@@ -1,0 +1,38 @@
+package hospitalmanagement.controller;
+
+import hospitalmanagement.entity.Appointment;
+import hospitalmanagement.service.AppointmentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/appointments")
+@CrossOrigin(origins="*")
+public class AppointmentController {
+
+    @Autowired
+    private AppointmentService appointmentService;
+
+    @PostMapping
+    public Appointment addAppointment(@RequestBody Appointment appointment) {
+        return appointmentService.saveAppointment(appointment);
+    }
+
+    @GetMapping
+    public List<Appointment> getAllAppointments() {
+        return appointmentService.getAllAppointments();
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteAppointment(@PathVariable Long id){
+        appointmentService.deleteAppointment(id);
+        return "Appointment Deleted";
+    }
+
+    @PutMapping("/{id}")
+    public Appointment updateAppointment(@PathVariable Long id,@RequestBody Appointment appointment){
+        return appointmentService.updateAppointment(id, appointment);
+    }
+}
