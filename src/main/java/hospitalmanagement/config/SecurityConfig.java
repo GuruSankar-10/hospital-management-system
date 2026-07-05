@@ -44,14 +44,25 @@ public class SecurityConfig {
         http
         .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/", "/index.html", "/css/**", "/js/**").permitAll()
-            .requestMatchers("/dashboard.html").hasAnyRole("ADMIN","STAFF")
-            .requestMatchers("/doctors.html").hasRole("ADMIN")
-            .requestMatchers("/patients.html").hasAnyRole("ADMIN","DOCTOR")
-            .requestMatchers("/appointments.html").hasAnyRole("ADMIN","DOCTOR")
-            .requestMatchers("/billing.html").hasAnyRole("ADMIN","STAFF")
-            .anyRequest().authenticated()
-        )
+
+        	    // Static resources
+        	    .requestMatchers("/", "/index.html", "/login.html", "/css/**", "/js/**").permitAll()
+
+        	    // REST APIs
+        	    .requestMatchers("/doctors/**").permitAll()
+        	    .requestMatchers("/patients/**").permitAll()
+        	    .requestMatchers("/appointments/**").permitAll()
+        	    .requestMatchers("/billing/**").permitAll()
+
+        	    // HTML pages
+        	    .requestMatchers("/dashboard.html").hasAnyRole("ADMIN","STAFF")
+        	    .requestMatchers("/doctors.html").hasRole("ADMIN")
+        	    .requestMatchers("/patients.html").hasAnyRole("ADMIN","DOCTOR")
+        	    .requestMatchers("/appointments.html").hasAnyRole("ADMIN","DOCTOR")
+        	    .requestMatchers("/billing.html").hasAnyRole("ADMIN","STAFF")
+
+        	    .anyRequest().authenticated()
+        	)
         .formLogin(form -> form
         	    .loginPage("/login.html")
         	    .loginProcessingUrl("/login")
