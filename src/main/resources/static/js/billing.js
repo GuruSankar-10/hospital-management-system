@@ -1,35 +1,67 @@
-function addBill(){
+let allBills = [];
+
+// Add Bill
+function addBill() {
+
     let bill = {
         amount: parseFloat(document.getElementById("amount").value),
         paymentStatus: document.getElementById("paymentStatus").value,
         paymentMethod: document.getElementById("paymentMethod").value,
-        patient:{
+        patient: {
             id: parseInt(document.getElementById("patientId").value)
         },
-        appointment:{
+        appointment: {
             id: parseInt(document.getElementById("appointmentId").value)
         }
     };
 
-    fetch("http://localhost:8080/billing",{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify(bill)
+    fetch("/billing", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(bill)
     })
-    .then(res=>res.json())
-    .then(data=>{
-        alert("Bill Created Successfully");
-        loadBills();
-    });
-}
-function loadBills(){
-    fetch("http://localhost:8080/billing")
-    .then(res=>res.json())
-    .then(data=>{
-        let table=document.getElementById("billingTable");
-        table.innerHTML="";
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Failed to create bill");
+        }
+        return response.json();
+    })
+    .then(data => {
 
-        data.forEach(b=>{
+        alert("Bill Created Successfully ✅");
+
+        document.getElementById("amount").value = "";
+        document.getElementById("paymentStatus").value = "";
+        document.getElementById("paymentMethod").value = "";
+        document.getElementById("patientId").value = "";
+        document.getElementById("appointmentId").value = "";
+
+        loadBills();
+
+    })
+    .catch(error => {
+        console.error(error);
+        alert("Unable to create bill");
+    });
+
+}
+
+// Load Bills
+function loadBills() {
+
+    fetch("/billing")
+    .then(response => response.json())
+    .then(data => {
+
+        allBills = data;
+
+        let table = document.getElementById("billingTable");
+        table.innerHTML = "";
+
+        data.forEach(b => {
+
             table.innerHTML += `
             <tr>
                 <td>${b.id}</td>
@@ -39,12 +71,18 @@ function loadBills(){
                 <td>${b.patient ? b.patient.id : ""}</td>
                 <td>${b.appointment ? b.appointment.id : ""}</td>
                 <td>
-                    <button class="delete-btn" onclick="deleteBill(${b.id})">Delete</button>
-                    <button class="pdf-btn" onclick="downloadBill(${b.id})">PDF</button>
+                    <button class="delete-btn" onclick="deleteBill(${b.id})">
+                        🗑 Delete
+                    </button>
+
+                    <button class="pdf-btn" onclick="downloadBill(${b.id})">
+                        📄 PDF
+                    </button>
+
                     <button class="wa-btn"
                         onclick="sendBillWhatsApp(
-                            '${b.patient.phone}',
-                            '${b.patient.name}',
+                            '${b.patient ? b.patient.phone : ""}',
+                            '${b.patient ? b.patient.name : ""}',
                             '${b.amount}',
                             '${b.paymentStatus}',
                             '${b.paymentMethod}'
@@ -54,26 +92,40 @@ function loadBills(){
                 </td>
             </tr>`;
         });
-    });
+
+    })
+    .catch(error => console.error(error));
+
 }
 
-function deleteBill(id){
-    fetch(`http://localhost:8080/billing/${id}`,{
-        method:"DELETE"
+// Delete Bill
+function deleteBill(id) {
+
+    if (!confirm("Delete this bill?")) return;
+
+    fetch(`/billing/${id}`, {
+        method: "DELETE"
     })
-    .then(res=>res.text())
-    .then(msg=>{
+    .then(response => response.text())
+    .then(msg => {
+
         alert(msg);
         loadBills();
-    });
+
+    })
+    .catch(error => console.error(error));
+
 }
 
-function downloadBill(id){
-    window.open(`http://localhost:8080/pdf/bill/${id}`, "_blank");
+// Download PDF
+function downloadBill(id) {
+
+    window.open(`/pdf/bill/${id}`, "_blank");
+
 }
 
-window.onload = loadBills;
-function sendBillWhatsApp(phone, name, amount, status, method){
+// WhatsApp
+function sendBillWhatsApp(phone, name, amount, status, method) {
 
     let message =
         "Hello " + name + ",%0A%0A" +
@@ -87,4 +139,7 @@ function sendBillWhatsApp(phone, name, amount, status, method){
         "https://wa.me/91" + phone + "?text=" + message,
         "_blank"
     );
+
 }
+
+window.onload = loadBills;
