@@ -1,44 +1,74 @@
-let allAppointments=[];
+let allAppointments = [];
 
-function addAppointment(){
+// Add Appointment
+function addAppointment() {
+
     let appointment = {
         appointmentDate: document.getElementById("appointmentDate").value,
         appointmentTime: document.getElementById("appointmentTime").value + ":00",
         status: document.getElementById("status").value,
-        doctor:{
+        doctor: {
             id: parseInt(document.getElementById("doctorId").value)
         },
-        patient:{
+        patient: {
             id: parseInt(document.getElementById("patientId").value)
         }
     };
 
-    fetch("http://localhost:8080/appointments",{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify(appointment)
+    fetch("/appointments", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(appointment)
     })
-    .then(res=>res.json())
-    .then(data=>{
-        alert("Appointment Added");
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Failed to add appointment");
+        }
+        return response.json();
+    })
+    .then(data => {
+
+        alert("Appointment Added Successfully ✅");
+
+        document.getElementById("appointmentDate").value = "";
+        document.getElementById("appointmentTime").value = "";
+        document.getElementById("status").value = "";
+        document.getElementById("doctorId").value = "";
+        document.getElementById("patientId").value = "";
+
         loadAppointments();
+
+    })
+    .catch(error => {
+        console.error(error);
+        alert("Unable to add appointment");
     });
+
 }
 
-function loadAppointments(){
-    fetch("http://localhost:8080/appointments")
-    .then(res=>res.json())
-    .then(data=>{
-        allAppointments=data;
+// Load Appointments
+function loadAppointments() {
+
+    fetch("/appointments")
+    .then(response => response.json())
+    .then(data => {
+        allAppointments = data;
         renderAppointments(data);
-    });
+    })
+    .catch(error => console.error(error));
+
 }
 
-function renderAppointments(list){
-    let table=document.getElementById("appointmentTable");
-    table.innerHTML="";
+// Render Table
+function renderAppointments(list) {
 
-    list.forEach(a=>{
+    let table = document.getElementById("appointmentTable");
+    table.innerHTML = "";
+
+    list.forEach(a => {
+
         table.innerHTML += `
         <tr>
             <td>${a.id}</td>
@@ -48,21 +78,33 @@ function renderAppointments(list){
             <td>${a.doctor ? a.doctor.id : ""}</td>
             <td>${a.patient ? a.patient.id : ""}</td>
             <td>
-                <button onclick="deleteAppointment(${a.id})">Delete</button>
+                <button class="delete-btn"
+                        onclick="deleteAppointment(${a.id})">
+                    🗑 Delete
+                </button>
             </td>
-        </tr>`;
+        </tr>
+        `;
+
     });
+
 }
 
-function deleteAppointment(id){
-    fetch(`http://localhost:8080/appointments/${id}`,{
-        method:"DELETE"
+// Delete Appointment
+function deleteAppointment(id) {
+
+    if (!confirm("Delete this appointment?")) return;
+
+    fetch(`/appointments/${id}`, {
+        method: "DELETE"
     })
-    .then(res=>res.text())
-    .then(msg=>{
+    .then(response => response.text())
+    .then(msg => {
         alert(msg);
         loadAppointments();
-    });
+    })
+    .catch(error => console.error(error));
+
 }
 
-window.onload=loadAppointments;
+window.onload = loadAppointments;

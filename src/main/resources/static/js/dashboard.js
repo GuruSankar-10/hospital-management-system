@@ -11,10 +11,10 @@ function loadDashboard() {
     let upi = 0;
 
     Promise.all([
-        fetch("http://localhost:8080/doctors").then(res => res.json()),
-        fetch("http://localhost:8080/patients").then(res => res.json()),
-        fetch("http://localhost:8080/appointments").then(res => res.json()),
-        fetch("http://localhost:8080/billing").then(res => res.json())
+        fetch("/doctors").then(res => res.json()),
+        fetch("/patients").then(res => res.json()),
+        fetch("/appointments").then(res => res.json()),
+        fetch("/billing").then(res => res.json())
     ])
     .then(([doctors, patients, appointments, bills]) => {
 
@@ -29,43 +29,97 @@ function loadDashboard() {
         document.getElementById("billCount").innerText = billCount;
 
         bills.forEach(b => {
-            totalRevenue += b.amount;
 
-            if(b.paymentMethod === "Cash") cash++;
-            else if(b.paymentMethod === "Card") card++;
-            else if(b.paymentMethod === "UPI") upi++;
+            totalRevenue += b.amount || 0;
+
+            if (b.paymentMethod === "Cash") {
+                cash++;
+            } else if (b.paymentMethod === "Card") {
+                card++;
+            } else if (b.paymentMethod === "UPI") {
+                upi++;
+            }
+
         });
 
         document.getElementById("revenue").innerText = "₹ " + totalRevenue;
 
-        createBarChart(doctorCount, patientCount, appointmentCount, billCount);
-        createPieChart(cash, card, upi);
+        createBarChart(
+            doctorCount,
+            patientCount,
+            appointmentCount,
+            billCount
+        );
+
+        createPieChart(
+            cash,
+            card,
+            upi
+        );
+
+    })
+    .catch(error => {
+        console.error(error);
+        alert("Unable to load dashboard");
     });
+
 }
 
 function createBarChart(doctors, patients, appointments, bills) {
+
     new Chart(document.getElementById("statsChart"), {
+
         type: "bar",
+
         data: {
-            labels: ["Doctors", "Patients", "Appointments", "Bills"],
+            labels: [
+                "Doctors",
+                "Patients",
+                "Appointments",
+                "Bills"
+            ],
+
             datasets: [{
-                label: "Count",
-                data: [doctors, patients, appointments, bills]
+                label: "Hospital Statistics",
+                data: [
+                    doctors,
+                    patients,
+                    appointments,
+                    bills
+                ]
             }]
         }
+
     });
+
 }
 
 function createPieChart(cash, card, upi) {
+
     new Chart(document.getElementById("paymentChart"), {
+
         type: "pie",
+
         data: {
-            labels: ["Cash", "Card", "UPI"],
+
+            labels: [
+                "Cash",
+                "Card",
+                "UPI"
+            ],
+
             datasets: [{
-                data: [cash, card, upi]
+                data: [
+                    cash,
+                    card,
+                    upi
+                ]
             }]
+
         }
+
     });
+
 }
 
 window.onload = loadDashboard;
