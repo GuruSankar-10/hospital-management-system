@@ -1,8 +1,6 @@
 let allDoctors = [];
 
-// Automatically uses localhost locally and Render URL when deployed
-const API = window.location.origin;
-
+// Add Doctor
 function addDoctor() {
 
     let doctor = {
@@ -11,7 +9,7 @@ function addDoctor() {
         phone: document.getElementById("phone").value
     };
 
-    fetch(`${API}/doctors`, {
+    fetch("/doctors", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -28,6 +26,7 @@ function addDoctor() {
 
         alert("Doctor Added Successfully ✅");
 
+        // Clear form
         document.getElementById("name").value = "";
         document.getElementById("specialization").value = "";
         document.getElementById("phone").value = "";
@@ -39,26 +38,24 @@ function addDoctor() {
         console.error(error);
         alert("Unable to add doctor");
     });
-
 }
 
+// Load Doctors
 function loadDoctors() {
 
-    fetch(`${API}/doctors`)
+    fetch("/doctors")
     .then(response => response.json())
     .then(data => {
-
         allDoctors = data;
         renderDoctors(data);
-
-    });
-
+    })
+    .catch(error => console.error(error));
 }
 
+// Render Doctors Table
 function renderDoctors(doctors) {
 
     let table = document.getElementById("doctorTable");
-
     table.innerHTML = "";
 
     doctors.forEach(d => {
@@ -70,12 +67,14 @@ function renderDoctors(doctors) {
             <td>${d.specialization}</td>
             <td>${d.phone}</td>
             <td>
-                <button onclick="editDoctor(${d.id},'${d.name}','${d.specialization}','${d.phone}')">
-                    Edit
+                <button class="edit-btn"
+                    onclick="editDoctor(${d.id},'${d.name}','${d.specialization}','${d.phone}')">
+                    ✏ Edit
                 </button>
 
-                <button onclick="deleteDoctor(${d.id})">
-                    Delete
+                <button class="delete-btn"
+                    onclick="deleteDoctor(${d.id})">
+                    🗑 Delete
                 </button>
             </td>
         </tr>
@@ -85,78 +84,78 @@ function renderDoctors(doctors) {
 
 }
 
+// Delete Doctor
 function deleteDoctor(id) {
 
-    fetch(`${API}/doctors/${id}`, {
+    if (!confirm("Delete this doctor?")) return;
+
+    fetch(`/doctors/${id}`, {
         method: "DELETE"
     })
     .then(response => response.text())
     .then(msg => {
-
         alert(msg);
-
         loadDoctors();
-
-    });
+    })
+    .catch(error => console.error(error));
 
 }
 
-function editDoctor(id,name,specialization,phone) {
+// Edit Doctor
+function editDoctor(id, name, specialization, phone) {
 
-    let newName = prompt("Enter Name", name);
+    let newName = prompt("Doctor Name", name);
+    if (newName == null) return;
 
-    let newSpec = prompt("Enter Specialization", specialization);
+    let newSpec = prompt("Specialization", specialization);
+    if (newSpec == null) return;
 
-    let newPhone = prompt("Enter Phone", phone);
+    let newPhone = prompt("Phone Number", phone);
+    if (newPhone == null) return;
 
     let doctor = {
-
-        name:newName,
-
-        specialization:newSpec,
-
-        phone:newPhone
-
+        name: newName,
+        specialization: newSpec,
+        phone: newPhone
     };
 
-    fetch(`${API}/doctors/${id}`, {
-
-        method:"PUT",
-
-        headers:{
-            "Content-Type":"application/json"
+    fetch(`/doctors/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
         },
-
-        body:JSON.stringify(doctor)
-
+        body: JSON.stringify(doctor)
     })
-
-    .then(response=>response.json())
-
-    .then(data=>{
-
-        alert("Doctor Updated Successfully");
-
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Update Failed");
+        }
+        return response.json();
+    })
+    .then(data => {
+        alert("Doctor Updated Successfully ✅");
         loadDoctors();
-
+    })
+    .catch(error => {
+        console.error(error);
+        alert("Unable to update doctor");
     });
 
 }
 
+// Search Doctor
 function searchDoctors() {
 
     let keyword = document.getElementById("searchBox").value.toLowerCase();
 
     let filtered = allDoctors.filter(d =>
-
         d.name.toLowerCase().includes(keyword) ||
-
         d.specialization.toLowerCase().includes(keyword)
-
     );
 
     renderDoctors(filtered);
 
 }
 
+// Load Data on Page Load
 window.onload = loadDoctors;
