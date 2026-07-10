@@ -9,30 +9,41 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/patients")
-@CrossOrigin(origins="*")
+@CrossOrigin(origins = "*")
 public class PatientController {
 
     @Autowired
     private PatientService patientService;
 
-    @GetMapping
-    public List<Patient> getAllPatients() {
-        return patientService.getAllPatients();
-    }
-
+    // Add Patient
     @PostMapping
     public Patient addPatient(@RequestBody Patient patient) {
         return patientService.savePatient(patient);
     }
 
-    @DeleteMapping("/{id}")
-    public String deletePatient(@PathVariable Long id){
-        patientService.deletePatient(id);
-        return "Patient Deleted Successfully";
+    // Get All Patients
+    @GetMapping
+    public List<Patient> getAllPatients() {
+        return patientService.getAllPatients();
     }
 
+    // Get Patient By ID
+    @GetMapping("/{id}")
+    public Patient getPatient(@PathVariable Long id) {
+        return patientService.getPatientById(id);
+    }
+
+    // Update Patient
     @PutMapping("/{id}")
-    public Patient updatePatient(@PathVariable Long id, @RequestBody Patient patient){
+    public Patient updatePatient(@PathVariable Long id,
+                                 @RequestBody Patient patient) {
         return patientService.updatePatient(id, patient);
+    }
+
+    // Delete Patient
+    @DeleteMapping("/{id}")
+    public String deletePatient(@PathVariable Long id) {
+        patientService.deletePatient(id);
+        return "Patient Deleted Successfully";
     }
 }

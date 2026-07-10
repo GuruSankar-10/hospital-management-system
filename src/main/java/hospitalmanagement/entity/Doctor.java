@@ -5,6 +5,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
+@Table(name = "doctor")
 public class Doctor {
 
     @Id
@@ -12,12 +13,18 @@ public class Doctor {
     private Long id;
 
     private String name;
+
     private String specialization;
+
     private String phone;
 
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Patient> patients;
+
+    @OneToMany(mappedBy = "doctor")
+    @JsonIgnore
+    private List<Appointment> appointments;
 
     public Doctor() {
     }
@@ -28,9 +35,6 @@ public class Doctor {
         this.specialization = specialization;
         this.phone = phone;
     }
-    @OneToMany(mappedBy = "doctor")
-    @JsonIgnore
-    private List<Appointment> appointments;
 
     public Long getId() {
         return id;
@@ -62,5 +66,31 @@ public class Doctor {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public List<Patient> getPatients() {
+        return patients;
+    }
+
+    public void setPatients(List<Patient> patients) {
+        this.patients = patients;
+    }
+
+    public List<Appointment> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(List<Appointment> appointments) {
+        this.appointments = appointments;
+    }
+
+    @Override
+    public String toString() {
+        return "Doctor{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", specialization='" + specialization + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
     }
 }

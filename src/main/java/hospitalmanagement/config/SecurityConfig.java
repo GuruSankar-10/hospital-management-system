@@ -1,75 +1,86 @@
 package hospitalmanagement.config;
 
+import hospitalmanagement.security.CustomUserDetailsService;
+import hospitalmanagement.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.*;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 public class SecurityConfig {
 
-    @Bean
-    public UserDetailsService userDetailsService() {
+    private final JwtAuthenticationFilter jwtFilter;
+    private final CustomUserDetailsService userDetailsService;
 
-        UserDetails admin = User.withUsername("admin")
-                .password("admin123")
-                .roles("ADMIN")
-                .build();
-
-        UserDetails doctor = User.withUsername("doctor")
-                .password("doctor123")
-                .roles("DOCTOR")
-                .build();
-
-        UserDetails staff = User.withUsername("staff")
-                .password("staff123")
-                .roles("STAFF")
-                .build();
-
-        return new InMemoryUserDetailsManager(admin, doctor, staff);
+    public SecurityConfig(JwtAuthenticationFilter jwtFilter,
+                          CustomUserDetailsService userDetailsService) {
+        this.jwtFilter = jwtFilter;
+        this.userDetailsService = userDetailsService;
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration)
+            throws Exception {
+        return configuration.getAuthenticationManager();
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-        .csrf(csrf -> csrf.disable())
-        .authorizeHttpRequests(auth -> auth
+                .csrf(csrf -> csrf.disable())
 
-        	    // Static resources
-        	    .requestMatchers("/", "/index.html", "/login.html", "/css/**", "/js/**").permitAll()
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-        	    // REST APIs
-        	    .requestMatchers("/doctors/**").permitAll()
-        	    .requestMatchers("/patients/**").permitAll()
-        	    .requestMatchers("/appointments/**").permitAll()
-        	    .requestMatchers("/billing/**").permitAll()
+                .userDetailsService(userDetailsService)
 
-        	    // HTML pages
-        	    .requestMatchers("/dashboard.html").hasAnyRole("ADMIN","STAFF")
-        	    .requestMatchers("/doctors.html").hasRole("ADMIN")
-        	    .requestMatchers("/patients.html").hasAnyRole("ADMIN","DOCTOR")
-        	    .requestMatchers("/appointments.html").hasAnyRole("ADMIN","DOCTOR")
-        	    .requestMatchers("/billing.html").hasAnyRole("ADMIN","STAFF")
+                .authorizeHttpRequests(auth -> auth
 
-        	    .anyRequest().authenticated()
-        	)
-        .formLogin(form -> form
-        	    .loginPage("/login.html")
-        	    .loginProcessingUrl("/login")
-        	    .defaultSuccessUrl("/dashboard.html", true)
-        	    .permitAll()
-        	)
-        .logout(logout -> logout.permitAll());
+                        // Public Pages
+                        .requestMatchers(
+                                "/",
+                                "/index.html",
+                                "/login.html",
+                                "/dashboard.html",
+                                "/doctors.html",
+                                "/patients.html",
+                                "/appointments.html",
+                                "/billing.html",
+                                "/records.html",
+                                "/prescriptions.html",
+                                "/css/**",
+                                "/js/**",
+                                "/images/**",
+                                "/favicon.ico"
+                        ).permitAll()
+
+                        // Public APIs
+                        .requestMatchers("/auth/**").permitAll()
+
+                        // Temporarily allow all REST APIs while developing
+                        .requestMatchers("/doctors/**").permitAll()
+                        .requestMatchers("/patients/**").permitAll()
+                        .requestMatchers("/appointments/**").permitAll()
+                        .requestMatchers("/billing/**").permitAll()
+
+                        .anyRequest().permitAll()
+                )
+
+                .addFilterBefore(jwtFilter,
+                        UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

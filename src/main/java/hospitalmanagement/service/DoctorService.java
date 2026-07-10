@@ -21,17 +21,29 @@ public class DoctorService {
         return doctorRepository.findAll();
     }
 
-    public void deleteDoctor(Long id) {
-        doctorRepository.deleteById(id);
+    public Doctor getDoctorById(Long id) {
+
+        return doctorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Doctor Not Found"));
     }
 
     public Doctor updateDoctor(Long id, Doctor newDoctor) {
-        Doctor oldDoctor = doctorRepository.findById(id).orElseThrow();
+
+        Doctor oldDoctor = doctorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Doctor Not Found"));
 
         oldDoctor.setName(newDoctor.getName());
         oldDoctor.setSpecialization(newDoctor.getSpecialization());
         oldDoctor.setPhone(newDoctor.getPhone());
 
         return doctorRepository.save(oldDoctor);
+    }
+
+    public void deleteDoctor(Long id) {
+
+        Doctor doctor = doctorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Doctor Not Found"));
+
+        doctorRepository.delete(doctor);
     }
 }
