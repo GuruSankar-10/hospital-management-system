@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Doctor Prescriptions</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<link rel="stylesheet" href="css/doctor.css">
+
+</head>
+
+<body>
+
+<!-- Sidebar -->
+
+<div class="sidebar">
+
+<h2>🏥 HMS</h2>
+
+<a href="doctor-dashboard.html">
+<i class="fa fa-house"></i>
+Dashboard
+</a>
+
+<a href="doctor-appointments.html">
+<i class="fa fa-calendar-check"></i>
+Appointments
+</a>
+
+<a href="doctor-patients.html">
+<i class="fa fa-user-group"></i>
+Patients
+</a>
+
+<a href="doctor-prescriptions.html" class="active">
+<i class="fa fa-file-medical"></i>
+Prescriptions
+</a>
+
+<a href="#" onclick="logout()">
+<i class="fa fa-right-from-bracket"></i>
+Logout
+</a>
+
+</div>
+
+<!-- Main -->
+
+<div class="main">
+
+<div class="topbar">
+
+<div>
+
+<h2>Doctor Prescriptions</h2>
+
+<p id="todayDate"></p>
+
+</div>
+
+<div class="profile">
+
+<span id="doctorName"></span>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="table-card">
+
+<h3>Create Prescription</h3>
+
+<br>
+
+<input
+type="text"
+id="patientName"
+placeholder="Patient Name">
+
+<br><br>
+
+<textarea
+id="medicine"
+placeholder="Medicines"
+rows="4"
+style="width:100%;padding:12px;"></textarea>
+
+<br><br>
+
+<textarea
+id="notes"
+placeholder="Doctor Notes"
+rows="4"
+style="width:100%;padding:12px;"></textarea>
+
+<br><br>
+
+<button onclick="savePrescription()">
+
+Save Prescription
+
+</button>
+
+</div>
+
+<br>
+
+<div class="table-card">
+
+<h3>Prescription History</h3>
+
+<br>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+
+<th>Patient</th>
+
+<th>Medicine</th>
+
+<th>Notes</th>
+
+</tr>
+
+</thead>
+
+<tbody id="prescriptionTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<script src="js/logout.js"></script>
+
+<script src="js/doctor-prescriptions.js"></script>
+
+</body>
+
+</html>

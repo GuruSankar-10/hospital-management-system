@@ -1,9 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Billing Management</title>
+
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -17,10 +23,13 @@ body{
 }
 
 /* Sidebar */
+
 .sidebar{
     width:250px;
     height:100vh;
     position:fixed;
+    left:0;
+    top:0;
     background:linear-gradient(180deg,#0f172a,#2563eb);
     color:white;
     padding:25px;
@@ -39,22 +48,24 @@ body{
     padding:15px;
     margin:12px 0;
     border-radius:12px;
-    transition:0.3s;
+    transition:.3s;
 }
 
 .sidebar a:hover{
-    background:rgba(255,255,255,0.2);
+    background:rgba(255,255,255,.2);
     transform:translateX(5px);
 }
 
 /* Main */
+
 .main{
     margin-left:250px;
-    width:100%;
+    width:calc(100% - 250px);
     padding:30px;
 }
 
 /* Topbar */
+
 .topbar{
     display:flex;
     justify-content:space-between;
@@ -62,20 +73,25 @@ body{
     background:white;
     padding:20px 30px;
     border-radius:20px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.08);
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
 }
 
 .topbar h1{
     color:#1e293b;
 }
 
-/* Card */
+#welcomeUser{
+    color:#2563eb;
+}
+
+/* Cards */
+
 .card{
     background:white;
     padding:30px;
     margin-top:25px;
     border-radius:24px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.08);
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
 }
 
 .card h2{
@@ -83,7 +99,6 @@ body{
     color:#1e293b;
 }
 
-/* Inputs */
 .input-group{
     display:flex;
     gap:15px;
@@ -103,7 +118,6 @@ input:focus{
     border-color:#2563eb;
 }
 
-/* Buttons */
 button{
     padding:14px 24px;
     border:none;
@@ -117,6 +131,10 @@ button{
     background:linear-gradient(135deg,#10b981,#059669);
 }
 
+.bill-btn:hover{
+    opacity:.9;
+}
+
 .delete-btn{
     background:#ef4444;
     padding:8px 14px;
@@ -127,13 +145,13 @@ button{
     padding:8px 14px;
     margin-left:5px;
 }
+
 .wa-btn{
     background:#25D366;
     padding:8px 14px;
     margin-left:5px;
 }
 
-/* Table */
 table{
     width:100%;
     border-collapse:collapse;
@@ -155,59 +173,159 @@ td{
 tr:hover{
     background:#f8fafc;
 }
+
 </style>
+
 </head>
+
 <body>
 
 <div class="sidebar">
-    <h2>🏥 HMS</h2>
-    <a href="dashboard.html">📊 Dashboard</a>
-    <a href="doctors.html">👨‍⚕️ Doctors</a>
-    <a href="patients.html">🧑 Patients</a>
-    <a href="appointments.html">📅 Appointments</a>
-    <a href="billing.html">💳 Billing</a>
+
+<h2>🏥 HMS</h2>
+
+<a href="dashboard.html">📊 Dashboard</a>
+
+<a href="doctors.html">👨‍⚕️ Doctors</a>
+
+<a href="patients.html">🧑 Patients</a>
+
+<a href="appointments.html">📅 Appointments</a>
+
+<a href="billing.html">💳 Billing</a>
+
+<a href="prescriptions.html">💊 Prescriptions</a>
+
+<a href="records.html">📁 Records</a>
+
+<a href="javascript:void(0)" onclick="logout()">
+🚪 Logout
+</a>
+
 </div>
 
 <div class="main">
 
-    <div class="topbar">
-        <h1>💳 Billing Management</h1>
-    </div>
+<div class="topbar">
 
-    <div class="card">
-        <h2>Create Bill</h2>
+<h1>💳 Billing Management</h1>
 
-        <div class="input-group">
-            <input id="amount" placeholder="Amount">
-            <input id="paymentStatus" placeholder="Payment Status">
-            <input id="paymentMethod" placeholder="Payment Method">
-            <input id="patientId" placeholder="Patient ID">
-            <input id="appointmentId" placeholder="Appointment ID">
-            <button class="bill-btn" onclick="addBill()">Create Bill</button>
-        </div>
-    </div>
+<h3 id="welcomeUser"></h3>
 
-    <div class="card">
-        <h2>Bills List</h2>
+</div>
+<!-- Create Bill -->
 
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Amount</th>
-                    <th>Status</th>
-                    <th>Method</th>
-                    <th>Patient ID</th>
-                    <th>Appointment ID</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="billingTable"></tbody>
-        </table>
+<div class="card">
+
+    <h2>💳 Create Bill</h2>
+
+    <div class="input-group">
+
+        <input
+            type="number"
+            id="amount"
+            placeholder="Amount">
+
+        <input
+            type="text"
+            id="paymentStatus"
+            placeholder="Payment Status">
+
+        <input
+            type="text"
+            id="paymentMethod"
+            placeholder="Payment Method">
+
+        <input
+            type="number"
+            id="patientId"
+            placeholder="Patient ID">
+
+        <input
+            type="number"
+            id="appointmentId"
+            placeholder="Appointment ID">
+
+        <button
+            class="bill-btn"
+            onclick="addBill()">
+            Create Bill
+        </button>
+
     </div>
 
 </div>
 
+<!-- Bills Table -->
+
+<div class="card">
+
+    <h2>📋 Bills List</h2>
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Amount</th>
+
+                <th>Status</th>
+
+                <th>Payment Method</th>
+
+                <th>Patient ID</th>
+
+                <th>Appointment ID</th>
+
+                <th>Actions</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="billingTable">
+
+        </tbody>
+
+    </table>
+
+</div>
+
+</div>
+<!-- JavaScript Files -->
 <script src="/js/billing.js"></script>
+<script src="/js/logout.js"></script>
+
+<script>
+
+// ===============================
+// Login Protection
+// ===============================
+if (!localStorage.getItem("name") || !localStorage.getItem("role")) {
+    window.location.replace("login.html");
+}
+
+// ===============================
+// Welcome Logged-in User
+// ===============================
+const username = localStorage.getItem("name") || "User";
+
+document.getElementById("welcomeUser").innerHTML =
+    "Welcome, " + username + " 👋";
+
+// ===============================
+// Prevent Browser Back After Logout
+// ===============================
+history.pushState(null, null, location.href);
+
+window.onpopstate = function () {
+    history.go(1);
+};
+
+</script>
+
 </body>
 </html>

@@ -47,4 +47,21 @@ public class AppointmentController {
         appointmentService.deleteAppointment(id);
         return "Appointment Deleted Successfully";
     }
+ // Update Appointment Status
+    @PutMapping("/{id}/status")
+    public Appointment updateStatus(
+            @PathVariable Long id,
+            @RequestBody Appointment appointment) {
+
+        return appointmentService.updateStatus(
+                id,
+                appointment.getStatus());
+
+    }
+    @GetMapping("/doctor/{doctorId}")
+    public List<Appointment> getAppointmentsByDoctor(
+            @PathVariable Long doctorId) {
+
+        return appointmentService.getAppointmentsByDoctor(doctorId);
+    }
 }

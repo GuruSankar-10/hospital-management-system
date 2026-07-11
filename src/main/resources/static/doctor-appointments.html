@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Doctor Appointments</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<link rel="stylesheet" href="css/doctor.css">
+
+</head>
+
+<body>
+
+<!-- Sidebar -->
+
+<div class="sidebar">
+
+    <h2>🏥 HMS</h2>
+
+    <a href="doctor-dashboard.html">
+        <i class="fa fa-house"></i>
+        Dashboard
+    </a>
+
+    <a href="doctor-appointments.html" class="active">
+        <i class="fa fa-calendar-check"></i>
+        Appointments
+    </a>
+
+    <a href="doctor-patients.html">
+        <i class="fa fa-user-group"></i>
+        Patients
+    </a>
+
+    <a href="doctor-prescriptions.html">
+        <i class="fa fa-file-medical"></i>
+        Prescriptions
+    </a>
+
+    <a href="#" onclick="logout()">
+        <i class="fa fa-right-from-bracket"></i>
+        Logout
+    </a>
+
+</div>
+
+<!-- Main -->
+
+<div class="main">
+
+    <!-- Topbar -->
+
+    <div class="topbar">
+
+        <div>
+
+            <h2>
+                Doctor Appointments
+            </h2>
+
+            <p id="todayDate"></p>
+
+        </div>
+
+        <div class="profile">
+
+            <span id="doctorName"></span>
+
+        </div>
+
+    </div>
+
+    <!-- Search -->
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search Patient..."
+            onkeyup="searchAppointments()">
+
+    </div>
+
+    <!-- Appointment Table -->
+
+    <div class="table-card">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Patient</th>
+
+                    <th>Date</th>
+
+                    <th>Time</th>
+
+                    <th>Status</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="appointmentTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<script src="js/logout.js"></script>
+
+<script src="js/doctor-appointments.js"></script>
+
+</body>
+
+</html>

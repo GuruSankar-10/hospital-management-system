@@ -3,7 +3,9 @@ package hospitalmanagement.controller;
 import hospitalmanagement.dto.AuthResponse;
 import hospitalmanagement.dto.LoginRequest;
 import hospitalmanagement.dto.RegisterRequest;
+import hospitalmanagement.entity.Doctor;
 import hospitalmanagement.entity.User;
+import hospitalmanagement.repository.DoctorRepository;
 import hospitalmanagement.repository.UserRepository;
 import hospitalmanagement.security.JwtService;
 import hospitalmanagement.service.UserService;
@@ -31,6 +33,9 @@ public class AuthController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private DoctorRepository doctorRepository;
+
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
 
@@ -45,12 +50,30 @@ public class AuthController {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
-                        request.getPassword()
-                )
-        );
+                        request.getPassword()));
 
-        String token = jwtService.generateToken(request.getEmail());
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("User Not Found"));
 
-        return ResponseEntity.ok(new AuthResponse(token));
+        String token = jwtService.generateToken(user.getEmail());
+
+        Long doctorId = null;
+
+        if (user.getRole().name().equals("DOCTOR")) {
+
+            Doctor doctor = doctorRepository.findByEmail(user.getEmail())
+                    .orElseThrow(() -> new RuntimeException("Doctor record not found. Please create doctor details."));
+
+            doctorId = doctor.getId();
+        }
+
+        AuthResponse response = new AuthResponse(
+                token,
+                user.getRole().name(),
+                user.getFullName(),
+                user.getEmail(),
+                doctorId);
+
+        return ResponseEntity.ok(response);
     }
 }

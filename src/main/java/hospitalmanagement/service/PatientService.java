@@ -23,6 +23,11 @@ public class PatientService {
         return patientRepository.findAll();
     }
 
+    // NEW
+    public List<Patient> getPatientsByDoctor(Long doctorId) {
+        return patientRepository.findByDoctorId(doctorId);
+    }
+
     // Get Patient By ID
     public Patient getPatientById(Long id) {
         return patientRepository.findById(id)
@@ -39,6 +44,8 @@ public class PatientService {
         oldPatient.setAge(newPatient.getAge());
         oldPatient.setDisease(newPatient.getDisease());
         oldPatient.setPhone(newPatient.getPhone());
+        oldPatient.setDoctor(newPatient.getDoctor());
+        oldPatient.setStaff(newPatient.getStaff());
 
         return patientRepository.save(oldPatient);
     }

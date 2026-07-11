@@ -15,32 +15,31 @@ public class PatientController {
     @Autowired
     private PatientService patientService;
 
-    // Add Patient
     @PostMapping
     public Patient addPatient(@RequestBody Patient patient) {
         return patientService.savePatient(patient);
     }
+    @GetMapping("/doctor/{doctorId}")
+    public List<Patient> getPatientsByDoctor(@PathVariable Long doctorId) {
+        return patientService.getPatientsByDoctor(doctorId);
+    }
 
-    // Get All Patients
     @GetMapping
     public List<Patient> getAllPatients() {
         return patientService.getAllPatients();
     }
 
-    // Get Patient By ID
     @GetMapping("/{id}")
     public Patient getPatient(@PathVariable Long id) {
         return patientService.getPatientById(id);
     }
 
-    // Update Patient
     @PutMapping("/{id}")
     public Patient updatePatient(@PathVariable Long id,
                                  @RequestBody Patient patient) {
         return patientService.updatePatient(id, patient);
     }
 
-    // Delete Patient
     @DeleteMapping("/{id}")
     public String deletePatient(@PathVariable Long id) {
         patientService.deletePatient(id);

@@ -2,8 +2,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Doctors Management</title>
+
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -17,10 +20,13 @@ body{
 }
 
 /* Sidebar */
+
 .sidebar{
     width:250px;
     height:100vh;
     position:fixed;
+    left:0;
+    top:0;
     background:linear-gradient(180deg,#0f172a,#2563eb);
     color:white;
     padding:25px;
@@ -38,22 +44,24 @@ body{
     padding:15px;
     margin:12px 0;
     border-radius:12px;
-    transition:0.3s;
+    transition:.3s;
 }
 
 .sidebar a:hover{
-    background:rgba(255,255,255,0.2);
+    background:rgba(255,255,255,.2);
     transform:translateX(5px);
 }
 
 /* Main */
+
 .main{
     margin-left:250px;
-    width:100%;
+    width:calc(100% - 250px);
     padding:30px;
 }
 
 /* Topbar */
+
 .topbar{
     display:flex;
     justify-content:space-between;
@@ -61,20 +69,25 @@ body{
     background:white;
     padding:20px 30px;
     border-radius:20px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.08);
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
 }
 
 .topbar h1{
     color:#1e293b;
 }
 
-/* Cards */
+#welcomeDoctor{
+    color:#2563eb;
+}
+
+/* Card */
+
 .card{
     background:white;
     padding:30px;
     margin-top:25px;
     border-radius:24px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.08);
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
 }
 
 .card h2{
@@ -83,6 +96,7 @@ body{
 }
 
 /* Inputs */
+
 .input-group{
     display:flex;
     gap:15px;
@@ -103,6 +117,7 @@ input:focus{
 }
 
 /* Buttons */
+
 button{
     padding:14px 24px;
     border:none;
@@ -117,16 +132,29 @@ button{
 }
 
 .add-btn:hover{
-    opacity:0.9;
+    opacity:.9;
+}
+
+.edit-btn{
+    background:#f59e0b;
+    padding:8px 14px;
+    margin-right:5px;
+}
+
+.delete-btn{
+    background:#ef4444;
+    padding:8px 14px;
 }
 
 /* Search */
+
 .search-box{
     width:350px;
     margin-top:20px;
 }
 
 /* Table */
+
 table{
     width:100%;
     border-collapse:collapse;
@@ -149,75 +177,154 @@ tr:hover{
     background:#f8fafc;
 }
 
-.edit-btn{
-    background:#f59e0b;
-    padding:8px 14px;
-    margin-right:5px;
-}
-
-.delete-btn{
-    background:#ef4444;
-    padding:8px 14px;
-}
 </style>
+
 </head>
+
 <body>
 
 <!-- Sidebar -->
+
 <div class="sidebar">
-    <h2>🏥 HMS</h2>
-    <a href="dashboard.html">📊 Dashboard</a>
-    <a href="doctors.html">👨‍⚕️ Doctors</a>
-    <a href="patients.html">🧑 Patients</a>
-    <a href="appointments.html">📅 Appointments</a>
-    <a href="billing.html">💳 Billing</a>
+
+<h2>🏥 HMS</h2>
+
+<a href="dashboard.html">📊 Dashboard</a>
+
+<a href="doctors.html">👨‍⚕️ Doctors</a>
+
+<a href="patients.html">🧑 Patients</a>
+
+<a href="appointments.html">📅 Appointments</a>
+
+<a href="billing.html">💳 Billing</a>
+
+<a href="prescriptions.html">💊 Prescriptions</a>
+
+<a href="records.html">📁 Records</a>
+
+<a href="javascript:void(0)" onclick="logout()">
+🚪 Logout
+</a>
+
 </div>
 
-<!-- Main -->
 <div class="main">
 
-    <div class="topbar">
-        <h1>👨‍⚕️ Doctors Management</h1>
-    </div>
+<div class="topbar">
 
-    <!-- Add Doctor -->
-    <div class="card">
-        <h2>Add Doctor</h2>
+<h1>👨‍⚕️ Doctors Management</h1>
 
-        <div class="input-group">
-            <input id="name" placeholder="Doctor Name">
-            <input id="specialization" placeholder="Specialization">
-            <input id="phone" placeholder="Phone">
-            <button class="add-btn" onclick="addDoctor()">Add Doctor</button>
-        </div>
-    </div>
+<h3 id="welcomeDoctor"></h3>
 
-    <!-- Doctors Table -->
-    <div class="card">
-        <h2>Doctors List</h2>
+</div>
+<!-- Add Doctor Card -->
 
-        <input id="searchBox"
-               class="search-box"
-               placeholder="🔍 Search Doctor..."
-               onkeyup="searchDoctors()">
+<div class="card">
 
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Specialization</th>
-                    <th>Phone</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
+    <h2>➕ Add Doctor</h2>
 
-            <tbody id="doctorTable"></tbody>
-        </table>
+    <div class="input-group">
+
+        <input
+            type="text"
+            id="name"
+            placeholder="Doctor Name">
+
+        <input
+            type="text"
+            id="specialization"
+            placeholder="Specialization">
+
+        <input
+            type="text"
+            id="phone"
+            placeholder="Phone Number">
+
+        <button
+            class="add-btn"
+            onclick="addDoctor()">
+            Add Doctor
+        </button>
+
     </div>
 
 </div>
 
+<!-- Doctors List -->
+
+<div class="card">
+
+    <h2>📋 Doctors List</h2>
+
+    <input
+        type="text"
+        id="searchBox"
+        class="search-box"
+        placeholder="🔍 Search Doctor..."
+        onkeyup="searchDoctors()">
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Name</th>
+
+                <th>Specialization</th>
+
+                <th>Phone</th>
+
+                <th>Actions</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="doctorTable">
+
+        </tbody>
+
+    </table>
+
+</div>
+
+</div>
+<!-- JavaScript -->
+
 <script src="/js/doctors.js"></script>
+<script src="/js/logout.js"></script>
+
+<script>
+
+// -----------------------------
+// Login Protection
+// -----------------------------
+if (!localStorage.getItem("name") || !localStorage.getItem("role")) {
+    window.location.replace("login.html");
+}
+
+// -----------------------------
+// Welcome Message
+// -----------------------------
+const doctorName = localStorage.getItem("name");
+
+document.getElementById("welcomeDoctor").innerHTML =
+    "Welcome, " + doctorName + " 👋";
+
+// -----------------------------
+// Prevent browser back after logout
+// -----------------------------
+history.pushState(null, null, location.href);
+
+window.onpopstate = function () {
+    history.go(1);
+};
+
+</script>
+
 </body>
 </html>

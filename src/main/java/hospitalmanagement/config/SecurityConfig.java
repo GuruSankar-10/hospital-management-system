@@ -50,22 +50,31 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
 
                         // Public Pages
-                        .requestMatchers(
-                                "/",
-                                "/index.html",
-                                "/login.html",
-                                "/dashboard.html",
-                                "/doctors.html",
-                                "/patients.html",
-                                "/appointments.html",
-                                "/billing.html",
-                                "/records.html",
-                                "/prescriptions.html",
-                                "/css/**",
-                                "/js/**",
-                                "/images/**",
-                                "/favicon.ico"
-                        ).permitAll()
+                		.requestMatchers(
+                		        "/",
+                		        "/index.html",
+                		        "/login.html",
+                		        "/dashboard.html",
+                		        "/doctors.html",
+                		        "/patients.html",
+                		        "/appointments.html",
+                		        "/billing.html",
+                		        "/records.html",
+                		        "/prescriptions.html",
+
+                		        "/doctor-dashboard.html",
+                		        "/doctor-patients.html",
+                		        "/doctor-appointments.html",
+                		        "/doctor-prescriptions.html",
+
+                		        "/staff-dashboard.html",
+
+                		        "/css/**",
+                		        "/js/**",
+                		        "/images/**",
+                		        "/favicon.ico"
+
+                		).permitAll()
 
                         // Public APIs
                         .requestMatchers("/auth/**").permitAll()

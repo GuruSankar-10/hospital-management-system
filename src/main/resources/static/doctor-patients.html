@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Doctor Patients</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<link rel="stylesheet" href="css/doctor.css">
+
+</head>
+
+<body>
+
+<!-- Sidebar -->
+
+<div class="sidebar">
+
+<h2>🏥 HMS</h2>
+
+<a href="doctor-dashboard.html">
+<i class="fa-solid fa-house"></i>
+Dashboard
+</a>
+
+<a href="doctor-appointments.html">
+<i class="fa-solid fa-calendar-check"></i>
+Appointments
+</a>
+
+<a href="doctor-patients.html" class="active">
+<i class="fa-solid fa-user-group"></i>
+Patients
+</a>
+
+<a href="doctor-prescriptions.html">
+<i class="fa-solid fa-file-medical"></i>
+Prescriptions
+</a>
+
+<a href="#" onclick="logout()">
+<i class="fa-solid fa-right-from-bracket"></i>
+Logout
+</a>
+
+</div>
+
+<!-- Main -->
+
+<div class="main">
+
+<div class="topbar">
+
+<div>
+
+<h2>My Patients</h2>
+
+<p id="todayDate"></p>
+
+</div>
+
+<div class="profile">
+
+<span id="doctorName"></span>
+
+</div>
+
+</div>
+
+<br>
+
+<input
+type="text"
+id="searchInput"
+placeholder="Search Patient..."
+onkeyup="searchPatients()"
+style="width:100%;padding:12px;border-radius:8px;border:1px solid #ccc;">
+
+<br><br>
+
+<div class="table-card">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+
+<th>Name</th>
+
+<th>Age</th>
+
+<th>Disease</th>
+
+<th>Phone</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="patientTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<script src="js/logout.js"></script>
+
+<script src="js/doctor-patients.js"></script>
+
+</body>
+
+</html>

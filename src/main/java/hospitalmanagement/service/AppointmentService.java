@@ -44,7 +44,16 @@ public class AppointmentService {
 
         return appointmentRepository.save(oldAppointment);
     }
+ // Update Appointment Status
+    public Appointment updateStatus(Long id, String status) {
 
+        Appointment appointment = appointmentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Appointment Not Found"));
+
+        appointment.setStatus(status);
+
+        return appointmentRepository.save(appointment);
+    } 
     // Delete Appointment
     public void deleteAppointment(Long id) {
 
@@ -52,5 +61,8 @@ public class AppointmentService {
                 .orElseThrow(() -> new RuntimeException("Appointment Not Found"));
 
         appointmentRepository.delete(appointment);
+    }
+    public List<Appointment> getAppointmentsByDoctor(Long doctorId) {
+        return appointmentRepository.findByDoctorId(doctorId);
     }
 }

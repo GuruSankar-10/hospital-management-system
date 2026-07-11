@@ -3,19 +3,18 @@ package hospitalmanagement.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "prescriptions")
 public class Prescription {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String disease;
+    @Column(length = 1000)
+    private String medicine;
 
-    @Column(length = 3000)
-    private String medicines;
-
-    @Column(length = 2000)
-    private String advice;
+    @Column(length = 1000)
+    private String notes;
 
     @ManyToOne
     @JoinColumn(name = "doctor_id")
@@ -25,23 +24,55 @@ public class Prescription {
     @JoinColumn(name = "patient_id")
     private Patient patient;
 
-    public Prescription() {}
+    public Prescription() {
+    }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Prescription(Long id, String medicine, String notes,
+                        Doctor doctor, Patient patient) {
+        this.id = id;
+        this.medicine = medicine;
+        this.notes = notes;
+        this.doctor = doctor;
+        this.patient = patient;
+    }
 
-    public String getDisease() { return disease; }
-    public void setDisease(String disease) { this.disease = disease; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getMedicines() { return medicines; }
-    public void setMedicines(String medicines) { this.medicines = medicines; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getAdvice() { return advice; }
-    public void setAdvice(String advice) { this.advice = advice; }
+    public String getMedicine() {
+        return medicine;
+    }
 
-    public Doctor getDoctor() { return doctor; }
-    public void setDoctor(Doctor doctor) { this.doctor = doctor; }
+    public void setMedicine(String medicine) {
+        this.medicine = medicine;
+    }
 
-    public Patient getPatient() { return patient; }
-    public void setPatient(Patient patient) { this.patient = patient; }
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
 }

@@ -1,9 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Appointments Management</title>
+
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -17,10 +23,13 @@ body{
 }
 
 /* Sidebar */
+
 .sidebar{
     width:250px;
     height:100vh;
     position:fixed;
+    left:0;
+    top:0;
     background:linear-gradient(180deg,#0f172a,#2563eb);
     color:white;
     padding:25px;
@@ -39,22 +48,24 @@ body{
     padding:15px;
     margin:12px 0;
     border-radius:12px;
-    transition:0.3s;
+    transition:.3s;
 }
 
 .sidebar a:hover{
-    background:rgba(255,255,255,0.2);
+    background:rgba(255,255,255,.2);
     transform:translateX(5px);
 }
 
 /* Main */
+
 .main{
     margin-left:250px;
-    width:100%;
+    width:calc(100% - 250px);
     padding:30px;
 }
 
 /* Topbar */
+
 .topbar{
     display:flex;
     justify-content:space-between;
@@ -62,20 +73,25 @@ body{
     background:white;
     padding:20px 30px;
     border-radius:20px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.08);
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
 }
 
 .topbar h1{
     color:#1e293b;
 }
 
+#welcomeUser{
+    color:#2563eb;
+}
+
 /* Card */
+
 .card{
     background:white;
     padding:30px;
     margin-top:25px;
     border-radius:24px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.08);
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
 }
 
 .card h2{
@@ -84,6 +100,7 @@ body{
 }
 
 /* Inputs */
+
 .input-group{
     display:flex;
     gap:15px;
@@ -104,6 +121,7 @@ input:focus{
 }
 
 /* Buttons */
+
 button{
     padding:14px 24px;
     border:none;
@@ -118,7 +136,7 @@ button{
 }
 
 .book-btn:hover{
-    opacity:0.9;
+    opacity:.9;
 }
 
 .delete-btn{
@@ -127,6 +145,7 @@ button{
 }
 
 /* Table */
+
 table{
     width:100%;
     border-collapse:collapse;
@@ -148,63 +167,157 @@ td{
 tr:hover{
     background:#f8fafc;
 }
+
 </style>
+
 </head>
+
 <body>
 
-<!-- Sidebar -->
 <div class="sidebar">
-    <h2>🏥 HMS</h2>
-    <a href="dashboard.html">📊 Dashboard</a>
-    <a href="doctors.html">👨‍⚕️ Doctors</a>
-    <a href="patients.html">🧑 Patients</a>
-    <a href="appointments.html">📅 Appointments</a>
-    <a href="billing.html">💳 Billing</a>
+
+<h2>🏥 HMS</h2>
+
+<a href="dashboard.html">📊 Dashboard</a>
+
+<a href="doctors.html">👨‍⚕️ Doctors</a>
+
+<a href="patients.html">🧑 Patients</a>
+
+<a href="appointments.html">📅 Appointments</a>
+
+<a href="billing.html">💳 Billing</a>
+
+<a href="prescriptions.html">💊 Prescriptions</a>
+
+<a href="records.html">📁 Records</a>
+
+<a href="javascript:void(0)" onclick="logout()">
+🚪 Logout
+</a>
+
 </div>
 
-<!-- Main -->
 <div class="main">
 
-    <div class="topbar">
-        <h1>📅 Appointment Management</h1>
-    </div>
+<div class="topbar">
 
-    <!-- Appointment Form -->
-    <div class="card">
-        <h2>Book Appointment</h2>
+<h1>📅 Appointment Management</h1>
 
-        <div class="input-group">
-            <input id="doctorId" placeholder="Doctor ID">
-            <input id="patientId" placeholder="Patient ID">
-            <input id="appointmentDate" type="date">
-            <input id="appointmentTime" type="time">
-            <input id="status" placeholder="Status">
-            <button class="book-btn" onclick="addAppointment()">Book Appointment</button>
-        </div>
-    </div>
+<h3 id="welcomeUser"></h3>
 
-    <!-- Appointment Table -->
-    <div class="card">
-        <h2>Appointments List</h2>
+</div>
+<!-- Appointment Form -->
 
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Status</th>
-                    <th>Doctor ID</th>
-                    <th>Patient ID</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="appointmentTable"></tbody>
-        </table>
+<div class="card">
+
+    <h2>📅 Book Appointment</h2>
+
+    <div class="input-group">
+
+        <input
+            type="number"
+            id="doctorId"
+            placeholder="Doctor ID">
+
+        <input
+            type="number"
+            id="patientId"
+            placeholder="Patient ID">
+
+        <input
+            type="date"
+            id="appointmentDate">
+
+        <input
+            type="time"
+            id="appointmentTime">
+
+        <input
+            type="text"
+            id="status"
+            placeholder="Status">
+
+        <button
+            class="book-btn"
+            onclick="addAppointment()">
+            Book Appointment
+        </button>
+
     </div>
 
 </div>
 
+<!-- Appointment Table -->
+
+<div class="card">
+
+    <h2>📋 Appointments List</h2>
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Date</th>
+
+                <th>Time</th>
+
+                <th>Status</th>
+
+                <th>Doctor ID</th>
+
+                <th>Patient ID</th>
+
+                <th>Action</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="appointmentTable">
+
+        </tbody>
+
+    </table>
+
+</div>
+
+</div>
+<!-- JavaScript Files -->
 <script src="/js/appointments.js"></script>
+<script src="/js/logout.js"></script>
+
+<script>
+
+// ===============================
+// Login Protection
+// ===============================
+if (!localStorage.getItem("name") || !localStorage.getItem("role")) {
+    window.location.replace("login.html");
+}
+
+// ===============================
+// Welcome Logged-in User
+// ===============================
+const username = localStorage.getItem("name") || "User";
+
+document.getElementById("welcomeUser").innerHTML =
+    "Welcome, " + username + " 👋";
+
+// ===============================
+// Prevent Browser Back After Logout
+// ===============================
+history.pushState(null, null, location.href);
+
+window.onpopstate = function () {
+    history.go(1);
+};
+
+</script>
+
 </body>
 </html>

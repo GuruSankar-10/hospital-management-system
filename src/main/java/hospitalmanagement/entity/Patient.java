@@ -1,10 +1,12 @@
 package hospitalmanagement.entity;
 
-import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
+@Table(name = "patient")
 public class Patient {
 
     @Id
@@ -13,39 +15,57 @@ public class Patient {
 
     private String name;
 
-    // Changed int -> Integer (important)
+    // Integer instead of int to avoid null issues
     private Integer age;
 
     private String disease;
+
     private String phone;
 
+    // ================= Relationships =================
+
+    // Many Patients -> One Doctor
     @ManyToOne
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
 
+    // Many Patients -> One Staff
     @ManyToOne
     @JoinColumn(name = "staff_id")
     private Staff staff;
 
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    // One Patient -> Many Appointments
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Appointment> appointments;
+
+    // One Patient -> Many Prescriptions
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Prescription> prescriptions;
+
+    // One Patient -> Many Bills
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Billing> bills;
+
+    // ================= Constructors =================
 
     public Patient() {
     }
 
-    public Patient(Long id, String name, Integer age, String disease, String phone) {
+    public Patient(Long id, String name, Integer age, String disease, String phone,
+                   Doctor doctor, Staff staff) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.disease = disease;
         this.phone = phone;
+        this.doctor = doctor;
+        this.staff = staff;
     }
-    @OneToMany(mappedBy = "patient")
-    @JsonIgnore
-    private java.util.List<Billing> bills;
 
-    // ---------- Getters & Setters ----------
+    // ================= Getters & Setters =================
 
     public Long getId() {
         return id;
@@ -79,7 +99,6 @@ public class Patient {
         this.name = name;
     }
 
-    // Integer instead of int
     public Integer getAge() {
         return age;
     }
@@ -110,5 +129,32 @@ public class Patient {
 
     public void setAppointments(List<Appointment> appointments) {
         this.appointments = appointments;
+    }
+
+    public List<Prescription> getPrescriptions() {
+        return prescriptions;
+    }
+
+    public void setPrescriptions(List<Prescription> prescriptions) {
+        this.prescriptions = prescriptions;
+    }
+
+    public List<Billing> getBills() {
+        return bills;
+    }
+
+    public void setBills(List<Billing> bills) {
+        this.bills = bills;
+    }
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", disease='" + disease + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
     }
 }

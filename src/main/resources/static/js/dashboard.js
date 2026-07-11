@@ -1,48 +1,77 @@
+// =====================================
+// Dashboard Management
+// =====================================
+
+let statsChart = null;
+let paymentChart = null;
+
+// ===============================
+// Load Dashboard
+// ===============================
 function loadDashboard() {
 
-    let doctorCount = 0;
-    let patientCount = 0;
-    let appointmentCount = 0;
-    let billCount = 0;
-    let totalRevenue = 0;
-
-    let cash = 0;
-    let card = 0;
-    let upi = 0;
-
     Promise.all([
+
         fetch("/doctors").then(res => res.json()),
+
         fetch("/patients").then(res => res.json()),
+
         fetch("/appointments").then(res => res.json()),
+
         fetch("/billing").then(res => res.json())
+
     ])
+
     .then(([doctors, patients, appointments, bills]) => {
 
-        doctorCount = doctors.length;
-        patientCount = patients.length;
-        appointmentCount = appointments.length;
-        billCount = bills.length;
+        const doctorCount = doctors.length;
 
-        document.getElementById("doctorCount").innerText = doctorCount;
-        document.getElementById("patientCount").innerText = patientCount;
-        document.getElementById("appointmentCount").innerText = appointmentCount;
-        document.getElementById("billCount").innerText = billCount;
+        const patientCount = patients.length;
 
-        bills.forEach(b => {
+        const appointmentCount = appointments.length;
 
-            totalRevenue += b.amount || 0;
+        const billCount = bills.length;
 
-            if (b.paymentMethod === "Cash") {
-                cash++;
-            } else if (b.paymentMethod === "Card") {
-                card++;
-            } else if (b.paymentMethod === "UPI") {
-                upi++;
+        document.getElementById("doctorCount").innerHTML = doctorCount;
+
+        document.getElementById("patientCount").innerHTML = patientCount;
+
+        document.getElementById("appointmentCount").innerHTML = appointmentCount;
+
+        document.getElementById("billCount").innerHTML = billCount;
+
+        let revenue = 0;
+
+        let cash = 0;
+
+        let card = 0;
+
+        let upi = 0;
+
+        bills.forEach(bill => {
+
+            revenue += Number(bill.amount || 0);
+
+            switch ((bill.paymentMethod || "").toUpperCase()) {
+
+                case "CASH":
+                    cash++;
+                    break;
+
+                case "CARD":
+                    card++;
+                    break;
+
+                case "UPI":
+                    upi++;
+                    break;
+
             }
 
         });
 
-        document.getElementById("revenue").innerText = "₹ " + totalRevenue;
+        document.getElementById("revenue").innerHTML =
+            "₹ " + revenue.toFixed(2);
 
         createBarChart(
             doctorCount,
@@ -58,20 +87,34 @@ function loadDashboard() {
         );
 
     })
+
     .catch(error => {
+
         console.error(error);
-        alert("Unable to load dashboard");
+
+        alert("Unable to load dashboard.");
+
     });
 
 }
-
+// ===============================
+// Hospital Statistics Bar Chart
+// ===============================
 function createBarChart(doctors, patients, appointments, bills) {
 
-    new Chart(document.getElementById("statsChart"), {
+    // Destroy old chart if it exists
+    if (statsChart) {
+        statsChart.destroy();
+    }
+
+    const ctx = document.getElementById("statsChart");
+
+    statsChart = new Chart(ctx, {
 
         type: "bar",
 
         data: {
+
             labels: [
                 "Doctors",
                 "Patients",
@@ -80,23 +123,86 @@ function createBarChart(doctors, patients, appointments, bills) {
             ],
 
             datasets: [{
+
                 label: "Hospital Statistics",
+
                 data: [
                     doctors,
                     patients,
                     appointments,
                     bills
-                ]
+                ],
+
+                backgroundColor: [
+                    "#3b82f6",
+                    "#10b981",
+                    "#f59e0b",
+                    "#ef4444"
+                ],
+
+                borderRadius: 10
+
             }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+                legend: {
+
+                    display: false
+
+                }
+
+            },
+
+            animation: {
+
+                duration: 1500
+
+            },
+
+            scales: {
+
+                y: {
+
+                    beginAtZero: true,
+
+                    ticks: {
+
+                        precision: 0
+
+                    }
+
+                }
+
+            }
+
         }
 
     });
 
 }
 
+// ===============================
+// Payment Method Pie Chart
+// ===============================
 function createPieChart(cash, card, upi) {
 
-    new Chart(document.getElementById("paymentChart"), {
+    // Destroy old chart if it exists
+    if (paymentChart) {
+        paymentChart.destroy();
+    }
+
+    const ctx = document.getElementById("paymentChart");
+
+    paymentChart = new Chart(ctx, {
 
         type: "pie",
 
@@ -109,12 +215,136 @@ function createPieChart(cash, card, upi) {
             ],
 
             datasets: [{
+
                 data: [
                     cash,
                     card,
                     upi
+                ],
+
+                backgroundColor: [
+                    "#22c55e",
+                    "#3b82f6",
+                    "#f59e0b"
                 ]
+
             }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            animation: {
+
+                duration: 1500
+
+            },
+
+            plugins: {
+
+                legend: {
+
+                    position: "bottom"
+
+                }
+
+            }
+
+        }
+
+    });
+
+}
+// ===============================
+// Hospital Statistics Bar Chart
+// ===============================
+function createBarChart(doctors, patients, appointments, bills) {
+
+    // Destroy old chart if it exists
+    if (statsChart) {
+        statsChart.destroy();
+    }
+
+    const ctx = document.getElementById("statsChart");
+
+    statsChart = new Chart(ctx, {
+
+        type: "bar",
+
+        data: {
+
+            labels: [
+                "Doctors",
+                "Patients",
+                "Appointments",
+                "Bills"
+            ],
+
+            datasets: [{
+
+                label: "Hospital Statistics",
+
+                data: [
+                    doctors,
+                    patients,
+                    appointments,
+                    bills
+                ],
+
+                backgroundColor: [
+                    "#3b82f6",
+                    "#10b981",
+                    "#f59e0b",
+                    "#ef4444"
+                ],
+
+                borderRadius: 10
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+                legend: {
+
+                    display: false
+
+                }
+
+            },
+
+            animation: {
+
+                duration: 1500
+
+            },
+
+            scales: {
+
+                y: {
+
+                    beginAtZero: true,
+
+                    ticks: {
+
+                        precision: 0
+
+                    }
+
+                }
+
+            }
 
         }
 
@@ -122,4 +352,72 @@ function createPieChart(cash, card, upi) {
 
 }
 
-window.onload = loadDashboard;
+// ===============================
+// Payment Method Pie Chart
+// ===============================
+function createPieChart(cash, card, upi) {
+
+    // Destroy old chart if it exists
+    if (paymentChart) {
+        paymentChart.destroy();
+    }
+
+    const ctx = document.getElementById("paymentChart");
+
+    paymentChart = new Chart(ctx, {
+
+        type: "pie",
+
+        data: {
+
+            labels: [
+                "Cash",
+                "Card",
+                "UPI"
+            ],
+
+            datasets: [{
+
+                data: [
+                    cash,
+                    card,
+                    upi
+                ],
+
+                backgroundColor: [
+                    "#22c55e",
+                    "#3b82f6",
+                    "#f59e0b"
+                ]
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            animation: {
+
+                duration: 1500
+
+            },
+
+            plugins: {
+
+                legend: {
+
+                    position: "bottom"
+
+                }
+
+            }
+
+        }
+
+    });
+
+}
