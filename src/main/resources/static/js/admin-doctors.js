@@ -1,11 +1,16 @@
 console.log("Admin Doctor JS Loaded");
 
 // ==========================
-// API URLs
+// API URLs (Works for Localhost & Render)
 // ==========================
 
-const DOCTOR_API = "http://localhost:8080/doctors";
-const ADMIN_DOCTOR_API = "http://localhost:8080/admin/doctor";
+const BASE_URL =
+    window.location.hostname === "localhost"
+        ? "http://localhost:8080"
+        : "https://hospital-management-system-6pok.onrender.com";
+
+const DOCTOR_API = `${BASE_URL}/doctors`;
+const ADMIN_DOCTOR_API = `${BASE_URL}/admin/doctor`;
 
 let deleteDoctorId = null;
 
@@ -24,9 +29,10 @@ window.onload = function () {
 function loadDoctors() {
 
     fetch(DOCTOR_API)
-
-        .then(response => response.json())
-
+        .then(response => {
+            if (!response.ok) throw new Error("Failed to load doctors");
+            return response.json();
+        })
         .then(doctors => {
 
             let rows = "";
@@ -39,69 +45,41 @@ function loadDoctors() {
 
                 if (doctor.specialization === "Cardiology")
                     cardio++;
-
                 else if (doctor.specialization === "Neurology")
                     neuro++;
-
                 else
                     general++;
 
                 rows += `
-
 <tr>
-
 <td>${doctor.id}</td>
-
 <td>${doctor.name}</td>
-
 <td>${doctor.email}</td>
-
 <td>${doctor.specialization}</td>
-
 <td>${doctor.phone}</td>
-
 <td>
-
-<button class="btn"
-onclick="editDoctor(${doctor.id})">
-
+<button class="btn" onclick="editDoctor(${doctor.id})">
 <i class="fas fa-pen"></i>
-
 </button>
 
-<button class="deleteBtn"
-onclick="deleteDoctor(${doctor.id})">
-
+<button class="deleteBtn" onclick="deleteDoctor(${doctor.id})">
 <i class="fas fa-trash"></i>
-
 </button>
-
 </td>
-
 </tr>
-
 `;
-
             });
 
             document.getElementById("doctorTable").innerHTML = rows;
-
             document.getElementById("doctorCount").innerHTML = doctors.length;
-
             document.getElementById("cardiologyCount").innerHTML = cardio;
-
             document.getElementById("neurologyCount").innerHTML = neuro;
-
             document.getElementById("generalCount").innerHTML = general;
 
         })
-
         .catch(error => {
-
-            console.log(error);
-
+            console.error(error);
             alert("Unable to Load Doctors");
-
         });
 
 }
@@ -123,13 +101,7 @@ function searchDoctor() {
 
         let text = row.innerText.toLowerCase();
 
-        if (text.includes(input))
-
-            row.style.display = "";
-
-        else
-
-            row.style.display = "none";
+        row.style.display = text.includes(input) ? "" : "none";
 
     });
 
@@ -144,15 +116,10 @@ function openDoctorModal() {
     document.getElementById("modalTitle").innerHTML = "Add Doctor";
 
     document.getElementById("doctorId").value = "";
-
     document.getElementById("doctorName").value = "";
-
     document.getElementById("doctorEmail").value = "";
-
     document.getElementById("doctorPassword").value = "";
-
     document.getElementById("doctorPhone").value = "";
-
     document.getElementById("doctorSpecialization").value = "";
 
     document.getElementById("doctorModal").style.display = "flex";
@@ -168,6 +135,11 @@ function closeDoctorModal() {
     document.getElementById("doctorModal").style.display = "none";
 
 }
+
+// ==========================
+// Save Doctor
+// ==========================
+
 // ==========================
 // Save Doctor
 // ==========================
@@ -179,28 +151,23 @@ function saveDoctor() {
     const doctor = {
 
         name: document.getElementById("doctorName").value.trim(),
-
         email: document.getElementById("doctorEmail").value.trim(),
-
         password: document.getElementById("doctorPassword").value.trim(),
-
         specialization: document.getElementById("doctorSpecialization").value,
-
         phone: document.getElementById("doctorPhone").value.trim()
 
     };
 
+    // Validate fields
     if (
         doctor.name === "" ||
         doctor.email === "" ||
+        doctor.password === "" ||
         doctor.specialization === "" ||
         doctor.phone === ""
     ) {
-
         alert("Please fill all fields.");
-
         return;
-
     }
 
     // ==========================
@@ -209,29 +176,31 @@ function saveDoctor() {
 
     if (id === "") {
 
-        fetch("http://localhost:8080/admin/doctor", {
+        fetch(ADMIN_DOCTOR_API, {
 
             method: "POST",
 
             headers: {
-
                 "Content-Type": "application/json"
-
             },
 
             body: JSON.stringify(doctor)
 
         })
 
-        .then(res => {
+        .then(async response => {
 
-            if (!res.ok) {
+            const text = await response.text();
 
-                throw new Error();
-
+            if (!response.ok) {
+                throw new Error(text || "Registration Failed");
             }
 
-            return res.json();
+            if (text) {
+                return JSON.parse(text);
+            }
+
+            return {};
 
         })
 
@@ -245,9 +214,11 @@ function saveDoctor() {
 
         })
 
-        .catch(() => {
+        .catch(error => {
 
-            alert("Registration Failed");
+            console.error("Registration Error:", error);
+
+            alert(error.message);
 
         });
 
@@ -259,21 +230,130 @@ function saveDoctor() {
 
     else {
 
-        fetch("http://localhost:8080/doctors/" + id, {
+        fetch(DOCTOR_API + "/" + id, {
 
             method: "PUT",
 
             headers: {
-
                 "Content-Type": "application/json"
-
             },
 
             body: JSON.stringify(doctor)
 
         })
 
-        .then(res => res.json())
+        .then(async response => {
+
+            const text = await response.text();
+
+            if (!response.ok) {
+                throw new Error(text || "Update Failed");
+            }
+
+            if (text) {
+                return JSON.parse(text);
+            }
+
+            return {};
+
+        })
+
+        .then(() => {
+
+            alert("Doctor Updated Successfully");
+
+            closeDoctorModal();
+
+            loadDoctors();
+
+        })
+
+        .catch(error => {
+
+            console.error("Update Error:", error);
+
+            alert(error.message);
+
+        });
+
+    }
+
+}
+    // ==========================
+    // ADD DOCTOR
+    // ==========================
+
+    if (id === "") {
+
+        fetch(ADMIN_DOCTOR_API, {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(doctor)
+
+        })
+
+        .then(response => {
+
+            if (!response.ok) {
+                return response.text().then(text => {
+                    throw new Error(text);
+                });
+            }
+
+            return response.json();
+
+        })
+
+        .then(() => {
+
+            alert("Doctor Registered Successfully");
+
+            closeDoctorModal();
+
+            loadDoctors();
+
+        })
+
+        .catch(error => {
+
+            console.error(error);
+
+            alert(error.message || "Registration Failed");
+
+        });
+
+    }
+
+    // ==========================
+    // UPDATE DOCTOR
+    // ==========================
+
+    else {
+
+        fetch(DOCTOR_API + "/" + id, {
+
+            method: "PUT",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(doctor)
+
+        })
+
+        .then(response => {
+
+            if (!response.ok) throw new Error();
+
+            return response.json();
+
+        })
 
         .then(() => {
 
@@ -295,7 +375,6 @@ function saveDoctor() {
 
 }
 
-
 // ==========================
 // Delete Doctor
 // ==========================
@@ -308,7 +387,6 @@ function deleteDoctor(id) {
 
 }
 
-
 // ==========================
 // Close Delete Modal
 // ==========================
@@ -318,7 +396,6 @@ function closeDeleteModal() {
     document.getElementById("deleteModal").style.display = "none";
 
 }
-
 
 // ==========================
 // Confirm Delete
@@ -346,14 +423,13 @@ function confirmDelete() {
 
     .catch(error => {
 
-        console.log(error);
+        console.error(error);
 
         alert("Delete Failed");
 
     });
 
 }
-
 
 // ==========================
 // Edit Doctor
@@ -368,30 +444,21 @@ function editDoctor(id) {
     .then(doctor => {
 
         document.getElementById("doctorId").value = doctor.id;
-
         document.getElementById("doctorName").value = doctor.name;
-
         document.getElementById("doctorEmail").value = doctor.email;
-
         document.getElementById("doctorPassword").value = "";
+        document.getElementById("doctorSpecialization").value = doctor.specialization;
+        document.getElementById("doctorPhone").value = doctor.phone;
 
-        document.getElementById("doctorSpecialization").value =
-        doctor.specialization;
+        document.getElementById("modalTitle").innerHTML = "Edit Doctor";
 
-        document.getElementById("doctorPhone").value =
-        doctor.phone;
-
-        document.getElementById("modalTitle").innerHTML =
-        "Edit Doctor";
-
-        document.getElementById("doctorModal").style.display =
-        "flex";
+        document.getElementById("doctorModal").style.display = "flex";
 
     })
 
     .catch(error => {
 
-        console.log(error);
+        console.error(error);
 
         alert("Unable to Load Doctor");
 
@@ -399,25 +466,20 @@ function editDoctor(id) {
 
 }
 
-
 // ==========================
 // Toggle Password
 // ==========================
 
 function togglePassword() {
 
-    let password =
-    document.getElementById("doctorPassword");
-
-    let icon =
-    document.getElementById("togglePassword");
+    let password = document.getElementById("doctorPassword");
+    let icon = document.getElementById("togglePassword");
 
     if (password.type === "password") {
 
         password.type = "text";
 
         icon.classList.remove("fa-eye");
-
         icon.classList.add("fa-eye-slash");
 
     } else {
@@ -425,36 +487,27 @@ function togglePassword() {
         password.type = "password";
 
         icon.classList.remove("fa-eye-slash");
-
         icon.classList.add("fa-eye");
 
     }
 
 }
 
-
 // ==========================
 // Close Modal on Outside Click
 // ==========================
 
-window.onclick = function(event) {
+window.onclick = function (event) {
 
-    let doctorModal =
-    document.getElementById("doctorModal");
-
-    let deleteModal =
-    document.getElementById("deleteModal");
+    let doctorModal = document.getElementById("doctorModal");
+    let deleteModal = document.getElementById("deleteModal");
 
     if (event.target === doctorModal) {
-
         closeDoctorModal();
-
     }
 
     if (event.target === deleteModal) {
-
         closeDeleteModal();
-
     }
 
 };
