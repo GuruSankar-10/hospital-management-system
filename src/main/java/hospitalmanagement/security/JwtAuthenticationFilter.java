@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 

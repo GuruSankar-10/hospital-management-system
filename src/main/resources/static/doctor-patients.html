@@ -8,10 +8,10 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>My Patients</title>
+<title>Doctor Patients</title>
 
 <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 <link rel="stylesheet" href="css/theme.css">
 <link rel="stylesheet" href="css/doctor.css">
@@ -24,65 +24,42 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
 <div class="sidebar">
 
-<div class="logo">
-
-<h2>👨‍⚕️ HMS</h2>
-
-<p>Doctor Panel</p>
-
-</div>
-
-<nav>
+<h2>🏥 HMS</h2>
 
 <a href="doctor-dashboard.html">
-
 <i class="fas fa-house"></i>
-
-<span>Dashboard</span>
-
+Dashboard
 </a>
 
 <a href="doctor-patients.html" class="active">
-
 <i class="fas fa-bed"></i>
-
-<span>My Patients</span>
-
+My Patients
 </a>
 
 <a href="doctor-appointments.html">
-
 <i class="fas fa-calendar-check"></i>
-
-<span>Appointments</span>
-
+Appointments
 </a>
 
 <a href="doctor-prescriptions.html">
-
 <i class="fas fa-file-prescription"></i>
+Prescriptions
+</a>
 
-<span>Prescriptions</span>
-
+<a href="doctor-medical-records.html">
+<i class="fas fa-notes-medical"></i>
+Medical Records
 </a>
 
 <a href="doctor-profile.html">
-
 <i class="fas fa-user-doctor"></i>
-
-<span>Profile</span>
-
+Profile
 </a>
 
 <a href="#" onclick="logout()">
-
 <i class="fas fa-right-from-bracket"></i>
-
-<span>Logout</span>
-
+Logout
 </a>
-
-</nav>
 
 </div>
 
@@ -94,148 +71,76 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
 <div>
 
-<h1>
+<h2>My Patients</h2>
 
-My Patients
-
-</h1>
-
-<p>
-
-View and manage assigned patients
-
-</p>
-
-</div>
-
-<div class="top-right">
-
-<div class="search-box">
-
-<i class="fas fa-search"></i>
-
-<input
-type="text"
-id="searchPatient"
-placeholder="Search Patient">
+<p>Manage your assigned patients</p>
 
 </div>
 
 <div class="profile">
 
-<i class="fas fa-user-circle"></i>
+<i class="fas fa-user-doctor"></i>
 
-<span id="doctorName">
-
-Doctor
-
-</span>
+<span id="doctorName"></span>
 
 </div>
 
 </div>
 
+<!-- Search -->
+
+<div class="search-box">
+
+<input
+type="text"
+id="searchPatient"
+placeholder="Search patient by name, disease or phone">
+
 </div>
 
-<!-- ================= Cards ================= -->
+<!-- Statistics -->
 
 <div class="cards">
 
 <div class="card">
 
-<div>
+<h2 id="patientCount">0</h2>
 
-<h2 id="patientCount">
-
-0
-
-</h2>
-
-<p>
-
-Total Patients
-
-</p>
-
-</div>
-
-<i class="fas fa-bed"></i>
+<p>Total Patients</p>
 
 </div>
 
 <div class="card">
 
-<div>
+<h2 id="feverCount">0</h2>
 
-<h2 id="feverCount">
-
-0
-
-</h2>
-
-<p>
-
-Fever Cases
-
-</p>
-
-</div>
-
-<i class="fas fa-temperature-high"></i>
+<p>Fever</p>
 
 </div>
 
 <div class="card">
 
-<div>
+<h2 id="otherCount">0</h2>
 
-<h2 id="otherCount">
-
-0
-
-</h2>
-
-<p>
-
-Other Diseases
-
-</p>
-
-</div>
-
-<i class="fas fa-notes-medical"></i>
+<p>Other Diseases</p>
 
 </div>
 
 <div class="card">
 
-<div>
+<h2 id="todayCount">0</h2>
 
-<h2 id="todayCount">
-
-0
-
-</h2>
-
-<p>
-
-Today's Patients
-
-</p>
-
-</div>
-
-<i class="fas fa-calendar-day"></i>
+<p>Today's Patients</p>
 
 </div>
 
 </div>
 
-<!-- ================= Patients Table ================= -->
+<!-- Table -->
 
-<div class="recent-card">
+<div class="table-card">
 
-<h2>
+<h2 style="margin-bottom:20px;">
 
 <i class="fas fa-bed"></i>
 
@@ -259,7 +164,15 @@ Patient List
 
 <th>Phone</th>
 
-<th>Action</th>
+<th>View</th>
+
+<th>Medical Record</th>
+
+<th>Prescription</th>
+
+<th>Edit</th>
+
+<th>Delete</th>
 
 </tr>
 
@@ -267,88 +180,48 @@ Patient List
 
 <tbody id="patientTable">
 
-<!-- Loaded by doctor-patients.js -->
-
 </tbody>
+
 </table>
 
 </div>
 
-<!-- ===========================
-      Patient Details Modal
-=========================== -->
+</div>
 
-<div id="patientModal" class="modal">
+<!-- ================= Modal ================= -->
+
+<div id="patientModal"
+class="modal"
+style="display:none;">
 
 <div class="modal-content">
 
-<h2>
-
-Patient Details
-
-</h2>
+<h2>Patient Details</h2>
 
 <br>
 
-<p>
-
-<strong>Name :</strong>
-
-<span id="detailName"></span>
-
-</p>
+<p><b>Name :</b> <span id="detailName"></span></p>
 
 <br>
 
-<p>
-
-<strong>Age :</strong>
-
-<span id="detailAge"></span>
-
-</p>
+<p><b>Age :</b> <span id="detailAge"></span></p>
 
 <br>
 
-<p>
-
-<strong>Disease :</strong>
-
-<span id="detailDisease"></span>
-
-</p>
+<p><b>Disease :</b> <span id="detailDisease"></span></p>
 
 <br>
 
-<p>
-
-<strong>Phone :</strong>
-
-<span id="detailPhone"></span>
-
-</p>
+<p><b>Phone :</b> <span id="detailPhone"></span></p>
 
 <br>
 
-<p>
-
-<strong>Assigned Staff :</strong>
-
-<span id="detailStaff"></span>
-
-</p>
+<p><b>Assigned Staff :</b> <span id="detailStaff"></span></p>
 
 <br>
-
-<div
-style="
-display:flex;
-justify-content:flex-end;
-gap:15px;
-margin-top:20px;">
 
 <button
-class="btn"
+class="view-btn"
 onclick="closePatientModal()">
 
 Close
@@ -359,79 +232,10 @@ Close
 
 </div>
 
-</div>
-
-<!-- ===========================
-      Quick Actions
-=========================== -->
-
-<div class="quick-actions">
-
-<h2>
-
-Quick Actions
-
-</h2>
-
-<div class="action-buttons">
-
-<button
-onclick="location.href='doctor-prescriptions.html'">
-
-<i class="fas fa-file-prescription"></i>
-
-Prescriptions
-
-</button>
-
-<button
-onclick="location.href='doctor-appointments.html'">
-
-<i class="fas fa-calendar-check"></i>
-
-Appointments
-
-</button>
-
-<button
-onclick="location.href='doctor-dashboard.html'">
-
-<i class="fas fa-chart-line"></i>
-
-Dashboard
-
-</button>
-
-</div>
-
-</div>
-
-<!-- ===========================
-          Footer
-=========================== -->
-
-<footer class="footer">
-
-<p>
-
-© 2026 Hospital Management System | Doctor Portal
-
-</p>
-
-</footer>
-
-</div>
-
 <script>
 
-const doctorName = localStorage.getItem("name");
-
-if(doctorName){
-
-    document.getElementById("doctorName").innerHTML =
-    doctorName;
-
-}
+document.getElementById("doctorName").innerHTML =
+localStorage.getItem("name") || "Doctor";
 
 </script>
 

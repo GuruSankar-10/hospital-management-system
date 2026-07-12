@@ -3,7 +3,17 @@
 // Authentication
 // ==========================================
 
-const API_URL = "http://localhost:8080/auth";
+// Local Spring Boot Backend
+// ==========================================
+// API URL
+// ==========================================
+const isLocal =
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1";
+
+const API_URL = isLocal
+    ? "http://localhost:8080/auth"
+    : "https://hospital-management-system-6pok.onrender.com/auth";
 
 // ==========================================
 // Login
@@ -13,46 +23,49 @@ function login() {
 
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
+    const loginButton = document.querySelector("button");
 
     if (email === "" || password === "") {
-
         alert("Please enter email and password.");
-
         return;
-
     }
 
-    const loginData = {
+    showLoading(loginButton);
 
+    const loginData = {
         email: email,
         password: password
-
     };
 
     fetch(API_URL + "/login", {
-
         method: "POST",
-
         headers: {
-
             "Content-Type": "application/json"
-
         },
-
         body: JSON.stringify(loginData)
-
     })
 
-    .then(response => {
+    .then(async response => {
 
         if (!response.ok) {
 
-            throw new Error("Invalid Email or Password");
+            hideLoading(loginButton);
 
+            let message = "Invalid email or password.";
+
+            try {
+                const error = await response.json();
+                if (error.message) {
+                    message = error.message;
+                }
+            } catch (e) {
+                console.log(e);
+            }
+
+            throw new Error(message);
         }
 
         return response.json();
-
     })
 
     .then(data => {
@@ -62,11 +75,11 @@ function login() {
         localStorage.setItem("name", data.fullName);
         localStorage.setItem("email", data.email);
 
-        if (data.doctorId != null) {
-
+        if (data.doctorId !== null && data.doctorId !== undefined) {
             localStorage.setItem("doctorId", data.doctorId);
-
         }
+
+        rememberUser();
 
         alert("Welcome " + data.fullName);
 
@@ -74,25 +87,114 @@ function login() {
 
             window.location.href = "admin-dashboard.html";
 
-        }
-
-        else if (data.role === "DOCTOR") {
+        } else if (data.role === "DOCTOR") {
 
             window.location.href = "doctor-dashboard.html";
 
-        }
-
-        else if (data.role === "STAFF") {
+        } else if (data.role === "STAFF") {
 
             window.location.href = "staff-dashboard.html";
 
-        }
-
-        else {
+        } else {
 
             alert("Unknown Role");
 
         }
+
+    })
+
+    .catch(error => {
+
+        hideLoading(loginButton);
+        alert(error.message);
+
+    });
+
+}
+
+// ==========================================
+// Forgot Password
+// ==========================================
+
+function openForgotPassword() {
+
+    document.getElementById("forgotModal").style.display = "block";
+
+}
+
+function closeForgotPassword() {
+
+    document.getElementById("forgotModal").style.display = "none";
+
+    document.getElementById("resetEmail").value = "";
+    document.getElementById("newPassword").value = "";
+    document.getElementById("confirmPassword").value = "";
+
+}
+
+function resetPassword() {
+
+    const email = document.getElementById("resetEmail").value.trim();
+    const newPassword = document.getElementById("newPassword").value.trim();
+    const confirmPassword = document.getElementById("confirmPassword").value.trim();
+
+    if (email === "" || newPassword === "" || confirmPassword === "") {
+
+        alert("Please fill all fields.");
+        return;
+
+    }
+
+    if (newPassword !== confirmPassword) {
+
+        alert("Passwords do not match.");
+        return;
+
+    }
+
+    fetch(API_URL + "/forgot-password", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+            email: email,
+            newPassword: newPassword
+        })
+
+    })
+
+    .then(async response => {
+
+        if (!response.ok) {
+
+            let message = "Unable to reset password.";
+
+            try {
+
+                const error = await response.json();
+
+                if (error.message) {
+                    message = error.message;
+                }
+
+            } catch (e) {}
+
+            throw new Error(message);
+
+        }
+
+        return response.text();
+
+    })
+
+    .then(message => {
+
+        alert(message);
+        closeForgotPassword();
 
     })
 
@@ -104,109 +206,6 @@ function login() {
 
 }
 
-// ==========================================
-// Open Forgot Password
-// ==========================================
-
-function openForgotPassword() {
-
-    document.getElementById("forgotModal").style.display = "block";
-
-}
-
-// ==========================================
-// Close Forgot Password
-// ==========================================
-
-function closeForgotPassword() {
-
-    document.getElementById("forgotModal").style.display = "none";
-
-    document.getElementById("resetEmail").value = "";
-
-    document.getElementById("newPassword").value = "";
-
-    document.getElementById("confirmPassword").value = "";
-
-}
-
-// ==========================================
-// Reset Password
-// ==========================================
-
-function resetPassword() {
-
-    const email = document.getElementById("resetEmail").value.trim();
-
-    const newPassword = document.getElementById("newPassword").value.trim();
-
-    const confirmPassword = document.getElementById("confirmPassword").value.trim();
-
-    if (email === "" || newPassword === "" || confirmPassword === "") {
-
-        alert("Please fill all fields.");
-
-        return;
-
-    }
-
-    if (newPassword !== confirmPassword) {
-
-        alert("Passwords do not match.");
-
-        return;
-
-    }
-
-    const request = {
-
-        email: email,
-
-        newPassword: newPassword
-
-    };
-
-    fetch(API_URL + "/forgot-password", {
-
-        method: "POST",
-
-        headers: {
-
-            "Content-Type": "application/json"
-
-        },
-
-        body: JSON.stringify(request)
-
-    })
-
-    .then(response => {
-
-        if (!response.ok) {
-
-            throw new Error("Unable to reset password.");
-
-        }
-
-        return response.text();
-
-    })
-
-    .then(message => {
-
-        alert("✅ " + message);
-
-        closeForgotPassword();
-
-    })
-
-    .catch(error => {
-
-        alert("❌ " + error.message);
-
-    });
-
-}
 // ==========================================
 // Show / Hide Password
 // ==========================================
@@ -235,12 +234,51 @@ function togglePassword(inputId, iconId) {
 }
 
 // ==========================================
-// Press Enter to Login
+// Logout
 // ==========================================
 
-document.addEventListener("keydown", function(event){
+function logout() {
 
-    if(event.key === "Enter"){
+    localStorage.clear();
+    window.location.href = "login.html";
+
+}
+
+// ==========================================
+// Remember Email
+// ==========================================
+
+function rememberUser() {
+
+    const email = document.getElementById("email").value.trim();
+
+    if (email !== "") {
+
+        localStorage.setItem("rememberEmail", email);
+
+    }
+
+}
+
+window.addEventListener("DOMContentLoaded", function () {
+
+    const savedEmail = localStorage.getItem("rememberEmail");
+
+    if (savedEmail && document.getElementById("email")) {
+
+        document.getElementById("email").value = savedEmail;
+
+    }
+
+});
+
+// ==========================================
+// Enter Key Login
+// ==========================================
+
+document.addEventListener("keydown", function (event) {
+
+    if (event.key === "Enter") {
 
         login();
 
@@ -249,15 +287,14 @@ document.addEventListener("keydown", function(event){
 });
 
 // ==========================================
-// Close Forgot Password Popup
-// When Clicking Outside
+// Close Forgot Password Modal
 // ==========================================
 
-window.onclick = function(event){
+window.onclick = function (event) {
 
     const modal = document.getElementById("forgotModal");
 
-    if(event.target === modal){
+    if (event.target === modal) {
 
         closeForgotPassword();
 
@@ -266,89 +303,39 @@ window.onclick = function(event){
 };
 
 // ==========================================
-// Logout
+// Button Loading
 // ==========================================
 
-function logout(){
+function showLoading(button) {
 
-    localStorage.clear();
-
-    window.location.href="login.html";
-
-}
-
-// ==========================================
-// Remember Email
-// ==========================================
-
-window.addEventListener("DOMContentLoaded",function(){
-
-    const savedEmail = localStorage.getItem("rememberEmail");
-
-    if(savedEmail){
-
-        const emailBox = document.getElementById("email");
-
-        if(emailBox){
-
-            emailBox.value = savedEmail;
-
-        }
-
-    }
-
-});
-
-// ==========================================
-// Save Remember Email
-// ==========================================
-
-function rememberUser(){
-
-    const email = document.getElementById("email").value.trim();
-
-    if(email !== ""){
-
-        localStorage.setItem("rememberEmail",email);
-
-    }
-
-}
-
-// ==========================================
-// Auto Focus Email
-// ==========================================
-
-window.addEventListener("load",function(){
-
-    const emailBox = document.getElementById("email");
-
-    if(emailBox){
-
-        emailBox.focus();
-
-    }
-
-});
-
-// ==========================================
-// Login Button Loading
-// ==========================================
-
-function showLoading(button){
-
-    if(!button) return;
+    if (!button) return;
 
     button.disabled = true;
     button.innerHTML = "Signing In...";
 
 }
 
-function hideLoading(button){
+function hideLoading(button) {
 
-    if(!button) return;
+    if (!button) return;
 
     button.disabled = false;
     button.innerHTML = "Login Securely";
 
 }
+
+// ==========================================
+// Auto Focus
+// ==========================================
+
+window.onload = function () {
+
+    const email = document.getElementById("email");
+
+    if (email) {
+
+        email.focus();
+
+    }
+
+};

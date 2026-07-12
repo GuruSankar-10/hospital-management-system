@@ -75,62 +75,48 @@ public class SecurityConfig {
         .csrf(csrf -> csrf.disable())
 
 
+        .cors(cors -> {})
+
+
         .sessionManagement(session ->
                 session.sessionCreationPolicy(
                         SessionCreationPolicy.STATELESS
-                ))
+                )
+        )
 
 
         .userDetailsService(userDetailsService)
 
 
-
         .authorizeHttpRequests(auth -> auth
 
 
-
-                // =========================
-                // Public HTML Pages
-                // =========================
-
+                // Public Pages
                 .requestMatchers(
 
                         "/",
                         "/index.html",
                         "/login.html",
 
-
-                        // Admin
-
                         "/admin-dashboard.html",
                         "/admin-doctors.html",
                         "/admin-staff.html",
-
-
-                        // Doctor
 
                         "/doctor-dashboard.html",
                         "/doctor-patients.html",
                         "/doctor-appointments.html",
                         "/doctor-prescriptions.html",
 
-
-                        // Staff
-
                         "/staff-dashboard.html",
                         "/staff-patients.html",
                         "/staff-appointments.html",
                         "/staff-profile.html"
 
-
                 ).permitAll()
 
 
 
-                // =========================
-                // Static Files
-                // =========================
-
+                // Static files
                 .requestMatchers(
 
                         "/css/**",
@@ -142,19 +128,13 @@ public class SecurityConfig {
 
 
 
-                // =========================
-                // Login/Register
-                // =========================
-
+                // Authentication
                 .requestMatchers("/auth/**")
                 .permitAll()
 
 
 
-                // =========================
-                // REST APIs
-                // =========================
-
+                // APIs
                 .requestMatchers("/staff/**")
                 .permitAll()
 
@@ -175,18 +155,16 @@ public class SecurityConfig {
                 .permitAll()
 
 
+                .requestMatchers("/dashboard/**")
+                .permitAll()
 
-                // =========================
-                // Anything else
-                // =========================
+
 
                 .anyRequest()
                 .permitAll()
 
 
-
         )
-
 
 
         .addFilterBefore(
@@ -195,9 +173,7 @@ public class SecurityConfig {
         );
 
 
-
         return http.build();
 
     }
-
 }

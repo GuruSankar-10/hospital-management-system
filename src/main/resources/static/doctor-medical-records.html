@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Medical Records</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/doctor.css">
+<link rel="stylesheet" href="css/medical-records.css">
+
+</head>
+
+<body>
+
+<!-- Sidebar -->
+
+<div class="sidebar">
+
+    <h2>🏥 HMS</h2>
+
+    <a href="doctor-dashboard.html">
+        <i class="fa-solid fa-house"></i>
+        Dashboard
+    </a>
+
+    <a href="doctor-patients.html">
+        <i class="fa-solid fa-user-injured"></i>
+        Patients
+    </a>
+
+    <a href="doctor-appointments.html">
+        <i class="fa-solid fa-calendar-check"></i>
+        Appointments
+    </a>
+
+    <a href="doctor-prescriptions.html">
+        <i class="fa-solid fa-file-prescription"></i>
+        Prescriptions
+    </a>
+
+    <a href="doctor-medical-records.html" class="active">
+        <i class="fa-solid fa-notes-medical"></i>
+        Medical Records
+    </a>
+
+    <a href="doctor-profile.html">
+        <i class="fa-solid fa-user-doctor"></i>
+        Profile
+    </a>
+
+    <a href="#" onclick="logout()">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        Logout
+    </a>
+
+</div>
+
+<!-- Main -->
+
+<div class="main">
+
+<div class="topbar">
+
+<h2>
+<i class="fa-solid fa-notes-medical"></i>
+Medical Records
+</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Add Medical Record</h3>
+
+<div class="row">
+
+<input
+type="number"
+id="patientId"
+placeholder="Patient ID">
+
+<input
+type="text"
+id="diagnosis"
+placeholder="Diagnosis">
+
+</div>
+
+<div class="row">
+
+<input
+type="text"
+id="symptoms"
+placeholder="Symptoms">
+
+<input
+type="text"
+id="treatment"
+placeholder="Treatment">
+
+</div>
+
+<textarea
+id="notes"
+placeholder="Notes"></textarea>
+
+<button
+onclick="saveMedicalRecord()">
+
+<i class="fa-solid fa-floppy-disk"></i>
+
+Save Record
+
+</button>
+
+</div>
+
+<div class="card">
+
+<h3>Medical Records</h3>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+
+<th>Patient</th>
+
+<th>Diagnosis</th>
+
+<th>Symptoms</th>
+
+<th>Treatment</th>
+
+<th>Visit Date</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="recordsTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<script src="js/auth.js"></script>
+<script src="js/medical-records.js"></script>
+
+</body>
+
+</html>

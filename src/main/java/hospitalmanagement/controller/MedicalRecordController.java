@@ -1,97 +1,112 @@
 package hospitalmanagement.controller;
 
-
 import hospitalmanagement.entity.MedicalRecord;
 import hospitalmanagement.service.MedicalRecordService;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 
 import java.util.List;
 
-
-
 @RestController
-@RequestMapping("/records")
+@RequestMapping("/medical-records")
 @CrossOrigin(origins = "*")
 public class MedicalRecordController {
-
-
 
     @Autowired
     private MedicalRecordService medicalRecordService;
 
-
-
-    // Add Record
+    // =====================================
+    // Add Medical Record
+    // =====================================
 
     @PostMapping
-    public MedicalRecord addRecord(
-            @RequestBody MedicalRecord record){
+    public ResponseEntity<MedicalRecord> addMedicalRecord(
+            @RequestBody MedicalRecord medicalRecord) {
 
-        return medicalRecordService.saveRecord(record);
+        return ResponseEntity.ok(
+                medicalRecordService.saveMedicalRecord(medicalRecord));
 
     }
 
-
-
-
-    // Get All Records
+    // =====================================
+    // Get All Medical Records
+    // =====================================
 
     @GetMapping
-    public List<MedicalRecord> getAllRecords(){
+    public ResponseEntity<List<MedicalRecord>> getAllMedicalRecords() {
 
-        return medicalRecordService.getAllRecords();
+        return ResponseEntity.ok(
+                medicalRecordService.getAllMedicalRecords());
 
     }
 
-
-
-
-    // Get Record By ID
+    // =====================================
+    // Get Medical Record By ID
+    // =====================================
 
     @GetMapping("/{id}")
-    public MedicalRecord getRecord(
-            @PathVariable Long id){
+    public ResponseEntity<MedicalRecord> getMedicalRecord(
+            @PathVariable Long id) {
 
-        return medicalRecordService.getRecordById(id);
+        return ResponseEntity.ok(
+                medicalRecordService.getMedicalRecordById(id));
 
     }
 
+    // =====================================
+    // Get Records By Patient
+    // =====================================
 
+    @GetMapping("/patient/{patientId}")
+    public ResponseEntity<List<MedicalRecord>> getPatientRecords(
+            @PathVariable Long patientId) {
 
+        return ResponseEntity.ok(
+                medicalRecordService.getPatientRecords(patientId));
 
+    }
 
-    // Update Record
+    // =====================================
+    // Get Records By Doctor
+    // =====================================
+
+    @GetMapping("/doctor/{doctorId}")
+    public ResponseEntity<List<MedicalRecord>> getDoctorRecords(
+            @PathVariable Long doctorId) {
+
+        return ResponseEntity.ok(
+                medicalRecordService.getDoctorRecords(doctorId));
+
+    }
+
+    // =====================================
+    // Update Medical Record
+    // =====================================
 
     @PutMapping("/{id}")
-    public MedicalRecord updateRecord(
+    public ResponseEntity<MedicalRecord> updateMedicalRecord(
             @PathVariable Long id,
-            @RequestBody MedicalRecord record){
+            @RequestBody MedicalRecord medicalRecord) {
 
-        return medicalRecordService.updateRecord(id, record);
+        return ResponseEntity.ok(
+                medicalRecordService.updateMedicalRecord(id, medicalRecord));
 
     }
 
-
-
-
-
-    // Delete Record
+    // =====================================
+    // Delete Medical Record
+    // =====================================
 
     @DeleteMapping("/{id}")
-    public String deleteRecord(
-            @PathVariable Long id){
+    public ResponseEntity<String> deleteMedicalRecord(
+            @PathVariable Long id) {
 
+        medicalRecordService.deleteMedicalRecord(id);
 
-        medicalRecordService.deleteRecord(id);
-
-
-        return "Medical Record Deleted Successfully";
+        return ResponseEntity.ok("Medical Record Deleted Successfully");
 
     }
-
 
 }

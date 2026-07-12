@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -32,11 +33,17 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private DoctorRepository doctorRepository;
 
+    // ==========================
+    // Register
+    // ==========================
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
 
@@ -44,6 +51,10 @@ public class AuthController {
 
         return ResponseEntity.ok(user);
     }
+
+    // ==========================
+    // Forgot Password
+    // ==========================
     @PostMapping("/forgot-password")
     public ResponseEntity<?> forgotPassword(@RequestBody ResetPasswordRequest request) {
 
@@ -52,16 +63,33 @@ public class AuthController {
         return ResponseEntity.ok(message);
     }
 
+    // ==========================
+    // Login
+    // ==========================
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+
+        System.out.println("==================================");
+        System.out.println("LOGIN REQUEST");
+        System.out.println("Email : " + request.getEmail());
+        System.out.println("Password : " + request.getPassword());
+
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("User Not Found"));
+
+        System.out.println("DB Password : " + user.getPassword());
+
+        boolean matches = passwordEncoder.matches(
+                request.getPassword(),
+                user.getPassword());
+
+        System.out.println("Password Matches : " + matches);
+        System.out.println("==================================");
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
                         request.getPassword()));
-
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("User Not Found"));
 
         String token = jwtService.generateToken(user.getEmail());
 
@@ -70,7 +98,8 @@ public class AuthController {
         if (user.getRole().name().equals("DOCTOR")) {
 
             Doctor doctor = doctorRepository.findByEmail(user.getEmail())
-                    .orElseThrow(() -> new RuntimeException("Doctor record not found. Please create doctor details."));
+                    .orElseThrow(() -> new RuntimeException(
+                            "Doctor record not found. Please create doctor details."));
 
             doctorId = doctor.getId();
         }

@@ -24,20 +24,34 @@ public class Doctor {
 
     private String phone;
 
-    // One Doctor -> Many Patients
+    // ===== New Profile Fields =====
+
+    private String department;
+
+    private String qualification;
+
+    private Integer experience;
+
+    @Column(length = 1000)
+    private String about;
+
+    private String profileImage;
+
+    // ================= Relationships =================
+
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Patient> patients;
 
-    // One Doctor -> Many Appointments
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Appointment> appointments;
 
-    // One Doctor -> Many Prescriptions
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Prescription> prescriptions;
+
+    // ================= Constructors =================
 
     public Doctor() {
     }
@@ -46,13 +60,23 @@ public class Doctor {
                   String name,
                   String email,
                   String specialization,
-                  String phone) {
+                  String phone,
+                  String department,
+                  String qualification,
+                  Integer experience,
+                  String about,
+                  String profileImage) {
 
         this.id = id;
         this.name = name;
         this.email = email;
         this.specialization = specialization;
         this.phone = phone;
+        this.department = department;
+        this.qualification = qualification;
+        this.experience = experience;
+        this.about = about;
+        this.profileImage = profileImage;
     }
 
     // ================= Getters & Setters =================
@@ -97,6 +121,46 @@ public class Doctor {
         this.phone = phone;
     }
 
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getQualification() {
+        return qualification;
+    }
+
+    public void setQualification(String qualification) {
+        this.qualification = qualification;
+    }
+
+    public Integer getExperience() {
+        return experience;
+    }
+
+    public void setExperience(Integer experience) {
+        this.experience = experience;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
+
     public List<Patient> getPatients() {
         return patients;
     }
@@ -129,6 +193,11 @@ public class Doctor {
                 ", email='" + email + '\'' +
                 ", specialization='" + specialization + '\'' +
                 ", phone='" + phone + '\'' +
+                ", department='" + department + '\'' +
+                ", qualification='" + qualification + '\'' +
+                ", experience=" + experience +
+                ", about='" + about + '\'' +
+                ", profileImage='" + profileImage + '\'' +
                 '}';
     }
 }
