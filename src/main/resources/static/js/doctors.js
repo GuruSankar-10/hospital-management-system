@@ -1,176 +1,71 @@
-// =====================================
-// Doctor Management
-// =====================================
+const doctorId = localStorage.getItem("doctorId");
 
-let allDoctors = [];
+const PATIENT_API =
+"http://localhost:8080/patients/doctor/" + doctorId;
+
+const APPOINTMENT_API =
+"http://localhost:8080/appointments/doctor/" + doctorId;
 
 // ===============================
-// Add Doctor
+// Page Load
 // ===============================
-function addDoctor() {
 
-    const name = document.getElementById("name").value.trim();
-    const specialization = document.getElementById("specialization").value.trim();
-    const phone = document.getElementById("phone").value.trim();
+window.onload = function(){
 
-    if (name === "" || specialization === "" || phone === "") {
+    loadPatients();
 
-        alert("Please fill all fields.");
-        return;
+    loadAppointments();
+
+};
+
+// ===============================
+// Load Patients
+// ===============================
+
+async function loadPatients(){
+
+    try{
+
+        const response =
+        await fetch(PATIENT_API);
+
+        const patients =
+        await response.json();
+
+        document.getElementById("patientCount").innerHTML =
+        patients.length;
+
+        showRecentPatients(patients);
 
     }
 
-    const doctor = {
-
-        name: name,
-        specialization: specialization,
-        phone: phone
-
-    };
-
-    fetch("/doctors", {
-
-        method: "POST",
-
-        headers: {
-
-            "Content-Type": "application/json"
-
-        },
-
-        body: JSON.stringify(doctor)
-
-    })
-
-    .then(response => {
-
-        if (!response.ok) {
-
-            throw new Error("Unable to add doctor.");
-
-        }
-
-        return response.json();
-
-    })
-
-    .then(data => {
-
-        alert("✅ Doctor Added Successfully");
-
-        clearDoctorForm();
-
-        loadDoctors();
-
-    })
-
-    .catch(error => {
+    catch(error){
 
         console.error(error);
 
-        alert("❌ Failed to add doctor.");
-
-    });
+    }
 
 }
 
 // ===============================
-// Load Doctors
+// Recent Patients
 // ===============================
-function loadDoctors() {
 
-    fetch("/doctors")
+function showRecentPatients(patients){
 
-    .then(response => {
+    let rows = "";
 
-        if (!response.ok) {
+    patients.slice(0,5).forEach(patient=>{
 
-            throw new Error("Unable to load doctors.");
-
-        }
-
-        return response.json();
-
-    })
-
-    .then(data => {
-
-        allDoctors = data;
-
-        renderDoctors(allDoctors);
-
-    })
-
-    .catch(error => {
-
-        console.error(error);
-
-        alert("❌ Failed to load doctors.");
-
-    });
-
-}
-// ===============================
-// Render Doctors Table
-// ===============================
-function renderDoctors(doctors) {
-
-    const table = document.getElementById("doctorTable");
-
-    table.innerHTML = "";
-
-    if (doctors.length === 0) {
-
-        table.innerHTML = `
-            <tr>
-                <td colspan="5">
-                    No Doctors Found
-                </td>
-            </tr>
-        `;
-
-        return;
-
-    }
-
-    doctors.forEach(doctor => {
-
-        table.innerHTML += `
+        rows += `
 
         <tr>
 
-            <td>${doctor.id}</td>
+        <td>${patient.name}</td>
 
-            <td>${doctor.name}</td>
+        <td>${patient.age}</td>
 
-            <td>${doctor.specialization}</td>
-
-            <td>${doctor.phone}</td>
-
-            <td>
-
-                <button
-                    class="edit-btn"
-                    onclick="editDoctor(
-                        ${doctor.id},
-                        '${doctor.name}',
-                        '${doctor.specialization}',
-                        '${doctor.phone}'
-                    )">
-
-                    ✏️ Edit
-
-                </button>
-
-                <button
-                    class="delete-btn"
-                    onclick="deleteDoctor(${doctor.id})">
-
-                    🗑 Delete
-
-                </button>
-
-            </td>
+        <td>${patient.disease}</td>
 
         </tr>
 
@@ -178,210 +73,119 @@ function renderDoctors(doctors) {
 
     });
 
+    document.getElementById("recentPatients").innerHTML =
+    rows;
+
 }
 
 // ===============================
-// Delete Doctor
+// Load Appointments
 // ===============================
-function deleteDoctor(id) {
 
-    if (!confirm("Are you sure you want to delete this doctor?")) {
+async function loadAppointments(){
 
-        return;
+    try{
+
+        const response =
+        await fetch(APPOINTMENT_API);
+
+        const appointments =
+        await response.json();
+
+        document.getElementById("appointmentCount").innerHTML =
+        appointments.length;
+
+        showAppointments(appointments);
+
+        updateCards(appointments);
 
     }
 
-    fetch("/doctors/" + id, {
-
-        method: "DELETE"
-
-    })
-
-    .then(response => {
-
-        if (!response.ok) {
-
-            throw new Error("Delete failed.");
-
-        }
-
-        return response.text();
-
-    })
-
-    .then(message => {
-
-        alert("✅ " + message);
-
-        loadDoctors();
-
-    })
-
-    .catch(error => {
+    catch(error){
 
         console.error(error);
 
-        alert("❌ Failed to delete doctor.");
+    }
+
+}
+
+// ===============================
+// Today's Appointments
+// ===============================
+
+function showAppointments(appointments){
+
+    let rows = "";
+
+    appointments.forEach(a=>{
+
+        rows += `
+
+        <tr>
+
+        <td>${a.patient ? a.patient.name : "-"}</td>
+
+        <td>${a.appointmentDate}</td>
+
+        <td>${a.appointmentTime}</td>
+
+        <td>${a.status}</td>
+
+        </tr>
+
+        `;
 
     });
 
+    document.getElementById("todayAppointments").innerHTML =
+    rows;
+
 }
 
 // ===============================
-// Edit Doctor
+// Dashboard Cards
 // ===============================
-function editDoctor(id, name, specialization, phone) {
 
-    const newName = prompt("Doctor Name", name);
+function updateCards(appointments){
 
-    if (newName === null) return;
+    let pending=0;
 
-    const newSpecialization = prompt("Specialization", specialization);
+    let completed=0;
 
-    if (newSpecialization === null) return;
+    let confirmed=0;
 
-    const newPhone = prompt("Phone Number", phone);
+    appointments.forEach(a=>{
 
-    if (newPhone === null) return;
+        const status =
+        (a.status || "").toUpperCase();
 
-    const doctor = {
+        if(status==="PENDING")
 
-        name: newName.trim(),
+            pending++;
 
-        specialization: newSpecialization.trim(),
+        else if(status==="COMPLETED")
 
-        phone: newPhone.trim()
+            completed++;
 
-    };
+        else if(status==="CONFIRMED")
 
-    fetch("/doctors/" + id, {
-
-        method: "PUT",
-
-        headers: {
-
-            "Content-Type": "application/json"
-
-        },
-
-        body: JSON.stringify(doctor)
-
-    })
-
-    .then(response => {
-
-        if (!response.ok) {
-
-            throw new Error("Update failed.");
-
-        }
-
-        return response.json();
-
-    })
-
-    .then(data => {
-
-        alert("✅ Doctor Updated Successfully");
-
-        loadDoctors();
-
-    })
-
-    .catch(error => {
-
-        console.error(error);
-
-        alert("❌ Failed to update doctor.");
+            confirmed++;
 
     });
 
-}
-// ===============================
-// Search Doctors
-// ===============================
-function searchDoctors() {
+    document.getElementById("pendingCount").innerHTML =
+    pending;
 
-    const keyword = document
-        .getElementById("searchBox")
-        .value
-        .toLowerCase()
-        .trim();
+    document.getElementById("completedCount").innerHTML =
+    completed;
 
-    const filteredDoctors = allDoctors.filter(doctor => {
+    document.getElementById("pendingAppointments").innerHTML =
+    pending;
 
-        return (
+    document.getElementById("completedAppointments").innerHTML =
+    completed;
 
-            doctor.name.toLowerCase().includes(keyword) ||
-
-            doctor.specialization.toLowerCase().includes(keyword) ||
-
-            doctor.phone.toLowerCase().includes(keyword) ||
-
-            doctor.id.toString().includes(keyword)
-
-        );
-
-    });
-
-    renderDoctors(filteredDoctors);
+    document.getElementById("confirmedAppointments").innerHTML =
+    confirmed;
 
 }
-
-// ===============================
-// Clear Doctor Form
-// ===============================
-function clearDoctorForm() {
-
-    document.getElementById("name").value = "";
-    document.getElementById("specialization").value = "";
-    document.getElementById("phone").value = "";
-
-}
-
-// ===============================
-// Refresh Doctors
-// ===============================
-function refreshDoctors() {
-
-    loadDoctors();
-
-}
-
-// ===============================
-// Doctor Count
-// ===============================
-function getDoctorCount() {
-
-    return allDoctors.length;
-
-}
-
-// ===============================
-// Auto Refresh Every 30 Seconds
-// ===============================
-setInterval(function () {
-
-    refreshDoctors();
-
-}, 30000);
-
-// ===============================
-// Page Loaded
-// ===============================
-window.addEventListener("DOMContentLoaded", function () {
-
-    console.log("Doctors Page Loaded Successfully");
-
-    loadDoctors();
-
-});
-
-// ===============================
-// Refresh When Window Gets Focus
-// ===============================
-window.addEventListener("focus", function () {
-
-    refreshDoctors();
-
-});

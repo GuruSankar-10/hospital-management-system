@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Staff Dashboard</title>
+
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+<link rel="stylesheet" href="css/staff.css">
+
+
+</head>
+
+
+<body>
+
+
+<!-- ================= Sidebar ================= -->
+
+<div class="sidebar">
+
+
+<div class="logo">
+
+<h2>🏥 HMS</h2>
+
+<p>Staff Panel</p>
+
+</div>
+
+
+
+<nav>
+
+
+<a href="staff-dashboard.html" class="active">
+
+<i class="fas fa-house"></i>
+
+Dashboard
+
+</a>
+
+
+
+<a href="patients.html">
+
+<i class="fas fa-bed"></i>
+
+Patients
+
+</a>
+
+<a href="staff-profile.html">
+
+<i class="fas fa-user"></i>
+
+Profile
+
+</a>
+
+
+
+<a href="appointments.html">
+
+<i class="fas fa-calendar-check"></i>
+
+Appointments
+
+</a>
+
+
+
+<a href="billing.html">
+
+<i class="fas fa-file-invoice-dollar"></i>
+
+Billing
+
+</a>
+
+
+
+<a href="records.html">
+
+<i class="fas fa-file-medical"></i>
+
+Medical Records
+
+</a>
+
+
+
+<a href="#" onclick="logout()">
+
+<i class="fas fa-right-from-bracket"></i>
+
+Logout
+
+</a>
+
+
+</nav>
+
+
+</div>
+
+
+
+
+
+<!-- ================= Main ================= -->
+
+
+<div class="main">
+
+
+
+<!-- Topbar -->
+
+
+<div class="topbar">
+
+
+<div class="welcome">
+
+
+<h1>
+
+Welcome,
+
+<span id="staffName">
+
+Staff
+
+</span>
+
+👋
+
+</h1>
+
+
+<p id="todayDate"></p>
+
+
+</div>
+
+
+
+<div class="profile">
+
+
+<i class="fas fa-user-nurse"></i>
+
+
+<span>
+
+Staff
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<!-- Banner -->
+
+
+<div class="welcome-banner">
+
+
+<div>
+
+
+<h2>
+
+Staff Dashboard
+
+</h2>
+
+
+<p>
+
+Manage patients, appointments and hospital activities.
+
+</p>
+
+
+</div>
+
+
+
+<i class="fas fa-user-nurse banner-icon"></i>
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- Cards -->
+
+
+<div class="cards">
+
+
+<div class="card">
+
+
+<div>
+
+<p>Total Patients</p>
+
+<h2 id="patientCount">
+
+0
+
+</h2>
+
+</div>
+
+
+<i class="fas fa-bed"></i>
+
+
+</div>
+
+
+
+
+<div class="card">
+
+
+<div>
+
+<p>Appointments</p>
+
+<h2 id="appointmentCount">
+
+0
+
+</h2>
+
+</div>
+
+
+<i class="fas fa-calendar-check"></i>
+
+
+</div>
+
+
+
+
+<div class="card">
+
+
+<div>
+
+<p>Medical Records</p>
+
+<h2>
+
+0
+
+</h2>
+
+</div>
+
+
+<i class="fas fa-file-medical"></i>
+
+
+</div>
+
+
+
+<div class="card">
+
+
+<div>
+
+<p>Department</p>
+
+<h2>
+
+Staff
+
+</h2>
+
+</div>
+
+
+<i class="fas fa-user-nurse"></i>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- Quick Actions -->
+
+
+<div class="quick-actions">
+
+
+<h2>
+
+<i class="fas fa-bolt"></i>
+
+Quick Actions
+
+</h2>
+
+
+
+<div class="action-buttons">
+
+
+
+<button onclick="location.href='patients.html'">
+
+<i class="fas fa-bed"></i>
+
+View Patients
+
+</button>
+
+
+
+
+<button onclick="location.href='appointments.html'">
+
+<i class="fas fa-calendar-check"></i>
+
+Appointments
+
+</button>
+
+
+
+
+<button onclick="location.href='records.html'">
+
+<i class="fas fa-file-medical"></i>
+
+Medical Records
+
+</button>
+
+
+
+
+<button onclick="location.href='billing.html'">
+
+<i class="fas fa-money-bill"></i>
+
+Billing
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<!-- Recent Section -->
+
+
+<div class="dashboard-grid">
+
+
+
+<div class="recent-card">
+
+
+<h2>
+
+<i class="fas fa-bed"></i>
+
+Recent Patients
+
+</h2>
+
+
+
+<table>
+
+
+<thead>
+
+
+<tr>
+
+<th>ID</th>
+
+<th>Name</th>
+
+<th>Age</th>
+
+<th>Disease</th>
+
+
+</tr>
+
+
+</thead>
+
+
+<tbody id="patientTable">
+
+
+</tbody>
+
+
+</table>
+
+
+
+</div>
+
+
+
+
+
+
+<div class="recent-card">
+
+
+<h2>
+
+<i class="fas fa-calendar"></i>
+
+Recent Appointments
+
+</h2>
+
+
+
+<table>
+
+
+<thead>
+
+
+<tr>
+
+<th>ID</th>
+
+<th>Patient</th>
+
+<th>Status</th>
+
+
+</tr>
+
+
+</thead>
+
+
+<tbody id="appointmentTable">
+
+
+</tbody>
+
+
+</table>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<footer class="footer">
+
+
+<p>
+
+© 2026 Hospital Management System | Staff Dashboard
+
+</p>
+
+
+</footer>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<script src="js/logout.js"></script>
+
+
+
+<script>
+
+
+// Protect Page
+
+if(
+!localStorage.getItem("name") ||
+!localStorage.getItem("role")
+){
+
+window.location.href="login.html";
+
+}
+
+
+
+
+// Check Role
+
+if(localStorage.getItem("role") !== "STAFF"){
+
+window.location.href="login.html";
+
+}
+
+
+
+
+// Display Name
+
+
+let name =
+localStorage.getItem("name");
+
+
+document.getElementById("staffName")
+.innerHTML=name;
+
+
+
+
+
+// Date
+
+
+document.getElementById("todayDate")
+.innerHTML=new Date().toDateString();
+
+
+
+
+// Prevent Back
+
+
+history.pushState(null,null,location.href);
+
+
+window.onpopstate=function(){
+
+history.go(1);
+
+}
+
+
+
+</script>
+
+
+
+</body>
+
+</html>

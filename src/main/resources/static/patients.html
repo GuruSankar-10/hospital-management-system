@@ -4,478 +4,403 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Patients Management</title>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<style>
+<title>Patient Management</title>
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,Helvetica,sans-serif;
-}
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-body{
-    display:flex;
-    background:#f4f7fb;
-}
-
-/* Sidebar */
-
-.sidebar{
-
-    width:250px;
-    height:100vh;
-    position:fixed;
-    left:0;
-    top:0;
-
-    background:linear-gradient(180deg,#0f172a,#2563eb);
-
-    color:white;
-
-    padding:25px;
-
-}
-
-.sidebar h2{
-
-    text-align:center;
-    margin-bottom:40px;
-    font-size:30px;
-
-}
-
-.sidebar a{
-
-    display:block;
-
-    color:white;
-
-    text-decoration:none;
-
-    padding:15px;
-
-    margin:12px 0;
-
-    border-radius:12px;
-
-    transition:.3s;
-
-}
-
-.sidebar a:hover{
-
-    background:rgba(255,255,255,.2);
-
-    transform:translateX(5px);
-
-}
-
-/* Main */
-
-.main{
-
-    margin-left:250px;
-
-    width:calc(100% - 250px);
-
-    padding:30px;
-
-}
-
-/* Topbar */
-
-.topbar{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    background:white;
-
-    padding:20px 30px;
-
-    border-radius:20px;
-
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
-
-}
-
-.topbar h1{
-
-    color:#1e293b;
-
-}
-
-#welcomeUser{
-
-    color:#2563eb;
-
-    font-size:22px;
-
-    font-weight:bold;
-
-}
-/* ================= CARD ================= */
-
-.card{
-
-    background:white;
-
-    margin-top:25px;
-
-    padding:30px;
-
-    border-radius:20px;
-
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
-
-}
-
-.card h2{
-
-    color:#1e293b;
-
-    margin-bottom:20px;
-
-}
-
-/* ================= INPUTS ================= */
-
-.input-group{
-
-    display:grid;
-
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-
-    gap:20px;
-
-    margin-bottom:20px;
-
-}
-
-input{
-
-    width:100%;
-
-    padding:14px;
-
-    border:1px solid #ddd;
-
-    border-radius:12px;
-
-    font-size:15px;
-
-}
-
-input:focus{
-
-    outline:none;
-
-    border:2px solid #2563eb;
-
-}
-
-/* ================= BUTTONS ================= */
-
-.add-btn{
-
-    background:#10b981;
-
-    color:white;
-
-    padding:14px 25px;
-
-    border:none;
-
-    border-radius:12px;
-
-    cursor:pointer;
-
-    font-size:16px;
-
-    font-weight:bold;
-
-}
-
-.add-btn:hover{
-
-    background:#059669;
-
-}
-
-.edit-btn{
-
-    background:#f59e0b;
-
-    color:white;
-
-    border:none;
-
-    padding:8px 15px;
-
-    border-radius:8px;
-
-    cursor:pointer;
-
-    margin-right:8px;
-
-}
-
-.delete-btn{
-
-    background:#ef4444;
-
-    color:white;
-
-    border:none;
-
-    padding:8px 15px;
-
-    border-radius:8px;
-
-    cursor:pointer;
-
-}
-
-/* ================= SEARCH ================= */
-
-.search-box{
-
-    width:350px;
-
-    padding:12px;
-
-    border-radius:10px;
-
-    border:1px solid #ccc;
-
-    margin-bottom:20px;
-
-}
-
-/* ================= TABLE ================= */
-
-table{
-
-    width:100%;
-
-    border-collapse:collapse;
-
-}
-
-table th{
-
-    background:#1e293b;
-
-    color:white;
-
-    padding:15px;
-
-}
-
-table td{
-
-    padding:14px;
-
-    border-bottom:1px solid #ddd;
-
-    text-align:center;
-
-}
-
-table tr:hover{
-
-    background:#f8fafc;
-
-}
-
-.footer{
-
-    text-align:center;
-
-    margin-top:30px;
-
-    color:#64748b;
-
-}
-
-</style>
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/admin.css">
 
 </head>
 
 <body>
 
-<!-- ================= SIDEBAR ================= -->
+<!-- ================= Sidebar ================= -->
 
 <div class="sidebar">
 
+<div class="logo">
+
 <h2>🏥 HMS</h2>
 
-<a href="dashboard.html">📊 Dashboard</a>
-
-<a href="doctors.html">👨‍⚕️ Doctors</a>
-
-<a href="patients.html">🧑 Patients</a>
-
-<a href="appointments.html">📅 Appointments</a>
-
-<a href="billing.html">💳 Billing</a>
-
-<a href="prescriptions.html">💊 Prescriptions</a>
-
-<a href="records.html">📁 Records</a>
-
-<a href="#" onclick="logout()">🚪 Logout</a>
+<p>Hospital Management</p>
 
 </div>
 
-<!-- ================= MAIN ================= -->
+<nav>
+
+<a href="admin-dashboard.html">
+<i class="fas fa-house"></i>
+<span>Dashboard</span>
+</a>
+
+<a href="admin-doctors.html">
+<i class="fas fa-user-doctor"></i>
+<span>Doctors</span>
+</a>
+
+<a href="admin-staff.html">
+<i class="fas fa-user-nurse"></i>
+<span>Staff</span>
+</a>
+
+<a href="patients.html" class="active">
+<i class="fas fa-bed"></i>
+<span>Patients</span>
+</a>
+
+<a href="appointments.html">
+<i class="fas fa-calendar-check"></i>
+<span>Appointments</span>
+</a>
+
+<a href="billing.html">
+<i class="fas fa-file-invoice-dollar"></i>
+<span>Billing</span>
+</a>
+
+<a href="#" onclick="logout()">
+<i class="fas fa-right-from-bracket"></i>
+<span>Logout</span>
+</a>
+
+</nav>
+
+</div>
+
+<!-- ================= Main ================= -->
 
 <div class="main">
 
 <div class="topbar">
 
-<h1>🧑 Patients Management</h1>
+<div class="welcome">
 
-<h3 id="welcomeUser"></h3>
+<h1>Patient Management</h1>
+
+<p>Manage Hospital Patients</p>
 
 </div>
-<!-- ================= ADD PATIENT ================= -->
+
+<div class="top-right">
+
+<div class="search-box">
+
+<i class="fas fa-search"></i>
+
+<input
+type="text"
+id="searchPatient"
+placeholder="Search Patient">
+
+</div>
+
+<div class="profile">
+
+<i class="fas fa-user-shield"></i>
+
+<span>Admin</span>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= Statistics ================= -->
+
+<div class="cards">
 
 <div class="card">
 
-    <h2>➕ Add Patient</h2>
+<div>
 
-    <div class="input-group">
+<p>Total Patients</p>
 
-        <input
-            type="text"
-            id="pname"
-            placeholder="Patient Name">
-
-        <input
-            type="number"
-            id="age"
-            placeholder="Age">
-
-        <input
-            type="text"
-            id="disease"
-            placeholder="Disease">
-
-        <input
-            type="text"
-            id="pphone"
-            placeholder="Phone Number">
-
-    </div>
-
-    <button
-        class="add-btn"
-        onclick="addPatient()">
-
-        ➕ Add Patient
-
-    </button>
+<h2 id="patientCount">0</h2>
 
 </div>
 
-<!-- ================= PATIENTS LIST ================= -->
+<i class="fas fa-bed"></i>
+
+</div>
 
 <div class="card">
 
-    <h2>📋 Patients List</h2>
+<div>
 
-    <input
-        type="text"
-        id="searchBox"
-        class="search-box"
-        placeholder="🔍 Search Patient..."
-        onkeyup="searchPatients()">
+<p>Doctors Assigned</p>
 
-    <table>
-
-        <thead>
-
-            <tr>
-
-                <th>ID</th>
-
-                <th>Name</th>
-
-                <th>Age</th>
-
-                <th>Disease</th>
-
-                <th>Phone</th>
-
-                <th>Actions</th>
-
-            </tr>
-
-        </thead>
-
-        <tbody id="patientTable">
-
-        </tbody>
-
-    </table>
+<h2 id="doctorAssigned">0</h2>
 
 </div>
 
-<div class="footer">
+<i class="fas fa-user-doctor"></i>
 
-    <h3>© 2026 Hospital Management System | Patients Module</h3>
+</div>
+
+<div class="card">
+
+<div>
+
+<p>Staff Assigned</p>
+
+<h2 id="staffAssigned">0</h2>
+
+</div>
+
+<i class="fas fa-user-nurse"></i>
+
+</div>
+
+<div class="card">
+
+<div>
+
+<p>Diseases</p>
+
+<h2 id="diseaseCount">0</h2>
+
+</div>
+
+<i class="fas fa-virus"></i>
 
 </div>
 
 </div>
-<!-- ================= JAVASCRIPT FILES ================= -->
 
-<script src="/js/patients.js"></script>
-<script src="/js/logout.js"></script>
+<!-- ================= Toolbar ================= -->
 
-<script>
+<div class="quick-actions">
 
-// ===============================
-// Login Protection
-// ===============================
+<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;">
 
-const name = localStorage.getItem("name");
-const role = localStorage.getItem("role");
+<h2>
 
-if (!name || !role) {
+<i class="fas fa-bed"></i>
 
-    window.location.replace("login.html");
+Patient List
 
-}
+</h2>
 
-// ===============================
-// Welcome User
-// ===============================
+<button
+class="btn"
+onclick="openPatientModal()">
 
-document.getElementById("welcomeUser").innerHTML =
-    "Welcome, " + name + " 👋";
+<i class="fas fa-plus"></i>
 
-// ===============================
-// Prevent Browser Back After Logout
-// ===============================
+Add Patient
 
-history.pushState(null, null, location.href);
+</button>
 
-window.onpopstate = function () {
+</div>
 
-    history.go(1);
+</div>
 
-};
+<!-- ================= Patient Table ================= -->
 
-</script>
+<div class="recent-card">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+
+<th>Name</th>
+
+<th>Age</th>
+
+<th>Disease</th>
+
+<th>Phone</th>
+
+<th>Doctor</th>
+
+<th>Staff</th>
+
+<th>Actions</th>
+
+</tr>
+
+</thead>
+
+<tbody id="patientTable">
+
+<!-- Loaded from patients.js -->
+
+</tbody>
+</table>
+
+</div>
+
+<!-- ===========================
+        Add / Edit Patient Modal
+=========================== -->
+
+<div id="patientModal" class="modal">
+
+<div class="modal-content">
+
+<h2 id="modalTitle">
+
+Add Patient
+
+</h2>
+
+<input
+type="hidden"
+id="patientId">
+
+<label>Patient Name</label>
+
+<input
+type="text"
+id="patientName"
+placeholder="Enter Patient Name">
+
+<label>Age</label>
+
+<input
+type="number"
+id="patientAge"
+placeholder="Enter Age">
+
+<label>Disease</label>
+
+<input
+type="text"
+id="patientDisease"
+placeholder="Enter Disease">
+
+<label>Phone Number</label>
+
+<input
+type="text"
+id="patientPhone"
+placeholder="Enter Phone Number">
+
+<label>Select Doctor</label>
+
+<select id="doctorSelect">
+
+<option value="">Select Doctor</option>
+
+</select>
+
+<label>Select Staff</label>
+
+<select id="staffSelect">
+
+<option value="">Select Staff</option>
+
+</select>
+
+<div style="
+display:flex;
+justify-content:flex-end;
+gap:15px;
+margin-top:25px;">
+
+<button
+class="deleteBtn"
+onclick="closePatientModal()">
+
+Cancel
+
+</button>
+
+<button
+class="btn"
+onclick="savePatient()">
+
+Save
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ===========================
+      Delete Confirmation
+=========================== -->
+
+<div id="deleteModal" class="modal">
+
+<div class="modal-content">
+
+<h2>
+
+Delete Patient
+
+</h2>
+
+<br>
+
+<p>
+
+Are you sure you want to delete this patient?
+
+</p>
+
+<br>
+
+<div style="
+display:flex;
+justify-content:flex-end;
+gap:15px;">
+
+<button
+class="btn"
+onclick="closeDeleteModal()">
+
+Cancel
+
+</button>
+
+<button
+class="deleteBtn"
+onclick="confirmDelete()">
+
+Delete
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ===========================
+          Footer
+=========================== -->
+
+<footer class="footer">
+
+<p>
+
+© 2026 Hospital Management System
+
+</p>
+
+</footer>
+
+</div>
+
+<script src="js/auth.js"></script>
+
+<script src="js/patients.js"></script>
 
 </body>
 

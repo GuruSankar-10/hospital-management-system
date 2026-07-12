@@ -3,6 +3,7 @@ package hospitalmanagement.controller;
 import hospitalmanagement.dto.AuthResponse;
 import hospitalmanagement.dto.LoginRequest;
 import hospitalmanagement.dto.RegisterRequest;
+import hospitalmanagement.dto.ResetPasswordRequest;
 import hospitalmanagement.entity.Doctor;
 import hospitalmanagement.entity.User;
 import hospitalmanagement.repository.DoctorRepository;
@@ -42,6 +43,13 @@ public class AuthController {
         User user = userService.register(request);
 
         return ResponseEntity.ok(user);
+    }
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestBody ResetPasswordRequest request) {
+
+        String message = userService.resetPassword(request);
+
+        return ResponseEntity.ok(message);
     }
 
     @PostMapping("/login")

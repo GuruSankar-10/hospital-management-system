@@ -3,25 +3,25 @@ package hospitalmanagement.dto;
 public class DoctorDashboardDTO {
 
     private String doctorName;
-    private long totalPatients;
-    private long totalAppointments;
-    private long todayAppointments;
-    private long totalPrescriptions;
+    private long patientCount;
+    private long appointmentCount;
+    private long todayAppointmentCount;
+    private long prescriptionCount;
 
     public DoctorDashboardDTO() {
     }
 
     public DoctorDashboardDTO(String doctorName,
-                              long totalPatients,
-                              long totalAppointments,
-                              long todayAppointments,
-                              long totalPrescriptions) {
+                              long patientCount,
+                              long appointmentCount,
+                              long todayAppointmentCount,
+                              long prescriptionCount) {
 
         this.doctorName = doctorName;
-        this.totalPatients = totalPatients;
-        this.totalAppointments = totalAppointments;
-        this.todayAppointments = todayAppointments;
-        this.totalPrescriptions = totalPrescriptions;
+        this.patientCount = patientCount;
+        this.appointmentCount = appointmentCount;
+        this.todayAppointmentCount = todayAppointmentCount;
+        this.prescriptionCount = prescriptionCount;
     }
 
     public String getDoctorName() {
@@ -32,36 +32,35 @@ public class DoctorDashboardDTO {
         this.doctorName = doctorName;
     }
 
-    public long getTotalPatients() {
-        return totalPatients;
+    public long getPatientCount() {
+        return patientCount;
     }
 
-    public void setTotalPatients(long totalPatients) {
-        this.totalPatients = totalPatients;
+    public void setPatientCount(long patientCount) {
+        this.patientCount = patientCount;
     }
 
-    public long getTotalAppointments() {
-        return totalAppointments;
+    public long getAppointmentCount() {
+        return appointmentCount;
     }
 
-    public void setTotalAppointments(long totalAppointments) {
-        this.totalAppointments = totalAppointments;
+    public void setAppointmentCount(long appointmentCount) {
+        this.todayAppointmentCount = appointmentCount;
     }
 
-    public long getTodayAppointments() {
-        return todayAppointments;
+    public long getTodayAppointmentCount() {
+        return todayAppointmentCount;
     }
 
-    public void setTodayAppointments(long todayAppointments) {
-        this.todayAppointments = todayAppointments;
+    public void setTodayAppointmentCount(long todayAppointmentCount) {
+        this.todayAppointmentCount = todayAppointmentCount;
     }
 
-    public long getTotalPrescriptions() {
-        return totalPrescriptions;
+    public long getPrescriptionCount() {
+        return prescriptionCount;
     }
 
-    public void setTotalPrescriptions(long totalPrescriptions) {
-        this.totalPrescriptions = totalPrescriptions;
+    public void setPrescriptionCount(long prescriptionCount) {
+        this.prescriptionCount = prescriptionCount;
     }
-
 }

@@ -1,9 +1,10 @@
 package hospitalmanagement.repository;
 
-import hospitalmanagement.entity.Doctor;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
+import hospitalmanagement.entity.Doctor;
 
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 

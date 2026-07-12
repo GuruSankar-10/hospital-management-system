@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Staff Management</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/admin.css">
+
+</head>
+
+<body>
+
+<!-- ================= Sidebar ================= -->
+
+<div class="sidebar">
+
+<div class="logo">
+
+<h2>🏥 HMS</h2>
+
+<p>Hospital Management</p>
+
+</div>
+
+<nav>
+
+<a href="admin-dashboard.html">
+<i class="fas fa-house"></i>
+<span>Dashboard</span>
+</a>
+
+<a href="admin-doctors.html">
+<i class="fas fa-user-doctor"></i>
+<span>Doctors</span>
+</a>
+
+<a href="admin-staff.html" class="active">
+<i class="fas fa-user-nurse"></i>
+<span>Staff</span>
+</a>
+
+<a href="patients.html">
+<i class="fas fa-bed"></i>
+<span>Patients</span>
+</a>
+
+<a href="appointments.html">
+<i class="fas fa-calendar-check"></i>
+<span>Appointments</span>
+</a>
+
+<a href="billing.html">
+<i class="fas fa-file-invoice-dollar"></i>
+<span>Billing</span>
+</a>
+
+<a href="prescriptions.html">
+<i class="fas fa-prescription"></i>
+<span>Prescriptions</span>
+</a>
+
+<a href="records.html">
+<i class="fas fa-file-medical"></i>
+<span>Medical Records</span>
+</a>
+
+<a href="#" onclick="logout()">
+<i class="fas fa-right-from-bracket"></i>
+<span>Logout</span>
+</a>
+
+</nav>
+
+</div>
+
+<!-- ================= Main ================= -->
+
+<div class="main">
+
+<!-- ================= Topbar ================= -->
+
+<div class="topbar">
+
+<div class="welcome">
+
+<h1>👨‍💼 Staff Management</h1>
+
+<p>Register and Manage Hospital Staff</p>
+
+</div>
+
+<div class="top-right">
+
+<div class="search-box">
+
+<i class="fas fa-search"></i>
+
+<input
+type="text"
+id="searchStaff"
+placeholder="Search Staff..."
+onkeyup="searchStaff()">
+
+</div>
+
+<div class="profile">
+
+<i class="fas fa-user-shield"></i>
+
+<span>Admin</span>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= Statistics ================= -->
+
+<div class="cards">
+
+<div class="card">
+
+<div>
+
+<p>Total Staff</p>
+
+<h2 id="staffCount">0</h2>
+
+</div>
+
+<i class="fas fa-user-nurse"></i>
+
+</div>
+
+<div class="card">
+
+<div>
+
+<p>Nurses</p>
+
+<h2 id="nurseCount">0</h2>
+
+</div>
+
+<i class="fas fa-user-nurse"></i>
+
+</div>
+
+<div class="card">
+
+<div>
+
+<p>Reception</p>
+
+<h2 id="receptionCount">0</h2>
+
+</div>
+
+<i class="fas fa-user"></i>
+
+</div>
+
+<div class="card">
+
+<div>
+
+<p>Other Staff</p>
+
+<h2 id="otherCount">0</h2>
+
+</div>
+
+<i class="fas fa-users"></i>
+
+</div>
+
+</div>
+
+<!-- ================= Toolbar ================= -->
+
+<div class="quick-actions">
+
+<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;">
+
+<h2>
+
+<i class="fas fa-users"></i>
+
+Staff List
+
+</h2>
+
+<button
+class="btn"
+onclick="openStaffModal()">
+
+<i class="fas fa-user-plus"></i>
+
+Register Staff
+
+</button>
+
+</div>
+
+</div>
+
+<!-- ================= Staff Table ================= -->
+
+<div class="recent-card">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+
+<th>Name</th>
+
+<th>Phone</th>
+
+<th>Department</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="staffTable">
+
+<!-- Staff data will load here -->
+
+</tbody>
+
+</table>
+
+</div>
+
+<!-- ===========================
+      Register Staff Modal
+=========================== -->
+<!-- Add Staff Modal -->
+
+<div id="staffModal" class="modal">
+
+<div class="modal-content">
+
+<h2>
+Add Staff
+</h2>
+
+
+<input type="hidden" id="staffId">
+
+
+<label>Staff Name</label>
+
+<input 
+type="text"
+id="staffName"
+placeholder="Enter Staff Name">
+
+
+
+<label>Email</label>
+
+<input 
+type="email"
+id="staffEmail"
+placeholder="Enter Email">
+
+
+
+<label>Password</label>
+
+<input 
+type="password"
+id="staffPassword"
+placeholder="Enter Password">
+
+
+
+<label>Phone Number</label>
+
+<input 
+type="text"
+id="staffPhone"
+placeholder="Enter Phone Number">
+
+
+
+<label>Department</label>
+
+<select id="staffDepartment">
+
+<option value="">
+Select Department
+</option>
+
+<option value="Nurse">
+Nurse
+</option>
+
+<option value="Reception">
+Reception
+</option>
+
+<option value="Lab Technician">
+Lab Technician
+</option>
+
+<option value="Pharmacist">
+Pharmacist
+</option>
+
+<option value="Ward Boy">
+Ward Boy
+</option>
+
+<option value="Security">
+Security
+</option>
+
+
+</select>
+
+
+
+<div style="
+display:flex;
+justify-content:flex-end;
+gap:15px;
+margin-top:20px;
+">
+
+
+<button 
+class="deleteBtn"
+onclick="closeStaffModal()">
+
+Cancel
+
+</button>
+
+
+
+<button 
+class="btn"
+onclick="registerStaff()">
+
+Register Staff
+
+</button>
+
+
+</div>
+
+
+</div>
+
+</div>
+<!-- ================= Delete Modal ================= -->
+
+<div id="deleteModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2>
+
+            Delete Staff
+
+        </h2>
+
+        <br>
+
+        <p>
+
+            Are you sure you want to delete this staff member?
+
+        </p>
+
+        <br>
+
+        <div
+            style="display:flex;
+            justify-content:flex-end;
+            gap:15px;">
+
+            <button
+                class="btn"
+                onclick="closeDeleteModal()">
+
+                Cancel
+
+            </button>
+
+            <button
+                class="deleteBtn"
+                onclick="confirmDelete()">
+
+                Delete
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= Footer ================= -->
+
+<footer class="footer">
+
+    <p>
+
+        © 2026 Hospital Management System | Admin Panel
+
+    </p>
+
+</footer>
+
+</div>
+
+<script>
+
+// Show Admin Name
+
+const adminName = localStorage.getItem("name");
+
+if(adminName){
+
+    const profile=document.querySelector(".profile span");
+
+    if(profile){
+
+        profile.innerHTML=adminName;
+
+    }
+
+}
+
+// Protect Page
+
+if(!localStorage.getItem("role")){
+
+    window.location.href="login.html";
+
+}
+
+</script>
+
+<script src="js/auth.js"></script>
+<script src="js/staff.js"></script>
+
+</body>
+</html>

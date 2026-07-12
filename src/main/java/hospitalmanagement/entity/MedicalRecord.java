@@ -3,65 +3,129 @@ package hospitalmanagement.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "medical_records")
 public class MedicalRecord {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String bloodGroup;
-    private Double height;
-    private Double weight;
-    private String allergies;
+
     private String diagnosis;
-    private String treatment;
+
+
+    @Column(length = 2000)
     private String doctorNotes;
 
+
+    private String testResults;
+
+
+    private String recordDate;
+
+
+
     @ManyToOne
-    @JoinColumn(name="patient_id")
+    @JoinColumn(name = "patient_id")
     private Patient patient;
+
+
+
+    @ManyToOne
+    @JoinColumn(name = "doctor_id")
+    private Doctor doctor;
+
+
 
     public MedicalRecord() {
     }
 
-    public MedicalRecord(Long id, String bloodGroup, Double height,
-                         Double weight, String allergies,
-                         String diagnosis, String treatment,
-                         String doctorNotes) {
+
+
+    public MedicalRecord(Long id,
+                         String diagnosis,
+                         String doctorNotes,
+                         String testResults,
+                         String recordDate) {
+
         this.id = id;
-        this.bloodGroup = bloodGroup;
-        this.height = height;
-        this.weight = weight;
-        this.allergies = allergies;
         this.diagnosis = diagnosis;
-        this.treatment = treatment;
+        this.doctorNotes = doctorNotes;
+        this.testResults = testResults;
+        this.recordDate = recordDate;
+
+    }
+
+
+
+    public Long getId() {
+        return id;
+    }
+
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
+    public String getDiagnosis() {
+        return diagnosis;
+    }
+
+
+    public void setDiagnosis(String diagnosis) {
+        this.diagnosis = diagnosis;
+    }
+
+
+    public String getDoctorNotes() {
+        return doctorNotes;
+    }
+
+
+    public void setDoctorNotes(String doctorNotes) {
         this.doctorNotes = doctorNotes;
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
 
-    public String getBloodGroup() { return bloodGroup; }
-    public void setBloodGroup(String bloodGroup) { this.bloodGroup = bloodGroup; }
+    public String getTestResults() {
+        return testResults;
+    }
 
-    public Double getHeight() { return height; }
-    public void setHeight(Double height) { this.height = height; }
 
-    public Double getWeight() { return weight; }
-    public void setWeight(Double weight) { this.weight = weight; }
+    public void setTestResults(String testResults) {
+        this.testResults = testResults;
+    }
 
-    public String getAllergies() { return allergies; }
-    public void setAllergies(String allergies) { this.allergies = allergies; }
 
-    public String getDiagnosis() { return diagnosis; }
-    public void setDiagnosis(String diagnosis) { this.diagnosis = diagnosis; }
+    public String getRecordDate() {
+        return recordDate;
+    }
 
-    public String getTreatment() { return treatment; }
-    public void setTreatment(String treatment) { this.treatment = treatment; }
 
-    public String getDoctorNotes() { return doctorNotes; }
-    public void setDoctorNotes(String doctorNotes) { this.doctorNotes = doctorNotes; }
+    public void setRecordDate(String recordDate) {
+        this.recordDate = recordDate;
+    }
 
-    public Patient getPatient() { return patient; }
-    public void setPatient(Patient patient) { this.patient = patient; }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
+    }
+
 }

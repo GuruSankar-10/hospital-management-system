@@ -4,53 +4,89 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Doctor Patients</title>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>My Patients</title>
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+<link rel="stylesheet" href="css/theme.css">
 <link rel="stylesheet" href="css/doctor.css">
 
 </head>
 
 <body>
 
-<!-- Sidebar -->
+<!-- ================= Sidebar ================= -->
 
 <div class="sidebar">
 
-<h2>🏥 HMS</h2>
+<div class="logo">
 
-<a href="doctor-dashboard.html">
-<i class="fa-solid fa-house"></i>
-Dashboard
-</a>
+<h2>👨‍⚕️ HMS</h2>
 
-<a href="doctor-appointments.html">
-<i class="fa-solid fa-calendar-check"></i>
-Appointments
-</a>
-
-<a href="doctor-patients.html" class="active">
-<i class="fa-solid fa-user-group"></i>
-Patients
-</a>
-
-<a href="doctor-prescriptions.html">
-<i class="fa-solid fa-file-medical"></i>
-Prescriptions
-</a>
-
-<a href="#" onclick="logout()">
-<i class="fa-solid fa-right-from-bracket"></i>
-Logout
-</a>
+<p>Doctor Panel</p>
 
 </div>
 
-<!-- Main -->
+<nav>
+
+<a href="doctor-dashboard.html">
+
+<i class="fas fa-house"></i>
+
+<span>Dashboard</span>
+
+</a>
+
+<a href="doctor-patients.html" class="active">
+
+<i class="fas fa-bed"></i>
+
+<span>My Patients</span>
+
+</a>
+
+<a href="doctor-appointments.html">
+
+<i class="fas fa-calendar-check"></i>
+
+<span>Appointments</span>
+
+</a>
+
+<a href="doctor-prescriptions.html">
+
+<i class="fas fa-file-prescription"></i>
+
+<span>Prescriptions</span>
+
+</a>
+
+<a href="doctor-profile.html">
+
+<i class="fas fa-user-doctor"></i>
+
+<span>Profile</span>
+
+</a>
+
+<a href="#" onclick="logout()">
+
+<i class="fas fa-right-from-bracket"></i>
+
+<span>Logout</span>
+
+</a>
+
+</nav>
+
+</div>
+
+<!-- ================= Main ================= -->
 
 <div class="main">
 
@@ -58,32 +94,154 @@ Logout
 
 <div>
 
-<h2>My Patients</h2>
+<h1>
 
-<p id="todayDate"></p>
+My Patients
+
+</h1>
+
+<p>
+
+View and manage assigned patients
+
+</p>
+
+</div>
+
+<div class="top-right">
+
+<div class="search-box">
+
+<i class="fas fa-search"></i>
+
+<input
+type="text"
+id="searchPatient"
+placeholder="Search Patient">
 
 </div>
 
 <div class="profile">
 
-<span id="doctorName"></span>
+<i class="fas fa-user-circle"></i>
+
+<span id="doctorName">
+
+Doctor
+
+</span>
 
 </div>
 
 </div>
 
-<br>
+</div>
 
-<input
-type="text"
-id="searchInput"
-placeholder="Search Patient..."
-onkeyup="searchPatients()"
-style="width:100%;padding:12px;border-radius:8px;border:1px solid #ccc;">
+<!-- ================= Cards ================= -->
 
-<br><br>
+<div class="cards">
 
-<div class="table-card">
+<div class="card">
+
+<div>
+
+<h2 id="patientCount">
+
+0
+
+</h2>
+
+<p>
+
+Total Patients
+
+</p>
+
+</div>
+
+<i class="fas fa-bed"></i>
+
+</div>
+
+<div class="card">
+
+<div>
+
+<h2 id="feverCount">
+
+0
+
+</h2>
+
+<p>
+
+Fever Cases
+
+</p>
+
+</div>
+
+<i class="fas fa-temperature-high"></i>
+
+</div>
+
+<div class="card">
+
+<div>
+
+<h2 id="otherCount">
+
+0
+
+</h2>
+
+<p>
+
+Other Diseases
+
+</p>
+
+</div>
+
+<i class="fas fa-notes-medical"></i>
+
+</div>
+
+<div class="card">
+
+<div>
+
+<h2 id="todayCount">
+
+0
+
+</h2>
+
+<p>
+
+Today's Patients
+
+</p>
+
+</div>
+
+<i class="fas fa-calendar-day"></i>
+
+</div>
+
+</div>
+
+<!-- ================= Patients Table ================= -->
+
+<div class="recent-card">
+
+<h2>
+
+<i class="fas fa-bed"></i>
+
+Patient List
+
+</h2>
 
 <table>
 
@@ -109,15 +267,175 @@ style="width:100%;padding:12px;border-radius:8px;border:1px solid #ccc;">
 
 <tbody id="patientTable">
 
-</tbody>
+<!-- Loaded by doctor-patients.js -->
 
+</tbody>
 </table>
 
 </div>
 
+<!-- ===========================
+      Patient Details Modal
+=========================== -->
+
+<div id="patientModal" class="modal">
+
+<div class="modal-content">
+
+<h2>
+
+Patient Details
+
+</h2>
+
+<br>
+
+<p>
+
+<strong>Name :</strong>
+
+<span id="detailName"></span>
+
+</p>
+
+<br>
+
+<p>
+
+<strong>Age :</strong>
+
+<span id="detailAge"></span>
+
+</p>
+
+<br>
+
+<p>
+
+<strong>Disease :</strong>
+
+<span id="detailDisease"></span>
+
+</p>
+
+<br>
+
+<p>
+
+<strong>Phone :</strong>
+
+<span id="detailPhone"></span>
+
+</p>
+
+<br>
+
+<p>
+
+<strong>Assigned Staff :</strong>
+
+<span id="detailStaff"></span>
+
+</p>
+
+<br>
+
+<div
+style="
+display:flex;
+justify-content:flex-end;
+gap:15px;
+margin-top:20px;">
+
+<button
+class="btn"
+onclick="closePatientModal()">
+
+Close
+
+</button>
+
 </div>
 
-<script src="js/logout.js"></script>
+</div>
+
+</div>
+
+<!-- ===========================
+      Quick Actions
+=========================== -->
+
+<div class="quick-actions">
+
+<h2>
+
+Quick Actions
+
+</h2>
+
+<div class="action-buttons">
+
+<button
+onclick="location.href='doctor-prescriptions.html'">
+
+<i class="fas fa-file-prescription"></i>
+
+Prescriptions
+
+</button>
+
+<button
+onclick="location.href='doctor-appointments.html'">
+
+<i class="fas fa-calendar-check"></i>
+
+Appointments
+
+</button>
+
+<button
+onclick="location.href='doctor-dashboard.html'">
+
+<i class="fas fa-chart-line"></i>
+
+Dashboard
+
+</button>
+
+</div>
+
+</div>
+
+<!-- ===========================
+          Footer
+=========================== -->
+
+<footer class="footer">
+
+<p>
+
+© 2026 Hospital Management System | Doctor Portal
+
+</p>
+
+</footer>
+
+</div>
+
+<script>
+
+const doctorName = localStorage.getItem("name");
+
+if(doctorName){
+
+    document.getElementById("doctorName").innerHTML =
+    doctorName;
+
+}
+
+</script>
+
+<script src="js/auth.js"></script>
 
 <script src="js/doctor-patients.js"></script>
 

@@ -41,5 +41,10 @@ public class PrescriptionController {
         service.delete(id);
         return "Prescription Deleted Successfully";
     }
+    @GetMapping("/doctor/{doctorId}")
+    public List<Prescription> getPrescriptionsByDoctor(
+            @PathVariable Long doctorId) {
 
+        return service.getPrescriptionsByDoctor(doctorId);
+    }
 }

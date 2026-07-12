@@ -1,87 +1,206 @@
-const doctorName = localStorage.getItem("name") || "Doctor";
+const doctorId = localStorage.getItem("doctorId");
 
-document.getElementById("doctorName").innerHTML =
-"Dr. " + doctorName.replace(/^Dr\.?\s*/i,"");
+const API =
+"http://localhost:8080/patients/doctor/" + doctorId;
 
-document.getElementById("todayDate").innerHTML =
-new Date().toDateString();
+let patients = [];
 
-function loadPatients(){
+// ===============================
+// Page Load
+// ===============================
 
-fetch("http://localhost:8080/patients")
+window.onload = function () {
 
-.then(res=>res.json())
+    loadPatients();
 
-.then(data=>{
+    document
+        .getElementById("searchPatient")
+        .addEventListener("keyup", searchPatient);
 
-let table=document.getElementById("patientTable");
+};
 
-table.innerHTML="";
+// ===============================
+// Load Patients
+// ===============================
 
-data.forEach(patient=>{
+async function loadPatients() {
 
-table.innerHTML+=`
+    try {
 
-<tr>
+        const response = await fetch(API);
 
-<td>${patient.id}</td>
+        patients = await response.json();
 
-<td>${patient.name}</td>
+        displayPatients(patients);
 
-<td>${patient.age}</td>
+        updateCards(patients);
 
-<td>${patient.disease}</td>
+    }
 
-<td>${patient.phone}</td>
+    catch (error) {
 
-<td>
+        console.error(error);
 
-<button onclick="viewPatient(${patient.id})">
-
-View
-
-</button>
-
-</td>
-
-</tr>
-
-`;
-
-});
-
-});
+    }
 
 }
 
-function searchPatients(){
+// ===============================
+// Display Patients
+// ===============================
 
-let input=document
-.getElementById("searchInput")
-.value
-.toLowerCase();
+function displayPatients(list) {
 
-let rows=document
-.querySelectorAll("#patientTable tr");
+    let rows = "";
 
-rows.forEach(row=>{
+    list.forEach(patient => {
 
-row.style.display=
-row.innerText
-.toLowerCase()
-.includes(input)
-? ""
-: "none";
+        rows += `
 
-});
+        <tr>
+
+            <td>${patient.id}</td>
+
+            <td>${patient.name}</td>
+
+            <td>${patient.age}</td>
+
+            <td>${patient.disease}</td>
+
+            <td>${patient.phone}</td>
+
+            <td>
+
+                <button
+                    class="btn"
+                    onclick="viewPatient(${patient.id})">
+
+                    <i class="fas fa-eye"></i>
+
+                    View
+
+                </button>
+
+            </td>
+
+        </tr>
+
+        `;
+
+    });
+
+    document.getElementById("patientTable").innerHTML = rows;
 
 }
 
-function viewPatient(id){
+// ===============================
+// Dashboard Cards
+// ===============================
 
-window.location.href=
-"patient-details.html?id="+id;
+function updateCards(list) {
+
+    document.getElementById("patientCount").innerHTML =
+        list.length;
+
+    let fever = 0;
+
+    let other = 0;
+
+    list.forEach(patient => {
+
+        if (
+
+            patient.disease &&
+            patient.disease.toLowerCase().includes("fever")
+
+        )
+
+            fever++;
+
+        else
+
+            other++;
+
+    });
+
+    document.getElementById("feverCount").innerHTML =
+        fever;
+
+    document.getElementById("otherCount").innerHTML =
+        other;
+
+    document.getElementById("todayCount").innerHTML =
+        list.length;
 
 }
 
-loadPatients();
+// ===============================
+// Search
+// ===============================
+
+function searchPatient() {
+
+    const keyword =
+        document
+        .getElementById("searchPatient")
+        .value
+        .toLowerCase();
+
+    const filtered = patients.filter(patient =>
+
+        patient.name.toLowerCase().includes(keyword)
+
+        ||
+
+        patient.disease.toLowerCase().includes(keyword)
+
+        ||
+
+        patient.phone.toLowerCase().includes(keyword)
+
+    );
+
+    displayPatients(filtered);
+
+}
+
+// ===============================
+// View Patient
+// ===============================
+
+function viewPatient(id) {
+
+    const patient = patients.find(p => p.id == id);
+
+    if (!patient) return;
+
+    document.getElementById("detailName").innerHTML =
+        patient.name;
+
+    document.getElementById("detailAge").innerHTML =
+        patient.age;
+
+    document.getElementById("detailDisease").innerHTML =
+        patient.disease;
+
+    document.getElementById("detailPhone").innerHTML =
+        patient.phone;
+
+    document.getElementById("detailStaff").innerHTML =
+        patient.staff ? patient.staff.name : "-";
+
+    document.getElementById("patientModal").style.display =
+        "block";
+
+}
+
+// ===============================
+// Close Modal
+// ===============================
+
+function closePatientModal() {
+
+    document.getElementById("patientModal").style.display =
+        "none";
+
+}

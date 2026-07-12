@@ -1,185 +1,91 @@
-// =====================================
-// Prescription Management
-// =====================================
+const doctorId = localStorage.getItem("doctorId");
 
-let allPrescriptions = [];
+const API =
+"http://localhost:8080/prescriptions/doctor/" + doctorId;
 
-// ===============================
-// Add Prescription
-// ===============================
-function addPrescription() {
+const SAVE_API =
+"http://localhost:8080/prescriptions";
 
-    const doctorId = document.getElementById("doctorId").value.trim();
-    const patientId = document.getElementById("patientId").value.trim();
-    const disease = document.getElementById("disease").value.trim();
-    const medicines = document.getElementById("medicines").value.trim();
-    const advice = document.getElementById("advice").value.trim();
+const PATIENT_API =
+"http://localhost:8080/patients/doctor/" + doctorId;
 
-    if (
-        doctorId === "" ||
-        patientId === "" ||
-        disease === "" ||
-        medicines === "" ||
-        advice === ""
-    ) {
+let prescriptions = [];
 
-        alert("Please fill all fields.");
-        return;
+let deleteId = null;
 
-    }
+// =========================
+// Page Load
+// =========================
 
-    const prescription = {
+window.onload = function(){
 
-        disease: disease,
+    loadPatients();
 
-        medicines: medicines,
+    loadPrescriptions();
 
-        advice: advice,
+    document
+    .getElementById("searchPrescription")
+    .addEventListener("keyup",searchPrescription);
 
-        doctor: {
-            id: Number(doctorId)
-        },
+};
 
-        patient: {
-            id: Number(patientId)
-        }
-
-    };
-
-    fetch("/prescriptions", {
-
-        method: "POST",
-
-        headers: {
-
-            "Content-Type": "application/json"
-
-        },
-
-        body: JSON.stringify(prescription)
-
-    })
-
-    .then(response => {
-
-        if (!response.ok) {
-
-            throw new Error("Unable to save prescription.");
-
-        }
-
-        return response.json();
-
-    })
-
-    .then(data => {
-
-        alert("✅ Prescription Saved Successfully");
-
-        clearPrescriptionForm();
-
-        loadPrescriptions();
-
-    })
-
-    .catch(error => {
-
-        console.error(error);
-
-        alert("❌ Failed to save prescription.");
-
-    });
-
-}
-
-// ===============================
+// =========================
 // Load Prescriptions
-// ===============================
-function loadPrescriptions() {
+// =========================
 
-    fetch("/prescriptions")
+async function loadPrescriptions(){
 
-    .then(response => {
+    const response = await fetch(API);
 
-        if (!response.ok) {
+    prescriptions = await response.json();
 
-            throw new Error("Unable to load prescriptions.");
+    displayPrescriptions(prescriptions);
 
-        }
-
-        return response.json();
-
-    })
-
-    .then(data => {
-
-        allPrescriptions = data;
-
-        renderPrescriptions(allPrescriptions);
-
-    })
-
-    .catch(error => {
-
-        console.error(error);
-
-        alert("❌ Failed to load prescriptions.");
-
-    });
+    updateCards(prescriptions);
 
 }
-// ===============================
-// Render Prescriptions Table
-// ===============================
-function renderPrescriptions(prescriptions) {
 
-    const table = document.getElementById("prescriptionTable");
+// =========================
+// Display
+// =========================
 
-    table.innerHTML = "";
+function displayPrescriptions(list){
 
-    if (prescriptions.length === 0) {
+    let rows="";
 
-        table.innerHTML = `
-            <tr>
-                <td colspan="7">
-                    No Prescriptions Found
-                </td>
-            </tr>
-        `;
+    list.forEach(p=>{
 
-        return;
-
-    }
-
-    prescriptions.forEach(prescription => {
-
-        table.innerHTML += `
+        rows+=`
 
         <tr>
 
-            <td>${prescription.id}</td>
+        <td>${p.id}</td>
 
-            <td>${prescription.doctor ? prescription.doctor.id : "-"}</td>
+        <td>${p.patient ? p.patient.name : "-"}</td>
 
-            <td>${prescription.patient ? prescription.patient.id : "-"}</td>
+        <td>${p.medicine}</td>
 
-            <td>${prescription.disease}</td>
+        <td>${p.notes}</td>
 
-            <td>${prescription.medicines}</td>
+        <td>
 
-            <td>${prescription.advice}</td>
+        <button class="editBtn"
 
-            <td>
+        onclick="editPrescription(${p.id})">
 
-                <button
-                    class="delete-btn"
-                    onclick="deletePrescription(${prescription.id})">
+        <i class="fas fa-edit"></i>
 
-                    🗑 Delete
+        </button>
 
-                </button>
+        <button class="deleteBtn"
 
-            </td>
+        onclick="deletePrescription(${p.id})">
+
+        <i class="fas fa-trash"></i>
+
+        </button>
+
+        </td>
 
         </tr>
 
@@ -187,147 +93,271 @@ function renderPrescriptions(prescriptions) {
 
     });
 
+    document.getElementById("prescriptionTable").innerHTML =
+    rows;
+
 }
 
-// ===============================
-// Delete Prescription
-// ===============================
-function deletePrescription(id) {
+// =========================
+// Dashboard Cards
+// =========================
 
-    if (!confirm("Are you sure you want to delete this prescription?")) {
+function updateCards(list){
+
+    document.getElementById("prescriptionCount").innerHTML =
+    list.length;
+
+    const patients =
+    new Set();
+
+    list.forEach(p=>{
+
+        if(p.patient)
+
+            patients.add(p.patient.id);
+
+    });
+
+    document.getElementById("patientCount").innerHTML =
+    patients.size;
+
+    document.getElementById("todayCount").innerHTML =
+    list.length;
+
+    document.getElementById("medicineCount").innerHTML =
+    list.length;
+
+}
+
+// =========================
+// Load Patients
+// =========================
+
+async function loadPatients(){
+
+    const response =
+    await fetch(PATIENT_API);
+
+    const patients =
+    await response.json();
+
+    const select =
+    document.getElementById("patientSelect");
+
+    select.innerHTML =
+    "<option value=''>Select Patient</option>";
+
+    patients.forEach(patient=>{
+
+        select.innerHTML +=
+
+        `<option value="${patient.id}">
+
+        ${patient.name}
+
+        </option>`;
+
+    });
+
+}
+
+// =========================
+// Search
+// =========================
+
+function searchPrescription(){
+
+    const keyword =
+    document
+    .getElementById("searchPrescription")
+    .value
+    .toLowerCase();
+
+    const filtered =
+    prescriptions.filter(p=>
+
+        p.medicine.toLowerCase().includes(keyword)
+
+        ||
+
+        p.notes.toLowerCase().includes(keyword)
+
+        ||
+
+        (p.patient?.name || "")
+        .toLowerCase()
+        .includes(keyword)
+
+    );
+
+    displayPrescriptions(filtered);
+
+}
+
+// =========================
+// Open Modal
+// =========================
+
+function openPrescriptionModal(){
+
+    document.getElementById("modalTitle").innerHTML =
+    "New Prescription";
+
+    document.getElementById("prescriptionId").value="";
+
+    document.getElementById("patientSelect").value="";
+
+    document.getElementById("medicine").value="";
+
+    document.getElementById("instructions").value="";
+
+    document.getElementById("prescriptionModal").style.display =
+    "block";
+
+}
+
+function closePrescriptionModal(){
+
+    document.getElementById("prescriptionModal").style.display =
+    "none";
+
+}
+
+// =========================
+// Save
+// =========================
+
+async function savePrescription(){
+
+    const id =
+    document.getElementById("prescriptionId").value;
+
+    const prescription={
+
+        medicine:
+        document.getElementById("medicine").value,
+
+        notes:
+        document.getElementById("instructions").value,
+
+        doctor:{
+
+            id:doctorId
+
+        },
+
+        patient:{
+
+            id:
+            document.getElementById("patientSelect").value
+
+        }
+
+    };
+
+    if(
+
+        !prescription.medicine ||
+
+        !prescription.notes ||
+
+        !prescription.patient.id
+
+    ){
+
+        alert("Please fill all fields");
 
         return;
 
     }
 
-    fetch("/prescriptions/" + id, {
+    const url =
+    id ? SAVE_API+"/"+id : SAVE_API;
 
-        method: "DELETE"
+    const method =
+    id ? "PUT" : "POST";
 
-    })
+    await fetch(url,{
 
-    .then(response => {
+        method:method,
 
-        if (!response.ok) {
+        headers:{
 
-            throw new Error("Delete failed.");
+            "Content-Type":"application/json"
 
-        }
+        },
 
-        return response.text();
-
-    })
-
-    .then(message => {
-
-        alert("✅ " + message);
-
-        loadPrescriptions();
-
-    })
-
-    .catch(error => {
-
-        console.error(error);
-
-        alert("❌ Failed to delete prescription.");
+        body:JSON.stringify(prescription)
 
     });
 
-}
-// ===============================
-// Search Prescriptions
-// ===============================
-function searchPrescriptions() {
-
-    const keyword = document
-        .getElementById("searchBox")
-        .value
-        .toLowerCase()
-        .trim();
-
-    const filteredPrescriptions = allPrescriptions.filter(prescription => {
-
-        return (
-
-            prescription.id.toString().includes(keyword) ||
-
-            prescription.disease.toLowerCase().includes(keyword) ||
-
-            prescription.medicines.toLowerCase().includes(keyword) ||
-
-            prescription.advice.toLowerCase().includes(keyword) ||
-
-            (prescription.doctor &&
-                prescription.doctor.id.toString().includes(keyword)) ||
-
-            (prescription.patient &&
-                prescription.patient.id.toString().includes(keyword))
-
-        );
-
-    });
-
-    renderPrescriptions(filteredPrescriptions);
-
-}
-
-// ===============================
-// Clear Prescription Form
-// ===============================
-function clearPrescriptionForm() {
-
-    document.getElementById("doctorId").value = "";
-    document.getElementById("patientId").value = "";
-    document.getElementById("disease").value = "";
-    document.getElementById("medicines").value = "";
-    document.getElementById("advice").value = "";
-
-}
-
-// ===============================
-// Refresh Prescriptions
-// ===============================
-function refreshPrescriptions() {
+    closePrescriptionModal();
 
     loadPrescriptions();
 
 }
 
-// ===============================
-// Get Prescription Count
-// ===============================
-function getPrescriptionCount() {
+// =========================
+// Edit
+// =========================
 
-    return allPrescriptions.length;
+function editPrescription(id){
+
+    const p =
+    prescriptions.find(x=>x.id==id);
+
+    if(!p) return;
+
+    document.getElementById("modalTitle").innerHTML =
+    "Edit Prescription";
+
+    document.getElementById("prescriptionId").value =
+    p.id;
+
+    document.getElementById("patientSelect").value =
+    p.patient ? p.patient.id : "";
+
+    document.getElementById("medicine").value =
+    p.medicine;
+
+    document.getElementById("instructions").value =
+    p.notes;
+
+    document.getElementById("prescriptionModal").style.display =
+    "block";
 
 }
 
-// ===============================
-// Auto Refresh Every 30 Seconds
-// ===============================
-setInterval(function () {
+// =========================
+// Delete
+// =========================
 
-    refreshPrescriptions();
+function deletePrescription(id){
 
-}, 30000);
+    deleteId=id;
 
-// ===============================
-// Page Loaded
-// ===============================
-window.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("deleteModal").style.display =
+    "block";
 
-    console.log("Prescription Page Loaded Successfully");
+}
+
+function closeDeleteModal(){
+
+    document.getElementById("deleteModal").style.display =
+    "none";
+
+}
+
+async function confirmDelete(){
+
+    await fetch(SAVE_API+"/"+deleteId,{
+
+        method:"DELETE"
+
+    });
+
+    closeDeleteModal();
 
     loadPrescriptions();
 
-});
-
-// ===============================
-// Refresh When Window Gets Focus
-// ===============================
-window.addEventListener("focus", function () {
-
-    refreshPrescriptions();
-
-});
+}

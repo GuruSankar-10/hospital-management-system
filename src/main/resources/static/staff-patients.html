@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Staff Patients</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/admin.css">
+
+</head>
+
+
+<body>
+
+
+<!-- Sidebar -->
+
+<div class="sidebar">
+
+<div class="logo">
+
+<h2>🏥 HMS</h2>
+
+<p>Staff Panel</p>
+
+</div>
+
+
+<nav>
+
+
+<a href="staff-dashboard.html">
+
+<i class="fas fa-house"></i>
+
+Dashboard
+
+</a>
+
+
+<a href="staff-patients.html" class="active">
+
+<i class="fas fa-bed"></i>
+
+Patients
+
+</a>
+
+
+<a href="staff-profile.html">
+
+<i class="fas fa-user"></i>
+
+Profile
+
+</a>
+
+
+<a href="staff-appointments.html">
+
+<i class="fas fa-calendar-check"></i>
+
+Appointments
+
+</a>
+
+
+<a href="records.html">
+
+<i class="fas fa-file-medical"></i>
+
+Records
+
+</a>
+
+
+<a href="javascript:void(0)" onclick="logout()">
+
+<i class="fas fa-right-from-bracket"></i>
+
+Logout
+
+</a>
+
+
+</nav>
+
+
+</div>
+
+
+
+
+
+<!-- Main -->
+
+<div class="main">
+
+
+<!-- Topbar -->
+
+<div class="topbar">
+
+
+<div class="welcome">
+
+<h1>
+
+👥 Patient Management
+
+</h1>
+
+<p>
+
+View Hospital Patients
+
+</p>
+
+</div>
+
+
+
+<div class="profile">
+
+<i class="fas fa-user-nurse"></i>
+
+<span id="staffName">
+
+Staff
+
+</span>
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- Search -->
+
+
+<div class="quick-actions">
+
+
+<h2>
+
+<i class="fas fa-search"></i>
+
+Search Patients
+
+</h2>
+
+
+<input
+
+type="text"
+
+id="searchPatient"
+
+class="search-box"
+
+placeholder="Search patient..."
+
+onkeyup="searchPatients()">
+
+
+</div>
+
+
+
+
+
+
+
+<!-- Patient Table -->
+
+
+<div class="recent-card">
+
+
+<h2>
+
+<i class="fas fa-bed"></i>
+
+Patients List
+
+</h2>
+
+
+
+<table>
+
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+
+<th>Name</th>
+
+<th>Age</th>
+
+<th>Disease</th>
+
+<th>Phone</th>
+
+<th>Doctor</th>
+
+</tr>
+
+
+</thead>
+
+
+<tbody id="patientTable">
+
+
+</tbody>
+
+
+</table>
+
+
+
+</div>
+
+
+
+
+
+<footer class="footer">
+
+<p>
+
+© 2026 Hospital Management System | Staff Panel
+
+</p>
+
+</footer>
+
+
+
+</div>
+
+
+
+
+
+
+
+<script src="js/logout.js"></script>
+
+
+<script>
+
+
+// Role Protection
+
+if(
+!localStorage.getItem("role") ||
+localStorage.getItem("role") !== "STAFF"
+){
+
+window.location.href="login.html";
+
+}
+
+
+
+
+document.getElementById("staffName").innerHTML =
+localStorage.getItem("name");
+
+
+
+</script>
+
+
+
+<script src="js/staff-patients.js"></script>
+
+
+</body>
+
+</html>

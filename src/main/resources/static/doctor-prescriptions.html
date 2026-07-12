@@ -4,53 +4,89 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Doctor Prescriptions</title>
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+<link rel="stylesheet" href="css/theme.css">
 <link rel="stylesheet" href="css/doctor.css">
 
 </head>
 
 <body>
 
-<!-- Sidebar -->
+<!-- ================= Sidebar ================= -->
 
 <div class="sidebar">
 
-<h2>🏥 HMS</h2>
+<div class="logo">
 
-<a href="doctor-dashboard.html">
-<i class="fa fa-house"></i>
-Dashboard
-</a>
+<h2>👨‍⚕️ HMS</h2>
 
-<a href="doctor-appointments.html">
-<i class="fa fa-calendar-check"></i>
-Appointments
-</a>
-
-<a href="doctor-patients.html">
-<i class="fa fa-user-group"></i>
-Patients
-</a>
-
-<a href="doctor-prescriptions.html" class="active">
-<i class="fa fa-file-medical"></i>
-Prescriptions
-</a>
-
-<a href="#" onclick="logout()">
-<i class="fa fa-right-from-bracket"></i>
-Logout
-</a>
+<p>Doctor Panel</p>
 
 </div>
 
-<!-- Main -->
+<nav>
+
+<a href="doctor-dashboard.html">
+
+<i class="fas fa-house"></i>
+
+<span>Dashboard</span>
+
+</a>
+
+<a href="doctor-patients.html">
+
+<i class="fas fa-bed"></i>
+
+<span>My Patients</span>
+
+</a>
+
+<a href="doctor-appointments.html">
+
+<i class="fas fa-calendar-check"></i>
+
+<span>Appointments</span>
+
+</a>
+
+<a href="doctor-prescriptions.html" class="active">
+
+<i class="fas fa-file-prescription"></i>
+
+<span>Prescriptions</span>
+
+</a>
+
+<a href="doctor-profile.html">
+
+<i class="fas fa-user-doctor"></i>
+
+<span>Profile</span>
+
+</a>
+
+<a href="#" onclick="logout()">
+
+<i class="fas fa-right-from-bracket"></i>
+
+<span>Logout</span>
+
+</a>
+
+</nav>
+
+</div>
+
+<!-- ================= Main ================= -->
 
 <div class="main">
 
@@ -58,66 +94,176 @@ Logout
 
 <div>
 
-<h2>Doctor Prescriptions</h2>
+<h1>
 
-<p id="todayDate"></p>
+Prescription Management
+
+</h1>
+
+<p>
+
+Create and Manage Patient Prescriptions
+
+</p>
+
+</div>
+
+<div class="top-right">
+
+<div class="search-box">
+
+<i class="fas fa-search"></i>
+
+<input
+type="text"
+id="searchPrescription"
+placeholder="Search Prescription">
 
 </div>
 
 <div class="profile">
 
-<span id="doctorName"></span>
+<i class="fas fa-user-circle"></i>
+
+<span id="doctorName">
+
+Doctor
+
+</span>
 
 </div>
 
 </div>
 
-<br>
+</div>
 
-<div class="table-card">
+<!-- ================= Dashboard Cards ================= -->
 
-<h3>Create Prescription</h3>
+<div class="cards">
 
-<br>
+<div class="card">
 
-<input
-type="text"
-id="patientName"
-placeholder="Patient Name">
+<div>
 
-<br><br>
+<h2 id="prescriptionCount">
 
-<textarea
-id="medicine"
-placeholder="Medicines"
-rows="4"
-style="width:100%;padding:12px;"></textarea>
+0
 
-<br><br>
+</h2>
 
-<textarea
-id="notes"
-placeholder="Doctor Notes"
-rows="4"
-style="width:100%;padding:12px;"></textarea>
+<p>
 
-<br><br>
+Total Prescriptions
 
-<button onclick="savePrescription()">
+</p>
 
-Save Prescription
+</div>
+
+<i class="fas fa-file-prescription"></i>
+
+</div>
+
+<div class="card">
+
+<div>
+
+<h2 id="patientCount">
+
+0
+
+</h2>
+
+<p>
+
+Patients
+
+</p>
+
+</div>
+
+<i class="fas fa-bed"></i>
+
+</div>
+
+<div class="card">
+
+<div>
+
+<h2 id="todayCount">
+
+0
+
+</h2>
+
+<p>
+
+Today's Prescriptions
+
+</p>
+
+</div>
+
+<i class="fas fa-calendar-day"></i>
+
+</div>
+
+<div class="card">
+
+<div>
+
+<h2 id="medicineCount">
+
+0
+
+</h2>
+
+<p>
+
+Medicines
+
+</p>
+
+</div>
+
+<i class="fas fa-pills"></i>
+
+</div>
+
+</div>
+
+<!-- ================= Toolbar ================= -->
+
+<div class="quick-actions">
+
+<div
+style="
+display:flex;
+justify-content:space-between;
+align-items:center;">
+
+<h2>
+
+Prescription List
+
+</h2>
+
+<button
+class="btn"
+onclick="openPrescriptionModal()">
+
+<i class="fas fa-plus"></i>
+
+New Prescription
 
 </button>
 
 </div>
 
-<br>
+</div>
 
-<div class="table-card">
+<!-- ================= Table ================= -->
 
-<h3>Prescription History</h3>
-
-<br>
+<div class="recent-card">
 
 <table>
 
@@ -131,7 +277,11 @@ Save Prescription
 
 <th>Medicine</th>
 
-<th>Notes</th>
+<th>Dosage</th>
+
+<th>Instructions</th>
+
+<th>Actions</th>
 
 </tr>
 
@@ -139,15 +289,216 @@ Save Prescription
 
 <tbody id="prescriptionTable">
 
-</tbody>
+<!-- Loaded from doctor-prescriptions.js -->
 
+</tbody>
 </table>
 
 </div>
 
+<!-- ===========================
+      Add / Edit Prescription
+=========================== -->
+
+<div id="prescriptionModal" class="modal">
+
+<div class="modal-content">
+
+<h2 id="modalTitle">
+
+New Prescription
+
+</h2>
+
+<input
+type="hidden"
+id="prescriptionId">
+
+<label>Patient</label>
+
+<select id="patientSelect">
+
+<option value="">Select Patient</option>
+
+</select>
+
+<label>Medicine Name</label>
+
+<input
+type="text"
+id="medicine"
+placeholder="Enter Medicine Name">
+
+<label>Dosage</label>
+
+<input
+type="text"
+id="dosage"
+placeholder="Example: 1 Tablet Twice Daily">
+
+<label>Instructions</label>
+
+<textarea
+id="instructions"
+rows="4"
+placeholder="Enter Instructions"></textarea>
+
+<div
+style="
+display:flex;
+justify-content:flex-end;
+gap:15px;
+margin-top:25px;">
+
+<button
+class="deleteBtn"
+onclick="closePrescriptionModal()">
+
+Cancel
+
+</button>
+
+<button
+class="btn"
+onclick="savePrescription()">
+
+Save
+
+</button>
+
 </div>
 
-<script src="js/logout.js"></script>
+</div>
+
+</div>
+
+<!-- ===========================
+      Delete Confirmation
+=========================== -->
+
+<div id="deleteModal" class="modal">
+
+<div class="modal-content">
+
+<h2>
+
+Delete Prescription
+
+</h2>
+
+<br>
+
+<p>
+
+Are you sure you want to delete this prescription?
+
+</p>
+
+<br>
+
+<div
+style="
+display:flex;
+justify-content:flex-end;
+gap:15px;">
+
+<button
+class="btn"
+onclick="closeDeleteModal()">
+
+Cancel
+
+</button>
+
+<button
+class="deleteBtn"
+onclick="confirmDelete()">
+
+Delete
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ===========================
+      Quick Actions
+=========================== -->
+
+<div class="quick-actions">
+
+<h2>
+
+Quick Actions
+
+</h2>
+
+<div class="action-buttons">
+
+<button
+onclick="location.href='doctor-dashboard.html'">
+
+<i class="fas fa-chart-line"></i>
+
+Dashboard
+
+</button>
+
+<button
+onclick="location.href='doctor-patients.html'">
+
+<i class="fas fa-bed"></i>
+
+Patients
+
+</button>
+
+<button
+onclick="location.href='doctor-appointments.html'">
+
+<i class="fas fa-calendar-check"></i>
+
+Appointments
+
+</button>
+
+</div>
+
+</div>
+
+<!-- ===========================
+          Footer
+=========================== -->
+
+<footer class="footer">
+
+<p>
+
+© 2026 Hospital Management System | Doctor Portal
+
+</p>
+
+</footer>
+
+</div>
+
+<script>
+
+const doctorName = localStorage.getItem("name");
+
+if(doctorName){
+
+    document.getElementById("doctorName").innerHTML =
+    doctorName;
+
+}
+
+</script>
+
+<script src="js/auth.js"></script>
 
 <script src="js/doctor-prescriptions.js"></script>
 

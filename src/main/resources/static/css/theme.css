@@ -1,0 +1,436 @@
+/* ==========================================
+   Premium Hospital Management System Theme
+========================================== */
+
+
+:root{
+
+    --primary:#0F766E;
+    --primary-light:#14B8A6;
+    --primary-dark:#115E59;
+
+    --secondary:#2563EB;
+
+    --success:#16A34A;
+    --warning:#D97706;
+    --danger:#DC2626;
+
+    --bg:#F8FAFC;
+    --card:#FFFFFF;
+
+    --text:#0F172A;
+    --text-light:#64748B;
+
+    --border:#E5E7EB;
+
+    --shadow:
+    0 10px 30px rgba(15,23,42,0.08);
+
+    --shadow-hover:
+    0 15px 35px rgba(15,23,42,0.15);
+
+    --radius:18px;
+
+}
+
+
+
+/* ==========================================
+   Global
+========================================== */
+
+
+*{
+
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+
+    font-family:
+    "Inter",
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+}
+
+
+body{
+
+    background:
+    linear-gradient(
+        135deg,
+        #F8FAFC,
+        #EFF6FF
+    );
+
+    color:var(--text);
+
+}
+
+
+
+
+
+
+/* ==========================================
+   Cards
+========================================== */
+
+
+.card,
+.recent-card,
+.quick-actions{
+
+    background:var(--card);
+
+    border-radius:var(--radius);
+
+    box-shadow:var(--shadow);
+
+    transition:.3s;
+
+}
+
+
+
+.card:hover,
+.recent-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:var(--shadow-hover);
+
+}
+
+
+
+
+
+
+/* ==========================================
+   Buttons
+========================================== */
+
+
+.btn{
+
+
+    padding:12px 24px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+
+}
+
+
+
+.btn:hover{
+
+    transform:translateY(-2px);
+
+}
+
+
+
+
+.btn-primary{
+
+    background:
+    linear-gradient(
+        135deg,
+        var(--secondary),
+        #1D4ED8
+    );
+
+    color:white;
+
+}
+
+
+
+.btn-success{
+
+    background:
+    linear-gradient(
+        135deg,
+        #22C55E,
+        #15803D
+    );
+
+    color:white;
+
+}
+
+
+
+
+.btn-danger{
+
+    background:
+    linear-gradient(
+        135deg,
+        #EF4444,
+        #B91C1C
+    );
+
+    color:white;
+
+}
+
+
+
+
+.btn-warning{
+
+    background:
+    linear-gradient(
+        135deg,
+        #F59E0B,
+        #B45309
+    );
+
+    color:white;
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+   Inputs
+========================================== */
+
+
+input,
+select,
+textarea{
+
+
+    width:100%;
+
+    padding:14px 16px;
+
+    border-radius:12px;
+
+    border:1px solid var(--border);
+
+    background:white;
+
+    font-size:15px;
+
+    outline:none;
+
+    transition:.3s;
+
+
+}
+
+
+
+
+input:focus,
+select:focus,
+textarea:focus{
+
+
+    border-color:var(--primary);
+
+    box-shadow:
+    0 0 0 4px
+    rgba(15,118,110,.12);
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+   Tables
+========================================== */
+
+
+table{
+
+
+    width:100%;
+
+    border-collapse:separate;
+
+    border-spacing:0;
+
+    background:white;
+
+    overflow:hidden;
+
+    border-radius:16px;
+
+
+}
+
+
+
+
+thead th{
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        var(--primary),
+        var(--primary-light)
+    );
+
+
+    color:white;
+
+    padding:16px;
+
+    text-align:center;
+
+    font-size:14px;
+
+
+}
+
+
+
+
+tbody td{
+
+
+    padding:15px;
+
+    text-align:center;
+
+    border-bottom:
+
+    1px solid var(--border);
+
+
+}
+
+
+
+tbody tr{
+
+
+    transition:.2s;
+
+
+}
+
+
+
+tbody tr:hover{
+
+
+    background:#F0FDFA;
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+   Status Badges
+========================================== */
+
+
+.status-paid{
+
+
+    background:#DCFCE7;
+
+    color:#166534;
+
+    padding:6px 12px;
+
+    border-radius:20px;
+
+    font-weight:600;
+
+}
+
+
+
+.status-unpaid{
+
+
+    background:#FEE2E2;
+
+    color:#991B1B;
+
+    padding:6px 12px;
+
+    border-radius:20px;
+
+    font-weight:600;
+
+
+}
+
+
+
+.status-pending{
+
+
+    background:#FEF3C7;
+
+    color:#92400E;
+
+    padding:6px 12px;
+
+    border-radius:20px;
+
+    font-weight:600;
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+   Scrollbar
+========================================== */
+
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+
+::-webkit-scrollbar-thumb{
+
+    background:#94A3B8;
+
+    border-radius:20px;
+
+}

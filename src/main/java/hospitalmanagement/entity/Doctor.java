@@ -17,7 +17,6 @@ public class Doctor {
     @Column(nullable = false)
     private String name;
 
-    // NEW (Used to map logged-in doctor)
     @Column(nullable = false, unique = true)
     private String email;
 
@@ -43,8 +42,11 @@ public class Doctor {
     public Doctor() {
     }
 
-    public Doctor(Long id, String name, String email,
-                  String specialization, String phone) {
+    public Doctor(Long id,
+                  String name,
+                  String email,
+                  String specialization,
+                  String phone) {
 
         this.id = id;
         this.name = name;
@@ -53,7 +55,7 @@ public class Doctor {
         this.phone = phone;
     }
 
-    // ===================== Getters & Setters =====================
+    // ================= Getters & Setters =================
 
     public Long getId() {
         return id;

@@ -1,511 +1,728 @@
+console.log("Billing JS Loaded");
+
+
+const BILLING_API = "http://localhost:8080/billing";
+
+
+let bills = [];
+
+
+
 // =====================================
-// Billing Management
+// Page Load
 // =====================================
 
-let allBills = [];
+document.addEventListener("DOMContentLoaded", function(){
 
-// ===============================
-// Add Bill
-// ===============================
-function addBill() {
+    loadBills();
 
-    const amount = document.getElementById("amount").value.trim();
-    const paymentStatus = document.getElementById("paymentStatus").value.trim();
-    const paymentMethod = document.getElementById("paymentMethod").value.trim();
-    const patientId = document.getElementById("patientId").value.trim();
-    const appointmentId = document.getElementById("appointmentId").value.trim();
+    loadSummary();
 
-    if (
-        amount === "" ||
-        paymentStatus === "" ||
-        paymentMethod === "" ||
-        patientId === "" ||
-        appointmentId === ""
-    ) {
+});
 
-        alert("Please fill all fields.");
-        return;
 
-    }
 
-    const bill = {
 
-        amount: Number(amount),
+// =====================================
+// Load Billing Summary
+// =====================================
 
-        paymentStatus: paymentStatus,
+function loadSummary(){
 
-        paymentMethod: paymentMethod,
 
-        patient: {
-            id: Number(patientId)
-        },
+fetch(BILLING_API + "/summary")
 
-        appointment: {
-            id: Number(appointmentId)
-        }
 
-    };
+.then(response => response.json())
 
-    fetch("/billing", {
 
-        method: "POST",
+.then(data => {
 
-        headers: {
 
-            "Content-Type": "application/json"
+    document.getElementById("totalRevenue").innerHTML =
+    "₹ " + data.totalRevenue;
 
-        },
 
-        body: JSON.stringify(bill)
+    document.getElementById("paidBills").innerHTML =
+    data.paidBills;
 
-    })
 
-    .then(response => {
+    document.getElementById("unpaidBills").innerHTML =
+    data.unpaidBills;
 
-        if (!response.ok) {
 
-            throw new Error("Unable to create bill.");
+    document.getElementById("totalBills").innerHTML =
+    data.totalBills;
 
-        }
 
-        return response.json();
+})
 
-    })
+.catch(error=>{
 
-    .then(data => {
+    console.log(error);
 
-        alert("✅ Bill Created Successfully");
+});
 
-        clearBillForm();
-
-        loadBills();
-
-    })
-
-    .catch(error => {
-
-        console.error(error);
-
-        alert("❌ Failed to create bill.");
-
-    });
-
-}
-// ===============================
-// Load Bills
-// ===============================
-function loadBills() {
-
-    fetch("/billing")
-
-    .then(response => {
-
-        if (!response.ok) {
-
-            throw new Error("Unable to fetch bills.");
-
-        }
-
-        return response.json();
-
-    })
-
-    .then(data => {
-
-        allBills = data;
-
-        renderBills(allBills);
-
-    })
-
-    .catch(error => {
-
-        console.error(error);
-
-        alert("❌ Failed to load bills.");
-
-    });
 
 }
 
-// ===============================
-// Render Bills Table
-// ===============================
-function renderBills(list) {
 
-    const table = document.getElementById("billingTable");
 
-    table.innerHTML = "";
 
-    if (list.length === 0) {
 
-        table.innerHTML = `
-            <tr>
-                <td colspan="7">
-                    No Bills Available
-                </td>
-            </tr>
-        `;
 
-        return;
 
-    }
+// =====================================
+// Load All Bills
+// =====================================
 
-    list.forEach(bill => {
+function loadBills(){
 
-        table.innerHTML += `
 
-        <tr>
+fetch(BILLING_API)
 
-            <td>${bill.id}</td>
 
-            <td>₹${bill.amount}</td>
+.then(response=>response.json())
 
-            <td>${bill.paymentStatus}</td>
 
-            <td>${bill.paymentMethod}</td>
+.then(data=>{
 
-            <td>${bill.patient ? bill.patient.id : "-"}</td>
 
-            <td>${bill.appointment ? bill.appointment.id : "-"}</td>
+    bills = data;
 
-            <td>
 
-                <button
-                    class="delete-btn"
-                    onclick="deleteBill(${bill.id})">
+    displayBills(data);
 
-                    🗑 Delete
 
-                </button>
+})
 
-                <button
-                    class="pdf-btn"
-                    onclick="downloadBill(${bill.id})">
 
-                    📄 PDF
+.catch(error=>{
 
-                </button>
 
-                <button
-                    class="wa-btn"
-                    onclick="sendBillWhatsApp(
-                        '${bill.patient ? bill.patient.phone || "" : ""}',
-                        '${bill.patient ? bill.patient.name || "Patient" : "Patient"}',
-                        '${bill.amount}',
-                        '${bill.paymentStatus}',
-                        '${bill.paymentMethod}'
-                    )">
+    console.log("Billing Error:",error);
 
-                    WhatsApp
 
-                </button>
+});
 
-            </td>
-
-        </tr>
-
-        `;
-
-    });
 
 }
 
-// ===============================
+
+
+
+
+
+
+
+// =====================================
+// Display Bills
+// =====================================
+
+function displayBills(data){
+
+
+let rows = "";
+
+
+
+data.forEach(bill=>{
+
+
+rows += `
+
+
+<tr>
+
+
+<td>
+${bill.id}
+</td>
+
+
+<td>
+₹ ${bill.amount}
+</td>
+
+
+<td>
+${bill.paymentStatus}
+</td>
+
+
+<td>
+${bill.paymentMethod}
+</td>
+
+
+<td>
+
+${bill.patient 
+? bill.patient.name 
+: "N/A"}
+
+</td>
+
+
+<td>
+
+
+<button
+class="btn"
+onclick='printBill(${JSON.stringify(bill)})'>
+
+🖨 Print
+
+</button>
+
+
+
+<button
+class="whatsappBtn"
+onclick='whatsappBill(${JSON.stringify(bill)})'>
+
+📱 WhatsApp
+
+</button>
+
+
+
+
+<button
+class="deleteBtn"
+onclick="deleteBill(${bill.id})">
+
+Delete
+
+</button>
+
+
+</td>
+
+
+</tr>
+
+
+`;
+
+
+});
+
+
+
+document.getElementById("billingTable").innerHTML = rows;
+
+
+}
+
+
+
+
+
+
+
+
+
+// =====================================
+// Create Bill
+// =====================================
+
+function createBill(){
+
+
+
+let bill = {
+
+
+amount:
+Number(
+document.getElementById("amount").value
+),
+
+
+
+paymentStatus:
+document.getElementById("paymentStatus").value,
+
+
+
+paymentMethod:
+document.getElementById("paymentMethod").value,
+
+
+
+patient:{
+
+id:Number(
+document.getElementById("patientId").value
+)
+
+},
+
+
+
+appointment:{
+
+id:Number(
+document.getElementById("appointmentId").value
+)
+
+}
+
+
+};
+
+
+
+
+
+if(
+!bill.amount ||
+!bill.paymentStatus ||
+!bill.paymentMethod ||
+!bill.patient.id
+){
+
+
+alert("Please fill all required fields");
+
+return;
+
+}
+
+
+
+
+
+
+
+fetch(BILLING_API,{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify(bill)
+
+
+})
+
+
+
+.then(response=>response.json())
+
+
+.then(data=>{
+
+
+alert("Bill Created Successfully ✅");
+
+
+clearForm();
+
+
+loadBills();
+
+
+loadSummary();
+
+
+})
+
+
+.catch(error=>{
+
+
+console.log(error);
+
+
+alert("Bill Creation Failed");
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+// =====================================
 // Delete Bill
-// ===============================
-function deleteBill(id) {
+// =====================================
 
-    if (!confirm("Are you sure you want to delete this bill?")) {
+function deleteBill(id){
 
-        return;
 
-    }
 
-    fetch("/billing/" + id, {
+if(!confirm("Delete this bill?")){
 
-        method: "DELETE"
-
-    })
-
-    .then(response => {
-
-        if (!response.ok) {
-
-            throw new Error("Unable to delete bill.");
-
-        }
-
-        return response.text();
-
-    })
-
-    .then(message => {
-
-        alert("✅ " + message);
-
-        loadBills();
-
-    })
-
-    .catch(error => {
-
-        console.error(error);
-
-        alert("❌ Failed to delete bill.");
-
-    });
+return;
 
 }
 
-// ===============================
-// Download Bill PDF
-// ===============================
-function downloadBill(id) {
 
-    window.open("/pdf/bill/" + id, "_blank");
 
-}
+fetch(
+BILLING_API+"/"+id,
+{
 
-// ===============================
-// Send Bill via WhatsApp
-// ===============================
-function sendBillWhatsApp(phone, name, amount, status, method) {
+method:"DELETE"
 
-    if (phone === "") {
+})
 
-        alert("Patient phone number is not available.");
 
-        return;
 
-    }
+.then(response=>response.text())
 
-    const message =
-        `Hello ${name},
 
-Your Hospital Bill Details
+.then(message=>{
 
-Amount : ₹${amount}
-Status : ${status}
-Payment Method : ${method}
 
-Thank you for visiting HMS Hospital 🏥`;
+alert(message);
 
-    window.open(
 
-        `https://wa.me/91${phone}?text=${encodeURIComponent(message)}`,
+loadBills();
 
-        "_blank"
 
-    );
+loadSummary();
 
-}
-// ===============================
-// Load Bills
-// ===============================
-function loadBills() {
 
-    fetch("/billing")
+});
 
-    .then(response => {
 
-        if (!response.ok) {
-
-            throw new Error("Unable to fetch bills.");
-
-        }
-
-        return response.json();
-
-    })
-
-    .then(data => {
-
-        allBills = data;
-
-        renderBills(allBills);
-
-    })
-
-    .catch(error => {
-
-        console.error(error);
-
-        alert("❌ Failed to load bills.");
-
-    });
 
 }
 
-// ===============================
-// Render Bills Table
-// ===============================
-function renderBills(list) {
 
-    const table = document.getElementById("billingTable");
 
-    table.innerHTML = "";
 
-    if (list.length === 0) {
 
-        table.innerHTML = `
-            <tr>
-                <td colspan="7">
-                    No Bills Available
-                </td>
-            </tr>
-        `;
 
-        return;
 
-    }
 
-    list.forEach(bill => {
+// =====================================
+// Search Bills
+// =====================================
 
-        table.innerHTML += `
+function searchBills(){
 
-        <tr>
 
-            <td>${bill.id}</td>
+let value =
+document
+.getElementById("searchBill")
+.value
+.toLowerCase();
 
-            <td>₹${bill.amount}</td>
 
-            <td>${bill.paymentStatus}</td>
 
-            <td>${bill.paymentMethod}</td>
+let filtered =
+bills.filter(bill=>{
 
-            <td>${bill.patient ? bill.patient.id : "-"}</td>
 
-            <td>${bill.appointment ? bill.appointment.id : "-"}</td>
+return (
 
-            <td>
+String(bill.id)
+.includes(value)
 
-                <button
-                    class="delete-btn"
-                    onclick="deleteBill(${bill.id})">
 
-                    🗑 Delete
+||
 
-                </button>
+bill.paymentStatus
+.toLowerCase()
+.includes(value)
 
-                <button
-                    class="pdf-btn"
-                    onclick="downloadBill(${bill.id})">
 
-                    📄 PDF
+||
 
-                </button>
+bill.paymentMethod
+.toLowerCase()
+.includes(value)
 
-                <button
-                    class="wa-btn"
-                    onclick="sendBillWhatsApp(
-                        '${bill.patient ? bill.patient.phone || "" : ""}',
-                        '${bill.patient ? bill.patient.name || "Patient" : "Patient"}',
-                        '${bill.amount}',
-                        '${bill.paymentStatus}',
-                        '${bill.paymentMethod}'
-                    )">
 
-                    WhatsApp
+);
 
-                </button>
 
-            </td>
+});
 
-        </tr>
 
-        `;
 
-    });
+displayBills(filtered);
+
+
 
 }
 
-// ===============================
-// Delete Bill
-// ===============================
-function deleteBill(id) {
 
-    if (!confirm("Are you sure you want to delete this bill?")) {
 
-        return;
 
-    }
 
-    fetch("/billing/" + id, {
 
-        method: "DELETE"
 
-    })
 
-    .then(response => {
+// =====================================
+// Print Bill
+// =====================================
 
-        if (!response.ok) {
+function printBill(bill){
 
-            throw new Error("Unable to delete bill.");
 
-        }
 
-        return response.text();
+let invoice = `
 
-    })
 
-    .then(message => {
+<html>
 
-        alert("✅ " + message);
+<head>
 
-        loadBills();
+<title>Hospital Bill</title>
 
-    })
 
-    .catch(error => {
+<style>
 
-        console.error(error);
+body{
 
-        alert("❌ Failed to delete bill.");
-
-    });
+font-family:Arial;
+padding:40px;
 
 }
 
-// ===============================
-// Download Bill PDF
-// ===============================
-function downloadBill(id) {
 
-    window.open("/pdf/bill/" + id, "_blank");
+.invoice{
+
+border:2px solid black;
+padding:30px;
 
 }
 
-// ===============================
-// Send Bill via WhatsApp
-// ===============================
-function sendBillWhatsApp(phone, name, amount, status, method) {
 
-    if (phone === "") {
+h1,h2{
 
-        alert("Patient phone number is not available.");
+text-align:center;
 
-        return;
+}
 
-    }
 
-    const message =
-        `Hello ${name},
+</style>
 
-Your Hospital Bill Details
 
-Amount : ₹${amount}
-Status : ${status}
-Payment Method : ${method}
+</head>
 
-Thank you for visiting HMS Hospital 🏥`;
 
-    window.open(
+<body>
 
-        `https://wa.me/91${phone}?text=${encodeURIComponent(message)}`,
 
-        "_blank"
+<div class="invoice">
 
-    );
+
+<h1>
+🏥 Hospital Management System
+</h1>
+
+
+<h2>
+Bill Invoice
+</h2>
+
+
+<hr>
+
+
+
+<p>
+<b>Bill ID:</b>
+${bill.id}
+</p>
+
+
+<p>
+<b>Patient:</b>
+${bill.patient 
+? bill.patient.name 
+: "N/A"}
+
+</p>
+
+
+<p>
+<b>Amount:</b>
+₹ ${bill.amount}
+</p>
+
+
+<p>
+<b>Status:</b>
+${bill.paymentStatus}
+</p>
+
+
+<p>
+<b>Payment Method:</b>
+${bill.paymentMethod}
+</p>
+
+
+
+<hr>
+
+
+<h3 style="text-align:center">
+
+Thank You
+
+</h3>
+
+
+
+</div>
+
+
+</body>
+
+</html>
+
+
+`;
+
+
+
+
+let printWindow =
+window.open(
+"",
+"_blank"
+);
+
+
+
+printWindow.document.write(invoice);
+
+
+printWindow.document.close();
+
+
+printWindow.print();
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// =====================================
+// WhatsApp Share
+// =====================================
+
+function whatsappBill(bill){
+
+
+
+let message = `
+
+
+🏥 Hospital Management System
+
+
+Bill Invoice
+
+
+Bill ID:
+${bill.id}
+
+
+Patient:
+${bill.patient 
+? bill.patient.name 
+: "N/A"}
+
+
+
+Amount:
+₹ ${bill.amount}
+
+
+
+Payment Status:
+${bill.paymentStatus}
+
+
+
+Payment Method:
+${bill.paymentMethod}
+
+
+
+Thank You.
+
+
+
+`;
+
+
+
+
+let whatsappURL =
+
+"https://wa.me/?text="
+
++
+
+encodeURIComponent(message);
+
+
+
+
+window.open(
+whatsappURL,
+"_blank"
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// =====================================
+// Clear Form
+// =====================================
+
+function clearForm(){
+
+
+document.getElementById("amount").value="";
+
+
+document.getElementById("paymentStatus").value="";
+
+
+document.getElementById("paymentMethod").value="";
+
+
+document.getElementById("patientId").value="";
+
+
+document.getElementById("appointmentId").value="";
+
 
 }

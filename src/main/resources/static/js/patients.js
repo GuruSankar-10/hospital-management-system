@@ -1,405 +1,374 @@
-	// =====================================
-	// Patient Management
-	// =====================================
-	
-	let allPatients = [];
-	
-	// ===============================
-	// Add Patient
-	// ===============================
-	function addPatient() {
-	
-	    const name = document.getElementById("pname").value.trim();
-	    const age = document.getElementById("age").value.trim();
-	    const disease = document.getElementById("disease").value.trim();
-	    const phone = document.getElementById("pphone").value.trim();
-	
-	    if (name === "" || age === "" || disease === "" || phone === "") {
-	
-	        alert("Please fill all fields.");
-	
-	        return;
-	
-	    }
-	
-	    const patient = {
-	
-	        name: name,
-	
-	        age: Number(age),
-	
-	        disease: disease,
-	
-	        phone: phone
-	
-	    };
-	
-	    fetch("/patients", {
-	
-	        method: "POST",
-	
-	        headers: {
-	
-	            "Content-Type": "application/json"
-	
-	        },
-	
-	        body: JSON.stringify(patient)
-	
-	    })
-	
-	    .then(response => {
-	
-	        if (!response.ok) {
-	
-	            throw new Error("Unable to add patient.");
-	
-	        }
-	
-	        return response.json();
-	
-	    })
-	
-	    .then(data => {
-	
-	        alert("✅ Patient Added Successfully");
-	
-	        clearPatientForm();
-	
-	        loadPatients();
-	
-	    })
-	
-	    .catch(error => {
-	
-	        console.error(error);
-	
-	        alert("❌ Failed to add patient.");
-	
-	    });
-	
-	}
-	
-	// ===============================
-	// Load Patients
-	// ===============================
-	function loadPatients() {
-	
-	    fetch("/patients")
-	
-	    .then(response => {
-	
-	        if (!response.ok) {
-	
-	            throw new Error("Unable to load patients.");
-	
-	        }
-	
-	        return response.json();
-	
-	    })
-	
-	    .then(data => {
-	
-	        allPatients = data;
-	
-	        renderPatients(allPatients);
-	
-	    })
-	
-	    .catch(error => {
-	
-	        console.error(error);
-	
-	        alert("❌ Failed to load patients.");
-	
-	    });
-	
-	}
-	// ===============================
-	// Render Patients Table
-	// ===============================
-	function renderPatients(patients) {
-	
-	    const table = document.getElementById("patientTable");
-	
-	    table.innerHTML = "";
-	
-	    if (patients.length === 0) {
-	
-	        table.innerHTML = `
-	            <tr>
-	                <td colspan="6">
-	                    No Patients Found
-	                </td>
-	            </tr>
-	        `;
-	
-	        return;
-	
-	    }
-	
-	    patients.forEach(patient => {
-	
-	        table.innerHTML += `
-	
-	        <tr>
-	
-	            <td>${patient.id}</td>
-	
-	            <td>${patient.name}</td>
-	
-	            <td>${patient.age}</td>
-	
-	            <td>${patient.disease}</td>
-	
-	            <td>${patient.phone}</td>
-	
-	            <td>
-	
-	                <button
-	                    class="edit-btn"
-	                    onclick="editPatient(
-	                        ${patient.id},
-	                        '${patient.name}',
-	                        ${patient.age},
-	                        '${patient.disease}',
-	                        '${patient.phone}'
-	                    )">
-	
-	                    ✏️ Edit
-	
-	                </button>
-	
-	                <button
-	                    class="delete-btn"
-	                    onclick="deletePatient(${patient.id})">
-	
-	                    🗑 Delete
-	
-	                </button>
-	
-	            </td>
-	
-	        </tr>
-	
-	        `;
-	
-	    });
-	
-	}
-	
-	// ===============================
-	// Delete Patient
-	// ===============================
-	function deletePatient(id) {
-	
-	    if (!confirm("Are you sure you want to delete this patient?")) {
-	
-	        return;
-	
-	    }
-	
-	    fetch("/patients/" + id, {
-	
-	        method: "DELETE"
-	
-	    })
-	
-	    .then(response => {
-	
-	        if (!response.ok) {
-	
-	            throw new Error("Delete failed.");
-	
-	        }
-	
-	        return response.text();
-	
-	    })
-	
-	    .then(message => {
-	
-	        alert("✅ " + message);
-	
-	        loadPatients();
-	
-	    })
-	
-	    .catch(error => {
-	
-	        console.error(error);
-	
-	        alert("❌ Failed to delete patient.");
-	
-	    });
-	
-	}
-	
-	// ===============================
-	// Edit Patient
-	// ===============================
-	function editPatient(id, name, age, disease, phone) {
-	
-	    const newName = prompt("Patient Name", name);
-	
-	    if (newName === null) return;
-	
-	    const newAge = prompt("Patient Age", age);
-	
-	    if (newAge === null) return;
-	
-	    const newDisease = prompt("Disease", disease);
-	
-	    if (newDisease === null) return;
-	
-	    const newPhone = prompt("Phone Number", phone);
-	
-	    if (newPhone === null) return;
-	
-	    const patient = {
-	
-	        name: newName.trim(),
-	
-	        age: Number(newAge),
-	
-	        disease: newDisease.trim(),
-	
-	        phone: newPhone.trim()
-	
-	    };
-	
-	    fetch("/patients/" + id, {
-	
-	        method: "PUT",
-	
-	        headers: {
-	
-	            "Content-Type": "application/json"
-	
-	        },
-	
-	        body: JSON.stringify(patient)
-	
-	    })
-	
-	    .then(response => {
-	
-	        if (!response.ok) {
-	
-	            throw new Error("Update failed.");
-	
-	        }
-	
-	        return response.json();
-	
-	    })
-	
-	    .then(data => {
-	
-	        alert("✅ Patient Updated Successfully");
-	
-	        loadPatients();
-	
-	    })
-	
-	    .catch(error => {
-	
-	        console.error(error);
-	
-	        alert("❌ Failed to update patient.");
-	
-	    });
-	
-	}
-	// ===============================
-	// Search Patients
-	// ===============================
-	function searchPatients() {
-	
-	    const keyword = document
-	        .getElementById("searchBox")
-	        .value
-	        .toLowerCase()
-	        .trim();
-	
-	    const filteredPatients = allPatients.filter(patient => {
-	
-	        return (
-	
-	            patient.id.toString().includes(keyword) ||
-	
-	            patient.name.toLowerCase().includes(keyword) ||
-	
-	            patient.disease.toLowerCase().includes(keyword) ||
-	
-	            patient.phone.toLowerCase().includes(keyword) ||
-	
-	            patient.age.toString().includes(keyword)
-	
-	        );
-	
-	    });
-	
-	    renderPatients(filteredPatients);
-	
-	}
-	
-	// ===============================
-	// Clear Patient Form
-	// ===============================
-	function clearPatientForm() {
-	
-	    document.getElementById("pname").value = "";
-	    document.getElementById("age").value = "";
-	    document.getElementById("disease").value = "";
-	    document.getElementById("pphone").value = "";
-	
-	}
-	
-	// ===============================
-	// Refresh Patients
-	// ===============================
-	function refreshPatients() {
-	
-	    loadPatients();
-	
-	}
-	
-	// ===============================
-	// Get Patient Count
-	// ===============================
-	function getPatientCount() {
-	
-	    return allPatients.length;
-	
-	}
-	
-	// ===============================
-	// Auto Refresh Every 30 Seconds
-	// ===============================
-	setInterval(function () {
-	
-	    refreshPatients();
-	
-	}, 30000);
-	
-	// ===============================
-	// Page Loaded
-	// ===============================
-	window.addEventListener("DOMContentLoaded", function () {
-	
-	    console.log("Patients Page Loaded Successfully");
-	
-	    loadPatients();
-	
-	});
-	
-	// ===============================
-	// Refresh When Window Gets Focus
-	// ===============================
-	window.addEventListener("focus", function () {
-	
-	    refreshPatients();
-	
-	});
+const API = "http://localhost:8080/patients";
+const DOCTOR_API = "http://localhost:8080/doctors";
+const STAFF_API = "http://localhost:8080/staff";
+
+let deletePatientId = null;
+
+// ===============================
+// Page Load
+// ===============================
+
+window.onload = function () {
+
+    loadPatients();
+    loadDoctors();
+    loadStaff();
+
+    document
+        .getElementById("searchPatient")
+        .addEventListener("keyup", searchPatient);
+
+};
+
+// ===============================
+// Load Patients
+// ===============================
+
+async function loadPatients() {
+
+    try {
+
+        const response = await fetch(API);
+
+        const patients = await response.json();
+
+        displayPatients(patients);
+
+        updateCards(patients);
+
+    } catch (e) {
+
+        console.error(e);
+
+    }
+
+}
+
+// ===============================
+// Display Patients
+// ===============================
+
+function displayPatients(patients) {
+
+    let rows = "";
+
+    patients.forEach(p => {
+
+        rows += `
+
+        <tr>
+
+            <td>${p.id}</td>
+
+            <td>${p.name}</td>
+
+            <td>${p.age}</td>
+
+            <td>${p.disease}</td>
+
+            <td>${p.phone}</td>
+
+            <td>${p.doctor ? p.doctor.name : "-"}</td>
+
+            <td>${p.staff ? p.staff.name : "-"}</td>
+
+            <td>
+
+                <button class="editBtn"
+                    onclick="editPatient(${p.id})">
+
+                    <i class="fa fa-edit"></i>
+
+                </button>
+
+                <button class="deleteBtn"
+                    onclick="deletePatient(${p.id})">
+
+                    <i class="fa fa-trash"></i>
+
+                </button>
+
+            </td>
+
+        </tr>
+
+        `;
+
+    });
+
+    document.getElementById("patientTable").innerHTML = rows;
+
+}
+
+// ===============================
+// Statistics
+// ===============================
+
+function updateCards(patients) {
+
+    document.getElementById("patientCount").innerHTML = patients.length;
+
+    let doctorAssigned = 0;
+    let staffAssigned = 0;
+    let disease = new Set();
+
+    patients.forEach(p => {
+
+        if (p.doctor) doctorAssigned++;
+
+        if (p.staff) staffAssigned++;
+
+        if (p.disease)
+            disease.add(p.disease);
+
+    });
+
+    document.getElementById("doctorAssigned").innerHTML = doctorAssigned;
+
+    document.getElementById("staffAssigned").innerHTML = staffAssigned;
+
+    document.getElementById("diseaseCount").innerHTML = disease.size;
+
+}
+
+// ===============================
+// Load Doctors
+// ===============================
+
+async function loadDoctors() {
+
+    const response = await fetch(DOCTOR_API);
+
+    const doctors = await response.json();
+
+    const select = document.getElementById("doctorSelect");
+
+    select.innerHTML =
+        '<option value="">Select Doctor</option>';
+
+    doctors.forEach(d => {
+
+        select.innerHTML +=
+
+        `<option value="${d.id}">${d.name}</option>`;
+
+    });
+
+}
+
+// ===============================
+// Load Staff
+// ===============================
+
+async function loadStaff() {
+
+    const response = await fetch(STAFF_API);
+
+    const staff = await response.json();
+
+    const select = document.getElementById("staffSelect");
+
+    select.innerHTML =
+        '<option value="">Select Staff</option>';
+
+    staff.forEach(s => {
+
+        select.innerHTML +=
+
+        `<option value="${s.id}">${s.name}</option>`;
+
+    });
+
+}
+
+// ===============================
+// Search
+// ===============================
+
+async function searchPatient() {
+
+    const keyword =
+        document.getElementById("searchPatient")
+        .value
+        .toLowerCase();
+
+    const response = await fetch(API);
+
+    const patients = await response.json();
+
+    const filtered = patients.filter(p =>
+
+        p.name.toLowerCase().includes(keyword) ||
+
+        p.disease.toLowerCase().includes(keyword) ||
+
+        p.phone.toLowerCase().includes(keyword)
+
+    );
+
+    displayPatients(filtered);
+
+}
+
+// ===============================
+// Open Modal
+// ===============================
+
+function openPatientModal() {
+
+    document.getElementById("modalTitle").innerHTML =
+        "Add Patient";
+
+    document.getElementById("patientId").value = "";
+
+    document.getElementById("patientName").value = "";
+
+    document.getElementById("patientAge").value = "";
+
+    document.getElementById("patientDisease").value = "";
+
+    document.getElementById("patientPhone").value = "";
+
+    document.getElementById("doctorSelect").value = "";
+
+    document.getElementById("staffSelect").value = "";
+
+    document.getElementById("patientModal").style.display = "block";
+
+}
+
+function closePatientModal() {
+
+    document.getElementById("patientModal").style.display = "none";
+
+}
+
+// ===============================
+// Save Patient
+// ===============================
+
+async function savePatient() {
+
+    const id = document.getElementById("patientId").value;
+
+    const patient = {
+
+        name: document.getElementById("patientName").value,
+
+        age: parseInt(document.getElementById("patientAge").value),
+
+        disease: document.getElementById("patientDisease").value,
+
+        phone: document.getElementById("patientPhone").value,
+
+        doctor: {
+            id: document.getElementById("doctorSelect").value
+        },
+
+        staff: {
+            id: document.getElementById("staffSelect").value
+        }
+
+    };
+
+    if (!patient.name ||
+        !patient.age ||
+        !patient.disease ||
+        !patient.phone ||
+        !patient.doctor.id ||
+        !patient.staff.id) {
+
+        alert("Please fill all fields");
+
+        return;
+
+    }
+
+    const url = id ? API + "/" + id : API;
+
+    const method = id ? "PUT" : "POST";
+
+    await fetch(url, {
+
+        method: method,
+
+        headers: {
+
+            "Content-Type": "application/json"
+
+        },
+
+        body: JSON.stringify(patient)
+
+    });
+
+    closePatientModal();
+
+    loadPatients();
+
+}
+
+// ===============================
+// Edit Patient
+// ===============================
+
+async function editPatient(id) {
+
+    const response = await fetch(API + "/" + id);
+
+    const p = await response.json();
+
+    document.getElementById("modalTitle").innerHTML =
+        "Edit Patient";
+
+    document.getElementById("patientId").value = p.id;
+
+    document.getElementById("patientName").value = p.name;
+
+    document.getElementById("patientAge").value = p.age;
+
+    document.getElementById("patientDisease").value = p.disease;
+
+    document.getElementById("patientPhone").value = p.phone;
+
+    document.getElementById("doctorSelect").value =
+        p.doctor ? p.doctor.id : "";
+
+    document.getElementById("staffSelect").value =
+        p.staff ? p.staff.id : "";
+
+    document.getElementById("patientModal").style.display = "block";
+
+}
+
+// ===============================
+// Delete
+// ===============================
+
+function deletePatient(id) {
+
+    deletePatientId = id;
+
+    document.getElementById("deleteModal").style.display = "block";
+
+}
+
+function closeDeleteModal() {
+
+    document.getElementById("deleteModal").style.display = "none";
+
+}
+
+async function confirmDelete() {
+
+    await fetch(API + "/" + deletePatientId, {
+
+        method: "DELETE"
+
+    });
+
+    closeDeleteModal();
+
+    loadPatients();
+
+}

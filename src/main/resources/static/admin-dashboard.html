@@ -1,0 +1,655 @@
+	<!DOCTYPE html>
+	<html lang="en">
+	
+	<head>
+	
+	<meta charset="UTF-8">
+	
+	<meta name="viewport"
+	content="width=device-width, initial-scale=1.0">
+	
+	<title>Hospital Management System</title>
+	
+	<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+	
+	<link rel="stylesheet" href="css/theme.css">
+	
+	<link rel="stylesheet" href="css/admin.css">
+	
+	</head>
+	
+	<body>
+	
+	<!-- ================= Sidebar ================= -->
+	
+	<div class="sidebar">
+	
+	<div class="logo">
+	
+	<h2>🏥 HMS</h2>
+	
+	<p>Hospital Management</p>
+	
+	</div>
+	
+	<nav>
+	
+	<a href="admin-dashboard.html" class="active">
+	
+	<i class="fas fa-house"></i>
+	
+	<span>Dashboard</span>
+	
+	</a>
+	
+	<a href="admin-doctors.html">
+	
+	<i class="fas fa-user-doctor"></i>
+	
+	<span>Doctors</span>
+	
+	</a>
+	
+	<a href="admin-staff.html">
+	
+	<i class="fas fa-user-nurse"></i>
+	
+	<span>Staff</span>
+	
+	</a>
+	
+	<a href="patients.html">
+	
+	<i class="fas fa-bed"></i>
+	
+	<span>Patients</span>
+	
+	</a>
+	
+	<a href="appointments.html">
+	
+	<i class="fas fa-calendar-check"></i>
+	
+	<span>Appointments</span>
+	
+	</a>
+	
+	<a href="billing.html">
+	
+	<i class="fas fa-file-invoice-dollar"></i>
+	
+	<span>Billing</span>
+	
+	</a>
+	
+	<a href="records.html">
+	
+	<i class="fas fa-file-medical"></i>
+	
+	<span>Medical Records</span>
+	
+	</a>
+	
+	<a href="#" onclick="logout()">
+	
+	<i class="fas fa-right-from-bracket"></i>
+	
+	<span>Logout</span>
+	
+	</a>
+	
+	</nav>
+	
+	</div>
+	
+	<!-- ================= Main ================= -->
+	
+	<div class="main">
+	
+	<!-- ================= Topbar ================= -->
+	
+	<div class="topbar">
+	
+	<div class="welcome">
+	
+	<h1>
+	
+	Welcome,
+	
+	<span id="adminName">
+	
+	Administrator
+	
+	</span>
+	
+	👋
+	
+	</h1>
+	
+	<p id="todayDate"></p>
+	
+	</div>
+	
+	<div class="top-right">
+	
+	<div class="search-box">
+	
+	<i class="fas fa-search"></i>
+	
+	<input
+	type="text"
+	placeholder="Search Dashboard">
+	
+	</div>
+	
+	<button class="icon-btn">
+	
+	<i class="fas fa-bell"></i>
+	
+	</button>
+	
+	<button class="icon-btn">
+	
+	<i class="fas fa-envelope"></i>
+	
+	</button>
+	
+	<div class="profile">
+	
+	<i class="fas fa-user-circle"></i>
+	
+	<span>Admin</span>
+	
+	</div>
+	
+	</div>
+	
+	</div>
+	
+	<!-- ================= Banner ================= -->
+	
+	<div class="welcome-banner">
+	
+	<div>
+	
+	<h2>
+	
+	Hospital Management Dashboard
+	
+	</h2>
+	
+	<p>
+	
+	Manage Doctors, Staff, Patients,
+	Appointments, Billing and Medical Records
+	from one place.
+	
+	</p>
+	
+	</div>
+	
+	<div>
+	
+	<i class="fas fa-hospital banner-icon"></i>
+	
+	</div>
+	
+	</div>
+	
+	<!-- ================= Dashboard Cards ================= -->
+	
+	<div class="cards">
+	
+	<div class="card">
+	
+	<div>
+	
+	<p>Total Doctors</p>
+	
+	<h2 id="doctorCount">
+	
+	0
+	
+	</h2>
+	
+	</div>
+	
+	<i class="fas fa-user-doctor"></i>
+	
+	</div>
+	
+	<div class="card">
+	
+	<div>
+	
+	<p>Total Staff</p>
+	
+	<h2 id="staffCount">
+	
+	0
+	
+	</h2>
+	
+	</div>
+	
+	<i class="fas fa-user-nurse"></i>
+	
+	</div>
+	
+	<div class="card">
+	
+	<div>
+	
+	<p>Total Patients</p>
+	
+	<h2 id="patientCount">
+	
+	0
+	
+	</h2>
+	
+	</div>
+	
+	<i class="fas fa-bed"></i>
+	
+	</div>
+	
+	<div class="card">
+	
+	<div>
+	
+	<p>Total Appointments</p>
+	
+	<h2 id="appointmentCount">
+	
+	0
+	
+	</h2>
+	
+	</div>
+	
+	<i class="fas fa-calendar-check"></i>
+	
+	</div>
+	
+	</div>
+	
+	<!-- ================= Quick Actions ================= -->
+	
+	<div class="quick-actions">
+	
+	<h2>
+	
+	<i class="fas fa-bolt"></i>
+	
+	Quick Actions
+	
+	</h2>
+	
+	<div class="action-buttons">
+	
+	<button onclick="location.href='admin-doctors.html'">
+	
+	<i class="fas fa-user-plus"></i>
+	
+	Add Doctor
+	
+	</button>
+	
+	<button onclick="location.href='admin-staff.html'">
+	
+	<i class="fas fa-user-nurse"></i>
+	
+	Add Staff
+	
+	</button>
+	
+	<button onclick="location.href='patients.html'">
+	
+	<i class="fas fa-bed"></i>
+	
+	Add Patient
+	
+	</button>
+	
+	<button onclick="location.href='appointments.html'">
+	
+	<i class="fas fa-calendar-plus"></i>
+	
+	Book Appointment
+	
+	</button>
+	
+	<button onclick="location.href='billing.html'">
+	
+	<i class="fas fa-file-invoice-dollar"></i>
+	
+	Generate Bill
+	
+	</button>
+	
+	</div>
+	
+	</div>
+	
+	<!-- ================= Dashboard Grid ================= -->
+	
+	<div class="dashboard-grid">
+	
+	<div class="recent-card">
+	
+	<h2>
+	
+	<i class="fas fa-calendar-days"></i>
+	
+	Recent Appointments
+	
+	</h2>
+	
+	<table>
+	
+	<thead>
+	
+	<tr>
+	
+	<th>ID</th>
+	
+	<th>Patient</th>
+	
+	<th>Doctor</th>
+	
+	<th>Date</th>
+	
+	<th>Status</th>
+	
+	</tr>
+	
+	</thead>
+	
+	<tbody id="appointmentTable">
+	
+	<!-- Dynamic Data From admin.js -->
+	
+	</tbody>
+	</table>
+	
+	</div>
+	
+	<!-- ================= Recent Patients ================= -->
+	
+	<div class="recent-card">
+	
+	<h2>
+	
+	<i class="fas fa-bed"></i>
+	
+	Recent Patients
+	
+	</h2>
+	
+	<table>
+	
+	<thead>
+	
+	<tr>
+	
+	<th>ID</th>
+	
+	<th>Name</th>
+	
+	<th>Age</th>
+	
+	<th>Disease</th>
+	
+	</tr>
+	
+	</thead>
+	
+	<tbody id="patientTable">
+	
+	<!-- Dynamic Data From admin.js -->
+	
+	</tbody>
+	
+	</table>
+	
+	</div>
+	
+	</div>
+	
+	<!-- ================= Bottom Dashboard ================= -->
+	
+	<div class="dashboard-grid">
+	
+	<!-- Hospital Summary -->
+	
+	<div class="recent-card">
+	
+	<h2>
+	
+	<i class="fas fa-chart-pie"></i>
+	
+	Hospital Summary
+	
+	</h2>
+	
+	<div class="summary-box">
+	
+	<div class="summary-item">
+	
+	<i class="fas fa-user-doctor"></i>
+	
+	<div>
+	
+	<h4>Total Doctors</h4>
+	
+	<p id="summaryDoctorCount">0</p>
+	
+	</div>
+	
+	</div>
+	
+	<div class="summary-item">
+	
+	<i class="fas fa-user-nurse"></i>
+	
+	<div>
+	
+	<h4>Total Staff</h4>
+	
+	<p id="summaryStaffCount">0</p>
+	
+	</div>
+	
+	</div>
+	
+	<div class="summary-item">
+	
+	<i class="fas fa-bed"></i>
+	
+	<div>
+	
+	<h4>Total Patients</h4>
+	
+	<p id="summaryPatientCount">0</p>
+	
+	</div>
+	
+	</div>
+	
+	<div class="summary-item">
+	
+	<i class="fas fa-calendar-check"></i>
+	
+	<div>
+	
+	<h4>Total Appointments</h4>
+	
+	<p id="summaryAppointmentCount">0</p>
+	
+	</div>
+	
+	</div>
+	
+	</div>
+	
+	</div>
+	
+	<!-- System Status -->
+	
+	<div class="recent-card">
+	
+	<h2>
+	
+	<i class="fas fa-server"></i>
+	
+	System Status
+	
+	</h2>
+	
+	<div class="status-list">
+	
+	<div class="status-item">
+	
+	<span>Database</span>
+	
+	<strong id="dbStatus">
+	
+	Connected
+	
+	</strong>
+	
+	</div>
+	
+	<div class="status-item">
+	
+	<span>Backend API</span>
+	
+	<strong>
+	
+	Running
+	
+	</strong>
+	
+	</div>
+	
+	<div class="status-item">
+	
+	<span>Authentication</span>
+	
+	<strong>
+	
+	Secure
+	
+	</strong>
+	
+	</div>
+	
+	<div class="status-item">
+	
+	<span>Server Status</span>
+	
+	<strong>
+	
+	Online
+	
+	</strong>
+	
+	</div>
+	
+	</div>
+	
+	</div>
+	
+	</div>
+	<!-- ================= Analytics ================= -->
+
+
+	<div class="dashboard-grid">
+
+
+	<div class="recent-card">
+
+
+	<h2>
+
+	<i class="fas fa-chart-line"></i>
+
+	Patient Growth
+
+	</h2>
+
+
+	<canvas id="patientChart"></canvas>
+
+
+	</div>
+
+
+
+	<div class="recent-card">
+
+
+	<h2>
+
+	<i class="fas fa-chart-pie"></i>
+
+	Appointment Status
+
+	</h2>
+
+
+	<canvas id="appointmentChart"></canvas>
+
+
+	</div>
+
+
+	</div>
+	
+	<!-- ================= Footer ================= -->
+	
+	<footer class="footer">
+	
+	<p>
+	
+	© 2026 Hospital Management System | Admin Dashboard
+	
+	</p>
+	
+	</footer>
+	
+	</div>
+	
+	<!-- ================= Scripts ================= -->
+	
+	<script>
+	
+	// Admin Name
+	
+	const adminName = localStorage.getItem("name");
+	
+	if(adminName){
+	
+	document.getElementById("adminName").textContent = adminName;
+	
+	}
+	
+	// Current Date
+	
+	const today = new Date();
+	
+	document.getElementById("todayDate").textContent =
+	today.toDateString();
+	
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="js/auth.js"></script>
+	<script src="js/admin.js"></script>
+
+	<script src="js/admin-dashboard.js"></script>
+	
+	</body>
+	
+	</html>

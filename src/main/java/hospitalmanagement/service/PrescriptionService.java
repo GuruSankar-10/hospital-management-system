@@ -50,5 +50,7 @@ public class PrescriptionService {
     public void delete(Long id) {
         repository.deleteById(id);
     }
-
+    public List<Prescription> getPrescriptionsByDoctor(Long doctorId) {
+        return repository.findByDoctorId(doctorId);
+    }
 }

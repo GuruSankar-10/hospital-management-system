@@ -1,84 +1,74 @@
 package hospitalmanagement.dto;
 
+
 public class DashboardResponse {
 
-    private long totalDoctors;
-    private long totalPatients;
-    private long totalStaff;
-    private long totalAppointments;
-    private Double totalRevenue;
-    private long paidBills;
-    private long unpaidBills;
+
+    private long doctors;
+
+    private long staff;
+
+    private long patients;
+
+    private long appointments;
+
 
     public DashboardResponse() {
+
     }
 
-    public DashboardResponse(long totalDoctors, long totalPatients,
-                             long totalStaff, long totalAppointments,
-                             Double totalRevenue, long paidBills,
-                             long unpaidBills) {
-        this.totalDoctors = totalDoctors;
-        this.totalPatients = totalPatients;
-        this.totalStaff = totalStaff;
-        this.totalAppointments = totalAppointments;
-        this.totalRevenue = totalRevenue;
-        this.paidBills = paidBills;
-        this.unpaidBills = unpaidBills;
+
+    public DashboardResponse(long doctors,
+                             long staff,
+                             long patients,
+                             long appointments) {
+
+        this.doctors = doctors;
+        this.staff = staff;
+        this.patients = patients;
+        this.appointments = appointments;
+
     }
 
-    public long getTotalDoctors() {
-        return totalDoctors;
+
+
+    public long getDoctors() {
+        return doctors;
     }
 
-    public void setTotalDoctors(long totalDoctors) {
-        this.totalDoctors = totalDoctors;
+
+    public void setDoctors(long doctors) {
+        this.doctors = doctors;
     }
 
-    public long getTotalPatients() {
-        return totalPatients;
+
+    public long getStaff() {
+        return staff;
     }
 
-    public void setTotalPatients(long totalPatients) {
-        this.totalPatients = totalPatients;
+
+    public void setStaff(long staff) {
+        this.staff = staff;
     }
 
-    public long getTotalStaff() {
-        return totalStaff;
+
+    public long getPatients() {
+        return patients;
     }
 
-    public void setTotalStaff(long totalStaff) {
-        this.totalStaff = totalStaff;
+
+    public void setPatients(long patients) {
+        this.patients = patients;
     }
 
-    public long getTotalAppointments() {
-        return totalAppointments;
+
+    public long getAppointments() {
+        return appointments;
     }
 
-    public void setTotalAppointments(long totalAppointments) {
-        this.totalAppointments = totalAppointments;
+
+    public void setAppointments(long appointments) {
+        this.appointments = appointments;
     }
 
-    public Double getTotalRevenue() {
-        return totalRevenue;
-    }
-
-    public void setTotalRevenue(Double totalRevenue) {
-        this.totalRevenue = totalRevenue;
-    }
-
-    public long getPaidBills() {
-        return paidBills;
-    }
-
-    public void setPaidBills(long paidBills) {
-        this.paidBills = paidBills;
-    }
-
-    public long getUnpaidBills() {
-        return unpaidBills;
-    }
-
-    public void setUnpaidBills(long unpaidBills) {
-        this.unpaidBills = unpaidBills;
-    }
 }

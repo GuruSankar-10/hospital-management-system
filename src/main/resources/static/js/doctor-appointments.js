@@ -1,170 +1,269 @@
-// ================================
-// Doctor Appointments
-// ================================
+const doctorId = localStorage.getItem("doctorId");
 
-const API_URL = "http://localhost:8080/appointments";
+const API =
+"http://localhost:8080/appointments/doctor/" + doctorId;
 
-const doctorName = localStorage.getItem("name") || "Doctor";
+const STATUS_API =
+"http://localhost:8080/appointments";
 
-document.getElementById("doctorName").innerHTML =
-    "Dr. " + doctorName.replace(/^Dr\.?\s*/i, "");
+let appointments = [];
 
-// Today's Date
-document.getElementById("todayDate").innerHTML =
-    new Date().toDateString();
+let selectedAppointmentId = null;
 
+// ===============================
+// Page Load
+// ===============================
+
+window.onload = function () {
+
+    loadAppointments();
+
+    document
+        .getElementById("searchAppointment")
+        .addEventListener("keyup", searchAppointment);
+
+};
+
+// ===============================
 // Load Appointments
-function loadAppointments() {
+// ===============================
 
-    const doctorId = localStorage.getItem("doctorId");
+async function loadAppointments() {
 
-    fetch("http://localhost:8080/appointments/doctor/" + doctorId)
+    try {
 
-        .then(response => response.json())
+        const response = await fetch(API);
 
-        .then(data => {
+        appointments = await response.json();
 
-            const table = document.getElementById("appointmentTable");
+        displayAppointments(appointments);
 
-            table.innerHTML = "";
+        updateCards(appointments);
 
-            data.forEach(app => {
+    }
 
-                table.innerHTML += `
-
-                <tr>
-
-                    <td>${app.id}</td>
-
-                    <td>${app.patient ? app.patient.name : "-"}</td>
-
-                    <td>${app.appointmentDate || "-"}</td>
-
-                    <td>${app.appointmentTime || "-"}</td>
-
-                    <td>
-
-                        <select onchange="updateStatus(${app.id}, this.value)">
-
-                            <option value="PENDING"
-                                ${app.status=="PENDING"?"selected":""}>
-                                Pending
-                            </option>
-
-                            <option value="COMPLETED"
-                                ${app.status=="COMPLETED"?"selected":""}>
-                                Completed
-                            </option>
-
-                            <option value="CANCELLED"
-                                ${app.status=="CANCELLED"?"selected":""}>
-                                Cancelled
-                            </option>
-
-                        </select>
-
-                    </td>
-
-                    <td>
-
-                        <button class="complete-btn"
-                                onclick="viewAppointment(${app.id})">
-
-                            View
-
-                        </button>
-
-                    </td>
-
-                </tr>
-
-                `;
-
-            });
-
-        })
-
-        .catch(error => {
-
-            console.error(error);
-
-            alert("Unable to load appointments");
-
-        });
-
-}
-
-// Search
-
-function searchAppointments(){
-
-    const input =
-        document.getElementById("searchInput")
-        .value
-        .toLowerCase();
-
-    const rows =
-        document.querySelectorAll("#appointmentTable tr");
-
-    rows.forEach(row=>{
-
-        row.style.display =
-            row.innerText.toLowerCase().includes(input)
-            ? ""
-            : "none";
-
-    });
-
-}
-
-// Update Status
-
-function updateStatus(id,status){
-
-    fetch(API_URL + "/" + id + "/status",{
-
-        method:"PUT",
-
-        headers:{
-
-            "Content-Type":"application/json"
-
-        },
-
-        body:JSON.stringify({
-
-            status:status
-
-        })
-
-    })
-
-    .then(response=>{
-
-        if(response.ok){
-
-            alert("Status Updated");
-
-        }
-
-    })
-
-    .catch(error=>{
+    catch (error) {
 
         console.error(error);
 
+    }
+
+}
+
+// ===============================
+// Display Appointments
+// ===============================
+
+function displayAppointments(list) {
+
+    let rows = "";
+
+    list.forEach(a => {
+
+        rows += `
+
+        <tr>
+
+            <td>${a.id}</td>
+
+            <td>${a.patient ? a.patient.name : "-"}</td>
+
+            <td>${a.appointmentDate}</td>
+
+            <td>${a.appointmentTime}</td>
+
+            <td>
+
+                <span class="status ${a.status.toLowerCase()}">
+
+                    ${a.status}
+
+                </span>
+
+            </td>
+
+            <td>
+
+                <button
+                    class="editBtn"
+                    onclick="openStatusModal(${a.id},'${a.status}')">
+
+                    <i class="fas fa-edit"></i>
+
+                    Update
+
+                </button>
+
+            </td>
+
+        </tr>
+
+        `;
+
     });
 
-}
-
-// View Appointment
-
-function viewAppointment(id){
-
-    alert("Appointment ID : " + id);
+    document.getElementById("appointmentTable").innerHTML = rows;
 
 }
 
-// Load
+// ===============================
+// Dashboard Cards
+// ===============================
 
-loadAppointments();
+function updateCards(list) {
+
+    document.getElementById("appointmentCount").innerHTML =
+        list.length;
+
+    let pending = 0;
+
+    let confirmed = 0;
+
+    let completed = 0;
+
+    list.forEach(a => {
+
+        const status = (a.status || "").toUpperCase();
+
+        if (status === "PENDING")
+
+            pending++;
+
+        else if (status === "CONFIRMED")
+
+            confirmed++;
+
+        else if (status === "COMPLETED")
+
+            completed++;
+
+    });
+
+    document.getElementById("pendingCount").innerHTML =
+        pending;
+
+    document.getElementById("confirmedCount").innerHTML =
+        confirmed;
+
+    document.getElementById("completedCount").innerHTML =
+        completed;
+
+}
+
+// ===============================
+// Search
+// ===============================
+
+function searchAppointment() {
+
+    const keyword = document
+        .getElementById("searchAppointment")
+        .value
+        .toLowerCase();
+
+    const filtered = appointments.filter(a =>
+
+        (a.patient?.name || "")
+            .toLowerCase()
+            .includes(keyword)
+
+        ||
+
+        (a.status || "")
+            .toLowerCase()
+            .includes(keyword)
+
+        ||
+
+        (a.appointmentDate || "")
+            .includes(keyword)
+
+    );
+
+    displayAppointments(filtered);
+
+}
+
+// ===============================
+// Open Status Modal
+// ===============================
+
+function openStatusModal(id, status) {
+
+    selectedAppointmentId = id;
+
+    document.getElementById("appointmentId").value = id;
+
+    document.getElementById("appointmentStatus").value =
+        status;
+
+    document.getElementById("statusModal").style.display =
+        "block";
+
+}
+
+// ===============================
+// Close Modal
+// ===============================
+
+function closeStatusModal() {
+
+    document.getElementById("statusModal").style.display =
+        "none";
+
+}
+
+// ===============================
+// Update Status
+// ===============================
+
+async function updateStatus() {
+
+    const status =
+        document.getElementById("appointmentStatus").value;
+
+    const body = {
+
+        status: status
+
+    };
+
+    try {
+
+        await fetch(
+
+            STATUS_API +
+            "/" +
+            selectedAppointmentId +
+            "/status",
+
+            {
+
+                method: "PUT",
+
+                headers: {
+
+                    "Content-Type":
+                    "application/json"
+
+                },
+
+                body: JSON.stringify(body)
+
+            }
+
+        );
+
+        closeStatusModal();
+
+        loadAppointments();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+    }
+
+}

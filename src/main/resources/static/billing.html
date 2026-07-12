@@ -8,324 +8,538 @@
 
 <title>Billing Management</title>
 
-<style>
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
-}
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-body{
-    display:flex;
-    background:#f1f5f9;
-}
 
-/* Sidebar */
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/admin.css">
 
-.sidebar{
-    width:250px;
-    height:100vh;
-    position:fixed;
-    left:0;
-    top:0;
-    background:linear-gradient(180deg,#0f172a,#2563eb);
-    color:white;
-    padding:25px;
-}
-
-.sidebar h2{
-    text-align:center;
-    margin-bottom:40px;
-    font-size:28px;
-}
-
-.sidebar a{
-    display:block;
-    color:white;
-    text-decoration:none;
-    padding:15px;
-    margin:12px 0;
-    border-radius:12px;
-    transition:.3s;
-}
-
-.sidebar a:hover{
-    background:rgba(255,255,255,.2);
-    transform:translateX(5px);
-}
-
-/* Main */
-
-.main{
-    margin-left:250px;
-    width:calc(100% - 250px);
-    padding:30px;
-}
-
-/* Topbar */
-
-.topbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    background:white;
-    padding:20px 30px;
-    border-radius:20px;
-    box-shadow:0 8px 20px rgba(0,0,0,.08);
-}
-
-.topbar h1{
-    color:#1e293b;
-}
-
-#welcomeUser{
-    color:#2563eb;
-}
-
-/* Cards */
-
-.card{
-    background:white;
-    padding:30px;
-    margin-top:25px;
-    border-radius:24px;
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
-}
-
-.card h2{
-    margin-bottom:20px;
-    color:#1e293b;
-}
-
-.input-group{
-    display:flex;
-    gap:15px;
-    flex-wrap:wrap;
-}
-
-input{
-    padding:14px;
-    border:1px solid #ddd;
-    border-radius:12px;
-    width:210px;
-    font-size:15px;
-}
-
-input:focus{
-    outline:none;
-    border-color:#2563eb;
-}
-
-button{
-    padding:14px 24px;
-    border:none;
-    border-radius:12px;
-    cursor:pointer;
-    color:white;
-    font-weight:bold;
-}
-
-.bill-btn{
-    background:linear-gradient(135deg,#10b981,#059669);
-}
-
-.bill-btn:hover{
-    opacity:.9;
-}
-
-.delete-btn{
-    background:#ef4444;
-    padding:8px 14px;
-}
-
-.pdf-btn{
-    background:#2563eb;
-    padding:8px 14px;
-    margin-left:5px;
-}
-
-.wa-btn{
-    background:#25D366;
-    padding:8px 14px;
-    margin-left:5px;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-    margin-top:20px;
-}
-
-th{
-    background:#1e293b;
-    color:white;
-    padding:15px;
-}
-
-td{
-    padding:14px;
-    text-align:center;
-    border-bottom:1px solid #ddd;
-}
-
-tr:hover{
-    background:#f8fafc;
-}
-
-</style>
 
 </head>
 
+
 <body>
+
+
+<!-- Sidebar -->
 
 <div class="sidebar">
 
+<div class="logo">
+
 <h2>🏥 HMS</h2>
 
-<a href="dashboard.html">📊 Dashboard</a>
-
-<a href="doctors.html">👨‍⚕️ Doctors</a>
-
-<a href="patients.html">🧑 Patients</a>
-
-<a href="appointments.html">📅 Appointments</a>
-
-<a href="billing.html">💳 Billing</a>
-
-<a href="prescriptions.html">💊 Prescriptions</a>
-
-<a href="records.html">📁 Records</a>
-
-<a href="javascript:void(0)" onclick="logout()">
-🚪 Logout
-</a>
+<p>Hospital Management</p>
 
 </div>
+
+
+<nav>
+
+
+<a href="admin-dashboard.html">
+
+<i class="fas fa-house"></i>
+
+Dashboard
+
+</a>
+
+
+
+<a href="admin-doctors.html">
+
+<i class="fas fa-user-doctor"></i>
+
+Doctors
+
+</a>
+
+
+
+<a href="admin-staff.html">
+
+<i class="fas fa-user-nurse"></i>
+
+Staff
+
+</a>
+
+
+
+<a href="patients.html">
+
+<i class="fas fa-bed"></i>
+
+Patients
+
+</a>
+
+
+
+<a href="appointments.html">
+
+<i class="fas fa-calendar-check"></i>
+
+Appointments
+
+</a>
+
+
+
+<a href="billing.html" class="active">
+
+<i class="fas fa-file-invoice-dollar"></i>
+
+Billing
+
+</a>
+
+
+
+<a href="records.html">
+
+<i class="fas fa-file-medical"></i>
+
+Records
+
+</a>
+
+
+
+<a href="#" onclick="logout()">
+
+<i class="fas fa-right-from-bracket"></i>
+
+Logout
+
+</a>
+
+
+</nav>
+
+
+</div>
+
+
+
+
+
+<!-- Main -->
 
 <div class="main">
 
+
+
+<!-- Topbar -->
+
 <div class="topbar">
 
-<h1>💳 Billing Management</h1>
 
-<h3 id="welcomeUser"></h3>
+<div class="welcome">
+
+
+<h1>
+
+💳 Billing Management
+
+</h1>
+
+
+<p>
+
+Create and manage hospital bills
+
+</p>
+
 
 </div>
-<!-- Create Bill -->
+
+
+
+<div class="profile">
+
+
+<i class="fas fa-user-shield"></i>
+
+
+<span>
+
+Admin
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- Summary Cards -->
+
+
+<div class="cards">
+
 
 <div class="card">
 
-    <h2>💳 Create Bill</h2>
+<div>
 
-    <div class="input-group">
+<p>Total Revenue</p>
 
-        <input
-            type="number"
-            id="amount"
-            placeholder="Amount">
+<h2 id="totalRevenue">
 
-        <input
-            type="text"
-            id="paymentStatus"
-            placeholder="Payment Status">
+0
 
-        <input
-            type="text"
-            id="paymentMethod"
-            placeholder="Payment Method">
+</h2>
 
-        <input
-            type="number"
-            id="patientId"
-            placeholder="Patient ID">
-
-        <input
-            type="number"
-            id="appointmentId"
-            placeholder="Appointment ID">
-
-        <button
-            class="bill-btn"
-            onclick="addBill()">
-            Create Bill
-        </button>
-
-    </div>
 
 </div>
 
-<!-- Bills Table -->
+
+<i class="fas fa-indian-rupee-sign"></i>
+
+
+</div>
+
+
+
+
 
 <div class="card">
 
-    <h2>📋 Bills List</h2>
+<div>
 
-    <table>
+<p>Paid Bills</p>
 
-        <thead>
+<h2 id="paidBills">
 
-            <tr>
+0
 
-                <th>ID</th>
+</h2>
 
-                <th>Amount</th>
-
-                <th>Status</th>
-
-                <th>Payment Method</th>
-
-                <th>Patient ID</th>
-
-                <th>Appointment ID</th>
-
-                <th>Actions</th>
-
-            </tr>
-
-        </thead>
-
-        <tbody id="billingTable">
-
-        </tbody>
-
-    </table>
 
 </div>
 
+
+<i class="fas fa-circle-check"></i>
+
+
 </div>
-<!-- JavaScript Files -->
-<script src="/js/billing.js"></script>
-<script src="/js/logout.js"></script>
 
-<script>
 
-// ===============================
-// Login Protection
-// ===============================
-if (!localStorage.getItem("name") || !localStorage.getItem("role")) {
-    window.location.replace("login.html");
-}
 
-// ===============================
-// Welcome Logged-in User
-// ===============================
-const username = localStorage.getItem("name") || "User";
 
-document.getElementById("welcomeUser").innerHTML =
-    "Welcome, " + username + " 👋";
 
-// ===============================
-// Prevent Browser Back After Logout
-// ===============================
-history.pushState(null, null, location.href);
+<div class="card">
 
-window.onpopstate = function () {
-    history.go(1);
-};
+<div>
 
-</script>
+<p>Unpaid Bills</p>
+
+<h2 id="unpaidBills">
+
+0
+
+</h2>
+
+
+</div>
+
+
+<i class="fas fa-clock"></i>
+
+
+</div>
+
+
+
+<div class="card">
+
+<div>
+
+<p>Total Bills</p>
+
+<h2 id="totalBills">
+
+0
+
+</h2>
+
+
+</div>
+
+
+<i class="fas fa-file-invoice"></i>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- Add Bill -->
+
+
+<div class="quick-actions">
+
+
+<h2>
+
+<i class="fas fa-plus"></i>
+
+Create Bill
+
+</h2>
+
+
+
+<div class="input-group">
+
+
+<input 
+type="number"
+id="amount"
+placeholder="Bill Amount">
+
+
+
+<select id="paymentStatus">
+
+
+<option value="">
+
+Payment Status
+
+</option>
+
+
+<option value="PAID">
+
+PAID
+
+</option>
+
+
+<option value="UNPAID">
+
+UNPAID
+
+</option>
+
+
+</select>
+
+
+
+
+<select id="paymentMethod">
+
+
+<option value="">
+
+Payment Method
+
+</option>
+
+
+<option>
+
+Cash
+
+</option>
+
+
+<option>
+
+Card
+
+</option>
+
+
+<option>
+
+UPI
+
+</option>
+
+
+</select>
+
+
+
+<input
+
+type="number"
+
+id="patientId"
+
+placeholder="Patient ID">
+
+
+
+
+
+<input
+
+type="number"
+
+id="appointmentId"
+
+placeholder="Appointment ID">
+
+
+
+
+
+<button
+
+class="btn"
+
+onclick="createBill()">
+
+
+Generate Bill
+
+
+</button>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- Search -->
+
+
+<div class="recent-card">
+
+
+<h2>
+
+<i class="fas fa-list"></i>
+
+Bills List
+
+</h2>
+
+
+
+<input
+
+type="text"
+
+id="searchBill"
+
+class="search-box"
+
+placeholder="Search Bill..."
+
+onkeyup="searchBills()">
+
+
+
+
+
+<table>
+
+
+<thead>
+
+
+<tr>
+
+<th>ID</th>
+
+<th>Amount</th>
+
+<th>Status</th>
+
+<th>Method</th>
+
+<th>Patient</th>
+
+<th>Action</th>
+
+
+</tr>
+
+
+</thead>
+
+
+
+<tbody id="billingTable">
+
+
+</tbody>
+
+
+
+</table>
+
+
+
+</div>
+
+
+
+
+
+
+
+<footer class="footer">
+
+<p>
+
+© 2026 Hospital Management System
+
+</p>
+
+</footer>
+
+
+
+</div>
+
+
+
+
+
+
+
+<script src="js/logout.js"></script>
+
+<script src="js/billing.js"></script>
+
 
 </body>
+
 </html>

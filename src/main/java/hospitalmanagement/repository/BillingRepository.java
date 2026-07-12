@@ -8,6 +8,7 @@ public interface BillingRepository extends JpaRepository<Billing, Long> {
 
     long countByPaymentStatus(String paymentStatus);
 
-    @Query("SELECT SUM(b.amount) FROM Billing b")
+    @Query("SELECT COALESCE(SUM(b.amount),0) FROM Billing b")
     Double getTotalRevenue();
+
 }
