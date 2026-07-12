@@ -74,7 +74,18 @@ public class AuthController {
         System.out.println("Email : " + request.getEmail());
         System.out.println("Password : " + request.getPassword());
 
-        User user = userRepository.findByEmail(request.getEmail())
+        // DEBUG: Show all users in database
+        System.out.println("===== USERS IN DATABASE =====");
+        userRepository.findAll().forEach(u ->
+                System.out.println(
+                        u.getId() + " | " +
+                        u.getEmail() + " | " +
+                        u.getRole()
+                )
+        );
+        System.out.println("=============================");
+
+        User user = userRepository.findByEmail(request.getEmail().trim())
                 .orElseThrow(() -> new RuntimeException("User Not Found"));
 
         System.out.println("DB Password : " + user.getPassword());
@@ -88,7 +99,7 @@ public class AuthController {
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
+                        request.getEmail().trim(),
                         request.getPassword()));
 
         String token = jwtService.generateToken(user.getEmail());
