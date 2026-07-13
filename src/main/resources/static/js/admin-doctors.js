@@ -155,34 +155,28 @@ function searchDoctor(){
 // Open Modal
 // ==========================
 
-function openDoctorModal(){
+function openDoctorModal() {
 
-    document.getElementById("modalTitle").innerHTML =
-    "Add Doctor";
+    document.getElementById("modalTitle").innerHTML = "Add Doctor";
 
-    document.getElementById("doctorId").value="";
+    document.getElementById("doctorId").value = "";
+    document.getElementById("doctorName").value = "";
+    document.getElementById("doctorEmail").value = "";
+    document.getElementById("doctorPassword").value = "";
+    document.getElementById("doctorPhone").value = "";
+    document.getElementById("doctorSpecialization").value = "";
 
-    document.getElementById("doctorName").value="";
-
-    document.getElementById("doctorEmail").value="";
-
-    document.getElementById("doctorPassword").value="";
-
-    document.getElementById("doctorPhone").value="";
-
-    document.getElementById("doctorSpecialization").value="";
-
-    document.getElementById("doctorModal").style.display="flex";
-
+    const modal = document.getElementById("doctorModal");
+    modal.style.display = "flex";
 }
-
 // ==========================
 // Close Modal
 // ==========================
 
-function closeDoctorModal(){
+function closeDoctorModal() {
 
-    document.getElementById("doctorModal").style.display="none";
+    const modal = document.getElementById("doctorModal");
+    modal.style.display = "none";
 
 }
 
@@ -373,15 +367,15 @@ function confirmDelete() {
 function editDoctor(id) {
 
     fetch(DOCTOR_API + "/" + id)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Unable to Load Doctor");
+        .then(res => {
+            if (!res.ok) {
+                throw new Error("Unable to load doctor");
             }
-            return response.json();
+            return res.json();
         })
         .then(doctor => {
 
-            console.log("Doctor Loaded:", doctor);
+            document.getElementById("modalTitle").innerHTML = "Edit Doctor";
 
             document.getElementById("doctorId").value = doctor.id || "";
             document.getElementById("doctorName").value = doctor.name || "";
@@ -390,14 +384,18 @@ function editDoctor(id) {
             document.getElementById("doctorPhone").value = doctor.phone || "";
             document.getElementById("doctorSpecialization").value = doctor.specialization || "";
 
-            document.getElementById("modalTitle").innerHTML = "Edit Doctor";
+            const modal = document.getElementById("doctorModal");
 
-            document.getElementById("doctorModal").style.display = "flex";
+            modal.style.display = "flex";
+
+            modal.classList.add("show");
 
         })
-        .catch(error => {
-            console.error("Edit Error:", error);
-            alert(error.message);
+        .catch(err => {
+
+            console.error(err);
+            alert(err.message);
+
         });
 
 }
@@ -407,27 +405,20 @@ function editDoctor(id) {
 
 function togglePassword() {
 
-    const password =
-        document.getElementById("doctorPassword");
+    const password = document.getElementById("doctorPassword");
+    const icon = document.getElementById("togglePassword");
 
-    const icon =
-        document.getElementById("togglePassword");
+    if (!password || !icon) return;
 
     if (password.type === "password") {
 
         password.type = "text";
-
-        icon.classList.remove("fa-eye");
-
-        icon.classList.add("fa-eye-slash");
+        icon.className = "fas fa-eye-slash";
 
     } else {
 
         password.type = "password";
-
-        icon.classList.remove("fa-eye-slash");
-
-        icon.classList.add("fa-eye");
+        icon.className = "fas fa-eye";
 
     }
 
@@ -437,24 +428,21 @@ function togglePassword() {
 // Close Modal on Outside Click
 // ==========================
 
-window.addEventListener("click", function (event) {
+// ==========================
+// Close Modal on Outside Click
+// ==========================
 
-    const doctorModal =
-        document.getElementById("doctorModal");
+window.addEventListener("mousedown", function (e) {
 
-    const deleteModal =
-        document.getElementById("deleteModal");
+    const doctorModal = document.getElementById("doctorModal");
+    const deleteModal = document.getElementById("deleteModal");
 
-    if (event.target === doctorModal) {
-
+    if (doctorModal && e.target === doctorModal) {
         closeDoctorModal();
-
     }
 
-    if (event.target === deleteModal) {
-
+    if (deleteModal && e.target === deleteModal) {
         closeDeleteModal();
-
     }
 
 });

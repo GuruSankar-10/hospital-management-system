@@ -3,10 +3,10 @@
 // Authentication
 // ==========================================
 
-// Local Spring Boot Backend
 // ==========================================
 // API URL
 // ==========================================
+
 const isLocal =
     window.location.hostname === "localhost" ||
     window.location.hostname === "127.0.0.1";
@@ -21,8 +21,14 @@ const API_URL = isLocal
 
 function login() {
 
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value.trim();
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+
+    if (!emailInput || !passwordInput) return;
+
+    const email = emailInput.value.trim();
+    const password = passwordInput.value.trim();
+
     const loginButton = document.querySelector("button");
 
     if (email === "" || password === "") {
@@ -32,17 +38,15 @@ function login() {
 
     showLoading(loginButton);
 
-    const loginData = {
-        email: email,
-        password: password
-    };
-
     fetch(API_URL + "/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(loginData)
+        body: JSON.stringify({
+            email,
+            password
+        })
     })
 
     .then(async response => {
@@ -58,14 +62,13 @@ function login() {
                 if (error.message) {
                     message = error.message;
                 }
-            } catch (e) {
-                console.log(e);
-            }
+            } catch (e) {}
 
             throw new Error(message);
         }
 
         return response.json();
+
     })
 
     .then(data => {
@@ -75,7 +78,7 @@ function login() {
         localStorage.setItem("name", data.fullName);
         localStorage.setItem("email", data.email);
 
-        if (data.doctorId !== null && data.doctorId !== undefined) {
+        if (data.doctorId != null) {
             localStorage.setItem("doctorId", data.doctorId);
         }
 
@@ -161,8 +164,8 @@ function resetPassword() {
         },
 
         body: JSON.stringify({
-            email: email,
-            newPassword: newPassword
+            email,
+            newPassword
         })
 
     })
@@ -207,7 +210,7 @@ function resetPassword() {
 }
 
 // ==========================================
-// Show / Hide Password
+// Toggle Password
 // ==========================================
 
 function togglePassword(inputId, iconId) {
@@ -220,14 +223,12 @@ function togglePassword(inputId, iconId) {
     if (input.type === "password") {
 
         input.type = "text";
-        icon.classList.remove("fa-eye");
-        icon.classList.add("fa-eye-slash");
+        icon.className = "fas fa-eye-slash";
 
     } else {
 
         input.type = "password";
-        icon.classList.remove("fa-eye-slash");
-        icon.classList.add("fa-eye");
+        icon.className = "fas fa-eye";
 
     }
 
@@ -250,38 +251,48 @@ function logout() {
 
 function rememberUser() {
 
-    const email = document.getElementById("email").value.trim();
+    const email = document.getElementById("email");
 
-    if (email !== "") {
+    if (email && email.value.trim() !== "") {
 
-        localStorage.setItem("rememberEmail", email);
+        localStorage.setItem("rememberEmail", email.value.trim());
 
     }
 
 }
 
-window.addEventListener("DOMContentLoaded", function () {
+// ==========================================
+// DOM Ready
+// ==========================================
+
+document.addEventListener("DOMContentLoaded", function () {
 
     const savedEmail = localStorage.getItem("rememberEmail");
 
-    if (savedEmail && document.getElementById("email")) {
+    const email = document.getElementById("email");
 
-        document.getElementById("email").value = savedEmail;
+    if (savedEmail && email) {
+
+        email.value = savedEmail;
+        email.focus();
 
     }
 
 });
 
 // ==========================================
-// Enter Key Login
+// Enter Key Login (Only Login Page)
 // ==========================================
 
 document.addEventListener("keydown", function (event) {
 
-    if (event.key === "Enter") {
+    if (event.key !== "Enter") return;
 
+    if (
+        document.getElementById("email") &&
+        document.getElementById("password")
+    ) {
         login();
-
     }
 
 });
@@ -290,17 +301,17 @@ document.addEventListener("keydown", function (event) {
 // Close Forgot Password Modal
 // ==========================================
 
-window.onclick = function (event) {
+window.addEventListener("click", function (event) {
 
     const modal = document.getElementById("forgotModal");
 
-    if (event.target === modal) {
+    if (modal && event.target === modal) {
 
         closeForgotPassword();
 
     }
 
-};
+});
 
 // ==========================================
 // Button Loading
@@ -323,19 +334,3 @@ function hideLoading(button) {
     button.innerHTML = "Login Securely";
 
 }
-
-// ==========================================
-// Auto Focus
-// ==========================================
-
-window.onload = function () {
-
-    const email = document.getElementById("email");
-
-    if (email) {
-
-        email.focus();
-
-    }
-
-};
