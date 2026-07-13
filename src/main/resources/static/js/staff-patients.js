@@ -1,176 +1,143 @@
 console.log("Staff Patient JS Loaded");
 
+// ==========================================
+// Base URL
+// ==========================================
 
 const BASE_URL =
 window.location.hostname === "localhost"
-? "http://localhost:8080"
-: "https://hospital-management-system-6pok.onrender.com";
+    ? "http://localhost:8080"
+    : "https://hospital-management-system-6pok.onrender.com";
 
 const PATIENT_API = BASE_URL + "/patients";
 
 let patientsData = [];
 
-
 // ==============================
-// Load Patients
+// Page Load
 // ==============================
 
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded", function () {
 
     loadPatients();
 
 });
 
-
-
 // ==============================
-// Get Patients
+// Load Patients
 // ==============================
 
-function loadPatients(){
+function loadPatients() {
 
+    fetch(PATIENT_API)
 
-fetch(PATIENT_API)
+    .then(response => {
 
+        if (!response.ok) {
 
-.then(response => response.json())
+            throw new Error("Unable to load patients.");
 
+        }
 
-.then(data => {
+        return response.json();
 
+    })
 
-    patientsData = data;
+    .then(data => {
 
+        patientsData = data;
 
-    displayPatients(data);
+        displayPatients(data);
 
+    })
 
-})
+    .catch(error => {
 
+        console.error(error);
 
-.catch(error => {
+        alert(error.message);
 
-
-    console.log("Patient Load Error:", error);
-
-
-});
-
+    });
 
 }
-
-
-
-
 
 // ==============================
 // Display Patients
 // ==============================
 
-function displayPatients(data){
+function displayPatients(data) {
 
+    let rows = "";
 
-let rows = "";
+    data.forEach(patient => {
 
+        rows += `
 
+        <tr>
 
-data.forEach(patient => {
+            <td>${patient.id}</td>
 
+            <td>${patient.name || "-"}</td>
 
+            <td>${patient.age || "-"}</td>
 
-rows += `
+            <td>${patient.disease || "-"}</td>
 
-<tr>
+            <td>${patient.phone || "-"}</td>
 
+            <td>
 
-<td>${patient.id}</td>
+                ${patient.doctor ? patient.doctor.name : "Not Assigned"}
 
+            </td>
 
-<td>${patient.name}</td>
+        </tr>
 
+        `;
 
-<td>${patient.age}</td>
+    });
 
-
-<td>${patient.disease}</td>
-
-
-<td>${patient.phone}</td>
-
-
-<td>
-
-${patient.doctor ? patient.doctor.name : "Not Assigned"}
-
-</td>
-
-
-
-</tr>
-
-`;
-
-
-
-});
-
-
-
-document.getElementById("patientTable").innerHTML = rows;
-
-
+    document.getElementById("patientTable").innerHTML = rows;
 
 }
-
-
-
-
-
-
 
 // ==============================
 // Search Patients
 // ==============================
 
-function searchPatients(){
+function searchPatients() {
 
+    const searchValue =
 
-let searchValue =
+        document
+        .getElementById("searchPatient")
+        .value
+        .toLowerCase();
 
-document.getElementById("searchPatient")
-.value
-.toLowerCase();
+    const filtered = patientsData.filter(patient => {
 
+        return (
 
+            (patient.name || "")
+                .toLowerCase()
+                .includes(searchValue)
 
+            ||
 
-let filtered = patientsData.filter(patient => {
+            (patient.disease || "")
+                .toLowerCase()
+                .includes(searchValue)
 
+            ||
 
-return (
+            (patient.phone || "")
+                .toLowerCase()
+                .includes(searchValue)
 
-patient.name.toLowerCase()
-.includes(searchValue)
+        );
 
-||
+    });
 
-patient.disease.toLowerCase()
-.includes(searchValue)
-
-||
-
-patient.phone.includes(searchValue)
-
-
-);
-
-
-});
-
-
-
-displayPatients(filtered);
-
-
+    displayPatients(filtered);
 
 }

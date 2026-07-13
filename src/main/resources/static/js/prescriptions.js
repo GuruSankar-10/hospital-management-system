@@ -1,13 +1,30 @@
+// ==========================================
+// Doctor Prescriptions
+// ==========================================
+
+const BASE_URL =
+window.location.hostname === "localhost"
+    ? "http://localhost:8080"
+    : "https://hospital-management-system-6pok.onrender.com";
+
 const doctorId = localStorage.getItem("doctorId");
 
+if (!doctorId) {
+
+    alert("Session expired. Please login again.");
+
+    window.location.href = "login.html";
+
+}
+
 const API =
-"http://localhost:8080/prescriptions/doctor/" + doctorId;
+BASE_URL + "/prescriptions/doctor/" + doctorId;
 
 const SAVE_API =
-"http://localhost:8080/prescriptions";
+BASE_URL + "/prescriptions";
 
 const PATIENT_API =
-"http://localhost:8080/patients/doctor/" + doctorId;
+BASE_URL + "/patients/doctor/" + doctorId;
 
 let prescriptions = [];
 
@@ -17,15 +34,15 @@ let deleteId = null;
 // Page Load
 // =========================
 
-window.onload = function(){
+window.onload = function () {
 
     loadPatients();
 
     loadPrescriptions();
 
     document
-    .getElementById("searchPrescription")
-    .addEventListener("keyup",searchPrescription);
+        .getElementById("searchPrescription")
+        .addEventListener("keyup", searchPrescription);
 
 };
 
@@ -33,15 +50,33 @@ window.onload = function(){
 // Load Prescriptions
 // =========================
 
-async function loadPrescriptions(){
+async function loadPrescriptions() {
 
-    const response = await fetch(API);
+    try {
 
-    prescriptions = await response.json();
+        const response = await fetch(API);
 
-    displayPrescriptions(prescriptions);
+        if (!response.ok) {
 
-    updateCards(prescriptions);
+            throw new Error("Unable to load prescriptions.");
+
+        }
+
+        prescriptions = await response.json();
+
+        displayPrescriptions(prescriptions);
+
+        updateCards(prescriptions);
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert(error.message);
+
+    }
 
 }
 
@@ -49,43 +84,41 @@ async function loadPrescriptions(){
 // Display
 // =========================
 
-function displayPrescriptions(list){
+function displayPrescriptions(list) {
 
-    let rows="";
+    let rows = "";
 
-    list.forEach(p=>{
+    list.forEach(p => {
 
-        rows+=`
+        rows += `
 
         <tr>
 
-        <td>${p.id}</td>
+            <td>${p.id}</td>
 
-        <td>${p.patient ? p.patient.name : "-"}</td>
+            <td>${p.patient ? p.patient.name : "-"}</td>
 
-        <td>${p.medicine}</td>
+            <td>${p.medicine}</td>
 
-        <td>${p.notes}</td>
+            <td>${p.notes}</td>
 
-        <td>
+            <td>
 
-        <button class="editBtn"
+                <button class="editBtn"
+                    onclick="editPrescription(${p.id})">
 
-        onclick="editPrescription(${p.id})">
+                    <i class="fas fa-edit"></i>
 
-        <i class="fas fa-edit"></i>
+                </button>
 
-        </button>
+                <button class="deleteBtn"
+                    onclick="deletePrescription(${p.id})">
 
-        <button class="deleteBtn"
+                    <i class="fas fa-trash"></i>
 
-        onclick="deletePrescription(${p.id})">
+                </button>
 
-        <i class="fas fa-trash"></i>
-
-        </button>
-
-        </td>
+            </td>
 
         </tr>
 
@@ -94,7 +127,7 @@ function displayPrescriptions(list){
     });
 
     document.getElementById("prescriptionTable").innerHTML =
-    rows;
+        rows;
 
 }
 
@@ -102,30 +135,31 @@ function displayPrescriptions(list){
 // Dashboard Cards
 // =========================
 
-function updateCards(list){
+function updateCards(list) {
 
     document.getElementById("prescriptionCount").innerHTML =
-    list.length;
+        list.length;
 
-    const patients =
-    new Set();
+    const patients = new Set();
 
-    list.forEach(p=>{
+    list.forEach(p => {
 
-        if(p.patient)
+        if (p.patient) {
 
             patients.add(p.patient.id);
+
+        }
 
     });
 
     document.getElementById("patientCount").innerHTML =
-    patients.size;
+        patients.size;
 
     document.getElementById("todayCount").innerHTML =
-    list.length;
+        list.length;
 
     document.getElementById("medicineCount").innerHTML =
-    list.length;
+        list.length;
 
 }
 
@@ -133,31 +167,45 @@ function updateCards(list){
 // Load Patients
 // =========================
 
-async function loadPatients(){
+async function loadPatients() {
 
-    const response =
-    await fetch(PATIENT_API);
+    try {
 
-    const patients =
-    await response.json();
+        const response = await fetch(PATIENT_API);
 
-    const select =
-    document.getElementById("patientSelect");
+        if (!response.ok) {
 
-    select.innerHTML =
-    "<option value=''>Select Patient</option>";
+            throw new Error("Unable to load patients.");
 
-    patients.forEach(patient=>{
+        }
 
-        select.innerHTML +=
+        const patients = await response.json();
 
-        `<option value="${patient.id}">
+        const select =
+            document.getElementById("patientSelect");
 
-        ${patient.name}
+        select.innerHTML =
+            "<option value=''>Select Patient</option>";
 
-        </option>`;
+        patients.forEach(patient => {
 
-    });
+            select.innerHTML +=
+
+            `<option value="${patient.id}">
+                ${patient.name}
+            </option>`;
+
+        });
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert(error.message);
+
+    }
 
 }
 
@@ -165,30 +213,36 @@ async function loadPatients(){
 // Search
 // =========================
 
-function searchPrescription(){
+function searchPrescription() {
 
     const keyword =
-    document
-    .getElementById("searchPrescription")
-    .value
-    .toLowerCase();
+
+        document
+        .getElementById("searchPrescription")
+        .value
+        .toLowerCase();
 
     const filtered =
-    prescriptions.filter(p=>
 
-        p.medicine.toLowerCase().includes(keyword)
+        prescriptions.filter(p =>
 
-        ||
+            (p.medicine || "")
+            .toLowerCase()
+            .includes(keyword)
 
-        p.notes.toLowerCase().includes(keyword)
+            ||
 
-        ||
+            (p.notes || "")
+            .toLowerCase()
+            .includes(keyword)
 
-        (p.patient?.name || "")
-        .toLowerCase()
-        .includes(keyword)
+            ||
 
-    );
+            (p.patient?.name || "")
+            .toLowerCase()
+            .includes(keyword)
+
+        );
 
     displayPrescriptions(filtered);
 
@@ -198,28 +252,28 @@ function searchPrescription(){
 // Open Modal
 // =========================
 
-function openPrescriptionModal(){
+function openPrescriptionModal() {
 
     document.getElementById("modalTitle").innerHTML =
-    "New Prescription";
+        "New Prescription";
 
-    document.getElementById("prescriptionId").value="";
+    document.getElementById("prescriptionId").value = "";
 
-    document.getElementById("patientSelect").value="";
+    document.getElementById("patientSelect").value = "";
 
-    document.getElementById("medicine").value="";
+    document.getElementById("medicine").value = "";
 
-    document.getElementById("instructions").value="";
+    document.getElementById("instructions").value = "";
 
     document.getElementById("prescriptionModal").style.display =
-    "block";
+        "block";
 
 }
 
-function closePrescriptionModal(){
+function closePrescriptionModal() {
 
     document.getElementById("prescriptionModal").style.display =
-    "none";
+        "none";
 
 }
 
@@ -227,35 +281,35 @@ function closePrescriptionModal(){
 // Save
 // =========================
 
-async function savePrescription(){
+async function savePrescription() {
 
     const id =
-    document.getElementById("prescriptionId").value;
+        document.getElementById("prescriptionId").value;
 
-    const prescription={
+    const prescription = {
 
         medicine:
-        document.getElementById("medicine").value,
+            document.getElementById("medicine").value.trim(),
 
         notes:
-        document.getElementById("instructions").value,
+            document.getElementById("instructions").value.trim(),
 
-        doctor:{
+        doctor: {
 
-            id:doctorId
+            id: doctorId
 
         },
 
-        patient:{
+        patient: {
 
             id:
-            document.getElementById("patientSelect").value
+                document.getElementById("patientSelect").value
 
         }
 
     };
 
-    if(
+    if (
 
         !prescription.medicine ||
 
@@ -263,101 +317,159 @@ async function savePrescription(){
 
         !prescription.patient.id
 
-    ){
+    ) {
 
-        alert("Please fill all fields");
+        alert("Please fill all fields.");
 
         return;
 
     }
 
     const url =
-    id ? SAVE_API+"/"+id : SAVE_API;
+        id ? SAVE_API + "/" + id : SAVE_API;
 
     const method =
-    id ? "PUT" : "POST";
+        id ? "PUT" : "POST";
 
-    await fetch(url,{
+    try {
 
-        method:method,
+        const response = await fetch(url, {
 
-        headers:{
+            method: method,
 
-            "Content-Type":"application/json"
+            headers: {
 
-        },
+                "Content-Type": "application/json"
 
-        body:JSON.stringify(prescription)
+            },
 
-    });
+            body: JSON.stringify(prescription)
 
-    closePrescriptionModal();
+        });
 
-    loadPrescriptions();
+        if (!response.ok) {
+
+            throw new Error("Unable to save prescription.");
+
+        }
+
+        closePrescriptionModal();
+
+        loadPrescriptions();
+
+        alert("Prescription saved successfully.");
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert(error.message);
+
+    }
 
 }
-
 // =========================
-// Edit
+// Edit Prescription
 // =========================
 
-function editPrescription(id){
+function editPrescription(id) {
 
-    const p =
-    prescriptions.find(x=>x.id==id);
+    const p = prescriptions.find(x => x.id == id);
 
-    if(!p) return;
+    if (!p) {
+
+        alert("Prescription not found.");
+
+        return;
+
+    }
 
     document.getElementById("modalTitle").innerHTML =
-    "Edit Prescription";
+        "Edit Prescription";
 
     document.getElementById("prescriptionId").value =
-    p.id;
+        p.id;
 
     document.getElementById("patientSelect").value =
-    p.patient ? p.patient.id : "";
+        p.patient ? p.patient.id : "";
 
     document.getElementById("medicine").value =
-    p.medicine;
+        p.medicine || "";
 
     document.getElementById("instructions").value =
-    p.notes;
+        p.notes || "";
 
     document.getElementById("prescriptionModal").style.display =
-    "block";
+        "block";
 
 }
 
 // =========================
-// Delete
+// Delete Prescription
 // =========================
 
-function deletePrescription(id){
+function deletePrescription(id) {
 
-    deleteId=id;
+    deleteId = id;
 
     document.getElementById("deleteModal").style.display =
-    "block";
+        "block";
 
 }
 
-function closeDeleteModal(){
+// =========================
+// Close Delete Modal
+// =========================
+
+function closeDeleteModal() {
 
     document.getElementById("deleteModal").style.display =
-    "none";
+        "none";
 
 }
 
-async function confirmDelete(){
+// =========================
+// Confirm Delete
+// =========================
 
-    await fetch(SAVE_API+"/"+deleteId,{
+async function confirmDelete() {
 
-        method:"DELETE"
+    try {
 
-    });
+        const response = await fetch(
 
-    closeDeleteModal();
+            SAVE_API + "/" + deleteId,
 
-    loadPrescriptions();
+            {
+
+                method: "DELETE"
+
+            }
+
+        );
+
+        if (!response.ok) {
+
+            throw new Error("Unable to delete prescription.");
+
+        }
+
+        closeDeleteModal();
+
+        loadPrescriptions();
+
+        alert("Prescription deleted successfully.");
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert(error.message);
+
+    }
 
 }

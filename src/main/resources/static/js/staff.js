@@ -1,14 +1,17 @@
 console.log("STAFF JS LOADED");
 
+// ==========================================
+// Base URL
+// ==========================================
+
 const BASE_URL =
 window.location.hostname === "localhost"
-? "http://localhost:8080"
-: "https://hospital-management-system-6pok.onrender.com";
+    ? "http://localhost:8080"
+    : "https://hospital-management-system-6pok.onrender.com";
 
 const STAFF_API_URL = BASE_URL + "/staff";
 
 let deleteId = null;
-
 
 // ==========================
 // Page Load
@@ -20,25 +23,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-
-
 // ==========================
 // Open Staff Modal
 // ==========================
 
-function openStaffModal(){
+function openStaffModal() {
 
     document.getElementById("staffModal").style.display = "flex";
 
 }
 
-
-
 // ==========================
 // Close Staff Modal
 // ==========================
 
-function closeStaffModal(){
+function closeStaffModal() {
 
     document.getElementById("staffModal").style.display = "none";
 
@@ -46,13 +45,11 @@ function closeStaffModal(){
 
 }
 
-
-
 // ==========================
 // Clear Form
 // ==========================
 
-function clearForm(){
+function clearForm() {
 
     document.getElementById("staffId").value = "";
 
@@ -68,135 +65,117 @@ function clearForm(){
 
 }
 
-
-
 // ==========================
 // Register Staff
 // ==========================
 
-function registerStaff(){
-
+function registerStaff() {
 
     let staff = {
 
-
         fullName:
-        document.getElementById("staffName").value,
-
+            document.getElementById("staffName").value.trim(),
 
         email:
-        document.getElementById("staffEmail").value,
-
+            document.getElementById("staffEmail").value.trim(),
 
         password:
-        document.getElementById("staffPassword").value,
-
+            document.getElementById("staffPassword").value.trim(),
 
         phone:
-        document.getElementById("staffPhone").value,
-
+            document.getElementById("staffPhone").value.trim(),
 
         department:
-        document.getElementById("staffDepartment").value
-
+            document.getElementById("staffDepartment").value.trim()
 
     };
 
+    if (
 
-
-    if(
         staff.fullName === "" ||
-        staff.email === "" ||
-        staff.password === "" ||
-        staff.phone === "" ||
-        staff.department === ""
-    ){
 
-        alert("Please fill all fields");
+        staff.email === "" ||
+
+        staff.password === "" ||
+
+        staff.phone === "" ||
+
+        staff.department === ""
+
+    ) {
+
+        alert("Please fill all fields.");
 
         return;
 
     }
 
+    fetch(STAFF_API_URL + "/register", {
 
+        method: "POST",
 
-    fetch(STAFF_API_URL + "/register",{
+        headers: {
 
-
-        method:"POST",
-
-
-        headers:{
-
-
-            "Content-Type":"application/json"
-
+            "Content-Type": "application/json"
 
         },
 
-
-        body:JSON.stringify(staff)
-
-
+        body: JSON.stringify(staff)
 
     })
 
+    .then(response => {
 
+        if (!response.ok) {
 
-    .then(response=>response.text())
+            throw new Error("Staff Registration Failed.");
 
+        }
 
-    .then(data=>{
+        return response.text();
 
+    })
 
-        alert(data);
+    .then(message => {
 
+        alert(message);
 
         closeStaffModal();
 
-
         loadStaff();
-
-
 
     })
 
-
-    .catch(error=>{
-
+    .catch(error => {
 
         console.error(error);
 
-
-        alert("Staff Registration Failed");
-
+        alert(error.message);
 
     });
 
-
-
 }
-
-
-
-
-
-
 // ==========================
 // Load Staff List
 // ==========================
 
-function loadStaff(){
-
+function loadStaff() {
 
     fetch(STAFF_API_URL)
 
+    .then(response => {
 
-    .then(response=>response.json())
+        if (!response.ok) {
 
+            throw new Error("Unable to load staff.");
 
-    .then(data=>{
+        }
 
+        return response.json();
+
+    })
+
+    .then(data => {
 
         let table = "";
 
@@ -206,280 +185,198 @@ function loadStaff(){
 
         let other = 0;
 
+        data.forEach(staff => {
 
-
-        data.forEach(staff=>{
-
-
-            if(staff.department === "Nurse"){
+            if (staff.department === "Nurse") {
 
                 nurse++;
 
             }
 
-            else if(staff.department === "Reception"){
+            else if (staff.department === "Reception") {
 
                 reception++;
 
             }
 
-            else{
+            else {
 
                 other++;
 
             }
 
-
-
-
             table += `
-
 
             <tr>
 
+                <td>${staff.id}</td>
 
-            <td>${staff.id}</td>
+                <td>${staff.fullName || staff.name}</td>
 
+                <td>${staff.phone || "-"}</td>
 
-            <td>${staff.name}</td>
+                <td>${staff.department || "-"}</td>
 
+                <td>
 
-            <td>${staff.phone}</td>
+                    <button
+                        class="deleteBtn"
+                        onclick="deleteStaff(${staff.id})">
 
+                        Delete
 
-            <td>${staff.department}</td>
+                    </button>
 
-
-
-            <td>
-
-
-            <button 
-            class="deleteBtn"
-            onclick="deleteStaff(${staff.id})">
-
-
-            Delete
-
-
-            </button>
-
-
-            </td>
-
+                </td>
 
             </tr>
 
-
             `;
-
 
         });
 
-
-
-
         document.getElementById("staffTable").innerHTML = table;
-
-
 
         document.getElementById("staffCount").innerHTML = data.length;
 
-
         document.getElementById("nurseCount").innerHTML = nurse;
-
 
         document.getElementById("receptionCount").innerHTML = reception;
 
-
         document.getElementById("otherCount").innerHTML = other;
-
-
 
     })
 
+    .catch(error => {
 
-    .catch(error=>{
+        console.error(error);
 
-
-        console.log("Load Staff Error:",error);
-
+        alert(error.message);
 
     });
 
-
-
 }
-
-
-
-
-
-
 
 // ==========================
 // Search Staff
 // ==========================
 
-function searchStaff(){
+function searchStaff() {
 
+    const value =
+        document.getElementById("searchStaff")
+        .value
+        .toLowerCase();
 
-    let value =
-    document.getElementById("searchStaff")
-    .value
-    .toLowerCase();
+    const rows =
+        document.querySelectorAll("#staffTable tr");
 
-
-
-    let rows =
-    document.querySelectorAll("#staffTable tr");
-
-
-
-    rows.forEach(row=>{
-
+    rows.forEach(row => {
 
         row.style.display =
 
-        row.innerText
-        .toLowerCase()
-        .includes(value)
+            row.innerText
+            .toLowerCase()
+            .includes(value)
 
-        ?
+            ? ""
 
-        ""
-
-        :
-
-        "none";
-
+            : "none";
 
     });
 
-
-
 }
-
-
-
-
-
 
 // ==========================
 // Delete Staff
 // ==========================
 
-function deleteStaff(id){
+function deleteStaff(id) {
 
-
-    deleteId=id;
-
+    deleteId = id;
 
     document.getElementById("deleteModal")
-    .style.display="flex";
-
+        .style.display = "flex";
 
 }
-
-
-
-
-
 
 // ==========================
 // Confirm Delete
 // ==========================
 
-function confirmDelete(){
+function confirmDelete() {
 
+    fetch(STAFF_API_URL + "/" + deleteId, {
 
-    fetch(STAFF_API_URL+"/"+deleteId,{
-
-
-        method:"DELETE"
-
+        method: "DELETE"
 
     })
 
+    .then(response => {
 
-    .then(response=>response.text())
+        if (!response.ok) {
 
+            throw new Error("Delete failed.");
 
-    .then(data=>{
+        }
 
+        return response.text();
 
-        alert(data);
+    })
 
+    .then(message => {
+
+        alert(message);
 
         closeDeleteModal();
 
-
         loadStaff();
 
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+        alert(error.message);
 
     });
 
-
-
 }
-
-
-
-
-
 
 // ==========================
 // Close Delete Modal
 // ==========================
 
-function closeDeleteModal(){
-
+function closeDeleteModal() {
 
     document.getElementById("deleteModal")
-    .style.display="none";
-
+        .style.display = "none";
 
 }
-
-
-
-
-
 
 // ==========================
 // Outside Click Close
 // ==========================
 
-window.onclick=function(event){
+window.onclick = function (event) {
 
+    const staffModal =
+        document.getElementById("staffModal");
 
-    let staffModal =
-    document.getElementById("staffModal");
+    const deleteModal =
+        document.getElementById("deleteModal");
 
-
-    let deleteModal =
-    document.getElementById("deleteModal");
-
-
-
-    if(event.target === staffModal){
-
+    if (event.target === staffModal) {
 
         closeStaffModal();
 
-
     }
 
-
-
-    if(event.target === deleteModal){
-
+    if (event.target === deleteModal) {
 
         closeDeleteModal();
 
-
     }
-
-
 
 };

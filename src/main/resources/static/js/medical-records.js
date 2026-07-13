@@ -2,6 +2,7 @@
 // Medical Records
 // ==========================================
 
+// API URL
 const isLocal =
     window.location.hostname === "localhost" ||
     window.location.hostname === "127.0.0.1";
@@ -9,6 +10,17 @@ const isLocal =
 const API_URL = isLocal
     ? "http://localhost:8080"
     : "https://hospital-management-system-6pok.onrender.com";
+
+// Doctor Session
+const doctorId = localStorage.getItem("doctorId");
+
+if (!doctorId) {
+
+    alert("Session expired. Please login again.");
+
+    window.location.href = "login.html";
+
+}
 
 // ==========================================
 // Load Medical Records
@@ -19,7 +31,9 @@ function loadMedicalRecords() {
     fetch(API_URL + "/medical-records", {
 
         headers: {
+
             "Authorization": "Bearer " + localStorage.getItem("token")
+
         }
 
     })
@@ -63,8 +77,8 @@ function loadMedicalRecords() {
                 <td>
 
                     <button
-                    class="delete-btn"
-                    onclick="deleteMedicalRecord(${record.id})">
+                        class="delete-btn"
+                        onclick="deleteMedicalRecord(${record.id})">
 
                         Delete
 
@@ -82,6 +96,8 @@ function loadMedicalRecords() {
 
     .catch(error => {
 
+        console.error(error);
+
         alert(error.message);
 
     });
@@ -94,17 +110,20 @@ function loadMedicalRecords() {
 
 function saveMedicalRecord() {
 
-    const doctorId = localStorage.getItem("doctorId");
+    const patientId =
+        document.getElementById("patientId").value.trim();
 
-    const patientId = document.getElementById("patientId").value;
+    const diagnosis =
+        document.getElementById("diagnosis").value.trim();
 
-    const diagnosis = document.getElementById("diagnosis").value;
+    const symptoms =
+        document.getElementById("symptoms").value.trim();
 
-    const symptoms = document.getElementById("symptoms").value;
+    const treatment =
+        document.getElementById("treatment").value.trim();
 
-    const treatment = document.getElementById("treatment").value;
-
-    const notes = document.getElementById("notes").value;
+    const notes =
+        document.getElementById("notes").value.trim();
 
     if (!patientId || diagnosis === "") {
 
@@ -180,6 +199,8 @@ function saveMedicalRecord() {
 
     .catch(error => {
 
+        console.error(error);
+
         alert(error.message);
 
     });
@@ -231,6 +252,8 @@ function deleteMedicalRecord(id) {
     })
 
     .catch(error => {
+
+        console.error(error);
 
         alert(error.message);
 

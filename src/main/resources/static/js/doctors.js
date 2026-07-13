@@ -4,10 +4,19 @@
 
 const BASE_URL =
 window.location.hostname === "localhost"
-? "http://localhost:8080"
-: "https://hospital-management-system-6pok.onrender.com";
+    ? "http://localhost:8080"
+    : "https://hospital-management-system-6pok.onrender.com";
 
 const doctorId = localStorage.getItem("doctorId");
+
+// Check doctor session
+if (!doctorId) {
+
+    alert("Session expired. Please login again.");
+
+    window.location.href = "login.html";
+
+}
 
 const PATIENT_API =
 BASE_URL + "/patients/doctor/" + doctorId;
@@ -19,7 +28,7 @@ BASE_URL + "/appointments/doctor/" + doctorId;
 // Page Load
 // ===============================
 
-window.onload = function(){
+window.onload = function () {
 
     loadPatients();
 
@@ -31,26 +40,32 @@ window.onload = function(){
 // Load Patients
 // ===============================
 
-async function loadPatients(){
+async function loadPatients() {
 
-    try{
+    try {
 
-        const response =
-        await fetch(PATIENT_API);
+        const response = await fetch(PATIENT_API);
 
-        const patients =
-        await response.json();
+        if (!response.ok) {
+
+            throw new Error("Unable to load patients.");
+
+        }
+
+        const patients = await response.json();
 
         document.getElementById("patientCount").innerHTML =
-        patients.length;
+            patients.length;
 
         showRecentPatients(patients);
 
     }
 
-    catch(error){
+    catch (error) {
 
         console.error(error);
+
+        alert(error.message);
 
     }
 
@@ -60,21 +75,21 @@ async function loadPatients(){
 // Recent Patients
 // ===============================
 
-function showRecentPatients(patients){
+function showRecentPatients(patients) {
 
     let rows = "";
 
-    patients.slice(0,5).forEach(patient=>{
+    patients.slice(0, 5).forEach(patient => {
 
         rows += `
 
         <tr>
 
-        <td>${patient.name}</td>
+            <td>${patient.name}</td>
 
-        <td>${patient.age}</td>
+            <td>${patient.age}</td>
 
-        <td>${patient.disease}</td>
+            <td>${patient.disease}</td>
 
         </tr>
 
@@ -83,7 +98,7 @@ function showRecentPatients(patients){
     });
 
     document.getElementById("recentPatients").innerHTML =
-    rows;
+        rows;
 
 }
 
@@ -91,18 +106,22 @@ function showRecentPatients(patients){
 // Load Appointments
 // ===============================
 
-async function loadAppointments(){
+async function loadAppointments() {
 
-    try{
+    try {
 
-        const response =
-        await fetch(APPOINTMENT_API);
+        const response = await fetch(APPOINTMENT_API);
 
-        const appointments =
-        await response.json();
+        if (!response.ok) {
+
+            throw new Error("Unable to load appointments.");
+
+        }
+
+        const appointments = await response.json();
 
         document.getElementById("appointmentCount").innerHTML =
-        appointments.length;
+            appointments.length;
 
         showAppointments(appointments);
 
@@ -110,9 +129,11 @@ async function loadAppointments(){
 
     }
 
-    catch(error){
+    catch (error) {
 
         console.error(error);
+
+        alert(error.message);
 
     }
 
@@ -122,23 +143,23 @@ async function loadAppointments(){
 // Today's Appointments
 // ===============================
 
-function showAppointments(appointments){
+function showAppointments(appointments) {
 
     let rows = "";
 
-    appointments.forEach(a=>{
+    appointments.forEach(a => {
 
         rows += `
 
         <tr>
 
-        <td>${a.patient ? a.patient.name : "-"}</td>
+            <td>${a.patient ? a.patient.name : "-"}</td>
 
-        <td>${a.appointmentDate}</td>
+            <td>${a.appointmentDate}</td>
 
-        <td>${a.appointmentTime}</td>
+            <td>${a.appointmentTime}</td>
 
-        <td>${a.status}</td>
+            <td>${a.status}</td>
 
         </tr>
 
@@ -147,7 +168,7 @@ function showAppointments(appointments){
     });
 
     document.getElementById("todayAppointments").innerHTML =
-    rows;
+        rows;
 
 }
 
@@ -155,46 +176,45 @@ function showAppointments(appointments){
 // Dashboard Cards
 // ===============================
 
-function updateCards(appointments){
+function updateCards(appointments) {
 
-    let pending=0;
+    let pending = 0;
+    let completed = 0;
+    let confirmed = 0;
 
-    let completed=0;
+    appointments.forEach(a => {
 
-    let confirmed=0;
+        const status = (a.status || "").toUpperCase();
 
-    appointments.forEach(a=>{
-
-        const status =
-        (a.status || "").toUpperCase();
-
-        if(status==="PENDING")
+        if (status === "PENDING") {
 
             pending++;
 
-        else if(status==="COMPLETED")
+        } else if (status === "COMPLETED") {
 
             completed++;
 
-        else if(status==="CONFIRMED")
+        } else if (status === "CONFIRMED") {
 
             confirmed++;
+
+        }
 
     });
 
     document.getElementById("pendingCount").innerHTML =
-    pending;
+        pending;
 
     document.getElementById("completedCount").innerHTML =
-    completed;
+        completed;
 
     document.getElementById("pendingAppointments").innerHTML =
-    pending;
+        pending;
 
     document.getElementById("completedAppointments").innerHTML =
-    completed;
+        completed;
 
     document.getElementById("confirmedAppointments").innerHTML =
-    confirmed;
+        confirmed;
 
 }

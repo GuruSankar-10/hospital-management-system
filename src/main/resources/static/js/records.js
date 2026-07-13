@@ -1,462 +1,337 @@
-console.log("Records JS Loaded");
+// ==========================================
+// Medical Records
+// ==========================================
 
+console.log("Records JS Loaded");
 
 const BASE_URL =
 window.location.hostname === "localhost"
-? "http://localhost:8080"
-: "https://hospital-management-system-6pok.onrender.com";
+    ? "http://localhost:8080"
+    : "https://hospital-management-system-6pok.onrender.com";
 
 const RECORD_API = BASE_URL + "/records";
 
-
 let records = [];
-
-
 
 // ==========================
 // Page Load
 // ==========================
 
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded", function () {
 
     loadRecords();
 
 });
 
-
-
-
 // ==========================
 // Load Records
 // ==========================
 
-function loadRecords(){
+function loadRecords() {
 
+    fetch(RECORD_API)
 
-fetch(RECORD_API)
+    .then(response => {
 
+        if (!response.ok) {
 
-.then(response => response.json())
+            throw new Error("Unable to load records.");
 
+        }
 
-.then(data => {
+        return response.json();
 
+    })
 
-records = data;
+    .then(data => {
 
+        records = data;
 
-displayRecords(data);
+        displayRecords(data);
 
+    })
 
+    .catch(error => {
 
-})
+        console.error(error);
 
+        alert(error.message);
 
-.catch(error=>{
-
-
-console.log("Record Loading Error:",error);
-
-
-});
-
+    });
 
 }
-
-
-
-
-
-
-
 
 // ==========================
 // Display Records
 // ==========================
 
-function displayRecords(data){
+function displayRecords(data) {
 
+    let rows = "";
 
+    data.forEach(record => {
 
-let rows = "";
+        rows += `
 
+        <tr>
 
+            <td>${record.id}</td>
 
-data.forEach(record => {
+            <td>${record.diagnosis || ""}</td>
 
+            <td>${record.doctorNotes || ""}</td>
 
+            <td>${record.testResults || ""}</td>
 
-rows += `
+            <td>${record.recordDate || ""}</td>
 
-<tr>
+            <td>${record.patient ? record.patient.name : "N/A"}</td>
 
+            <td>${record.doctor ? record.doctor.name : "N/A"}</td>
 
-<td>${record.id}</td>
+            <td>
 
+                <button
+                    class="deleteBtn"
+                    onclick="deleteRecord(${record.id})">
 
-<td>${record.diagnosis}</td>
+                    Delete
 
+                </button>
 
-<td>${record.doctorNotes}</td>
+            </td>
 
+        </tr>
 
-<td>${record.testResults}</td>
+        `;
 
+    });
 
-<td>${record.recordDate}</td>
-
-
-
-<td>
-
-${record.patient ? record.patient.name : "N/A"}
-
-</td>
-
-
-
-<td>
-
-${record.doctor ? record.doctor.name : "N/A"}
-
-</td>
-
-
-
-<td>
-
-
-<button
-
-class="deleteBtn"
-
-onclick="deleteRecord(${record.id})">
-
-Delete
-
-</button>
-
-
-</td>
-
-
-</tr>
-
-
-`;
-
-
-
-});
-
-
-
-document.getElementById("recordTable").innerHTML = rows;
-
-
+    document.getElementById("recordTable").innerHTML = rows;
 
 }
-
-
-
-
-
-
-
-
 
 // ==========================
 // Add Medical Record
 // ==========================
 
-function addRecord(){
+function addRecord() {
 
+    let record = {
 
+        diagnosis:
+            document.getElementById("diagnosis").value.trim(),
 
-let record = {
+        doctorNotes:
+            document.getElementById("doctorNotes").value.trim(),
 
+        testResults:
+            document.getElementById("testResults").value.trim(),
 
-diagnosis:
-document.getElementById("diagnosis").value,
+        recordDate:
+            document.getElementById("recordDate").value,
 
+        patient: {
 
+            id: Number(
+                document.getElementById("patientId").value
+            )
 
-doctorNotes:
-document.getElementById("doctorNotes").value,
+        },
 
+        doctor: {
 
+            id: Number(
+                document.getElementById("doctorId").value
+            )
 
-testResults:
-document.getElementById("testResults").value,
+        }
 
+    };
 
+    if (
 
-recordDate:
-document.getElementById("recordDate").value,
+        !record.diagnosis ||
 
+        !record.patient.id ||
 
+        !record.doctor.id ||
 
-patient:{
+        !record.recordDate
 
-id:
-Number(document.getElementById("patientId").value)
+    ) {
 
-},
+        alert("Please fill all required fields.");
 
+        return;
 
+    }
 
-doctor:{
+    fetch(RECORD_API, {
 
-id:
-Number(document.getElementById("doctorId").value)
+        method: "POST",
+
+        headers: {
+
+            "Content-Type": "application/json"
+
+        },
+
+        body: JSON.stringify(record)
+
+    })
+
+    .then(response => {
+
+        if (!response.ok) {
+
+            throw new Error("Unable to save record.");
+
+        }
+
+        return response.json();
+
+    })
+
+    .then(() => {
+
+        alert("Medical Record Added Successfully");
+
+        clearRecordForm();
+
+        loadRecords();
+
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+        alert(error.message);
+
+    });
 
 }
-
-
-};
-
-
-
-
-
-
-if(
-!record.diagnosis ||
-!record.patient.id ||
-!record.doctor.id
-){
-
-
-alert("Please enter required details");
-
-
-return;
-
-
-}
-
-
-
-
-
-
-
-fetch(RECORD_API,{
-
-
-method:"POST",
-
-
-headers:{
-
-
-"Content-Type":"application/json"
-
-
-},
-
-
-body:JSON.stringify(record)
-
-
-
-})
-
-
-
-.then(response=>response.json())
-
-
-.then(data=>{
-
-
-alert("Medical Record Added Successfully");
-
-
-clearRecordForm();
-
-
-loadRecords();
-
-
-
-})
-
-
-
-.catch(error=>{
-
-
-console.log(error);
-
-
-alert("Failed to Add Record");
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-
-
 // ==========================
 // Delete Record
 // ==========================
 
-function deleteRecord(id){
+function deleteRecord(id) {
 
+    if (!confirm("Delete this medical record?")) {
 
+        return;
 
-if(!confirm("Delete this medical record?")){
+    }
 
+    fetch(RECORD_API + "/" + id, {
 
-return;
+        method: "DELETE"
 
+    })
 
-}
+    .then(response => {
 
+        if (!response.ok) {
 
+            throw new Error("Delete failed.");
 
-fetch(RECORD_API+"/"+id,{
+        }
 
+        return response.text();
 
-method:"DELETE"
+    })
 
+    .then(message => {
 
-})
+        alert(message);
 
+        loadRecords();
 
+    })
 
-.then(response=>response.text())
+    .catch(error => {
 
+        console.error(error);
 
-.then(message=>{
+        alert(error.message);
 
-
-alert(message);
-
-
-loadRecords();
-
-
-
-})
-
-
-
-.catch(error=>{
-
-
-console.log(error);
-
-
-});
-
-
+    });
 
 }
-
-
-
-
-
-
-
-
 
 // ==========================
 // Search Records
 // ==========================
 
-function searchRecords(){
+function searchRecords() {
 
+    const value = document
+        .getElementById("searchRecord")
+        .value
+        .toLowerCase();
 
+    const filtered = records.filter(record => {
 
-let value = document
-.getElementById("searchRecord")
-.value
-.toLowerCase();
+        return (
 
+            String(record.id)
+                .includes(value)
 
+            ||
 
+            (record.diagnosis || "")
+                .toLowerCase()
+                .includes(value)
 
-let filtered = records.filter(record=>{
+            ||
 
+            (record.testResults || "")
+                .toLowerCase()
+                .includes(value)
 
-return (
+            ||
 
-String(record.id)
-.includes(value)
+            (record.doctorNotes || "")
+                .toLowerCase()
+                .includes(value)
 
+            ||
 
-||
+            (record.patient?.name || "")
+                .toLowerCase()
+                .includes(value)
 
-record.diagnosis
-.toLowerCase()
-.includes(value)
+            ||
 
+            (record.doctor?.name || "")
+                .toLowerCase()
+                .includes(value)
 
-||
+        );
 
-record.testResults
-.toLowerCase()
-.includes(value)
+    });
 
-
-);
-
-
-
-});
-
-
-
-displayRecords(filtered);
-
-
+    displayRecords(filtered);
 
 }
-
-
-
-
-
-
-
-
 
 // ==========================
 // Clear Form
 // ==========================
 
-function clearRecordForm(){
+function clearRecordForm() {
 
+    document.getElementById("diagnosis").value = "";
 
+    document.getElementById("doctorNotes").value = "";
 
-document.getElementById("diagnosis").value="";
+    document.getElementById("testResults").value = "";
 
+    document.getElementById("recordDate").value = "";
 
-document.getElementById("doctorNotes").value="";
+    document.getElementById("patientId").value = "";
 
-
-document.getElementById("testResults").value="";
-
-
-document.getElementById("recordDate").value="";
-
-
-document.getElementById("patientId").value="";
-
-
-document.getElementById("doctorId").value="";
-
+    document.getElementById("doctorId").value = "";
 
 }

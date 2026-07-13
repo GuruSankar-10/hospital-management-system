@@ -1,373 +1,275 @@
 console.log("Staff Appointment JS Loaded");
 
+// ==========================================
+// Base URL
+// ==========================================
 
 const BASE_URL =
 window.location.hostname === "localhost"
-? "http://localhost:8080"
-: "https://hospital-management-system-6pok.onrender.com";
+    ? "http://localhost:8080"
+    : "https://hospital-management-system-6pok.onrender.com";
 
 const APPOINTMENT_API = BASE_URL + "/appointments";
 
-
 let appointmentData = [];
-
 
 // ==============================
 // Page Load
 // ==============================
 
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded", function () {
 
     loadAppointments();
 
 });
 
-
-
-
 // ==============================
 // Load Appointments
 // ==============================
 
-function loadAppointments(){
+function loadAppointments() {
 
+    fetch(APPOINTMENT_API)
 
-fetch(APPOINTMENT_API)
+    .then(response => {
 
+        if (!response.ok) {
 
-.then(response => response.json())
+            throw new Error("Unable to load appointments.");
 
+        }
 
-.then(data => {
+        return response.json();
 
+    })
 
-    appointmentData = data;
+    .then(data => {
 
+        appointmentData = data;
 
-    displayAppointments(data);
+        displayAppointments(data);
 
+    })
 
+    .catch(error => {
 
-})
+        console.error(error);
 
+        alert(error.message);
 
-.catch(error => {
-
-
-    console.log("Appointment Load Error:", error);
-
-
-});
-
+    });
 
 }
-
-
-
-
-
 
 // ==============================
 // Display Appointments
 // ==============================
 
-function displayAppointments(data){
+function displayAppointments(data) {
 
+    let rows = "";
 
-let rows = "";
+    data.forEach(app => {
 
+        rows += `
 
+        <tr>
 
-data.forEach(app => {
+            <td>${app.id}</td>
 
+            <td>${app.patient ? app.patient.name : "N/A"}</td>
 
+            <td>${app.doctor ? app.doctor.name : "N/A"}</td>
 
-rows += `
+            <td>${app.appointmentDate || app.date || "N/A"}</td>
 
-<tr>
+            <td>
 
+                <select onchange="updateStatus(${app.id},this.value)">
 
-<td>${app.id}</td>
+                    <option value="PENDING"
+                        ${app.status === "PENDING" ? "selected" : ""}>
+                        PENDING
+                    </option>
 
+                    <option value="CONFIRMED"
+                        ${app.status === "CONFIRMED" ? "selected" : ""}>
+                        CONFIRMED
+                    </option>
 
+                    <option value="COMPLETED"
+                        ${app.status === "COMPLETED" ? "selected" : ""}>
+                        COMPLETED
+                    </option>
 
-<td>
+                    <option value="CANCELLED"
+                        ${app.status === "CANCELLED" ? "selected" : ""}>
+                        CANCELLED
+                    </option>
 
-${app.patient ? app.patient.name : "N/A"}
+                </select>
 
-</td>
+            </td>
 
+            <td>
 
+                <button
+                    class="deleteBtn"
+                    onclick="deleteAppointment(${app.id})">
 
-<td>
+                    Delete
 
-${app.doctor ? app.doctor.name : "N/A"}
+                </button>
 
-</td>
+            </td>
 
+        </tr>
 
+        `;
 
-<td>
+    });
 
-${app.date ? app.date : "N/A"}
-
-</td>
-
-
-
-<td>
-
-<select onchange="updateStatus(${app.id},this.value)">
-
-
-<option ${app.status=="PENDING"?"selected":""}>
-PENDING
-</option>
-
-
-<option ${app.status=="CONFIRMED"?"selected":""}>
-CONFIRMED
-</option>
-
-
-<option ${app.status=="COMPLETED"?"selected":""}>
-COMPLETED
-</option>
-
-
-<option ${app.status=="CANCELLED"?"selected":""}>
-CANCELLED
-</option>
-
-
-</select>
-
-
-</td>
-
-
-
-<td>
-
-
-<button
-
-class="deleteBtn"
-
-onclick="deleteAppointment(${app.id})">
-
-
-Delete
-
-
-</button>
-
-
-
-</td>
-
-
-</tr>
-
-`;
-
-
-
-});
-
-
-
-
-document.getElementById("appointmentTable").innerHTML = rows;
-
-
+    document.getElementById("appointmentTable").innerHTML = rows;
 
 }
-
-
-
-
-
-
 
 // ==============================
 // Search Appointment
 // ==============================
 
-function searchAppointments(){
+function searchAppointments() {
 
+    const value =
+        document.getElementById("searchAppointment")
+        .value
+        .toLowerCase();
 
+    const filtered = appointmentData.filter(app => {
 
-let value = document
-.getElementById("searchAppointment")
-.value
-.toLowerCase();
+        return (
 
+            (app.patient?.name || "")
+                .toLowerCase()
+                .includes(value)
 
+            ||
 
+            (app.doctor?.name || "")
+                .toLowerCase()
+                .includes(value)
 
-let filtered = appointmentData.filter(app=>{
+            ||
 
+            (app.status || "")
+                .toLowerCase()
+                .includes(value)
 
-return (
+        );
 
-(app.patient &&
-app.patient.name.toLowerCase().includes(value))
+    });
 
-||
-
-(app.doctor &&
-app.doctor.name.toLowerCase().includes(value))
-
-
-||
-
-(app.status &&
-app.status.toLowerCase().includes(value))
-
-
-);
-
-
-});
-
-
-
-displayAppointments(filtered);
-
-
+    displayAppointments(filtered);
 
 }
-
-
-
-
-
-
 
 // ==============================
 // Update Status
 // ==============================
 
-function updateStatus(id,status){
+function updateStatus(id, status) {
 
+    fetch(APPOINTMENT_API + "/" + id + "/status", {
 
+        method: "PUT",
 
-fetch(APPOINTMENT_API+"/"+id+"/status",{
+        headers: {
 
+            "Content-Type": "application/json"
 
-method:"PUT",
+        },
 
+        body: JSON.stringify({
 
-headers:{
+            status: status
 
+        })
 
-"Content-Type":"application/json"
+    })
 
+    .then(response => {
 
-},
+        if (!response.ok) {
 
+            throw new Error("Status Update Failed");
 
-body:JSON.stringify({
+        }
 
-status:status
+        return response.json();
 
-})
+    })
 
+    .then(() => {
 
-})
+        alert("Appointment Status Updated");
 
+        loadAppointments();
 
-.then(response=>response.json())
+    })
 
+    .catch(error => {
 
-.then(data=>{
+        console.error(error);
 
+        alert(error.message);
 
-alert("Appointment Status Updated");
-
-
-loadAppointments();
-
-
-
-})
-
-
-.catch(error=>{
-
-
-console.log(error);
-
-
-alert("Status Update Failed");
-
-
-});
-
-
+    });
 
 }
-
-
-
-
-
-
 
 // ==============================
 // Delete Appointment
 // ==============================
 
-function deleteAppointment(id){
+function deleteAppointment(id) {
 
+    if (!confirm("Delete this appointment?")) {
 
+        return;
 
-if(!confirm("Delete this appointment?")){
+    }
 
-return;
+    fetch(APPOINTMENT_API + "/" + id, {
 
-}
+        method: "DELETE"
 
+    })
 
+    .then(response => {
 
-fetch(APPOINTMENT_API+"/"+id,{
+        if (!response.ok) {
 
+            throw new Error("Delete Failed");
 
-method:"DELETE"
+        }
 
+        return response.text();
 
-})
+    })
 
+    .then(message => {
 
-.then(response=>response.text())
+        alert(message);
 
+        loadAppointments();
 
-.then(message=>{
+    })
 
+    .catch(error => {
 
-alert(message);
+        console.error(error);
 
+        alert(error.message);
 
-loadAppointments();
-
-
-
-})
-
-
-
-.catch(error=>{
-
-
-console.log(error);
-
-
-alert("Delete Failed");
-
-
-});
-
-
+    });
 
 }

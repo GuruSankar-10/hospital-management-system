@@ -12,7 +12,10 @@ const API_URL = isLocal
     : "https://hospital-management-system-6pok.onrender.com";
 
 const doctorId = localStorage.getItem("doctorId");
-
+if (!doctorId) {
+    alert("Session expired. Please login again.");
+    window.location.href = "login.html";
+}
 let patients = [];
 
 // ==========================================
@@ -225,15 +228,15 @@ function searchPatient() {
 
     const filtered = patients.filter(patient =>
 
-        patient.name.toLowerCase().includes(keyword)
+		(patient.name || "").toLowerCase().includes(keyword)
 
-        ||
+		||
 
-        patient.disease.toLowerCase().includes(keyword)
+		(patient.disease || "").toLowerCase().includes(keyword)
 
-        ||
+		||
 
-        patient.phone.toLowerCase().includes(keyword)
+		(patient.phone || "").toLowerCase().includes(keyword)
 
     );
 
