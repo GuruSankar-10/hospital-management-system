@@ -1,46 +1,46 @@
 console.log("Admin Doctor JS Loaded");
 
-// ==========================
-// API URLs
-// ==========================
+// =====================================
+// API URL
+// =====================================
 
 const BASE_URL =
 window.location.hostname === "localhost"
-    ? "http://localhost:8080"
-    : "https://hospital-management-system-6pok.onrender.com";
+? "http://localhost:8080"
+: "https://hospital-management-system-6pok.onrender.com";
 
-const DOCTOR_API = `${BASE_URL}/doctors`;
-const ADMIN_DOCTOR_API = `${BASE_URL}/admin/doctor`;
+const DOCTOR_API = BASE_URL + "/doctors";
+const ADMIN_DOCTOR_API = BASE_URL + "/admin/doctor";
 
 let deleteDoctorId = null;
 
-// ==========================
-// Page Load
-// ==========================
+// =====================================
+// PAGE LOAD
+// =====================================
 
 document.addEventListener("DOMContentLoaded", () => {
+
     loadDoctors();
+
 });
 
-// ==========================
-// Load Doctors
-// ==========================
+// =====================================
+// LOAD ALL DOCTORS
+// =====================================
 
-function loadDoctors() {
+async function loadDoctors(){
 
-    fetch(DOCTOR_API)
+    try{
 
-    .then(response => {
+        const response = await fetch(DOCTOR_API);
 
-        if (!response.ok) {
+        if(!response.ok){
+
             throw new Error("Unable to load doctors");
+
         }
 
-        return response.json();
-
-    })
-
-    .then(doctors => {
+        const doctors = await response.json();
 
         let rows = "";
 
@@ -48,101 +48,121 @@ function loadDoctors() {
         let neuro = 0;
         let general = 0;
 
-        doctors.forEach(doctor => {
+        doctors.forEach(doctor=>{
 
-            if (doctor.specialization === "Cardiology") {
-                cardio++;
-            } else if (doctor.specialization === "Neurology") {
-                neuro++;
-            } else {
-                general++;
+            switch(doctor.specialization){
+
+                case "Cardiology":
+                    cardio++;
+                    break;
+
+                case "Neurology":
+                    neuro++;
+                    break;
+
+                default:
+                    general++;
+
             }
 
             rows += `
-<tr>
 
-<td>${doctor.id}</td>
+            <tr>
 
-<td>${doctor.name}</td>
+                <td>${doctor.id}</td>
 
-<td>${doctor.email}</td>
+                <td>${doctor.name}</td>
 
-<td>${doctor.specialization || "-"}</td>
+                <td>${doctor.email}</td>
 
-<td>${doctor.phone || "-"}</td>
+                <td>${doctor.specialization ?? "-"}</td>
 
-<td>
+                <td>${doctor.phone ?? "-"}</td>
 
-<button class="btn"
-onclick="editDoctor(${doctor.id})">
+                <td>
 
-<i class="fas fa-pen"></i>
+                    <button
+                    class="btn"
+                    onclick="editDoctor(${doctor.id})">
 
-</button>
+                    <i class="fa-solid fa-pen"></i>
 
-<button class="deleteBtn"
-onclick="deleteDoctor(${doctor.id})">
+                    </button>
 
-<i class="fas fa-trash"></i>
+                    <button
+                    class="deleteBtn"
+                    onclick="deleteDoctor(${doctor.id})">
 
-</button>
+                    <i class="fa-solid fa-trash"></i>
 
-</td>
+                    </button>
 
-</tr>
-`;
+                </td>
+
+            </tr>
+
+            `;
 
         });
 
         document.getElementById("doctorTable").innerHTML = rows;
 
-        document.getElementById("doctorCount").innerHTML = doctors.length;
-        document.getElementById("cardiologyCount").innerHTML = cardio;
-        document.getElementById("neurologyCount").innerHTML = neuro;
-        document.getElementById("generalCount").innerHTML = general;
+        document.getElementById("doctorCount").textContent =
+        doctors.length;
 
-    })
+        document.getElementById("cardiologyCount").textContent =
+        cardio;
 
-    .catch(error => {
+        document.getElementById("neurologyCount").textContent =
+        neuro;
+
+        document.getElementById("generalCount").textContent =
+        general;
+
+    }
+
+    catch(error){
 
         console.error(error);
 
-        alert("Unable to Load Doctors");
+        alert(error.message);
 
-    });
+    }
 
 }
-// ==========================
-// Search Doctor
-// ==========================
 
-function searchDoctor() {
+// =====================================
+// SEARCH DOCTOR
+// =====================================
 
-    const keyword = document
-        .getElementById("searchDoctor")
-        .value
-        .toLowerCase();
+function searchDoctor(){
 
-    const rows = document.querySelectorAll("#doctorTable tr");
+    const keyword =
+    document
+    .getElementById("searchDoctor")
+    .value
+    .toLowerCase();
 
-    rows.forEach(row => {
+    const rows =
+    document.querySelectorAll("#doctorTable tr");
+
+    rows.forEach(row=>{
 
         row.style.display =
-            row.innerText.toLowerCase().includes(keyword)
-                ? ""
-                : "none";
+        row.innerText.toLowerCase().includes(keyword)
+        ? ""
+        : "none";
 
     });
 
 }
-
-// ==========================
-// Open Modal
-// ==========================
+// =====================================
+// OPEN DOCTOR MODAL
+// =====================================
 
 function openDoctorModal() {
 
-    document.getElementById("modalTitle").innerHTML = "Add Doctor";
+    document.getElementById("modalTitle").textContent = "Add Doctor";
 
     document.getElementById("doctorId").value = "";
     document.getElementById("doctorName").value = "";
@@ -151,121 +171,139 @@ function openDoctorModal() {
     document.getElementById("doctorPhone").value = "";
     document.getElementById("doctorSpecialization").value = "";
 
-    const modal = document.getElementById("doctorModal");
-
- modal.style.display = "flex";
+    document.getElementById("doctorModal").style.display = "flex";
 
 }
 
-// ==========================
-// Close Modal
-// ==========================
+// =====================================
+// CLOSE MODAL
+// =====================================
 
-function closeDoctorModal() {
+function closeDoctorModal(){
 
-    const modal = document.getElementById("doctorModal");
-
-  modal.style.display = "none";
+    document.getElementById("doctorModal").style.display = "none";
 
 }
-// ==========================
-// Save Doctor
-// ==========================
 
-function saveDoctor() {
+// =====================================
+// SAVE DOCTOR
+// =====================================
 
-    const id = document.getElementById("doctorId").value;
+async function saveDoctor(){
+
+    const id =
+    document.getElementById("doctorId").value;
 
     const doctor = {
 
-        name: document.getElementById("doctorName").value.trim(),
+        name:
+        document.getElementById("doctorName").value.trim(),
 
-        email: document.getElementById("doctorEmail").value.trim(),
+        email:
+        document.getElementById("doctorEmail").value.trim(),
 
-        specialization: document.getElementById("doctorSpecialization").value,
+        phone:
+        document.getElementById("doctorPhone").value.trim(),
 
-        phone: document.getElementById("doctorPhone").value.trim()
+        specialization:
+        document.getElementById("doctorSpecialization").value
 
     };
 
-    // Password only while adding a new doctor
-    if (id === "") {
+    if(id===""){
 
         doctor.password =
-            document.getElementById("doctorPassword").value.trim();
+        document.getElementById("doctorPassword").value.trim();
 
     }
 
-    const isNewDoctor = id === "";
+    if(
 
-    if (
+        doctor.name===""
 
-        doctor.name === "" ||
-        doctor.email === "" ||
-        doctor.specialization === "" ||
-        doctor.phone === "" ||
-        (isNewDoctor && doctor.password === "")
+        ||
 
-    ) {
+        doctor.email===""
+
+        ||
+
+        doctor.phone===""
+
+        ||
+
+        doctor.specialization===""
+
+        ||
+
+        (id==="" && doctor.password==="")
+
+    ){
 
         alert("Please fill all required fields.");
+
         return;
 
     }
 
-    const url =
-        isNewDoctor
-            ? ADMIN_DOCTOR_API
-            : DOCTOR_API + "/" + id;
+    try{
 
-    const method =
-        isNewDoctor
-            ? "POST"
-            : "PUT";
+        const url =
+        id===""
 
-    fetch(url, {
+        ?
 
-        method: method,
+        ADMIN_DOCTOR_API
 
-        headers: {
+        :
 
-            "Content-Type": "application/json"
+        DOCTOR_API + "/" + id;
 
-        },
+        const method =
+        id===""
 
-        body: JSON.stringify(doctor)
+        ?
 
-    })
+        "POST"
 
-    .then(async response => {
+        :
 
-        const text = await response.text();
+        "PUT";
 
-        if (!response.ok) {
+        const response =
+        await fetch(url,{
 
-            throw new Error(text || "Operation Failed");
+            method:method,
+
+            headers:{
+
+                "Content-Type":"application/json"
+
+            },
+
+            body:JSON.stringify(doctor)
+
+        });
+
+        if(!response.ok){
+
+            const message =
+            await response.text();
+
+            throw new Error(message);
 
         }
-
-        try {
-
-            return text ? JSON.parse(text) : {};
-
-        } catch (e) {
-
-            return {};
-
-        }
-
-    })
-
-    .then(() => {
 
         alert(
 
-            isNewDoctor
-                ? "Doctor Registered Successfully"
-                : "Doctor Updated Successfully"
+            id===""
+
+            ?
+
+            "Doctor Added Successfully"
+
+            :
+
+            "Doctor Updated Successfully"
 
         );
 
@@ -273,22 +311,72 @@ function saveDoctor() {
 
         loadDoctors();
 
-    })
+    }
 
-    .catch(error => {
+    catch(error){
 
         console.error(error);
 
         alert(error.message);
 
-    });
+    }
 
 }
-// ==========================
-// Delete Doctor
-// ==========================
+// =====================================
+// EDIT DOCTOR
+// =====================================
 
-function deleteDoctor(id) {
+async function editDoctor(id){
+
+    try{
+
+        const response = await fetch(DOCTOR_API + "/" + id);
+
+        if(!response.ok){
+
+            throw new Error("Unable to load doctor");
+
+        }
+
+        const doctor = await response.json();
+
+        document.getElementById("modalTitle").textContent = "Edit Doctor";
+
+        document.getElementById("doctorId").value = doctor.id;
+
+        document.getElementById("doctorName").value =
+        doctor.name ?? "";
+
+        document.getElementById("doctorEmail").value =
+        doctor.email ?? "";
+
+        document.getElementById("doctorPassword").value = "";
+
+        document.getElementById("doctorPhone").value =
+        doctor.phone ?? "";
+
+        document.getElementById("doctorSpecialization").value =
+        doctor.specialization ?? "";
+
+        document.getElementById("doctorModal").style.display = "flex";
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        alert(error.message);
+
+    }
+
+}
+
+// =====================================
+// DELETE DOCTOR
+// =====================================
+
+function deleteDoctor(id){
 
     deleteDoctorId = id;
 
@@ -296,181 +384,112 @@ function deleteDoctor(id) {
 
 }
 
-// ==========================
-// Close Delete Modal
-// ==========================
+// =====================================
+// CLOSE DELETE MODAL
+// =====================================
 
-function closeDeleteModal() {
+function closeDeleteModal(){
 
     document.getElementById("deleteModal").style.display = "none";
 
 }
 
-// ==========================
-// Confirm Delete
-// ==========================
+// =====================================
+// CONFIRM DELETE
+// =====================================
 
-function confirmDelete() {
+async function confirmDelete(){
 
-    fetch(DOCTOR_API + "/" + deleteDoctorId, {
+    try{
 
-        method: "DELETE"
+        const response = await fetch(
 
-    })
+            DOCTOR_API + "/" + deleteDoctorId,
 
-    .then(response => {
+            {
 
-        if (!response.ok) {
+                method:"DELETE"
+
+            }
+
+        );
+
+        if(!response.ok){
 
             throw new Error("Delete Failed");
 
         }
 
-        return response.text();
-
-    })
-
-    .then(message => {
-
-        alert(message);
+        alert("Doctor Deleted Successfully");
 
         closeDeleteModal();
 
         loadDoctors();
 
-    })
+    }
 
-    .catch(error => {
-
-        console.error(error);
-
-        alert(error.message);
-
-    });
-
-}
-// ==========================
-// Edit Doctor
-// ==========================
-
-function editDoctor(id) {
-
-    fetch(DOCTOR_API + "/" + id)
-
-    .then(response => {
-
-        if (!response.ok) {
-
-            throw new Error("Unable to load doctor");
-
-        }
-
-        return response.json();
-
-    })
-
-    .then(doctor => {
-		console.log("Doctor Response:", doctor);
-
-        document.getElementById("modalTitle").innerHTML = "Edit Doctor";
-
-        document.getElementById("doctorId").value = doctor.id || "";
-
-        document.getElementById("doctorName").value = doctor.name || "";
-
-        document.getElementById("doctorEmail").value = doctor.email || "";
-
-        // Password should be blank while editing
-        document.getElementById("doctorPassword").value = "";
-
-        document.getElementById("doctorPhone").value = doctor.phone || "";
-
-        document.getElementById("doctorSpecialization").value =
-            doctor.specialization || "";
-
-        const modal = document.getElementById("doctorModal");
-
-       modal.style.display = "flex";
-
-    })
-
-    .catch(error => {
+    catch(error){
 
         console.error(error);
 
         alert(error.message);
 
-    });
+    }
 
 }
 
-// ==========================
-// Toggle Password
-// ==========================
+// =====================================
+// TOGGLE PASSWORD
+// =====================================
 
-function togglePassword() {
+function togglePassword(){
 
-    const password = document.getElementById("doctorPassword");
-    const icon = document.getElementById("togglePassword");
+    const password =
+    document.getElementById("doctorPassword");
 
-    if (!password || !icon) return;
+    const icon =
+    document.getElementById("togglePassword");
 
-    if (password.type === "password") {
+    if(password.type==="password"){
 
-        password.type = "text";
+        password.type="text";
+
         icon.classList.remove("fa-eye");
+
         icon.classList.add("fa-eye-slash");
 
-    } else {
+    }
 
-        password.type = "password";
+    else{
+
+        password.type="password";
+
         icon.classList.remove("fa-eye-slash");
+
         icon.classList.add("fa-eye");
 
     }
 
 }
 
-// ==========================
-// Close Modal on Outside Click
-// ==========================
+// =====================================
+// GLOBAL FUNCTIONS
+// =====================================
 
-window.addEventListener("mousedown", function (e) {
+window.searchDoctor = searchDoctor;
 
-    const doctorModal = document.getElementById("doctorModal");
-    const deleteModal = document.getElementById("deleteModal");
+window.openDoctorModal = openDoctorModal;
 
-    if (
-        doctorModal &&
-        doctorModal.style.display === "flex" &&
-        e.target === doctorModal
-    ) {
+window.closeDoctorModal = closeDoctorModal;
 
-        closeDoctorModal();
-
-    }
-
-    if (
-        deleteModal &&
-        deleteModal.style.display === "flex" &&
-        e.target === deleteModal
-    ) {
-
-        closeDeleteModal();
-
-    }
-
-});
-// ==========================
-// Make functions global
-// ==========================
+window.saveDoctor = saveDoctor;
 
 window.editDoctor = editDoctor;
+
 window.deleteDoctor = deleteDoctor;
-window.openDoctorModal = openDoctorModal;
-window.closeDoctorModal = closeDoctorModal;
-window.saveDoctor = saveDoctor;
-window.confirmDelete = confirmDelete;
+
 window.closeDeleteModal = closeDeleteModal;
+
+window.confirmDelete = confirmDelete;
+
 window.togglePassword = togglePassword;
-window.searchDoctor = searchDoctor;
