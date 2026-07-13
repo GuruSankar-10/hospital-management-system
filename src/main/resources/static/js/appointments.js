@@ -1,6 +1,11 @@
-const API = "http://localhost:8080/appointments";
-const PATIENT_API = "http://localhost:8080/patients";
-const DOCTOR_API = "http://localhost:8080/doctors";
+const BASE_URL =
+window.location.hostname === "localhost"
+? "http://localhost:8080"
+: "https://hospital-management-system-6pok.onrender.com";
+
+const API = BASE_URL + "/appointments";
+const PATIENT_API = BASE_URL + "/patients";
+const DOCTOR_API = BASE_URL + "/doctors";
 
 let deleteAppointmentId = null;
 
