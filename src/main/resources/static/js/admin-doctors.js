@@ -1,13 +1,13 @@
 console.log("Admin Doctor JS Loaded");
 
 // ==========================
-// API URLs (Works for Localhost & Render)
+// API URLs
 // ==========================
 
 const BASE_URL =
-    window.location.hostname === "localhost"
-        ? "http://localhost:8080"
-        : "https://hospital-management-system-6pok.onrender.com";
+window.location.hostname === "localhost"
+? "http://localhost:8080"
+: "https://hospital-management-system-6pok.onrender.com";
 
 const DOCTOR_API = `${BASE_URL}/doctors`;
 const ADMIN_DOCTOR_API = `${BASE_URL}/admin/doctor`;
@@ -15,11 +15,13 @@ const ADMIN_DOCTOR_API = `${BASE_URL}/admin/doctor`;
 let deleteDoctorId = null;
 
 // ==========================
-// Window Load
+// Page Load
 // ==========================
 
 window.onload = function () {
+
     loadDoctors();
+
 };
 
 // ==========================
@@ -29,58 +31,98 @@ window.onload = function () {
 function loadDoctors() {
 
     fetch(DOCTOR_API)
-        .then(response => {
-            if (!response.ok) throw new Error("Failed to load doctors");
-            return response.json();
-        })
-        .then(doctors => {
 
-            let rows = "";
+    .then(response => {
 
-            let cardio = 0;
-            let neuro = 0;
-            let general = 0;
+        if (!response.ok)
 
-            doctors.forEach(doctor => {
+            throw new Error("Unable to load doctors");
 
-                if (doctor.specialization === "Cardiology")
-                    cardio++;
-                else if (doctor.specialization === "Neurology")
-                    neuro++;
-                else
-                    general++;
+        return response.json();
 
-                rows += `
+    })
+
+    .then(doctors => {
+
+        let rows = "";
+
+        let cardio = 0;
+        let neuro = 0;
+        let general = 0;
+
+        doctors.forEach(doctor => {
+
+            if (doctor.specialization === "Cardiology")
+
+                cardio++;
+
+            else if (doctor.specialization === "Neurology")
+
+                neuro++;
+
+            else
+
+                general++;
+
+            rows += `
 <tr>
+
 <td>${doctor.id}</td>
+
 <td>${doctor.name}</td>
+
 <td>${doctor.email}</td>
-<td>${doctor.specialization}</td>
-<td>${doctor.phone}</td>
+
+<td>${doctor.specialization || "-"}</td>
+
+<td>${doctor.phone || "-"}</td>
+
 <td>
-<button class="btn" onclick="editDoctor(${doctor.id})">
+
+<button class="btn"
+onclick="editDoctor(${doctor.id})">
+
 <i class="fas fa-pen"></i>
+
 </button>
 
-<button class="deleteBtn" onclick="deleteDoctor(${doctor.id})">
+<button class="deleteBtn"
+onclick="deleteDoctor(${doctor.id})">
+
 <i class="fas fa-trash"></i>
+
 </button>
+
 </td>
+
 </tr>
 `;
-            });
 
-            document.getElementById("doctorTable").innerHTML = rows;
-            document.getElementById("doctorCount").innerHTML = doctors.length;
-            document.getElementById("cardiologyCount").innerHTML = cardio;
-            document.getElementById("neurologyCount").innerHTML = neuro;
-            document.getElementById("generalCount").innerHTML = general;
-
-        })
-        .catch(error => {
-            console.error(error);
-            alert("Unable to Load Doctors");
         });
+
+        document.getElementById("doctorTable").innerHTML = rows;
+
+        document.getElementById("doctorCount").innerHTML =
+        doctors.length;
+
+        document.getElementById("cardiologyCount").innerHTML =
+        cardio;
+
+        document.getElementById("neurologyCount").innerHTML =
+        neuro;
+
+        document.getElementById("generalCount").innerHTML =
+        general;
+
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+        alert("Unable to Load Doctors");
+
+    });
 
 }
 
@@ -88,20 +130,22 @@ function loadDoctors() {
 // Search Doctor
 // ==========================
 
-function searchDoctor() {
+function searchDoctor(){
 
-    let input = document
-        .getElementById("searchDoctor")
-        .value
-        .toLowerCase();
+    let keyword =
+    document.getElementById("searchDoctor")
+    .value
+    .toLowerCase();
 
-    let rows = document.querySelectorAll("#doctorTable tr");
+    let rows =
+    document.querySelectorAll("#doctorTable tr");
 
-    rows.forEach(row => {
+    rows.forEach(row=>{
 
-        let text = row.innerText.toLowerCase();
-
-        row.style.display = text.includes(input) ? "" : "none";
+        row.style.display =
+        row.innerText.toLowerCase().includes(keyword)
+        ? ""
+        : "none";
 
     });
 
@@ -111,18 +155,24 @@ function searchDoctor() {
 // Open Modal
 // ==========================
 
-function openDoctorModal() {
+function openDoctorModal(){
 
-    document.getElementById("modalTitle").innerHTML = "Add Doctor";
+    document.getElementById("modalTitle").innerHTML =
+    "Add Doctor";
 
-    document.getElementById("doctorId").value = "";
-    document.getElementById("doctorName").value = "";
-    document.getElementById("doctorEmail").value = "";
-    document.getElementById("doctorPassword").value = "";
-    document.getElementById("doctorPhone").value = "";
-    document.getElementById("doctorSpecialization").value = "";
+    document.getElementById("doctorId").value="";
 
-    document.getElementById("doctorModal").style.display = "flex";
+    document.getElementById("doctorName").value="";
+
+    document.getElementById("doctorEmail").value="";
+
+    document.getElementById("doctorPassword").value="";
+
+    document.getElementById("doctorPhone").value="";
+
+    document.getElementById("doctorSpecialization").value="";
+
+    document.getElementById("doctorModal").style.display="flex";
 
 }
 
@@ -130,9 +180,9 @@ function openDoctorModal() {
 // Close Modal
 // ==========================
 
-function closeDoctorModal() {
+function closeDoctorModal(){
 
-    document.getElementById("doctorModal").style.display = "none";
+    document.getElementById("doctorModal").style.display="none";
 
 }
 
@@ -140,241 +190,116 @@ function closeDoctorModal() {
 // Save Doctor
 // ==========================
 
-// ==========================
-// Save Doctor
-// ==========================
+function saveDoctor(){
 
-function saveDoctor() {
+    const id =
+    document.getElementById("doctorId").value;
 
-    const id = document.getElementById("doctorId").value;
+    const doctor={
 
-    const doctor = {
+        name:
+        document.getElementById("doctorName").value.trim(),
 
-        name: document.getElementById("doctorName").value.trim(),
-        email: document.getElementById("doctorEmail").value.trim(),
-        password: document.getElementById("doctorPassword").value.trim(),
-        specialization: document.getElementById("doctorSpecialization").value,
-        phone: document.getElementById("doctorPhone").value.trim()
+        email:
+        document.getElementById("doctorEmail").value.trim(),
+
+        password:
+        document.getElementById("doctorPassword").value.trim(),
+
+        specialization:
+        document.getElementById("doctorSpecialization").value,
+
+        phone:
+        document.getElementById("doctorPhone").value.trim()
 
     };
 
-    // Validate fields
-    if (
-        doctor.name === "" ||
-        doctor.email === "" ||
-        doctor.password === "" ||
-        doctor.specialization === "" ||
-        doctor.phone === ""
-    ) {
+    if(
+
+        doctor.name==="" ||
+
+        doctor.email==="" ||
+
+        doctor.password==="" ||
+
+        doctor.specialization==="" ||
+
+        doctor.phone===""
+
+    ){
+
         alert("Please fill all fields.");
+
         return;
-    }
-
-    // ==========================
-    // ADD DOCTOR
-    // ==========================
-
-    if (id === "") {
-
-        fetch(ADMIN_DOCTOR_API, {
-
-            method: "POST",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify(doctor)
-
-        })
-
-        .then(async response => {
-
-            const text = await response.text();
-
-            if (!response.ok) {
-                throw new Error(text || "Registration Failed");
-            }
-
-            if (text) {
-                return JSON.parse(text);
-            }
-
-            return {};
-
-        })
-
-        .then(() => {
-
-            alert("Doctor Registered Successfully");
-
-            closeDoctorModal();
-
-            loadDoctors();
-
-        })
-
-        .catch(error => {
-
-            console.error("Registration Error:", error);
-
-            alert(error.message);
-
-        });
 
     }
 
-    // ==========================
-    // UPDATE DOCTOR
-    // ==========================
+    const url =
+    id===""
+    ? ADMIN_DOCTOR_API
+    : DOCTOR_API+"/"+id;
 
-    else {
+    const method =
+    id===""
+    ? "POST"
+    : "PUT";
 
-        fetch(DOCTOR_API + "/" + id, {
+    fetch(url,{
 
-            method: "PUT",
+        method:method,
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+        headers:{
 
-            body: JSON.stringify(doctor)
+            "Content-Type":"application/json"
 
-        })
+        },
 
-        .then(async response => {
+        body:JSON.stringify(doctor)
 
-            const text = await response.text();
+    })
 
-            if (!response.ok) {
-                throw new Error(text || "Update Failed");
-            }
+    .then(async response=>{
 
-            if (text) {
-                return JSON.parse(text);
-            }
+        const text =
+        await response.text();
 
-            return {};
+        if(!response.ok){
 
-        })
+            throw new Error(text || "Operation Failed");
 
-        .then(() => {
+        }
 
-            alert("Doctor Updated Successfully");
+        return text ? JSON.parse(text) : {};
 
-            closeDoctorModal();
+    })
 
-            loadDoctors();
+    .then(()=>{
 
-        })
+        alert(
 
-        .catch(error => {
+            id===""
 
-            console.error("Update Error:", error);
+            ? "Doctor Registered Successfully"
 
-            alert(error.message);
+            : "Doctor Updated Successfully"
 
-        });
+        );
 
-    }
+        closeDoctorModal();
+
+        loadDoctors();
+
+    })
+
+    .catch(error=>{
+
+        console.error(error);
+
+        alert(error.message);
+
+    });
 
 }
-    // ==========================
-    // ADD DOCTOR
-    // ==========================
-
-    if (id === "") {
-
-        fetch(ADMIN_DOCTOR_API, {
-
-            method: "POST",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify(doctor)
-
-        })
-
-        .then(response => {
-
-            if (!response.ok) {
-                return response.text().then(text => {
-                    throw new Error(text);
-                });
-            }
-
-            return response.json();
-
-        })
-
-        .then(() => {
-
-            alert("Doctor Registered Successfully");
-
-            closeDoctorModal();
-
-            loadDoctors();
-
-        })
-
-        .catch(error => {
-
-            console.error(error);
-
-            alert(error.message || "Registration Failed");
-
-        });
-
-    }
-
-    // ==========================
-    // UPDATE DOCTOR
-    // ==========================
-
-    else {
-
-        fetch(DOCTOR_API + "/" + id, {
-
-            method: "PUT",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify(doctor)
-
-        })
-
-        .then(response => {
-
-            if (!response.ok) throw new Error();
-
-            return response.json();
-
-        })
-
-        .then(() => {
-
-            alert("Doctor Updated Successfully");
-
-            closeDoctorModal();
-
-            loadDoctors();
-
-        })
-
-        .catch(() => {
-
-            alert("Update Failed");
-
-        });
-
-    }
-
-
-
 // ==========================
 // Delete Doctor
 // ==========================
@@ -409,7 +334,17 @@ function confirmDelete() {
 
     })
 
-    .then(response => response.text())
+    .then(response => {
+
+        if (!response.ok) {
+
+            throw new Error("Delete Failed");
+
+        }
+
+        return response.text();
+
+    })
 
     .then(message => {
 
@@ -425,7 +360,7 @@ function confirmDelete() {
 
         console.error(error);
 
-        alert("Delete Failed");
+        alert(error.message);
 
     });
 
@@ -439,20 +374,38 @@ function editDoctor(id) {
 
     fetch(DOCTOR_API + "/" + id)
 
-    .then(response => response.json())
+    .then(response => {
+
+        if (!response.ok) {
+
+            throw new Error("Unable to Load Doctor");
+
+        }
+
+        return response.json();
+
+    })
 
     .then(doctor => {
 
         document.getElementById("doctorId").value = doctor.id;
+
         document.getElementById("doctorName").value = doctor.name;
+
         document.getElementById("doctorEmail").value = doctor.email;
+
         document.getElementById("doctorPassword").value = "";
-        document.getElementById("doctorSpecialization").value = doctor.specialization;
-        document.getElementById("doctorPhone").value = doctor.phone;
 
-        document.getElementById("modalTitle").innerHTML = "Edit Doctor";
+        document.getElementById("doctorPhone").value = doctor.phone || "";
 
-        document.getElementById("doctorModal").style.display = "flex";
+        document.getElementById("doctorSpecialization").value =
+            doctor.specialization || "";
+
+        document.getElementById("modalTitle").innerHTML =
+            "Edit Doctor";
+
+        document.getElementById("doctorModal").style.display =
+            "flex";
 
     })
 
@@ -460,7 +413,7 @@ function editDoctor(id) {
 
         console.error(error);
 
-        alert("Unable to Load Doctor");
+        alert(error.message);
 
     });
 
@@ -472,14 +425,18 @@ function editDoctor(id) {
 
 function togglePassword() {
 
-    let password = document.getElementById("doctorPassword");
-    let icon = document.getElementById("togglePassword");
+    const password =
+        document.getElementById("doctorPassword");
+
+    const icon =
+        document.getElementById("togglePassword");
 
     if (password.type === "password") {
 
         password.type = "text";
 
         icon.classList.remove("fa-eye");
+
         icon.classList.add("fa-eye-slash");
 
     } else {
@@ -487,6 +444,7 @@ function togglePassword() {
         password.type = "password";
 
         icon.classList.remove("fa-eye-slash");
+
         icon.classList.add("fa-eye");
 
     }
@@ -497,17 +455,24 @@ function togglePassword() {
 // Close Modal on Outside Click
 // ==========================
 
-window.onclick = function (event) {
+window.addEventListener("click", function (event) {
 
-    let doctorModal = document.getElementById("doctorModal");
-    let deleteModal = document.getElementById("deleteModal");
+    const doctorModal =
+        document.getElementById("doctorModal");
+
+    const deleteModal =
+        document.getElementById("deleteModal");
 
     if (event.target === doctorModal) {
+
         closeDoctorModal();
+
     }
 
     if (event.target === deleteModal) {
+
         closeDeleteModal();
+
     }
 
-};
+});
