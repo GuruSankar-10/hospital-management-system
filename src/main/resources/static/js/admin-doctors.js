@@ -469,3 +469,16 @@ window.addEventListener("mousedown", function (e) {
     }
 
 });
+// ==========================
+// Make functions global
+// ==========================
+
+window.editDoctor = editDoctor;
+window.deleteDoctor = deleteDoctor;
+window.openDoctorModal = openDoctorModal;
+window.closeDoctorModal = closeDoctorModal;
+window.saveDoctor = saveDoctor;
+window.confirmDelete = confirmDelete;
+window.closeDeleteModal = closeDeleteModal;
+window.togglePassword = togglePassword;
+window.searchDoctor = searchDoctor;
