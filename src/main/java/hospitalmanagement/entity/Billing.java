@@ -9,9 +9,23 @@ public class Billing {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Existing Fields
     private Double amount;
-    private String paymentStatus;   // PAID / UNPAID
-    private String paymentMethod;   // Cash / Card / UPI
+
+    private String paymentStatus; // PAID / UNPAID
+
+    private String paymentMethod; // Cash / Card / UPI
+
+    // New Billing Fields
+    private Double medicineTotal = 0.0;
+
+    private Double doctorFee = 0.0;
+
+    private Double roomCharge = 0.0;
+
+    private Double labCharge = 0.0;
+
+    private Double totalAmount = 0.0;
 
     @ManyToOne
     @JoinColumn(name = "patient_id")
@@ -24,13 +38,9 @@ public class Billing {
     public Billing() {
     }
 
-    public Billing(Long id, Double amount, String paymentStatus,
-                   String paymentMethod) {
-        this.id = id;
-        this.amount = amount;
-        this.paymentStatus = paymentStatus;
-        this.paymentMethod = paymentMethod;
-    }
+    // ========================
+    // Getters & Setters
+    // ========================
 
     public Long getId() {
         return id;
@@ -62,6 +72,46 @@ public class Billing {
 
     public void setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    public Double getMedicineTotal() {
+        return medicineTotal;
+    }
+
+    public void setMedicineTotal(Double medicineTotal) {
+        this.medicineTotal = medicineTotal;
+    }
+
+    public Double getDoctorFee() {
+        return doctorFee;
+    }
+
+    public void setDoctorFee(Double doctorFee) {
+        this.doctorFee = doctorFee;
+    }
+
+    public Double getRoomCharge() {
+        return roomCharge;
+    }
+
+    public void setRoomCharge(Double roomCharge) {
+        this.roomCharge = roomCharge;
+    }
+
+    public Double getLabCharge() {
+        return labCharge;
+    }
+
+    public void setLabCharge(Double labCharge) {
+        this.labCharge = labCharge;
+    }
+
+    public Double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(Double totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     public Patient getPatient() {

@@ -1,21 +1,21 @@
-console.log("Medicine Management Loaded");
+console.log("Admin Medicines JS Loaded");
 
-// =====================================
+// ==========================
 // API URL
-// =====================================
+// ==========================
 
 const BASE_URL =
 window.location.hostname === "localhost"
-    ? "http://localhost:8080"
-    : "https://hospital-management-system-6pok.onrender.com";
+? "http://localhost:8080"
+: "https://hospital-management-system-6pok.onrender.com";
 
 const MEDICINE_API = BASE_URL + "/medicines";
 
 let deleteMedicineId = null;
 
-// =====================================
-// Page Load
-// =====================================
+// ==========================
+// PAGE LOAD
+// ==========================
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -23,74 +23,54 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-// =====================================
-// Load Medicines
-// =====================================
+// ==========================
+// LOAD MEDICINES
+// ==========================
 
-function loadMedicines() {
+async function loadMedicines(){
 
-    fetch(MEDICINE_API)
+    try{
 
-    .then(response => {
+        const response = await fetch(MEDICINE_API);
 
-        if (!response.ok) {
+        if(!response.ok){
 
-            throw new Error("Unable to load medicines.");
+            throw new Error("Unable to load medicines");
 
         }
 
-        return response.json();
-
-    })
-
-    .then(medicines => {
+        const medicines = await response.json();
 
         let rows = "";
 
         let lowStock = 0;
+        let expired = 0;
+        let available = 0;
 
-        let expiry = 0;
+        const today = new Date();
 
-        medicines.forEach(medicine => {
+        medicines.forEach(medicine=>{
 
-            // -------------------------
-            // Low Stock
-            // -------------------------
+            const expiry =
+            medicine.expiryDate
+            ? new Date(medicine.expiryDate)
+            : null;
 
-            let stockBadge = "";
-
-            if (medicine.stock <= medicine.reorderLevel) {
+            if(medicine.stock < 10){
 
                 lowStock++;
 
-                stockBadge =
-                "<span style='color:red;font-weight:bold;'>🔴 Low Stock</span>";
+            }
 
-            } else {
+            if(expiry && expiry < today){
 
-                stockBadge =
-                "<span style='color:green;font-weight:bold;'>🟢 Available</span>";
+                expired++;
 
             }
 
-            // -------------------------
-            // Expiry Check
-            // -------------------------
+            if(medicine.stock > 0){
 
-            if (medicine.expiryDate) {
-
-                const today = new Date();
-
-                const expiryDate = new Date(medicine.expiryDate);
-
-                const diff =
-                (expiryDate - today) / (1000 * 60 * 60 * 24);
-
-                if (diff <= 30) {
-
-                    expiry++;
-
-                }
+                available++;
 
             }
 
@@ -98,19 +78,19 @@ function loadMedicines() {
 
 <tr>
 
-<td>${medicine.medicineCode || "-"}</td>
+<td>${medicine.id}</td>
 
-<td>${medicine.medicineName || "-"}</td>
+<td>${medicine.name}</td>
 
-<td>${medicine.strength || "-"}</td>
+<td>${medicine.category ?? "-"}</td>
 
-<td>${medicine.category || "-"}</td>
+<td>${medicine.manufacturer ?? "-"}</td>
 
-<td>${medicine.stock ?? 0}</td>
+<td>₹${medicine.price}</td>
 
-<td>₹${medicine.price ?? 0}</td>
+<td>${medicine.stock}</td>
 
-<td>${stockBadge}</td>
+<td>${medicine.expiryDate ?? "-"}</td>
 
 <td>
 
@@ -118,7 +98,7 @@ function loadMedicines() {
 class="btn"
 onclick="editMedicine(${medicine.id})">
 
-<i class="fas fa-pen"></i>
+<i class="fa-solid fa-pen"></i>
 
 </button>
 
@@ -126,7 +106,7 @@ onclick="editMedicine(${medicine.id})">
 class="deleteBtn"
 onclick="deleteMedicine(${medicine.id})">
 
-<i class="fas fa-trash"></i>
+<i class="fa-solid fa-trash"></i>
 
 </button>
 
@@ -140,309 +120,302 @@ onclick="deleteMedicine(${medicine.id})">
 
         document.getElementById("medicineTable").innerHTML = rows;
 
-        document.getElementById("medicineCount").innerHTML =
+        document.getElementById("medicineCount").textContent =
         medicines.length;
 
-        document.getElementById("lowStockCount").innerHTML =
+        document.getElementById("lowStockCount").textContent =
         lowStock;
 
-        document.getElementById("expiryCount").innerHTML =
-        expiry;
+        document.getElementById("expiredCount").textContent =
+        expired;
 
-    })
+        document.getElementById("availableCount").textContent =
+        available;
 
-    .catch(error => {
+    }
+
+    catch(error){
 
         console.error(error);
 
         alert(error.message);
 
-    });
+    }
 
 }
-// =====================================
-// Search Medicine
-// =====================================
 
-function searchMedicine() {
+// ==========================
+// SEARCH
+// ==========================
 
-    const keyword = document
-        .getElementById("searchMedicine")
-        .value
-        .toLowerCase();
+function searchMedicine(){
 
-    const rows = document.querySelectorAll("#medicineTable tr");
+    const keyword =
+    document
+    .getElementById("searchMedicine")
+    .value
+    .toLowerCase();
 
-    rows.forEach(row => {
+    const rows =
+    document.querySelectorAll("#medicineTable tr");
+
+    rows.forEach(row=>{
 
         row.style.display =
-            row.innerText.toLowerCase().includes(keyword)
-                ? ""
-                : "none";
+        row.innerText.toLowerCase().includes(keyword)
+        ? ""
+        : "none";
 
     });
 
 }
-
-// =====================================
-// Open Medicine Modal
-// =====================================
+// ==========================
+// OPEN MEDICINE MODAL
+// ==========================
 
 function openMedicineModal() {
 
-    document.getElementById("modalTitle").innerHTML =
-        "Add Medicine";
+    document.getElementById("modalTitle").innerHTML = "Add Medicine";
 
     document.getElementById("medicineId").value = "";
-
     document.getElementById("medicineName").value = "";
-    document.getElementById("genericName").value = "";
-    document.getElementById("strength").value = "";
-    document.getElementById("category").value = "Tablet";
-    document.getElementById("dosageForm").value = "";
-    document.getElementById("manufacturer").value = "";
-    document.getElementById("price").value = "";
-    document.getElementById("stock").value = "";
-    document.getElementById("reorderLevel").value = "";
-    document.getElementById("batchNumber").value = "";
-    document.getElementById("expiryDate").value = "";
-    document.getElementById("status").value = "ACTIVE";
-    document.getElementById("description").value = "";
+    document.getElementById("medicineCategory").value = "";
+    document.getElementById("medicineManufacturer").value = "";
+    document.getElementById("medicinePrice").value = "";
+    document.getElementById("medicineStock").value = "";
+    document.getElementById("medicineExpiry").value = "";
+    document.getElementById("medicineDescription").value = "";
 
-    document.getElementById("medicineModal").style.display =
-        "flex";
+    document.getElementById("medicineModal").style.display = "flex";
 
 }
 
-// =====================================
-// Close Medicine Modal
-// =====================================
+// ==========================
+// CLOSE MODAL
+// ==========================
 
 function closeMedicineModal() {
 
-    document.getElementById("medicineModal").style.display =
-        "none";
+    document.getElementById("medicineModal").style.display = "none";
 
 }
 
-// =====================================
-// Save Medicine
-// =====================================
+// ==========================
+// SAVE MEDICINE
+// ==========================
 
-function saveMedicine() {
+async function saveMedicine() {
 
-    const id =
-        document.getElementById("medicineId").value;
+    const id = document.getElementById("medicineId").value;
 
     const medicine = {
 
-        medicineName:
-            document.getElementById("medicineName").value.trim(),
-
-        genericName:
-            document.getElementById("genericName").value.trim(),
-
-        strength:
-            document.getElementById("strength").value.trim(),
+        name:
+        document.getElementById("medicineName").value.trim(),
 
         category:
-            document.getElementById("category").value,
-
-        dosageForm:
-            document.getElementById("dosageForm").value.trim(),
+        document.getElementById("medicineCategory").value,
 
         manufacturer:
-            document.getElementById("manufacturer").value.trim(),
+        document.getElementById("medicineManufacturer").value.trim(),
 
         price:
-            parseFloat(document.getElementById("price").value || 0),
+        parseFloat(document.getElementById("medicinePrice").value),
 
         stock:
-            parseInt(document.getElementById("stock").value || 0),
-
-        reorderLevel:
-            parseInt(document.getElementById("reorderLevel").value || 0),
-
-        batchNumber:
-            document.getElementById("batchNumber").value.trim(),
+        parseInt(document.getElementById("medicineStock").value),
 
         expiryDate:
-            document.getElementById("expiryDate").value,
-
-        status:
-            document.getElementById("status").value,
+        document.getElementById("medicineExpiry").value,
 
         description:
-            document.getElementById("description").value.trim()
+        document.getElementById("medicineDescription").value.trim()
 
     };
 
-    if (medicine.medicineName === "") {
+    // Validation
 
-        alert("Medicine Name is required.");
+    if (
+
+        medicine.name === "" ||
+
+        medicine.category === "" ||
+
+        medicine.manufacturer === "" ||
+
+        isNaN(medicine.price) ||
+
+        isNaN(medicine.stock)
+
+    ) {
+
+        alert("Please fill all required fields.");
 
         return;
 
     }
 
     const url =
+
         id === ""
-            ? MEDICINE_API
-            : MEDICINE_API + "/" + id;
+
+        ?
+
+        MEDICINE_API
+
+        :
+
+        MEDICINE_API + "/" + id;
 
     const method =
+
         id === ""
-            ? "POST"
-            : "PUT";
 
-    fetch(url, {
+        ?
 
-        method: method,
+        "POST"
 
-        headers: {
+        :
 
-            "Content-Type": "application/json"
+        "PUT";
 
-        },
+    try {
 
-        body: JSON.stringify(medicine)
+        const response = await fetch(url, {
 
-    })
+            method: method,
 
-    .then(response => {
+            headers: {
+
+                "Content-Type": "application/json"
+
+            },
+
+            body: JSON.stringify(medicine)
+
+        });
 
         if (!response.ok) {
 
-            throw new Error("Unable to save medicine.");
+            const error = await response.text();
+
+            throw new Error(error);
 
         }
 
-        return response.json();
+        alert(
 
-    })
+            id === ""
 
-    .then(() => {
+            ?
 
-        alert("Medicine Saved Successfully");
+            "Medicine Added Successfully"
+
+            :
+
+            "Medicine Updated Successfully"
+
+        );
 
         closeMedicineModal();
 
         loadMedicines();
 
-    })
+    }
 
-    .catch(error => {
+    catch (error) {
 
         console.error(error);
 
         alert(error.message);
 
-    });
+    }
 
 }
-// =====================================
-// Edit Medicine
-// =====================================
+// ==========================
+// EDIT MEDICINE
+// ==========================
 
-function editMedicine(id) {
+async function editMedicine(id) {
 
-    fetch(MEDICINE_API + "/" + id)
+    try {
 
-    .then(response => {
+        const response = await fetch(MEDICINE_API + "/" + id);
 
         if (!response.ok) {
 
-            throw new Error("Unable to load medicine.");
+            throw new Error("Unable to load medicine");
 
         }
 
-        return response.json();
+        const medicine = await response.json();
 
-    })
+        document.getElementById("modalTitle").innerHTML = "Edit Medicine";
 
-    .then(medicine => {
+        document.getElementById("medicineId").value = medicine.id;
+        document.getElementById("medicineName").value = medicine.name || "";
+        document.getElementById("medicineCategory").value = medicine.category || "";
+        document.getElementById("medicineManufacturer").value = medicine.manufacturer || "";
+        document.getElementById("medicinePrice").value = medicine.price || "";
+        document.getElementById("medicineStock").value = medicine.stock || "";
+        document.getElementById("medicineExpiry").value = medicine.expiryDate || "";
+        document.getElementById("medicineDescription").value = medicine.description || "";
 
-        document.getElementById("modalTitle").innerHTML =
-            "Edit Medicine";
+        document.getElementById("medicineModal").style.display = "flex";
 
-        document.getElementById("medicineId").value =
-            medicine.id || "";
+    }
 
-        document.getElementById("medicineName").value =
-            medicine.medicineName || "";
-
-        document.getElementById("genericName").value =
-            medicine.genericName || "";
-
-        document.getElementById("strength").value =
-            medicine.strength || "";
-
-        document.getElementById("category").value =
-            medicine.category || "Tablet";
-
-        document.getElementById("dosageForm").value =
-            medicine.dosageForm || "";
-
-        document.getElementById("manufacturer").value =
-            medicine.manufacturer || "";
-
-        document.getElementById("price").value =
-            medicine.price || "";
-
-        document.getElementById("stock").value =
-            medicine.stock || "";
-
-        document.getElementById("reorderLevel").value =
-            medicine.reorderLevel || "";
-
-        document.getElementById("batchNumber").value =
-            medicine.batchNumber || "";
-
-        document.getElementById("expiryDate").value =
-            medicine.expiryDate || "";
-
-        document.getElementById("status").value =
-            medicine.status || "ACTIVE";
-
-        document.getElementById("description").value =
-            medicine.description || "";
-
-        document.getElementById("medicineModal").style.display =
-            "flex";
-
-    })
-
-    .catch(error => {
+    catch (error) {
 
         console.error(error);
 
         alert(error.message);
 
-    });
+    }
 
 }
 
-// =====================================
-// Delete Medicine
-// =====================================
+// ==========================
+// DELETE MEDICINE
+// ==========================
 
 function deleteMedicine(id) {
 
     deleteMedicineId = id;
 
-    if (!confirm("Are you sure you want to delete this medicine?")) {
+    document.getElementById("deleteModal").style.display = "flex";
 
-        return;
+}
 
-    }
+// ==========================
+// CLOSE DELETE MODAL
+// ==========================
 
-    fetch(MEDICINE_API + "/" + deleteMedicineId, {
+function closeDeleteModal() {
 
-        method: "DELETE"
+    document.getElementById("deleteModal").style.display = "none";
 
-    })
+}
 
-    .then(response => {
+// ==========================
+// CONFIRM DELETE
+// ==========================
+
+async function confirmDelete() {
+
+    try {
+
+        const response = await fetch(
+
+            MEDICINE_API + "/" + deleteMedicineId,
+
+            {
+
+                method: "DELETE"
+
+            }
+
+        );
 
         if (!response.ok) {
 
@@ -450,105 +423,40 @@ function deleteMedicine(id) {
 
         }
 
-        return response.text();
+        alert("Medicine Deleted Successfully");
 
-    })
-
-    .then(message => {
-
-        alert(message);
+        closeDeleteModal();
 
         loadMedicines();
 
-    })
+    }
 
-    .catch(error => {
+    catch (error) {
 
         console.error(error);
 
         alert(error.message);
 
-    });
-
-}
-// =====================================
-// Close Modal on Outside Click
-// =====================================
-
-window.addEventListener("mousedown", function (event) {
-
-    const modal = document.getElementById("medicineModal");
-
-    if (
-        modal &&
-        modal.style.display === "flex" &&
-        event.target === modal
-    ) {
-
-        closeMedicineModal();
-
     }
 
-});
-
-// =====================================
-// Refresh Medicines
-// =====================================
-
-function refreshMedicines() {
-
-    loadMedicines();
-
 }
 
-// =====================================
-// Utility
-// =====================================
-
-function clearMedicineForm() {
-
-    document.getElementById("medicineId").value = "";
-
-    document.getElementById("medicineName").value = "";
-
-    document.getElementById("genericName").value = "";
-
-    document.getElementById("strength").value = "";
-
-    document.getElementById("category").value = "Tablet";
-
-    document.getElementById("dosageForm").value = "";
-
-    document.getElementById("manufacturer").value = "";
-
-    document.getElementById("price").value = "";
-
-    document.getElementById("stock").value = "";
-
-    document.getElementById("reorderLevel").value = "";
-
-    document.getElementById("batchNumber").value = "";
-
-    document.getElementById("expiryDate").value = "";
-
-    document.getElementById("status").value = "ACTIVE";
-
-    document.getElementById("description").value = "";
-
-}
-
-// =====================================
-// Make Functions Global
-// =====================================
-
-window.loadMedicines = loadMedicines;
-window.searchMedicine = searchMedicine;
+// ==========================
+// GLOBAL FUNCTIONS
+// ==========================
 
 window.openMedicineModal = openMedicineModal;
+
 window.closeMedicineModal = closeMedicineModal;
 
 window.saveMedicine = saveMedicine;
+
 window.editMedicine = editMedicine;
+
 window.deleteMedicine = deleteMedicine;
 
-window.refreshMedicines = refreshMedicines;
+window.confirmDelete = confirmDelete;
+
+window.closeDeleteModal = closeDeleteModal;
+
+window.searchMedicine = searchMedicine;

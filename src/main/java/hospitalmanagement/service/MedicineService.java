@@ -12,99 +12,79 @@ import hospitalmanagement.repository.MedicineRepository;
 public class MedicineService {
 
     @Autowired
-    private MedicineRepository repository;
+    private MedicineRepository medicineRepository;
 
-    // =========================
+    // =============================
     // Get All Medicines
-    // =========================
+    // =============================
 
     public List<Medicine> getAllMedicines() {
 
-        return repository.findAll();
+        return medicineRepository.findAll();
 
     }
 
-    // =========================
-    // Get Medicine By ID
-    // =========================
+    // =============================
+    // Get Medicine By Id
+    // =============================
 
-    public Medicine getMedicine(Long id) {
+    public Medicine getMedicineById(Long id) {
 
-        return repository.findById(id).orElse(null);
-
-    }
-
-    // =========================
-    // Save Medicine
-    // =========================
-
-    public Medicine saveMedicine(Medicine medicine) {
-
-        if (medicine.getMedicineCode() == null ||
-            medicine.getMedicineCode().isBlank()) {
-
-            long count = repository.count() + 1;
-
-            medicine.setMedicineCode(
-                    String.format("MED%04d", count));
-        }
-
-        return repository.save(medicine);
+        return medicineRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Medicine Not Found"));
 
     }
 
-    // =========================
+    // =============================
+    // Add Medicine
+    // =============================
+
+    public Medicine addMedicine(Medicine medicine) {
+
+        return medicineRepository.save(medicine);
+
+    }
+
+    // =============================
     // Update Medicine
-    // =========================
+    // =============================
 
-    public Medicine updateMedicine(Long id,
-                                   Medicine medicine) {
+    public Medicine updateMedicine(Long id, Medicine updatedMedicine) {
 
-        Medicine existing =
-                repository.findById(id).orElse(null);
+        Medicine medicine = getMedicineById(id);
 
-        if (existing == null) {
+        medicine.setName(updatedMedicine.getName());
+        medicine.setCategory(updatedMedicine.getCategory());
+        medicine.setManufacturer(updatedMedicine.getManufacturer());
+        medicine.setPrice(updatedMedicine.getPrice());
+        medicine.setStock(updatedMedicine.getStock());
+        medicine.setExpiryDate(updatedMedicine.getExpiryDate());
+        medicine.setDescription(updatedMedicine.getDescription());
 
-            return null;
-
-        }
-
-        existing.setMedicineName(medicine.getMedicineName());
-        existing.setGenericName(medicine.getGenericName());
-        existing.setStrength(medicine.getStrength());
-        existing.setDosageForm(medicine.getDosageForm());
-        existing.setCategory(medicine.getCategory());
-        existing.setManufacturer(medicine.getManufacturer());
-        existing.setPrice(medicine.getPrice());
-        existing.setStock(medicine.getStock());
-        existing.setReorderLevel(medicine.getReorderLevel());
-        existing.setBatchNumber(medicine.getBatchNumber());
-        existing.setExpiryDate(medicine.getExpiryDate());
-        existing.setStatus(medicine.getStatus());
-        existing.setDescription(medicine.getDescription());
-
-        return repository.save(existing);
+        return medicineRepository.save(medicine);
 
     }
 
-    // =========================
+    // =============================
     // Delete Medicine
-    // =========================
+    // =============================
 
     public void deleteMedicine(Long id) {
 
-        repository.deleteById(id);
+        Medicine medicine = getMedicineById(id);
+
+        medicineRepository.delete(medicine);
 
     }
 
-    // =========================
+    // =============================
     // Search Medicine
-    // =========================
+    // =============================
 
     public List<Medicine> searchMedicine(String keyword) {
 
-        return repository
-                .findByMedicineNameContainingIgnoreCase(keyword);
+        return medicineRepository.findByNameContainingIgnoreCase(keyword);
 
     }
 

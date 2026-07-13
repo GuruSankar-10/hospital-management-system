@@ -14,19 +14,40 @@ public class BillingService {
     @Autowired
     private BillingRepository billingRepository;
 
-    // ==========================
+    // =====================================
     // Save Bill
-    // ==========================
+    // =====================================
 
     public Billing saveBill(Billing billing) {
+
+        // Auto Calculate Grand Total
+
+        double medicine =
+                billing.getMedicineTotal() == null ? 0 : billing.getMedicineTotal();
+
+        double doctor =
+                billing.getDoctorFee() == null ? 0 : billing.getDoctorFee();
+
+        double room =
+                billing.getRoomCharge() == null ? 0 : billing.getRoomCharge();
+
+        double lab =
+                billing.getLabCharge() == null ? 0 : billing.getLabCharge();
+
+        double total = medicine + doctor + room + lab;
+
+        billing.setTotalAmount(total);
+
+        // Keep old amount field for compatibility
+        billing.setAmount(total);
 
         return billingRepository.save(billing);
 
     }
 
-    // ==========================
+    // =====================================
     // Get All Bills
-    // ==========================
+    // =====================================
 
     public List<Billing> getAllBills() {
 
@@ -34,9 +55,9 @@ public class BillingService {
 
     }
 
-    // ==========================
+    // =====================================
     // Get Bill By Id
-    // ==========================
+    // =====================================
 
     public Billing getBillById(Long id) {
 
@@ -46,17 +67,36 @@ public class BillingService {
 
     }
 
-    // ==========================
+    // =====================================
     // Update Bill
-    // ==========================
+    // =====================================
 
     public Billing updateBill(Long id, Billing newBill) {
 
-        Billing oldBill = billingRepository.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Bill Not Found"));
+        Billing oldBill = getBillById(id);
 
-        oldBill.setAmount(newBill.getAmount());
+        oldBill.setMedicineTotal(newBill.getMedicineTotal());
+        oldBill.setDoctorFee(newBill.getDoctorFee());
+        oldBill.setRoomCharge(newBill.getRoomCharge());
+        oldBill.setLabCharge(newBill.getLabCharge());
+
+        double medicine =
+                newBill.getMedicineTotal() == null ? 0 : newBill.getMedicineTotal();
+
+        double doctor =
+                newBill.getDoctorFee() == null ? 0 : newBill.getDoctorFee();
+
+        double room =
+                newBill.getRoomCharge() == null ? 0 : newBill.getRoomCharge();
+
+        double lab =
+                newBill.getLabCharge() == null ? 0 : newBill.getLabCharge();
+
+        double total = medicine + doctor + room + lab;
+
+        oldBill.setTotalAmount(total);
+        oldBill.setAmount(total);
+
         oldBill.setPaymentMethod(newBill.getPaymentMethod());
         oldBill.setPaymentStatus(newBill.getPaymentStatus());
         oldBill.setPatient(newBill.getPatient());
@@ -66,23 +106,21 @@ public class BillingService {
 
     }
 
-    // ==========================
+    // =====================================
     // Delete Bill
-    // ==========================
+    // =====================================
 
     public void deleteBill(Long id) {
 
-        Billing bill = billingRepository.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Bill Not Found"));
+        Billing bill = getBillById(id);
 
         billingRepository.delete(bill);
 
     }
 
-    // ==========================
-    // Dashboard Methods
-    // ==========================
+    // =====================================
+    // Dashboard
+    // =====================================
 
     public long getPaidBills() {
 

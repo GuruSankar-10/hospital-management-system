@@ -4,316 +4,653 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Medicine Management</title>
+<title>Medicine Management | HMS PRO</title>
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <link rel="stylesheet" href="css/theme.css">
+
 <link rel="stylesheet" href="css/admin.css">
 
 </head>
 
 <body>
 
-<!-- Sidebar -->
-<div class="sidebar">
+<!-- ==========================================
+                SIDEBAR
+========================================== -->
 
-<div class="logo">
-<h2>🏥 HMS</h2>
-<p>Hospital Management</p>
-</div>
+<aside class="sidebar">
 
-<nav>
+    <div class="logo">
 
-<a href="admin-dashboard.html">
-<i class="fas fa-house"></i>
-<span>Dashboard</span>
-</a>
+        <div class="logo-icon">
 
-<a href="admin-doctors.html">
-<i class="fas fa-user-doctor"></i>
-<span>Doctors</span>
-</a>
+            <i class="fa-solid fa-hospital"></i>
 
-<a href="admin-staff.html">
-<i class="fas fa-user-nurse"></i>
-<span>Staff</span>
-</a>
+        </div>
 
-<a href="patients.html">
-<i class="fas fa-bed"></i>
-<span>Patients</span>
-</a>
+        <div>
 
-<a href="appointments.html">
-<i class="fas fa-calendar-check"></i>
-<span>Appointments</span>
-</a>
+            <h2>HMS PRO</h2>
 
-<a href="billing.html">
-<i class="fas fa-file-invoice-dollar"></i>
-<span>Billing</span>
-</a>
+            <p>Hospital System</p>
 
-<a href="admin-medicines.html" class="active">
-<i class="fas fa-pills"></i>
-<span>Medicines</span>
-</a>
+        </div>
 
-<a href="#" onclick="logout()">
-<i class="fas fa-right-from-bracket"></i>
-<span>Logout</span>
-</a>
+    </div>
 
-</nav>
+    <nav class="menu">
 
-</div>
+        <a href="admin-dashboard.html">
 
-<!-- Main -->
+            <i class="fa-solid fa-chart-line"></i>
+
+            <span>Dashboard</span>
+
+        </a>
+
+        <a href="admin-doctors.html">
+
+            <i class="fa-solid fa-user-doctor"></i>
+
+            <span>Doctors</span>
+
+        </a>
+
+        <a href="admin-staff.html">
+
+            <i class="fa-solid fa-user-nurse"></i>
+
+            <span>Staff</span>
+
+        </a>
+
+        <a href="patients.html">
+
+            <i class="fa-solid fa-bed-pulse"></i>
+
+            <span>Patients</span>
+
+        </a>
+
+        <a href="appointments.html">
+
+            <i class="fa-solid fa-calendar-check"></i>
+
+            <span>Appointments</span>
+
+        </a>
+
+        <a href="billing.html">
+
+            <i class="fa-solid fa-file-invoice-dollar"></i>
+
+            <span>Billing</span>
+
+        </a>
+
+        <a href="admin-medicines.html" class="active">
+
+            <i class="fa-solid fa-pills"></i>
+
+            <span>Medicines</span>
+
+        </a>
+
+        <a href="records.html">
+
+            <i class="fa-solid fa-file-medical"></i>
+
+            <span>Medical Records</span>
+
+        </a>
+
+        <a href="javascript:void(0)" onclick="logout()">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            <span>Logout</span>
+
+        </a>
+
+    </nav>
+
+</aside>
+
+<!-- ==========================================
+                MAIN CONTENT
+========================================== -->
 
 <div class="main">
 
-<div class="topbar">
+<!-- ==========================================
+                TOPBAR
+========================================== -->
 
-<div class="welcome">
+<header class="topbar">
 
-<h1>Medicine Management</h1>
+    <div class="welcome">
 
-<p>Manage Hospital Medicines</p>
+        <h1>
 
-</div>
+            Medicine Management 💊
 
-<div class="top-right">
+        </h1>
 
-<div class="search-box">
+        <p>
 
-<i class="fas fa-search"></i>
+            Manage hospital pharmacy inventory efficiently.
 
-<input
-type="text"
-id="searchMedicine"
-placeholder="Search Medicine..."
-onkeyup="searchMedicine()">
+        </p>
 
-</div>
+    </div>
 
-</div>
+    <div class="top-actions">
 
-</div>
+        <div class="search-box">
 
-<!-- Cards -->
+            <i class="fa-solid fa-search"></i>
 
-<div class="cards">
+            <input
+                type="text"
+                id="searchMedicine"
+                placeholder="Search Medicine..."
+                onkeyup="searchMedicine()">
 
-<div class="card">
+        </div>
 
-<div>
+        <button class="icon-btn">
 
-<p>Total Medicines</p>
+            <i class="fa-solid fa-bell"></i>
 
-<h2 id="medicineCount">0</h2>
+        </button>
 
-</div>
+        <button
+            class="icon-btn"
+            id="themeToggle">
 
-<i class="fas fa-pills"></i>
+            <i
+                class="fa-solid fa-moon"
+                id="themeIcon"></i>
 
-</div>
+        </button>
 
-<div class="card">
+        <div class="profile-box">
 
-<div>
+            <i class="fa-solid fa-circle-user"></i>
 
-<p>Low Stock</p>
+            <div>
 
-<h2 id="lowStockCount">0</h2>
+                <strong>Administrator</strong>
 
-</div>
+                <small>Hospital Admin</small>
 
-<i class="fas fa-triangle-exclamation"></i>
+            </div>
 
-</div>
+        </div>
 
-<div class="card">
+    </div>
 
-<div>
+</header>
+<!-- ==========================================
+            DASHBOARD BANNER
+========================================== -->
 
-<p>Expiring Soon</p>
+<section class="dashboard-banner">
 
-<h2 id="expiryCount">0</h2>
+    <div class="banner-content">
 
-</div>
+        <h2>
 
-<i class="fas fa-calendar-xmark"></i>
+            Medicine Management Center
 
-</div>
+        </h2>
 
-</div>
+        <p>
 
-<!-- Toolbar -->
+            Add medicines, monitor stock, manage expiry dates
+            and pharmacy inventory with ease.
 
-<div class="quick-actions">
+        </p>
 
-<div style="display:flex;justify-content:space-between;align-items:center;">
+        <div class="banner-buttons">
 
-<h2>
+            <button
+                class="primary-btn"
+                onclick="openMedicineModal()">
 
-<i class="fas fa-pills"></i>
+                <i class="fa-solid fa-plus"></i>
 
-Medicine List
+                Add Medicine
 
-</h2>
+            </button>
 
-<button class="btn" onclick="openMedicineModal()">
+            <button
+                class="secondary-btn"
+                onclick="window.location.href='admin-dashboard.html'">
 
-<i class="fas fa-plus"></i>
+                <i class="fa-solid fa-arrow-left"></i>
 
-Add Medicine
+                Dashboard
 
-</button>
+            </button>
 
-</div>
+        </div>
 
-</div>
+    </div>
 
-<!-- Table -->
+    <div class="banner-image">
 
-<div class="recent-card">
+        <i class="fa-solid fa-capsules"></i>
 
-<table>
+    </div>
 
-<thead>
+</section>
 
-<tr>
+<!-- ==========================================
+            MEDICINE STATISTICS
+========================================== -->
 
-<th>Code</th>
+<section class="stats-container">
 
-<th>Name</th>
+    <div class="stat-card">
 
-<th>Strength</th>
+        <div class="stat-icon">
 
-<th>Category</th>
+            <i class="fa-solid fa-pills"></i>
 
-<th>Stock</th>
+        </div>
 
-<th>Price</th>
+        <div class="stat-info">
 
-<th>Status</th>
+            <p>Total Medicines</p>
 
-<th>Actions</th>
+            <h2 id="medicineCount">0</h2>
 
-</tr>
+            <span>Inventory</span>
 
-</thead>
+        </div>
 
-<tbody id="medicineTable">
+    </div>
 
-</tbody>
+    <div class="stat-card">
 
-</table>
+        <div class="stat-icon">
 
-</div>
+            <i class="fa-solid fa-box-open"></i>
 
-</div>
+        </div>
 
-<script src="js/admin-medicines.js"></script>
+        <div class="stat-info">
 
-</body>
+            <p>Available Stock</p>
 
-</html>
-<!-- ===========================
-        Medicine Modal
-=========================== -->
+            <h2 id="availableCount">0</h2>
+
+            <span>Ready to Use</span>
+
+        </div>
+
+    </div>
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+
+            <i class="fa-solid fa-triangle-exclamation"></i>
+
+        </div>
+
+        <div class="stat-info">
+
+            <p>Low Stock</p>
+
+            <h2 id="lowStockCount">0</h2>
+
+            <span>Below 10 Units</span>
+
+        </div>
+
+    </div>
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+
+            <i class="fa-solid fa-calendar-xmark"></i>
+
+        </div>
+
+        <div class="stat-info">
+
+            <p>Expired</p>
+
+            <h2 id="expiredCount">0</h2>
+
+            <span>Needs Replacement</span>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ==========================================
+            MEDICINE INVENTORY
+========================================== -->
+
+<section class="dashboard-card">
+
+    <div class="card-header">
+
+        <div>
+
+            <h2>
+
+                <i class="fa-solid fa-pills"></i>
+
+                Medicine Inventory
+
+            </h2>
+
+            <p class="page-subtitle">
+
+                Manage all medicines available in your hospital.
+
+            </p>
+
+        </div>
+
+        <button
+            class="primary-btn"
+            onclick="openMedicineModal()">
+
+            <i class="fa-solid fa-plus"></i>
+
+            Add Medicine
+
+        </button>
+
+    </div>
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Name</th>
+
+                    <th>Category</th>
+
+                    <th>Manufacturer</th>
+
+                    <th>Price</th>
+
+                    <th>Stock</th>
+
+                    <th>Expiry</th>
+
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="medicineTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+<!-- ==========================================
+        PHARMACY SUMMARY
+========================================== -->
+
+<section class="dashboard-card">
+
+    <div class="card-header">
+
+        <h2>
+
+            <i class="fa-solid fa-chart-pie"></i>
+
+            Pharmacy Summary
+
+        </h2>
+
+    </div>
+
+    <div class="stats-container">
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+
+                <i class="fa-solid fa-prescription-bottle-medical"></i>
+
+            </div>
+
+            <div class="stat-info">
+
+                <p>Total Categories</p>
+
+                <h2 id="categoryCount">0</h2>
+
+            </div>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+
+                <i class="fa-solid fa-indian-rupee-sign"></i>
+
+            </div>
+
+            <div class="stat-info">
+
+                <p>Inventory Value</p>
+
+                <h2 id="inventoryValue">₹0</h2>
+
+            </div>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+
+                <i class="fa-solid fa-truck-medical"></i>
+
+            </div>
+
+            <div class="stat-info">
+
+                <p>Manufacturers</p>
+
+                <h2 id="manufacturerCount">0</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ==========================================
+        ADD / EDIT MEDICINE MODAL
+========================================== -->
 
 <div id="medicineModal" class="modal">
 
     <div class="modal-content">
 
-        <h2 id="modalTitle">
-            <i class="fas fa-pills"></i>
-            Add Medicine
-        </h2>
+        <!-- Modal Header -->
 
-        <input type="hidden" id="medicineId">
+        <div class="modal-header">
 
-        <label>Medicine Name</label>
-        <input type="text" id="medicineName">
+            <h2 id="modalTitle">
 
-        <label>Generic Name</label>
-        <input type="text" id="genericName">
+                Add Medicine
 
-        <label>Strength</label>
-        <input type="text" id="strength">
+            </h2>
 
-        <label>Category</label>
+            <span
+                class="close"
+                onclick="closeMedicineModal()">
 
-        <select id="category">
+                &times;
 
-            <option>Tablet</option>
-            <option>Capsule</option>
-            <option>Syrup</option>
-            <option>Injection</option>
-            <option>Ointment</option>
-            <option>Drops</option>
+            </span>
 
-        </select>
+        </div>
 
-        <label>Dosage Form</label>
+        <!-- Modal Body -->
 
-        <input type="text"
-               id="dosageForm">
+        <div class="modal-body">
 
-        <label>Manufacturer</label>
+            <input
+                type="hidden"
+                id="medicineId">
 
-        <input type="text"
-               id="manufacturer">
+            <div class="form-grid">
 
-        <label>Price</label>
+                <!-- Medicine Name -->
 
-        <input type="number"
-               id="price">
+                <div class="form-group">
 
-        <label>Stock</label>
+                    <label>Medicine Name</label>
 
-        <input type="number"
-               id="stock">
+                    <input
+                        type="text"
+                        id="medicineName"
+                        placeholder="Enter Medicine Name">
 
-        <label>Reorder Level</label>
+                </div>
 
-        <input type="number"
-               id="reorderLevel">
+                <!-- Category -->
 
-        <label>Batch Number</label>
+                <div class="form-group">
 
-        <input type="text"
-               id="batchNumber">
+                    <label>Category</label>
 
-        <label>Expiry Date</label>
+                    <select id="medicineCategory">
 
-        <input type="date"
-               id="expiryDate">
+                        <option value="">Select Category</option>
 
-        <label>Status</label>
+                        <option>Tablet</option>
 
-        <select id="status">
+                        <option>Capsule</option>
 
-            <option>ACTIVE</option>
-            <option>INACTIVE</option>
+                        <option>Syrup</option>
 
-        </select>
+                        <option>Injection</option>
 
-        <label>Description</label>
+                        <option>Cream</option>
 
-        <textarea
-            id="description"
-            rows="4"></textarea>
+                        <option>Drops</option>
 
-        <div class="modal-buttons">
+                        <option>Powder</option>
+
+                        <option>Others</option>
+
+                    </select>
+
+                </div>
+
+                <!-- Manufacturer -->
+
+                <div class="form-group">
+
+                    <label>Manufacturer</label>
+
+                    <input
+                        type="text"
+                        id="medicineManufacturer"
+                        placeholder="Enter Manufacturer">
+
+                </div>
+
+                <!-- Price -->
+
+                <div class="form-group">
+
+                    <label>Price (₹)</label>
+
+                    <input
+                        type="number"
+                        id="medicinePrice"
+                        placeholder="0">
+
+                </div>
+
+                <!-- Stock -->
+
+                <div class="form-group">
+
+                    <label>Stock</label>
+
+                    <input
+                        type="number"
+                        id="medicineStock"
+                        placeholder="0">
+
+                </div>
+
+                <!-- Expiry -->
+
+                <div class="form-group">
+
+                    <label>Expiry Date</label>
+
+                    <input
+                        type="date"
+                        id="medicineExpiry">
+
+                </div>
+
+            </div>
+
+            <!-- Description -->
+
+            <div class="form-group"
+                 style="margin-top:20px;">
+
+                <label>Description</label>
+
+                <textarea
+                    id="medicineDescription"
+                    rows="4"
+                    placeholder="Medicine Description">
+
+                </textarea>
+
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+
+        <div class="modal-footer">
 
             <button
-                class="deleteBtn"
+                class="secondary-btn"
                 onclick="closeMedicineModal()">
 
                 Cancel
@@ -321,8 +658,10 @@ Add Medicine
             </button>
 
             <button
-                class="btn"
+                class="primary-btn"
                 onclick="saveMedicine()">
+
+                <i class="fa-solid fa-floppy-disk"></i>
 
                 Save Medicine
 
@@ -333,3 +672,156 @@ Add Medicine
     </div>
 
 </div>
+<!-- ==========================================
+        DELETE MEDICINE MODAL
+========================================== -->
+
+<div id="deleteModal" class="modal">
+
+    <div class="modal-content" style="max-width:450px;">
+
+        <div class="modal-header">
+
+            <h2>
+
+                <i class="fa-solid fa-trash"></i>
+
+                Delete Medicine
+
+            </h2>
+
+            <span
+                class="close"
+                onclick="closeDeleteModal()">
+
+                &times;
+
+            </span>
+
+        </div>
+
+        <div class="modal-body">
+
+            <div style="text-align:center;">
+
+                <i class="fa-solid fa-circle-exclamation"
+                   style="font-size:70px;
+                          color:#dc2626;
+                          margin-bottom:20px;">
+
+                </i>
+
+                <h3>
+
+                    Delete Medicine?
+
+                </h3>
+
+                <p style="margin-top:10px;
+                          color:#64748b;">
+
+                    This action cannot be undone.
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button
+                class="secondary-btn"
+                onclick="closeDeleteModal()">
+
+                Cancel
+
+            </button>
+
+            <button
+                class="deleteBtn"
+                onclick="confirmDelete()">
+
+                <i class="fa-solid fa-trash"></i>
+
+                Delete
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ==========================================
+        PAGE HELPERS
+========================================== -->
+
+<script>
+
+function logout(){
+
+    localStorage.removeItem("email");
+
+    localStorage.removeItem("role");
+
+    localStorage.removeItem("token");
+
+    window.location.href="login.html";
+
+}
+
+// ESC closes popup
+
+document.addEventListener("keydown",function(e){
+
+    if(e.key==="Escape"){
+
+        closeMedicineModal();
+
+        closeDeleteModal();
+
+    }
+
+});
+
+// Click outside closes popup
+
+window.onclick=function(e){
+
+    const medicineModal =
+    document.getElementById("medicineModal");
+
+    const deleteModal =
+    document.getElementById("deleteModal");
+
+    if(e.target===medicineModal){
+
+        closeMedicineModal();
+
+    }
+
+    if(e.target===deleteModal){
+
+        closeDeleteModal();
+
+    }
+
+};
+
+</script>
+
+<!-- ==========================================
+        JAVASCRIPT FILES
+========================================== -->
+
+<script src="js/theme.js"></script>
+
+<script src="js/admin-medicines.js"></script>
+
+</div>
+
+</body>
+
+</html>

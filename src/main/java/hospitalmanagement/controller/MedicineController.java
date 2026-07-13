@@ -3,6 +3,7 @@ package hospitalmanagement.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import hospitalmanagement.entity.Medicine;
@@ -14,78 +15,66 @@ import hospitalmanagement.service.MedicineService;
 public class MedicineController {
 
     @Autowired
-    private MedicineService service;
+    private MedicineService medicineService;
 
-    // =========================
     // Get All Medicines
-    // =========================
-
     @GetMapping
-    public List<Medicine> getAllMedicines() {
+    public ResponseEntity<List<Medicine>> getAllMedicines() {
 
-        return service.getAllMedicines();
+        return ResponseEntity.ok(
+                medicineService.getAllMedicines());
 
     }
 
-    // =========================
-    // Get One Medicine
-    // =========================
-
+    // Get Medicine By Id
     @GetMapping("/{id}")
-    public Medicine getMedicine(@PathVariable Long id) {
+    public ResponseEntity<Medicine> getMedicineById(
+            @PathVariable Long id) {
 
-        return service.getMedicine(id);
+        return ResponseEntity.ok(
+                medicineService.getMedicineById(id));
 
     }
 
-    // =========================
     // Add Medicine
-    // =========================
-
     @PostMapping
-    public Medicine addMedicine(
+    public ResponseEntity<Medicine> addMedicine(
             @RequestBody Medicine medicine) {
 
-        return service.saveMedicine(medicine);
+        return ResponseEntity.ok(
+                medicineService.addMedicine(medicine));
 
     }
 
-    // =========================
     // Update Medicine
-    // =========================
-
     @PutMapping("/{id}")
-    public Medicine updateMedicine(
+    public ResponseEntity<Medicine> updateMedicine(
             @PathVariable Long id,
             @RequestBody Medicine medicine) {
 
-        return service.updateMedicine(id, medicine);
+        return ResponseEntity.ok(
+                medicineService.updateMedicine(id, medicine));
 
     }
 
-    // =========================
     // Delete Medicine
-    // =========================
-
     @DeleteMapping("/{id}")
-    public String deleteMedicine(
+    public ResponseEntity<String> deleteMedicine(
             @PathVariable Long id) {
 
-        service.deleteMedicine(id);
+        medicineService.deleteMedicine(id);
 
-        return "Medicine Deleted Successfully";
+        return ResponseEntity.ok("Medicine Deleted Successfully");
 
     }
 
-    // =========================
     // Search Medicine
-    // =========================
+    @GetMapping("/search")
+    public ResponseEntity<List<Medicine>> searchMedicine(
+            @RequestParam String keyword) {
 
-    @GetMapping("/search/{keyword}")
-    public List<Medicine> searchMedicine(
-            @PathVariable String keyword) {
-
-        return service.searchMedicine(keyword);
+        return ResponseEntity.ok(
+                medicineService.searchMedicine(keyword));
 
     }
 

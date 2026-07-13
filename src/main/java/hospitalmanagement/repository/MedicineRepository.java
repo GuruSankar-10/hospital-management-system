@@ -6,10 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import hospitalmanagement.entity.Medicine;
 
-public interface MedicineRepository extends JpaRepository<Medicine, Long> {
+public interface MedicineRepository extends JpaRepository<Medicine, Long>{
 
-    List<Medicine> findByMedicineNameContainingIgnoreCase(String keyword);
+    List<Medicine> findByNameContainingIgnoreCase(String keyword);
 
-    boolean existsByMedicineCode(String medicineCode);
+    long countByStockLessThanEqual(Integer stock);
 
 }

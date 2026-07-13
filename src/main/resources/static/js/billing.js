@@ -1,1260 +1,524 @@
-console.log("HMS PRO Billing Module Loaded");
+console.log("Billing JS Loaded");
 
-
-// ======================================
-// API URLs
-// ======================================
+// =====================================
+// API URL
+// =====================================
 
 const BASE_URL =
 window.location.hostname === "localhost"
-?
-"http://localhost:8080"
-:
-"https://hospital-management-system-6pok.onrender.com";
+? "http://localhost:8080"
+: "https://hospital-management-system-6pok.onrender.com";
 
+const BILLING_API = BASE_URL + "/billing";
+const PATIENT_API = BASE_URL + "/patients";
+const DOCTOR_API = BASE_URL + "/doctors";
+const MEDICINE_API = BASE_URL + "/medicines";
 
-const BILLING_API =
-BASE_URL + "/billing";
+let selectedMedicinePrice = 0;
+let deleteBillId = null;
 
-
-const PATIENT_API =
-BASE_URL + "/patients";
-
-
-const APPOINTMENT_API =
-BASE_URL + "/appointments";
-
-
-
-// ======================================
-// VARIABLES
-// ======================================
-
-
-let bills = [];
-
-let appointments = [];
-
-
-
-
-
-
-// ======================================
+// =====================================
 // PAGE LOAD
-// ======================================
+// =====================================
 
+document.addEventListener("DOMContentLoaded", () => {
 
-document.addEventListener(
-"DOMContentLoaded",
-()=>{
+    loadPatients();
 
+    loadDoctors();
 
-setInvoiceDetails();
+    loadMedicines();
 
+    loadBills();
 
-loadPatients();
-
-loadAppointments();
-
-loadBills();
-
-loadSummary();
-
-
+    loadSummary();
 
 });
 
-
-
-
-
-
-function setInvoiceDetails(){
-
-
-const invoice =
-document.getElementById("invoiceNo");
-
-
-const date =
-document.getElementById("billDate");
-
-
-
-if(invoice){
-
-invoice.innerHTML =
-"Invoice : INV-" + Date.now();
-
-}
-
-
-
-if(date){
-
-date.innerHTML =
-new Date().toLocaleString();
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ======================================
-// SUMMARY
-// ======================================
-
-
-function loadSummary(){
-
-
-
-fetch(BILLING_API + "/summary")
-
-.then(res=>{
-
-
-if(!res.ok){
-
-throw new Error(
-"Summary error"
-);
-
-}
-
-
-return res.json();
-
-
-})
-
-
-.then(data=>{
-
-
-document.getElementById(
-"totalRevenue"
-).innerHTML =
-"₹ " + (data.totalRevenue || 0);
-
-
-
-document.getElementById(
-"paidBills"
-).innerHTML =
-data.paidBills || 0;
-
-
-
-document.getElementById(
-"unpaidBills"
-).innerHTML =
-data.unpaidBills || 0;
-
-
-
-document.getElementById(
-"totalBills"
-).innerHTML =
-data.totalBills || 0;
-
-
-
-})
-
-
-.catch(error=>{
-
-console.log(error);
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ======================================
+// =====================================
 // LOAD PATIENTS
-// ======================================
+// =====================================
 
+async function loadPatients(){
 
-function loadPatients(){
+    try{
 
+        const response = await fetch(PATIENT_API);
 
+        const patients = await response.json();
 
-fetch(PATIENT_API)
+        let options =
+        `<option value="">Select Patient</option>`;
 
-.then(res=>res.json())
+        patients.forEach(patient=>{
 
+            options +=
+            `<option value="${patient.id}">
+                ${patient.name}
+            </option>`;
 
-.then(data=>{
+        });
 
+        document.getElementById("patientSelect").innerHTML =
+        options;
 
-let options =
+    }
 
-`
-<option value="">
-Select Patient
-</option>
-`;
+    catch(error){
 
+        console.error(error);
 
-
-data.forEach(p=>{
-
-
-options +=
-
-`
-<option value="${p.id}">
-${p.name}
-</option>
-
-`;
-
-
-
-});
-
-
-
-const select =
-document.getElementById(
-"patientId"
-);
-
-
-
-if(select){
-
-select.innerHTML =
-options;
+    }
 
 }
 
+// =====================================
+// LOAD DOCTORS
+// =====================================
 
+async function loadDoctors(){
 
-})
+    try{
 
+        const response = await fetch(DOCTOR_API);
 
-.catch(console.error);
+        const doctors = await response.json();
 
+        let options =
+        `<option value="">Select Doctor</option>`;
 
+        doctors.forEach(doctor=>{
 
-}
+            options +=
+            `<option value="${doctor.id}">
+                ${doctor.name}
+            </option>`;
 
+        });
 
+        document.getElementById("doctorSelect").innerHTML =
+        options;
 
+    }
 
+    catch(error){
 
+        console.error(error);
 
-
-
-
-// ======================================
-// LOAD APPOINTMENTS
-// ======================================
-
-
-function loadAppointments(){
-
-
-
-fetch(APPOINTMENT_API)
-
-.then(res=>res.json())
-
-
-.then(data=>{
-
-
-appointments=data;
-
-
-
-let options =
-
-`
-<option value="">
-Select Appointment
-</option>
-
-`;
-
-
-
-data.forEach(a=>{
-
-
-options +=
-
-`
-<option value="${a.id}">
-Appointment #${a.id}
-</option>
-
-`;
-
-
-
-});
-
-
-
-const select =
-document.getElementById(
-"appointmentId"
-);
-
-
-
-if(select){
-
-select.innerHTML =
-options;
+    }
 
 }
 
+// =====================================
+// LOAD MEDICINES
+// =====================================
 
+async function loadMedicines(){
 
-})
+    try{
 
+        const response = await fetch(MEDICINE_API);
 
-.catch(console.error);
+        const medicines = await response.json();
 
+        let options =
+        `<option value="">Select Medicine</option>`;
 
+        medicines.forEach(medicine=>{
 
-}
+            options +=
 
+            `<option
 
+            value="${medicine.id}"
 
+            data-price="${medicine.price}"
 
+            >
 
+            ${medicine.name}
 
+            </option>`;
 
+        });
 
+        const medicineSelect =
+        document.getElementById("medicineSelect");
 
-// ======================================
-// AUTO FILL DOCTOR
-// ======================================
+        medicineSelect.innerHTML = options;
 
+        medicineSelect.addEventListener("change",()=>{
 
-document.addEventListener(
-"change",
-function(e){
+            const selected =
+            medicineSelect.options[
+                medicineSelect.selectedIndex
+            ];
 
+            selectedMedicinePrice =
+            Number(
+                selected.dataset.price || 0
+            );
 
+            document.getElementById(
+                "medicinePrice"
+            ).value =
+            selectedMedicinePrice;
 
-if(e.target.id==="appointmentId"){
+            calculateMedicineTotal();
 
+        });
 
+    }
 
-const id =
-Number(e.target.value);
+    catch(error){
 
+        console.error(error);
 
-
-const appointment =
-appointments.find(
-a=>a.id===id
-);
-
-
-
-if(!appointment)
-return;
-
-
-
-
-document.getElementById(
-"patientId"
-).value =
-appointment.patient?.id || "";
-
-
-
-document.getElementById(
-"doctorName"
-).value =
-appointment.doctor?.name || "";
-
-
-
-document.getElementById(
-"department"
-).value =
-appointment.doctor?.specialization || "";
-
-
+    }
 
 }
 
+// =====================================
+// LOAD SUMMARY
+// =====================================
 
+async function loadSummary(){
 
-});
+    try{
 
+        const response =
+        await fetch(BILLING_API + "/summary");
 
+        const summary =
+        await response.json();
 
+        document.getElementById(
+            "totalRevenue"
+        ).innerHTML =
+        "₹" + (summary.totalRevenue || 0);
 
+        document.getElementById(
+            "paidBills"
+        ).innerHTML =
+        summary.paidBills;
 
+        document.getElementById(
+            "pendingBills"
+        ).innerHTML =
+        summary.unpaidBills;
 
+        document.getElementById(
+            "billCount"
+        ).innerHTML =
+        summary.totalBills;
 
+    }
 
+    catch(error){
 
-// ======================================
-// CALCULATE BILL
-// ======================================
+        console.error(error);
 
+    }
 
-function calculateBill(){
+}
+// =====================================
+// CALCULATE MEDICINE TOTAL
+// =====================================
 
+function calculateMedicineTotal() {
 
-let consultation =
-Number(
-document.getElementById(
-"consultationFee"
-).value || 0
-);
+    const qty =
+    parseInt(document.getElementById("medicineQty").value) || 0;
 
+    const total = qty * selectedMedicinePrice;
 
+    document.getElementById("medicineTotal").value = total;
 
-let medicine =
-Number(
-document.getElementById(
-"medicineFee"
-).value || 0
-);
-
-
-
-let lab =
-Number(
-document.getElementById(
-"labFee"
-).value || 0
-);
-
-
-
-let room =
-Number(
-document.getElementById(
-"roomFee"
-).value || 0
-);
-
-
-
-let other =
-Number(
-document.getElementById(
-"otherFee"
-).value || 0
-);
-
-
-
-let gst =
-Number(
-document.getElementById(
-"gst"
-).value || 0
-);
-
-
-
-let discount =
-Number(
-document.getElementById(
-"discount"
-).value || 0
-);
-
-
-
-let total =
-
-consultation+
-medicine+
-lab+
-room+
-other;
-
-
-
-total += total * gst /100;
-
-
-total -= total * discount /100;
-
-
-
-document.getElementById(
-"amount"
-).value =
-total.toFixed(2);
-
-
+    calculateGrandTotal();
 
 }
 
+// =====================================
+// CALCULATE GRAND TOTAL
+// =====================================
 
+function calculateGrandTotal() {
 
+    const medicine =
+    parseFloat(document.getElementById("medicineTotal").value) || 0;
 
+    const doctor =
+    parseFloat(document.getElementById("doctorFee").value) || 0;
 
+    const room =
+    parseFloat(document.getElementById("roomCharge").value) || 0;
 
+    const lab =
+    parseFloat(document.getElementById("labCharge").value) || 0;
 
+    const total = medicine + doctor + room + lab;
 
-
-// ======================================
-// CREATE BILL
-// ======================================
-
-
-function createBill(){
-
-
-calculateBill();
-
-
-
-const bill={
-
-
-amount:Number(
-document.getElementById(
-"amount"
-).value
-),
-
-
-
-paymentMethod:
-document.getElementById(
-"paymentMethod"
-).value,
-
-
-
-paymentStatus:
-document.getElementById(
-"paymentStatus"
-).value,
-
-
-
-patient:{
-id:Number(
-document.getElementById(
-"patientId"
-).value
-)
-},
-
-
-
-appointment:{
-id:Number(
-document.getElementById(
-"appointmentId"
-).value
-)
-}
-
-
-
-};
-
-
-
-
-if(
-
-!bill.patient.id ||
-
-!bill.appointment.id ||
-
-!bill.paymentMethod ||
-
-!bill.paymentStatus
-
-){
-
-
-alert(
-"Please fill all required fields"
-);
-
-return;
-
+    document.getElementById("grandTotal").value = total;
 
 }
 
+// =====================================
+// GENERATE BILL
+// =====================================
 
+async function generateBill() {
 
+    const patientId =
+    document.getElementById("patientSelect").value;
 
-fetch(BILLING_API,{
+    const doctorId =
+    document.getElementById("doctorSelect").value;
 
-method:"POST",
+    const medicineId =
+    document.getElementById("medicineSelect").value;
 
-headers:{
+    if (
 
-"Content-Type":
-"application/json"
+        patientId === "" ||
 
-},
+        doctorId === "" ||
 
-body:
-JSON.stringify(bill)
+        medicineId === ""
 
+    ) {
 
-})
+        alert("Please select Patient, Doctor and Medicine.");
 
-.then(res=>{
+        return;
 
+    }
 
-if(!res.ok){
+    const bill = {
 
-throw new Error(
-"Bill creation failed"
-);
+        patient: {
+
+            id: patientId
+
+        },
+
+        medicineTotal:
+        parseFloat(
+            document.getElementById("medicineTotal").value
+        ) || 0,
+
+        doctorFee:
+        parseFloat(
+            document.getElementById("doctorFee").value
+        ) || 0,
+
+        roomCharge:
+        parseFloat(
+            document.getElementById("roomCharge").value
+        ) || 0,
+
+        labCharge:
+        parseFloat(
+            document.getElementById("labCharge").value
+        ) || 0,
+
+        paymentMethod:
+        document.getElementById("paymentMethod").value,
+
+        paymentStatus:
+        document.getElementById("paymentStatus").value
+
+    };
+
+    try {
+
+        const response = await fetch(BILLING_API, {
+
+            method: "POST",
+
+            headers: {
+
+                "Content-Type": "application/json"
+
+            },
+
+            body: JSON.stringify(bill)
+
+        });
+
+        if (!response.ok) {
+
+            throw new Error("Unable to Generate Bill");
+
+        }
+
+        alert("Bill Generated Successfully");
+
+        loadBills();
+
+        loadSummary();
+
+        document.getElementById("medicineQty").value = 1;
+        document.getElementById("medicinePrice").value = "";
+        document.getElementById("medicineTotal").value = "";
+        document.getElementById("grandTotal").value = "";
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert(error.message);
+
+    }
 
 }
-
-
-return res.json();
-
-
-})
-
-
-.then(()=>{
-
-
-alert(
-"Bill Generated Successfully ✅"
-);
-
-
-clearForm();
-
-
-loadBills();
-
-
-loadSummary();
-
-
-
-})
-
-
-.catch(error=>{
-
-
-alert(error.message);
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ======================================
+// =====================================
 // LOAD BILLS
-// ======================================
+// =====================================
 
+async function loadBills() {
 
-function loadBills(){
+    try {
 
+        const response = await fetch(BILLING_API);
 
-fetch(BILLING_API)
+        if (!response.ok) {
 
-.then(res=>res.json())
+            throw new Error("Unable to load bills");
 
+        }
 
-.then(data=>{
+        const bills = await response.json();
 
+        let rows = "";
 
-bills=data;
+        bills.forEach(bill => {
 
+            rows += `
 
-displayBills(data);
+            <tr>
 
+                <td>${bill.id}</td>
 
+                <td>${bill.patient ? bill.patient.name : "-"}</td>
 
-})
+                <td>₹${bill.amount ?? 0}</td>
 
+                <td>${bill.paymentStatus}</td>
 
-.catch(console.error);
+                <td>${bill.paymentMethod}</td>
 
+                <td>
 
+                    <button
+                    class="deleteBtn"
+                    onclick="deleteBill(${bill.id})">
+
+                    <i class="fa-solid fa-trash"></i>
+
+                    </button>
+
+                </td>
+
+            </tr>
+
+            `;
+
+        });
+
+        document.getElementById("billingTable").innerHTML = rows;
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+    }
 
 }
 
+// =====================================
+// DELETE BILL
+// =====================================
 
+function deleteBill(id) {
 
+    deleteBillId = id;
 
-
-
-
-
-
-// ======================================
-// DISPLAY BILLS
-// ======================================
-
-
-function displayBills(data){
-
-
-let rows="";
-
-
-
-data.forEach(b=>{
-
-
-let status =
-
-b.paymentStatus || "UNPAID";
-
-
-
-let badge =
-
-status==="PAID"
-
-?
-"🟢 PAID"
-
-:
-
-status==="PENDING"
-
-?
-"🟡 PENDING"
-
-:
-
-"🔴 UNPAID";
-
-
-
-
-rows +=
-
-`
-
-<tr>
-
-
-<td>
-INV-${b.id}
-</td>
-
-
-<td>
-${b.patient?.name || "-"}
-</td>
-
-
-<td>
-₹ ${b.amount}
-</td>
-
-
-<td>
-${badge}
-</td>
-
-
-<td>
-${b.paymentMethod || "-"}
-</td>
-
-
-<td>
-
-
-<button class="btn"
-onclick='printBill(${JSON.stringify(b)})'>
-
-<i class="fa fa-print"></i>
-
-</button>
-
-
-
-<button class="whatsappBtn"
-onclick='whatsappBill(${JSON.stringify(b)})'>
-
-<i class="fab fa-whatsapp"></i>
-
-</button>
-
-
-
-<button class="deleteBtn"
-onclick="deleteBill(${b.id})">
-
-<i class="fa fa-trash"></i>
-
-</button>
-
-
-
-</td>
-
-
-</tr>
-
-`;
-
-
-
-});
-
-
-
-
-
-document.getElementById(
-"billingTable"
-).innerHTML =
-
-
-rows ||
-
-`
-
-<tr>
-
-<td colspan="6">
-
-No Billing Records Found
-
-</td>
-
-</tr>
-
-`;
-
-
+    document.getElementById("deleteModal").style.display = "flex";
 
 }
 
+// =====================================
+// CLOSE DELETE MODAL
+// =====================================
 
+function closeDeleteModal() {
 
-
-
-
-
-
-
-// ======================================
-// SEARCH
-// ======================================
-
-
-function searchBills(){
-
-
-const key =
-document.getElementById(
-"searchBill"
-).value
-.toLowerCase();
-
-
-
-const result =
-bills.filter(b=>
-
-
-String(b.id)
-.includes(key)
-
-
-||
-
-(b.patient?.name || "")
-.toLowerCase()
-.includes(key)
-
-
-||
-
-(b.paymentStatus || "")
-.toLowerCase()
-.includes(key)
-
-
-);
-
-
-
-displayBills(result);
-
-
+    document.getElementById("deleteModal").style.display = "none";
 
 }
 
+// =====================================
+// CONFIRM DELETE
+// =====================================
 
+async function confirmDelete() {
 
+    try {
 
+        const response = await fetch(
 
+            BILLING_API + "/" + deleteBillId,
 
+            {
 
+                method: "DELETE"
 
+            }
 
-// ======================================
-// DELETE
-// ======================================
+        );
 
+        if (!response.ok) {
 
-function deleteBill(id){
+            throw new Error("Delete Failed");
 
+        }
 
-if(!confirm(
-"Delete this bill?"
-))
-return;
+        alert("Bill Deleted Successfully");
 
+        closeDeleteModal();
 
+        loadBills();
 
-fetch(
-BILLING_API+"/"+id,
-{
+        loadSummary();
 
-method:"DELETE"
+    }
 
-})
+    catch (error) {
 
-.then(()=>{
+        console.error(error);
 
+        alert(error.message);
 
-loadBills();
-
-loadSummary();
-
-
-});
-
-
+    }
 
 }
 
+// =====================================
+// GLOBAL FUNCTIONS
+// =====================================
 
+window.calculateMedicineTotal = calculateMedicineTotal;
 
+window.calculateGrandTotal = calculateGrandTotal;
 
+window.generateBill = generateBill;
 
+window.deleteBill = deleteBill;
 
+window.confirmDelete = confirmDelete;
 
-
-
-// ======================================
-// PRINT
-// ======================================
-
-
-function printBill(b){
-
-
-
-let win =
-window.open("");
-
-
-
-win.document.write(
-
-`
-
-<h1 align="center">
-🏥 CITY HOSPITAL
-</h1>
-
-<h2 align="center">
-Invoice
-</h2>
-
-
-<hr>
-
-
-<p>
-Invoice : INV-${b.id}
-</p>
-
-
-<p>
-Patient : ${b.patient?.name || "-"}
-</p>
-
-
-<p>
-Amount : ₹${b.amount}
-</p>
-
-
-<p>
-Status : ${b.paymentStatus}
-</p>
-
-
-<p>
-Payment : ${b.paymentMethod}
-</p>
-
-
-`
-
-);
-
-
-
-win.print();
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ======================================
-// WHATSAPP
-// ======================================
-
-
-function whatsappBill(b){
-
-
-
-let msg =
-
-`
-🏥 CITY HOSPITAL
-
-Invoice : INV-${b.id}
-
-Patient :
-${b.patient?.name || "-"}
-
-Amount :
-₹${b.amount}
-
-Status :
-${b.paymentStatus}
-
-Thank You ❤️
-`;
-
-
-
-window.open(
-
-"https://wa.me/?text="+
-encodeURIComponent(msg),
-
-"_blank"
-
-);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ======================================
-// HMS PRO BUTTONS
-// ======================================
-
-
-function printCurrentBill(){
-
-
-if(bills.length){
-
-printBill(
-bills[bills.length-1]
-);
-
-
-}
-
-else{
-
-alert(
-"No bill available"
-);
-
-
-}
-
-
-}
-
-
-
-
-function shareCurrentBill(){
-
-
-if(bills.length){
-
-whatsappBill(
-bills[bills.length-1]
-);
-
-
-}
-
-else{
-
-alert(
-"No bill available"
-);
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ======================================
-// PDF
-// ======================================
-
-
-function downloadBillPDF(){
-
-
-alert(
-"PDF download will be added soon"
-);
-
-
-}
-
-
-
-
-
-
-
-
-
-// ======================================
-// CLEAR FORM
-// ======================================
-
-
-function clearForm(){
-
-
-
-document.getElementById(
-"amount"
-).value="";
-
-document.getElementById(
-"patientId"
-).value="";
-
-document.getElementById(
-"appointmentId"
-).value="";
-
-document.getElementById(
-"paymentMethod"
-).value="";
-
-document.getElementById(
-"paymentStatus"
-).value="";
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ======================================
-// GLOBAL
-// ======================================
-
-
-window.calculateBill=calculateBill;
-
-window.createBill=createBill;
-
-window.searchBills=searchBills;
-
-window.printBill=printBill;
-
-window.whatsappBill=whatsappBill;
-
-window.deleteBill=deleteBill;
-
-window.downloadBillPDF=downloadBillPDF;
-
-window.printCurrentBill=printCurrentBill;
-
-window.shareCurrentBill=shareCurrentBill;
+window.closeDeleteModal = closeDeleteModal;

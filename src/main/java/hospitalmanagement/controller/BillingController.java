@@ -18,9 +18,9 @@ public class BillingController {
     @Autowired
     private BillingService billingService;
 
-    // ==========================
+    // ======================================
     // Create Bill
-    // ==========================
+    // ======================================
 
     @PostMapping
     public Billing createBill(@RequestBody Billing billing) {
@@ -29,9 +29,9 @@ public class BillingController {
 
     }
 
-    // ==========================
+    // ======================================
     // Get All Bills
-    // ==========================
+    // ======================================
 
     @GetMapping
     public List<Billing> getAllBills() {
@@ -40,9 +40,9 @@ public class BillingController {
 
     }
 
-    // ==========================
+    // ======================================
     // Get Bill By Id
-    // ==========================
+    // ======================================
 
     @GetMapping("/{id}")
     public Billing getBill(@PathVariable Long id) {
@@ -51,21 +51,22 @@ public class BillingController {
 
     }
 
-    // ==========================
+    // ======================================
     // Update Bill
-    // ==========================
+    // ======================================
 
     @PutMapping("/{id}")
-    public Billing updateBill(@PathVariable Long id,
-                              @RequestBody Billing billing) {
+    public Billing updateBill(
+            @PathVariable Long id,
+            @RequestBody Billing billing) {
 
         return billingService.updateBill(id, billing);
 
     }
 
-    // ==========================
+    // ======================================
     // Delete Bill
-    // ==========================
+    // ======================================
 
     @DeleteMapping("/{id}")
     public String deleteBill(@PathVariable Long id) {
@@ -76,9 +77,9 @@ public class BillingController {
 
     }
 
-    // ==========================
+    // ======================================
     // Billing Summary
-    // ==========================
+    // ======================================
 
     @GetMapping("/summary")
     public Map<String, Object> getSummary() {
@@ -98,6 +99,18 @@ public class BillingController {
                 billingService.getAllBills().size());
 
         return summary;
+
+    }
+
+    // ======================================
+    // Calculate Bill
+    // ======================================
+
+    @PostMapping("/calculate")
+    public Billing calculateBill(
+            @RequestBody Billing billing) {
+
+        return billingService.saveBill(billing);
 
     }
 

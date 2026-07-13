@@ -1,9 +1,7 @@
 package hospitalmanagement.entity;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-
 import jakarta.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "medicine")
@@ -13,35 +11,22 @@ public class Medicine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
-    private String medicineCode;
-
     @Column(nullable = false)
-    private String medicineName;
-
-    private String genericName;
-
-    private String strength;
-
-    private String dosageForm;
+    private String name;
 
     private String category;
 
     private String manufacturer;
 
-    private BigDecimal price;
+    @Column(nullable = false)
+    private Double price;
 
+    @Column(nullable = false)
     private Integer stock;
-
-    private Integer reorderLevel;
-
-    private String batchNumber;
 
     private LocalDate expiryDate;
 
-    private String status;
-
-    @Column(length = 1000)
+    @Column(length = 500)
     private String description;
 
     public Medicine() {
@@ -55,44 +40,12 @@ public class Medicine {
         this.id = id;
     }
 
-    public String getMedicineCode() {
-        return medicineCode;
+    public String getName() {
+        return name;
     }
 
-    public void setMedicineCode(String medicineCode) {
-        this.medicineCode = medicineCode;
-    }
-
-    public String getMedicineName() {
-        return medicineName;
-    }
-
-    public void setMedicineName(String medicineName) {
-        this.medicineName = medicineName;
-    }
-
-    public String getGenericName() {
-        return genericName;
-    }
-
-    public void setGenericName(String genericName) {
-        this.genericName = genericName;
-    }
-
-    public String getStrength() {
-        return strength;
-    }
-
-    public void setStrength(String strength) {
-        this.strength = strength;
-    }
-
-    public String getDosageForm() {
-        return dosageForm;
-    }
-
-    public void setDosageForm(String dosageForm) {
-        this.dosageForm = dosageForm;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCategory() {
@@ -111,11 +64,11 @@ public class Medicine {
         this.manufacturer = manufacturer;
     }
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -127,36 +80,12 @@ public class Medicine {
         this.stock = stock;
     }
 
-    public Integer getReorderLevel() {
-        return reorderLevel;
-    }
-
-    public void setReorderLevel(Integer reorderLevel) {
-        this.reorderLevel = reorderLevel;
-    }
-
-    public String getBatchNumber() {
-        return batchNumber;
-    }
-
-    public void setBatchNumber(String batchNumber) {
-        this.batchNumber = batchNumber;
-    }
-
     public LocalDate getExpiryDate() {
         return expiryDate;
     }
 
     public void setExpiryDate(LocalDate expiryDate) {
         this.expiryDate = expiryDate;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getDescription() {
@@ -166,5 +95,4 @@ public class Medicine {
     public void setDescription(String description) {
         this.description = description;
     }
-
 }
