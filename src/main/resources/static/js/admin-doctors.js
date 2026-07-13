@@ -373,52 +373,34 @@ function confirmDelete() {
 function editDoctor(id) {
 
     fetch(DOCTOR_API + "/" + id)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Unable to Load Doctor");
+            }
+            return response.json();
+        })
+        .then(doctor => {
 
-    .then(response => {
+            console.log("Doctor Loaded:", doctor);
 
-        if (!response.ok) {
+            document.getElementById("doctorId").value = doctor.id || "";
+            document.getElementById("doctorName").value = doctor.name || "";
+            document.getElementById("doctorEmail").value = doctor.email || "";
+            document.getElementById("doctorPassword").value = "";
+            document.getElementById("doctorPhone").value = doctor.phone || "";
+            document.getElementById("doctorSpecialization").value = doctor.specialization || "";
 
-            throw new Error("Unable to Load Doctor");
+            document.getElementById("modalTitle").innerHTML = "Edit Doctor";
 
-        }
+            document.getElementById("doctorModal").style.display = "flex";
 
-        return response.json();
-
-    })
-
-    .then(doctor => {
-
-        document.getElementById("doctorId").value = doctor.id;
-
-        document.getElementById("doctorName").value = doctor.name;
-
-        document.getElementById("doctorEmail").value = doctor.email;
-
-        document.getElementById("doctorPassword").value = "";
-
-        document.getElementById("doctorPhone").value = doctor.phone || "";
-
-        document.getElementById("doctorSpecialization").value =
-            doctor.specialization || "";
-
-        document.getElementById("modalTitle").innerHTML =
-            "Edit Doctor";
-
-        document.getElementById("doctorModal").style.display =
-            "flex";
-
-    })
-
-    .catch(error => {
-
-        console.error(error);
-
-        alert(error.message);
-
-    });
+        })
+        .catch(error => {
+            console.error("Edit Error:", error);
+            alert(error.message);
+        });
 
 }
-
 // ==========================
 // Toggle Password
 // ==========================
