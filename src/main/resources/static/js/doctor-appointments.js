@@ -1,275 +1,713 @@
+// ==========================================
+// HMS PRO Doctor Appointments
+// ==========================================
+
+
+console.log("Doctor Appointments JS Loaded");
+
+
+
+
+// ===============================
+// BASE URL
+// ===============================
+
+
 const BASE_URL =
+
 window.location.hostname === "localhost"
-? "http://localhost:8080"
-: "https://hospital-management-system-6pok.onrender.com";
 
-const doctorId = localStorage.getItem("doctorId");
+?
 
-const API =
-BASE_URL + "/appointments/doctor/" + doctorId;
+"http://localhost:8080"
 
-const STATUS_API =
-BASE_URL + "/appointments";
+:
+
+"https://hospital-management-system-6pok.onrender.com";
 
 
-let appointments = [];
 
-let selectedAppointmentId = null;
 
-// ===============================
-// Page Load
-// ===============================
 
-window.onload = function () {
+const doctorId =
+localStorage.getItem("doctorId");
 
-    loadAppointments();
 
-    document
-        .getElementById("searchAppointment")
-        .addEventListener("keyup", searchAppointment);
 
-};
 
-// ===============================
-// Load Appointments
-// ===============================
+if(!doctorId){
 
-async function loadAppointments() {
+alert("Session expired. Please login again.");
 
-    try {
-
-        const response = await fetch(API);
-
-        appointments = await response.json();
-
-        displayAppointments(appointments);
-
-        updateCards(appointments);
-
-    }
-
-    catch (error) {
-
-        console.error(error);
-
-    }
+window.location.href="login.html";
 
 }
 
+
+
+
+
+
+const APPOINTMENT_API =
+
+BASE_URL+
+"/appointments/doctor/"+
+doctorId;
+
+
+
+
+
+const UPDATE_API =
+
+BASE_URL+
+"/appointments";
+
+
+
+
+
+let appointments=[];
+
+let selectedAppointmentId=null;
+
+
+
+
+
+
+
+
+
 // ===============================
-// Display Appointments
+// PAGE LOAD
 // ===============================
 
-function displayAppointments(list) {
 
-    let rows = "";
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
 
-    list.forEach(a => {
 
-        rows += `
+loadAppointments();
 
-        <tr>
 
-            <td>${a.id}</td>
 
-            <td>${a.patient ? a.patient.name : "-"}</td>
+const search =
+document.getElementById(
+"searchAppointment"
+);
 
-            <td>${a.appointmentDate}</td>
 
-            <td>${a.appointmentTime}</td>
 
-            <td>
+if(search){
 
-                <span class="status ${a.status.toLowerCase()}">
-
-                    ${a.status}
-
-                </span>
-
-            </td>
-
-            <td>
-
-                <button
-                    class="editBtn"
-                    onclick="openStatusModal(${a.id},'${a.status}')">
-
-                    <i class="fas fa-edit"></i>
-
-                    Update
-
-                </button>
-
-            </td>
-
-        </tr>
-
-        `;
-
-    });
-
-    document.getElementById("appointmentTable").innerHTML = rows;
+search.addEventListener(
+"keyup",
+searchAppointment
+);
 
 }
 
+
+});
+
+
+
+
+
+
+
+
+
 // ===============================
-// Dashboard Cards
+// LOAD APPOINTMENTS
 // ===============================
 
-function updateCards(list) {
 
-    document.getElementById("appointmentCount").innerHTML =
-        list.length;
+async function loadAppointments(){
 
-    let pending = 0;
 
-    let confirmed = 0;
+try{
 
-    let completed = 0;
 
-    list.forEach(a => {
+const response =
+await fetch(APPOINTMENT_API);
 
-        const status = (a.status || "").toUpperCase();
 
-        if (status === "PENDING")
 
-            pending++;
+if(!response.ok){
 
-        else if (status === "CONFIRMED")
-
-            confirmed++;
-
-        else if (status === "COMPLETED")
-
-            completed++;
-
-    });
-
-    document.getElementById("pendingCount").innerHTML =
-        pending;
-
-    document.getElementById("confirmedCount").innerHTML =
-        confirmed;
-
-    document.getElementById("completedCount").innerHTML =
-        completed;
+throw new Error(
+"Unable to load appointments"
+);
 
 }
 
-// ===============================
-// Search
-// ===============================
 
-function searchAppointment() {
 
-    const keyword = document
-        .getElementById("searchAppointment")
-        .value
-        .toLowerCase();
+appointments =
+await response.json();
 
-    const filtered = appointments.filter(a =>
 
-        (a.patient?.name || "")
-            .toLowerCase()
-            .includes(keyword)
 
-        ||
+displayAppointments(
+appointments
+);
 
-        (a.status || "")
-            .toLowerCase()
-            .includes(keyword)
 
-        ||
 
-        (a.appointmentDate || "")
-            .includes(keyword)
+updateCards(
+appointments
+);
 
-    );
 
-    displayAppointments(filtered);
 
 }
 
-// ===============================
-// Open Status Modal
-// ===============================
+catch(error){
 
-function openStatusModal(id, status) {
 
-    selectedAppointmentId = id;
+console.error(error);
 
-    document.getElementById("appointmentId").value = id;
-
-    document.getElementById("appointmentStatus").value =
-        status;
-
-    document.getElementById("statusModal").style.display =
-        "block";
 
 }
 
-// ===============================
-// Close Modal
-// ===============================
 
-function closeStatusModal() {
-
-    document.getElementById("statusModal").style.display =
-        "none";
 
 }
 
+
+
+
+
+
+
+
+
 // ===============================
-// Update Status
+// DISPLAY
 // ===============================
 
-async function updateStatus() {
 
-    const status =
-        document.getElementById("appointmentStatus").value;
+function displayAppointments(list){
 
-    const body = {
 
-        status: status
 
-    };
+let rows="";
 
-    try {
 
-        await fetch(
 
-            STATUS_API +
-            "/" +
-            selectedAppointmentId +
-            "/status",
+list.forEach(a=>{
 
-            {
 
-                method: "PUT",
+let status =
+(a.status || "PENDING")
+.toLowerCase();
 
-                headers: {
 
-                    "Content-Type":
-                    "application/json"
 
-                },
 
-                body: JSON.stringify(body)
+rows+=`
 
-            }
+<tr>
 
-        );
 
-        closeStatusModal();
+<td>${a.id}</td>
 
-        loadAppointments();
 
-    }
+<td>
 
-    catch (error) {
+${a.patient?.name || "-"}
 
-        console.error(error);
+</td>
 
-    }
+
+
+<td>
+
+${a.appointmentDate || "-"}
+
+</td>
+
+
+
+<td>
+
+${a.appointmentTime || "-"}
+
+</td>
+
+
+
+<td>
+
+
+<span class="status ${status}">
+
+${a.status || "PENDING"}
+
+</span>
+
+
+</td>
+
+
+
+
+
+<td>
+
+
+
+<button
+class="editBtn"
+
+onclick="openStatusModal(
+${a.id},
+'${a.status}'
+)">
+
+
+<i class="fas fa-edit"></i>
+
+Update
+
+
+</button>
+
+
+
+
+<button
+class="view-btn"
+
+onclick="viewPatient(
+${a.patient?.id}
+)">
+
+
+<i class="fas fa-eye"></i>
+
+
+</button>
+
+
+
+</td>
+
+
+</tr>
+
+
+`;
+
+
+
+});
+
+
+
+
+
+document.getElementById(
+"appointmentTable"
+).innerHTML =
+
+
+rows ||
+
+`
+
+<tr>
+
+<td colspan="6">
+
+No Appointments Found
+
+</td>
+
+</tr>
+
+`;
+
+
 
 }
+
+
+
+
+
+
+
+
+
+// ===============================
+// CARDS
+// ===============================
+
+
+function updateCards(list){
+
+
+
+let pending=0;
+
+let confirmed=0;
+
+let completed=0;
+
+
+
+
+list.forEach(a=>{
+
+
+let status =
+(a.status || "")
+.toUpperCase();
+
+
+
+if(status==="PENDING")
+pending++;
+
+
+else if(status==="CONFIRMED")
+confirmed++;
+
+
+else if(status==="COMPLETED")
+completed++;
+
+
+
+});
+
+
+
+
+setValue(
+"appointmentCount",
+list.length
+);
+
+
+
+setValue(
+"pendingCount",
+pending
+);
+
+
+
+setValue(
+"confirmedCount",
+confirmed
+);
+
+
+
+setValue(
+"completedCount",
+completed
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// SEARCH
+// ===============================
+
+
+function searchAppointment(){
+
+
+
+let keyword =
+document
+.getElementById(
+"searchAppointment"
+)
+.value
+.toLowerCase();
+
+
+
+
+
+let filtered =
+appointments.filter(a=>
+
+
+
+(a.patient?.name || "")
+.toLowerCase()
+.includes(keyword)
+
+
+
+||
+
+
+
+(a.status || "")
+.toLowerCase()
+.includes(keyword)
+
+
+
+||
+
+
+
+(a.appointmentDate || "")
+.includes(keyword)
+
+
+
+);
+
+
+
+displayAppointments(filtered);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// STATUS MODAL
+// ===============================
+
+
+function openStatusModal(id,status){
+
+
+selectedAppointmentId=id;
+
+
+
+document.getElementById(
+"appointmentId"
+).value=id;
+
+
+
+document.getElementById(
+"appointmentStatus"
+).value=status;
+
+
+
+document.getElementById(
+"statusModal"
+).style.display="flex";
+
+
+}
+
+
+
+
+
+
+
+
+
+function closeStatusModal(){
+
+
+document.getElementById(
+"statusModal"
+).style.display="none";
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// UPDATE STATUS
+// ===============================
+
+
+async function updateStatus(){
+
+
+let status =
+document
+.getElementById(
+"appointmentStatus"
+)
+.value;
+
+
+
+
+
+try{
+
+
+await fetch(
+
+UPDATE_API+
+"/"+
+selectedAppointmentId+
+"/status",
+
+{
+
+method:"PUT",
+
+headers:{
+
+"Content-Type":
+"application/json"
+
+},
+
+body:JSON.stringify({
+
+status:status
+
+})
+
+}
+
+
+);
+
+
+
+
+closeStatusModal();
+
+
+loadAppointments();
+
+
+
+}
+
+catch(error){
+
+
+console.error(error);
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// VIEW PATIENT
+// ===============================
+
+
+function viewPatient(id){
+
+
+if(!id)return;
+
+
+
+localStorage.setItem(
+"patientId",
+id
+);
+
+
+
+window.location.href=
+"doctor-patients.html";
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// SAFE SET
+// ===============================
+
+
+function setValue(id,value){
+
+
+let el =
+document.getElementById(id);
+
+
+
+if(el){
+
+el.innerHTML=value;
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+// GLOBAL FUNCTIONS
+// ===============================
+
+
+window.openStatusModal=openStatusModal;
+
+window.closeStatusModal=closeStatusModal;
+
+window.updateStatus=updateStatus;
+
+window.searchAppointment=searchAppointment;
+
+window.viewPatient=viewPatient;

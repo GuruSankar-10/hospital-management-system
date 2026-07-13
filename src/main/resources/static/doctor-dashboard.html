@@ -5,96 +5,201 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Doctor Dashboard</title>
+
+<title>HMS PRO | Doctor Dashboard</title>
+
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+
 <link rel="stylesheet" href="css/theme.css">
+
 <link rel="stylesheet" href="css/doctor.css">
+
 
 </head>
 
+
 <body>
 
-<!-- ================= Sidebar ================= -->
 
-<div class="sidebar">
+
+
+
+<!-- ================= SIDEBAR ================= -->
+
+
+<aside class="sidebar">
+
+
 
 <div class="logo">
 
-<h2>👨‍⚕️ HMS</h2>
 
-<p>Doctor Panel</p>
+<div class="logo-icon">
+
+<i class="fa-solid fa-user-doctor"></i>
 
 </div>
 
+
+
+<div>
+
+<h2>HMS PRO</h2>
+
+<p>Doctor Portal</p>
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
 <nav>
+
+
 
 <a href="doctor-dashboard.html" class="active">
 
-<i class="fas fa-house"></i>
+<i class="fa-solid fa-chart-line"></i>
 
 <span>Dashboard</span>
 
 </a>
 
+
+
+
+
+
+
 <a href="doctor-patients.html">
 
-<i class="fas fa-bed"></i>
+<i class="fa-solid fa-bed-pulse"></i>
 
 <span>My Patients</span>
 
 </a>
 
+
+
+
+
+
+
 <a href="doctor-appointments.html">
 
-<i class="fas fa-calendar-check"></i>
+<i class="fa-solid fa-calendar-check"></i>
 
 <span>Appointments</span>
 
 </a>
 
+
+
+
+
+
+
 <a href="doctor-prescriptions.html">
 
-<i class="fas fa-file-prescription"></i>
+<i class="fa-solid fa-file-prescription"></i>
 
 <span>Prescriptions</span>
 
 </a>
 
+
+
+
+
+
+
 <a href="doctor-profile.html">
 
-<i class="fas fa-user-doctor"></i>
+<i class="fa-solid fa-user-doctor"></i>
 
 <span>Profile</span>
 
 </a>
 
-<a href="#" onclick="logout()">
 
-<i class="fas fa-right-from-bracket"></i>
+
+
+
+
+
+<a href="records.html">
+
+<i class="fa-solid fa-file-medical"></i>
+
+<span>Medical Records</span>
+
+</a>
+
+
+
+
+
+
+
+<a href="javascript:void(0)" onclick="logout()">
+
+<i class="fa-solid fa-right-from-bracket"></i>
 
 <span>Logout</span>
 
 </a>
 
+
+
 </nav>
 
-</div>
 
-<!-- ================= Main ================= -->
+
+</aside>
+
+
+
+
+
+
+
+
+
+<!-- ================= MAIN ================= -->
+
 
 <div class="main">
 
-<!-- ================= Topbar ================= -->
 
-<div class="topbar">
 
-<div>
+
+
+
+
+<!-- ================= TOPBAR ================= -->
+
+
+
+<header class="topbar">
+
+
+
+
+
+<div class="welcome">
+
+
 
 <h1>
 
@@ -106,45 +211,376 @@ Doctor
 
 </span>
 
-👋
+👨‍⚕️
+
 
 </h1>
 
+
+
+
 <p id="todayDate"></p>
 
+
+
 </div>
+
+
+
+
+
+
 
 <div class="top-right">
 
+
+
+
+
+
 <div class="search-box">
 
-<i class="fas fa-search"></i>
+
+<i class="fa-solid fa-search"></i>
+
+
 
 <input
+
 type="text"
-placeholder="Search Patient">
+
+placeholder="Search Patients..."
+
+>
+
 
 </div>
 
-<i class="fas fa-bell notification"></i>
 
-<div class="profile">
 
-<i class="fas fa-user-circle"></i>
+
+
+
+
+<button class="icon-btn">
+
+
+<i class="fa-solid fa-bell"></i>
+
+
+</button>
+
+
+
+
+
+
+
+
+<div class="profile-box">
+
+
+
+<i class="fa-solid fa-circle-user"></i>
+
+
+
+<div>
+
+
+<strong>
+
+Doctor
+
+
+</strong>
+
+
+<small>
+
+Medical Staff
+
+</small>
+
 
 </div>
 
-</div>
+
 
 </div>
 
-<!-- ================= Dashboard Cards ================= -->
 
-<div class="cards">
+
+
+
+
+</div>
+
+
+
+
+
+
+</header>
+
+
+
+
+
+
+
+
+
+<!-- ================= DOCTOR BANNER ================= -->
+
+
+
+<section class="dashboard-banner">
+
+
+
+
+
+<div class="banner-content">
+
+
+
+<h2>
+
+Good Morning Doctor 👨‍⚕️
+
+</h2>
+
+
+
+<p>
+
+Manage your patients, appointments,
+prescriptions and medical records from one place.
+
+</p>
+
+
+
+
+
+
+
+<div class="banner-buttons">
+
+
+
+<button onclick="location.href='doctor-patients.html'">
+
+
+<i class="fa-solid fa-bed-pulse"></i>
+
+
+My Patients
+
+
+</button>
+
+
+
+
+
+
+
+<button onclick="location.href='doctor-appointments.html'">
+
+
+<i class="fa-solid fa-calendar-check"></i>
+
+
+Today's Schedule
+
+
+</button>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="banner-image">
+
+
+<i class="fa-solid fa-stethoscope"></i>
+
+
+</div>
+
+
+
+
+
+
+
+</section>
+<!-- ================= DOCTOR PROFILE CARD ================= -->
+
+
+<section class="dashboard-card">
+
+
+
+<div class="profile-dashboard">
+
+
+
+
+
+<div class="doctor-avatar">
+
+
+<i class="fa-solid fa-user-doctor"></i>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="doctor-details">
+
+
+
+<h2>
+
+Dr. <span id="profileDoctorName">
+
+Doctor
+
+</span>
+
+
+</h2>
+
+
+
+
+<p>
+
+<i class="fa-solid fa-stethoscope"></i>
+
+<span id="doctorSpecialization">
+
+Specialist Doctor
+
+</span>
+
+
+</p>
+
+
+
+
+
+<p>
+
+<i class="fa-solid fa-envelope"></i>
+
+doctor@hospital.com
+
+</p>
+
+
+
+
+
+
+<p>
+
+<i class="fa-solid fa-phone"></i>
+
++91 XXXXX XXXXX
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="doctor-status">
+
+
+<span>
+
+🟢 Available
+
+</span>
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ================= STATISTICS CARDS ================= -->
+
+
+
+<section class="cards">
+
+
+
+
+
+
 
 <div class="card">
 
+
 <div>
+
+
+<p>
+
+My Patients
+
+</p>
+
 
 <h2 id="patientCount">
 
@@ -152,21 +588,36 @@ placeholder="Search Patient">
 
 </h2>
 
-<p>
-
-My Patients
-
-</p>
 
 </div>
 
-<i class="fas fa-bed"></i>
+
+
+<i class="fa-solid fa-bed-pulse"></i>
+
+
 
 </div>
+
+
+
+
+
+
+
 
 <div class="card">
 
+
 <div>
+
+
+<p>
+
+Today's Appointments
+
+</p>
+
 
 <h2 id="appointmentCount">
 
@@ -174,284 +625,596 @@ My Patients
 
 </h2>
 
-<p>
-
-Appointments
-
-</p>
 
 </div>
 
-<i class="fas fa-calendar-check"></i>
+
+
+<i class="fa-solid fa-calendar-check"></i>
+
+
 
 </div>
+
+
+
+
+
+
+
 
 <div class="card">
 
+
 <div>
 
-<h2 id="pendingCount">
+
+<p>
+
+Medical Records
+
+</p>
+
+
+<h2 id="recordCount">
 
 0
 
 </h2>
 
-<p>
-
-Pending
-
-</p>
 
 </div>
 
-<i class="fas fa-hourglass-half"></i>
+
+
+<i class="fa-solid fa-file-medical"></i>
+
+
 
 </div>
+
+
+
+
+
+
+
 
 <div class="card">
 
+
 <div>
 
-<h2 id="completedCount">
+
+<p>
+
+Prescriptions
+
+</p>
+
+
+<h2 id="prescriptionCount">
 
 0
 
 </h2>
 
-<p>
-
-Completed
-
-</p>
 
 </div>
 
-<i class="fas fa-circle-check"></i>
+
+
+<i class="fa-solid fa-file-prescription"></i>
+
+
 
 </div>
 
-</div>
 
-<!-- ================= Quick Actions ================= -->
 
-<div class="quick-actions">
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ================= QUICK ACTIONS ================= -->
+
+
+
+<section class="quick-actions">
+
+
+
+
 
 <h2>
+
+<i class="fa-solid fa-bolt"></i>
 
 Quick Actions
 
 </h2>
 
+
+
+
+
+
+
+
 <div class="action-buttons">
+
+
+
+
+
+
 
 <button onclick="location.href='doctor-patients.html'">
 
-<i class="fas fa-bed"></i>
 
-My Patients
+<i class="fa-solid fa-users"></i>
+
+
+View Patients
+
 
 </button>
+
+
+
+
+
+
+
 
 <button onclick="location.href='doctor-appointments.html'">
 
-<i class="fas fa-calendar-check"></i>
+
+<i class="fa-solid fa-calendar-days"></i>
+
 
 Appointments
 
+
 </button>
+
+
+
+
+
+
+
 
 <button onclick="location.href='doctor-prescriptions.html'">
 
-<i class="fas fa-file-prescription"></i>
 
-Prescriptions
+<i class="fa-solid fa-prescription"></i>
+
+
+Create Prescription
+
 
 </button>
 
-</div>
+
+
+
+
+
+
+
+<button onclick="location.href='records.html'">
+
+
+<i class="fa-solid fa-file-medical"></i>
+
+
+Medical Records
+
+
+</button>
+
+
+
+
+
+
 
 </div>
 
-<!-- ================= Today's Appointments ================= -->
 
-<div class="recent-card">
+
+
+
+</section>
+<!-- ================= TODAY APPOINTMENTS ================= -->
+
+
+<section class="dashboard-card">
+
+
+
+<div class="card-header">
+
 
 <h2>
 
-<i class="fas fa-calendar-day"></i>
+<i class="fa-solid fa-calendar-day"></i>
 
 Today's Appointments
 
 </h2>
 
+
+</div>
+
+
+
+
+
+
+
+<div class="table-container">
+
+
 <table>
+
+
 
 <thead>
 
+
 <tr>
+
 
 <th>Patient</th>
 
+
 <th>Date</th>
+
 
 <th>Time</th>
 
+
 <th>Status</th>
+
 
 </tr>
 
+
 </thead>
+
+
+
+
 
 <tbody id="todayAppointments">
 
+
 <!-- Loaded from doctor.js -->
 
+
 </tbody>
+
+
+
+
+
 </table>
+
 
 </div>
 
-<!-- ===========================
-      Dashboard Bottom
-=========================== -->
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ================= DASHBOARD GRID ================= -->
+
 
 <div class="dashboard-grid">
 
-    <!-- Recent Patients -->
 
-    <div class="recent-card">
 
-        <h2>
 
-            <i class="fas fa-bed"></i>
 
-            Recent Patients
 
-        </h2>
 
-        <table>
+<!-- Recent Patients -->
 
-            <thead>
 
-                <tr>
+<div class="dashboard-card">
 
-                    <th>Name</th>
 
-                    <th>Age</th>
+<div class="card-header">
 
-                    <th>Disease</th>
-
-                </tr>
-
-            </thead>
-
-            <tbody id="recentPatients">
-
-                <!-- Loaded from doctor.js -->
-
-            </tbody>
-
-        </table>
-
-    </div>
-
-    <!-- Doctor Summary -->
-
-    <div class="recent-card">
-
-        <h2>
-
-            <i class="fas fa-chart-line"></i>
-
-            Doctor Summary
-
-        </h2>
-
-        <div class="summary">
-
-            <p>
-
-                👨‍⚕️ Welcome to your professional dashboard.
-
-            </p>
-
-            <br>
-
-            <p>
-
-                ✔ View today's appointments
-
-            </p>
-
-            <p>
-
-                ✔ Manage your patients
-
-            </p>
-
-            <p>
-
-                ✔ Create prescriptions
-
-            </p>
-
-            <p>
-
-                ✔ Track appointment status
-
-            </p>
-
-            <br>
-
-            <p>
-
-                Have a productive day! 🚀
-
-            </p>
-
-        </div>
-
-    </div>
-
-</div>
-
-<!-- ===========================
-      Appointment Status
-=========================== -->
-
-<div class="recent-card">
 
 <h2>
 
-<i class="fas fa-list-check"></i>
 
-Appointment Status Overview
+<i class="fa-solid fa-bed-pulse"></i>
+
+
+Recent Patients
+
 
 </h2>
 
+
+
+</div>
+
+
+
+
+
+
+
+<div class="table-container">
+
+
 <table>
+
+
 
 <thead>
 
+
 <tr>
 
-<th>Status</th>
 
-<th>Total</th>
+<th>Name</th>
+
+
+<th>Age</th>
+
+
+<th>Disease</th>
+
 
 </tr>
 
+
 </thead>
 
-<tbody>
+
+
+
+
+<tbody id="recentPatients">
+
+
+<!-- Loaded from doctor.js -->
+
+
+</tbody>
+
+
+
+
+</table>
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- Doctor Summary -->
+
+
+<div class="dashboard-card">
+
+
+
+<div class="card-header">
+
+
+<h2>
+
+
+<i class="fa-solid fa-chart-line"></i>
+
+
+Doctor Summary
+
+
+</h2>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="summary-box">
+
+
+<p>
+
+👨‍⚕️ Welcome to your professional dashboard.
+
+</p>
+
+
+<br>
+
+
+<p>
+
+✔ Manage assigned patients
+
+</p>
+
+
+<p>
+
+✔ Check daily appointments
+
+</p>
+
+
+<p>
+
+✔ Update prescriptions
+
+</p>
+
+
+<p>
+
+✔ Maintain medical records
+
+</p>
+
+
+<br>
+
+
+<p>
+
+Have a productive day! 🚀
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- ================= APPOINTMENT STATUS ================= -->
+
+
+
+<section class="dashboard-card">
+
+
+
+
+
+<div class="card-header">
+
+
+<h2>
+
+
+<i class="fa-solid fa-list-check"></i>
+
+
+Appointment Status Overview
+
+
+</h2>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="table-container">
+
+
+
+<table>
+
+
+
+<thead>
+
 
 <tr>
 
+
+<th>Status</th>
+
+
+<th>Total</th>
+
+
+</tr>
+
+
+</thead>
+
+
+
+
+
+
+<tbody>
+
+
+
+<tr>
+
+
 <td>
 
-Pending
+🟡 Pending
 
 </td>
+
 
 <td id="pendingAppointments">
 
@@ -459,15 +1222,22 @@ Pending
 
 </td>
 
+
 </tr>
+
+
+
+
 
 <tr>
 
+
 <td>
 
-Confirmed
+🔵 Confirmed
 
 </td>
+
 
 <td id="confirmedAppointments">
 
@@ -475,15 +1245,22 @@ Confirmed
 
 </td>
 
+
 </tr>
+
+
+
+
 
 <tr>
 
+
 <td>
 
-Completed
+🟢 Completed
 
 </td>
+
 
 <td id="completedAppointments">
 
@@ -491,54 +1268,161 @@ Completed
 
 </td>
 
+
 </tr>
+
+
+
+
 
 </tbody>
 
+
+
 </table>
+
+
 
 </div>
 
-<!-- ===========================
-          Footer
-=========================== -->
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ================= FOOTER ================= -->
+
+
 
 <footer class="footer">
 
+
+
+<h3>
+
+🩺 HMS PRO Doctor Portal
+
+</h3>
+
+
+
+
 <p>
 
-© 2026 Hospital Management System | Doctor Portal
+Professional Doctor Management System
 
 </p>
 
+
+
+
+<p>
+
+© 2026 Hospital Management System
+
+</p>
+
+
+
 </footer>
+
+
+
+
+
+
 
 </div>
 
+
+
+
+
+
+
+
+
+<!-- ================= SCRIPTS ================= -->
+
+
+
 <script>
 
-// Doctor Name
 
-const doctorName = localStorage.getItem("name");
+document.addEventListener("DOMContentLoaded",()=>{
+
+
+const name =
+
+localStorage.getItem("name")
+
+||
+
+"Doctor";
+
+
+
+const doctorName =
+
+document.getElementById("doctorName");
+
+
 
 if(doctorName){
 
-    document.getElementById("doctorName").innerHTML = doctorName;
+doctorName.innerHTML = name;
 
 }
 
-// Today's Date
 
-const today = new Date();
+
+
+const profileName =
+
+document.getElementById("profileDoctorName");
+
+
+
+if(profileName){
+
+profileName.innerHTML = name;
+
+}
+
+
+
+
 
 document.getElementById("todayDate").innerHTML =
-today.toDateString();
+
+new Date().toDateString();
+
+
+
+});
+
+
 
 </script>
+
+
+
+
 
 <script src="js/auth.js"></script>
 
 <script src="js/doctor.js"></script>
+
+
 
 </body>
 

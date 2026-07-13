@@ -4,465 +4,1221 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Staff Management</title>
+
+<title>HMS PRO | Staff Management</title>
+
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+
 <link rel="stylesheet" href="css/theme.css">
+
 <link rel="stylesheet" href="css/admin.css">
+
 
 </head>
 
+
+
 <body>
 
-<!-- ================= Sidebar ================= -->
 
-<div class="sidebar">
+
+
+
+<!-- ================= SIDEBAR ================= -->
+
+
+<aside class="sidebar">
+
+
 
 <div class="logo">
 
-<h2>🏥 HMS</h2>
 
-<p>Hospital Management</p>
+<div class="logo-icon">
+
+<i class="fa-solid fa-hospital"></i>
 
 </div>
 
-<nav>
+
+
+<div>
+
+<h2>HMS PRO</h2>
+
+<p>Hospital System</p>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<nav class="menu">
+
+
 
 <a href="admin-dashboard.html">
-<i class="fas fa-house"></i>
+
+
+<i class="fa-solid fa-chart-line"></i>
+
+
 <span>Dashboard</span>
+
+
 </a>
+
+
+
+
+
+
 
 <a href="admin-doctors.html">
-<i class="fas fa-user-doctor"></i>
+
+
+<i class="fa-solid fa-user-doctor"></i>
+
+
 <span>Doctors</span>
+
+
 </a>
+
+
+
+
+
+
 
 <a href="admin-staff.html" class="active">
-<i class="fas fa-user-nurse"></i>
+
+
+<i class="fa-solid fa-user-nurse"></i>
+
+
 <span>Staff</span>
+
+
 </a>
+
+
+
+
+
+
 
 <a href="patients.html">
-<i class="fas fa-bed"></i>
+
+
+<i class="fa-solid fa-bed-pulse"></i>
+
+
 <span>Patients</span>
+
+
 </a>
+
+
+
+
+
+
 
 <a href="appointments.html">
-<i class="fas fa-calendar-check"></i>
+
+
+<i class="fa-solid fa-calendar-check"></i>
+
+
 <span>Appointments</span>
+
+
 </a>
+
+
+
+
+
+
 
 <a href="billing.html">
-<i class="fas fa-file-invoice-dollar"></i>
+
+
+<i class="fa-solid fa-file-invoice-dollar"></i>
+
+
 <span>Billing</span>
+
+
 </a>
 
-<a href="prescriptions.html">
-<i class="fas fa-prescription"></i>
-<span>Prescriptions</span>
-</a>
+
+
+
+
+
 
 <a href="records.html">
-<i class="fas fa-file-medical"></i>
+
+
+<i class="fa-solid fa-file-medical"></i>
+
+
 <span>Medical Records</span>
+
+
 </a>
 
-<a href="#" onclick="logout()">
-<i class="fas fa-right-from-bracket"></i>
+
+
+
+
+
+
+<a href="javascript:void(0)" onclick="logout()">
+
+
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+
+
 <span>Logout</span>
+
+
+
 </a>
+
+
+
+
 
 </nav>
 
-</div>
 
-<!-- ================= Main ================= -->
+</aside>
+
+
+
+
+
+
+
+
+
+<!-- ================= MAIN ================= -->
+
 
 <div class="main">
 
-<!-- ================= Topbar ================= -->
 
-<div class="topbar">
+
+
+
+
+
+<!-- ================= TOPBAR ================= -->
+
+
+<header class="topbar">
+
+
+
+
 
 <div class="welcome">
 
-<h1>👨‍💼 Staff Management</h1>
 
-<p>Register and Manage Hospital Staff</p>
+<h1>
+
+Staff Management 👨‍💼
+
+</h1>
+
+
+
+<p>
+
+Register and manage hospital staff members
+
+</p>
+
 
 </div>
 
-<div class="top-right">
+
+
+
+
+
+
+
+<div class="top-actions">
+
+
+
+
 
 <div class="search-box">
 
-<i class="fas fa-search"></i>
+
+<i class="fa-solid fa-search"></i>
+
+
 
 <input
+
 type="text"
+
 id="searchStaff"
+
 placeholder="Search Staff..."
-onkeyup="searchStaff()">
+
+onkeyup="searchStaff()"
+
+
+>
+
 
 </div>
 
-<div class="profile">
 
-<i class="fas fa-user-shield"></i>
 
-<span>Admin</span>
 
-</div>
 
-</div>
 
-</div>
 
-<!-- ================= Statistics ================= -->
+<button class="icon-btn">
 
-<div class="cards">
 
-<div class="card">
+<i class="fa-solid fa-bell"></i>
+
+
+</button>
+
+
+
+
+
+
+
+
+<div class="profile-box">
+
+
+<i class="fa-solid fa-circle-user"></i>
+
 
 <div>
 
-<p>Total Staff</p>
 
-<h2 id="staffCount">0</h2>
+<strong>Admin</strong>
 
-</div>
 
-<i class="fas fa-user-nurse"></i>
+<small>Administrator</small>
 
-</div>
-
-<div class="card">
-
-<div>
-
-<p>Nurses</p>
-
-<h2 id="nurseCount">0</h2>
 
 </div>
 
-<i class="fas fa-user-nurse"></i>
 
 </div>
 
-<div class="card">
 
-<div>
 
-<p>Reception</p>
 
-<h2 id="receptionCount">0</h2>
 
 </div>
 
-<i class="fas fa-user"></i>
 
-</div>
 
-<div class="card">
 
-<div>
 
-<p>Other Staff</p>
 
-<h2 id="otherCount">0</h2>
+</header>
 
-</div>
 
-<i class="fas fa-users"></i>
 
-</div>
 
-</div>
 
-<!-- ================= Toolbar ================= -->
 
-<div class="quick-actions">
 
-<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;">
+
+
+<!-- ================= STAFF BANNER ================= -->
+
+
+
+<section class="dashboard-banner">
+
+
+
+
+
+<div class="banner-content">
+
+
 
 <h2>
 
-<i class="fas fa-users"></i>
+Hospital Staff Management Center
+
+</h2>
+
+
+
+<p>
+
+Manage nurses, receptionists, technicians
+and all hospital employees from one place.
+
+</p>
+
+
+
+
+
+<div class="banner-buttons">
+
+
+
+<button onclick="openStaffModal()">
+
+
+
+<i class="fa-solid fa-user-plus"></i>
+
+
+Register Staff
+
+
+</button>
+
+
+
+
+
+
+
+<button onclick="location.href='admin-dashboard.html'">
+
+
+
+<i class="fa-solid fa-arrow-left"></i>
+
+
+Dashboard
+
+
+</button>
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="banner-image">
+
+
+<i class="fa-solid fa-user-nurse"></i>
+
+
+</div>
+
+
+
+
+
+</section>
+<!-- ================= STAFF STATISTICS ================= -->
+
+
+<section class="stats-container">
+
+
+
+
+
+<div class="stat-card staff">
+
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-users"></i>
+
+</div>
+
+
+
+<div class="stat-info">
+
+
+<p>Total Staff</p>
+
+
+<h2 id="staffCount">
+
+0
+
+</h2>
+
+
+<span>
+
+Hospital Employees
+
+</span>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="stat-card doctors">
+
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-user-nurse"></i>
+
+</div>
+
+
+
+<div class="stat-info">
+
+
+<p>Nurses</p>
+
+
+<h2 id="nurseCount">
+
+0
+
+</h2>
+
+
+<span>
+
+Nursing Department
+
+</span>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="stat-card patients">
+
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-user"></i>
+
+</div>
+
+
+
+<div class="stat-info">
+
+
+<p>Reception</p>
+
+
+<h2 id="receptionCount">
+
+0
+
+</h2>
+
+
+<span>
+
+Front Desk Team
+
+</span>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="stat-card appointments">
+
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-user-group"></i>
+
+</div>
+
+
+
+<div class="stat-info">
+
+
+<p>Other Staff</p>
+
+
+<h2 id="otherCount">
+
+0
+
+</h2>
+
+
+<span>
+
+Support Team
+
+</span>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ================= STAFF LIST ================= -->
+
+
+
+<section class="dashboard-card">
+
+
+
+
+
+<div class="card-header">
+
+
+
+<div>
+
+
+<h2>
+
+<i class="fa-solid fa-users"></i>
 
 Staff List
 
 </h2>
 
-<button
-class="btn"
-onclick="openStaffModal()">
 
-<i class="fas fa-user-plus"></i>
+<p style="color:#64748b">
+
+Manage hospital employees
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+<button onclick="openStaffModal()">
+
+
+
+<i class="fa-solid fa-user-plus"></i>
+
 
 Register Staff
 
+
 </button>
 
-</div>
+
 
 </div>
 
-<!-- ================= Staff Table ================= -->
 
-<div class="recent-card">
+
+
+
+
+
+
+
+<div class="table-container">
+
+
+
+
 
 <table>
 
+
+
 <thead>
+
 
 <tr>
 
+
 <th>ID</th>
+
 
 <th>Name</th>
 
+
+<th>Email</th>
+
+
 <th>Phone</th>
+
 
 <th>Department</th>
 
+
 <th>Action</th>
+
+
 
 </tr>
 
+
 </thead>
+
+
+
+
+
 
 <tbody id="staffTable">
 
-<!-- Staff data will load here -->
+
+
+<!-- Staff data loaded from staff.js -->
+
+
 
 </tbody>
 
+
+
+
+
 </table>
+
+
+
+
 
 </div>
 
-<!-- ===========================
-      Register Staff Modal
-=========================== -->
-<!-- Add Staff Modal -->
+
+
+
+
+
+
+</section>
+<!-- ================= REGISTER STAFF MODAL ================= -->
+
 
 <div id="staffModal" class="modal">
 
+
 <div class="modal-content">
 
+
+
 <h2>
-Add Staff
+
+<i class="fa-solid fa-user-nurse"></i>
+
+Register Staff
+
 </h2>
 
 
-<input type="hidden" id="staffId">
 
 
-<label>Staff Name</label>
+
+
 
 <input 
+type="hidden"
+id="staffId">
+
+
+
+
+
+
+
+<label>
+
+Staff Name
+
+</label>
+
+
+<input
+
 type="text"
+
 id="staffName"
-placeholder="Enter Staff Name">
+
+placeholder="Enter staff name"
+
+>
 
 
 
-<label>Email</label>
 
-<input 
+
+
+
+<label>
+
+Email
+
+</label>
+
+
+<input
+
 type="email"
+
 id="staffEmail"
-placeholder="Enter Email">
+
+placeholder="Enter email address"
+
+>
 
 
 
-<label>Password</label>
 
-<input 
+
+
+
+<label>
+
+Password
+
+</label>
+
+
+<input
+
 type="password"
+
 id="staffPassword"
-placeholder="Enter Password">
+
+placeholder="Enter password"
+
+>
 
 
 
-<label>Phone Number</label>
 
-<input 
+
+
+
+<label>
+
+Phone Number
+
+</label>
+
+
+<input
+
 type="text"
+
 id="staffPhone"
-placeholder="Enter Phone Number">
+
+placeholder="Enter phone number"
+
+maxlength="10"
+
+>
 
 
 
-<label>Department</label>
+
+
+
+
+<label>
+
+Department
+
+</label>
+
 
 <select id="staffDepartment">
 
+
 <option value="">
+
 Select Department
+
 </option>
+
+
 
 <option value="Nurse">
+
 Nurse
+
 </option>
+
+
 
 <option value="Reception">
+
 Reception
+
 </option>
+
+
 
 <option value="Lab Technician">
+
 Lab Technician
+
 </option>
+
+
 
 <option value="Pharmacist">
+
 Pharmacist
+
 </option>
+
+
 
 <option value="Ward Boy">
+
 Ward Boy
+
 </option>
 
+
+
 <option value="Security">
+
 Security
+
 </option>
+
 
 
 </select>
 
 
 
-<div style="
-display:flex;
-justify-content:flex-end;
-gap:15px;
-margin-top:20px;
-">
 
 
-<button 
+
+
+
+
+<div class="modal-buttons">
+
+
+
+
+
+<button
+
 class="deleteBtn"
-onclick="closeStaffModal()">
+
+onclick="closeStaffModal()"
+
+>
+
 
 Cancel
 
+
 </button>
 
 
 
-<button 
+
+
+
+
+<button
+
 class="btn"
-onclick="registerStaff()">
+
+onclick="registerStaff()"
+
+>
+
+
+<i class="fa-solid fa-floppy-disk"></i>
+
 
 Register Staff
 
+
 </button>
 
 
+
+
+
+</div>
+
+
+
+
+
+
+
 </div>
 
 
 </div>
 
-</div>
-<!-- ================= Delete Modal ================= -->
+
+
+
+
+
+
+
+
+<!-- ================= DELETE STAFF MODAL ================= -->
+
+
 
 <div id="deleteModal" class="modal">
 
-    <div class="modal-content">
 
-        <h2>
 
-            Delete Staff
+<div class="modal-content">
 
-        </h2>
 
-        <br>
 
-        <p>
+<h2>
 
-            Are you sure you want to delete this staff member?
 
-        </p>
+<i class="fa-solid fa-trash"></i>
 
-        <br>
 
-        <div
-            style="display:flex;
-            justify-content:flex-end;
-            gap:15px;">
+Delete Staff
 
-            <button
-                class="btn"
-                onclick="closeDeleteModal()">
 
-                Cancel
+</h2>
 
-            </button>
 
-            <button
-                class="deleteBtn"
-                onclick="confirmDelete()">
 
-                Delete
 
-            </button>
 
-        </div>
+<p>
 
-    </div>
+
+Are you sure you want to delete this staff member?
+
+
+</p>
+
+
+
+
+
+
+
+
+<div class="modal-buttons">
+
+
+
+
+
+<button
+
+class="btn"
+
+onclick="closeDeleteModal()"
+
+>
+
+
+Cancel
+
+
+</button>
+
+
+
+
+
+
+
+
+<button
+
+class="deleteBtn"
+
+onclick="confirmDelete()"
+
+>
+
+
+<i class="fa-solid fa-trash"></i>
+
+
+Delete
+
+
+</button>
+
+
+
+
+
+
 
 </div>
 
-<!-- ================= Footer ================= -->
+
+
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- ================= FOOTER ================= -->
+
+
 
 <footer class="footer">
 
-    <p>
 
-        © 2026 Hospital Management System | Admin Panel
+<p>
 
-    </p>
+
+© 2026 HMS PRO | Staff Management Panel
+
+
+</p>
+
 
 </footer>
 
+
+
+
+
+
+
+
+
 </div>
 
-<script>
 
-// Show Admin Name
 
-const adminName = localStorage.getItem("name");
 
-if(adminName){
 
-    const profile=document.querySelector(".profile span");
 
-    if(profile){
 
-        profile.innerHTML=adminName;
 
-    }
 
-}
+<!-- ================= SCRIPTS ================= -->
 
-// Protect Page
-
-if(!localStorage.getItem("role")){
-
-    window.location.href="login.html";
-
-}
-
-</script>
 
 <script src="js/auth.js"></script>
+
+
 <script src="js/staff.js"></script>
 
+
+
+
+
+
 </body>
+
 </html>

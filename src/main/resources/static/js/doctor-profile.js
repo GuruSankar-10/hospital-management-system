@@ -1,157 +1,829 @@
 // ==========================================
-// Doctor Profile
+// Doctor Profile JS
 // ==========================================
 
-const isLocal =
-    window.location.hostname === "localhost" ||
-    window.location.hostname === "127.0.0.1";
+console.log("Doctor Profile JS Loaded");
 
-const API_URL = isLocal
-    ? "http://localhost:8080"
-    : "https://hospital-management-system-6pok.onrender.com";
+
 
 // ==========================================
-// Load Doctor Profile
+// BASE URL
 // ==========================================
 
-function loadProfile() {
 
-    const doctorId = localStorage.getItem("doctorId");
+const BASE_URL =
+window.location.hostname === "localhost" ||
+window.location.hostname === "127.0.0.1"
 
-    if (!doctorId) {
+?
 
-        alert("Doctor ID not found. Please login again.");
+"http://localhost:8080"
 
-        window.location.href = "login.html";
+:
 
-        return;
+"https://hospital-management-system-6pok.onrender.com";
 
-    }
 
-    fetch(API_URL + "/doctors/profile/" + doctorId, {
 
-        method: "GET",
 
-        headers: {
 
-            "Authorization": "Bearer " + localStorage.getItem("token"),
-            "Content-Type": "application/json"
+const token =
+localStorage.getItem("token");
 
-        }
 
-    })
 
-    .then(response => {
 
-        if (!response.ok) {
+// ==========================================
+// PAGE LOAD
+// ==========================================
 
-            throw new Error("Unable to load profile.");
 
-        }
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
 
-        return response.json();
 
-    })
+loadProfile();
 
-    .then(data => {
+loadDoctorStats();
 
-        document.getElementById("name").value = data.name || "";
-        document.getElementById("email").value = data.email || "";
-        document.getElementById("phone").value = data.phone || "";
-        document.getElementById("specialization").value = data.specialization || "";
-        document.getElementById("department").value = data.department || "";
-        document.getElementById("qualification").value = data.qualification || "";
-        document.getElementById("experience").value = data.experience || "";
-        document.getElementById("about").value = data.about || "";
 
-        if (data.profileImage && data.profileImage !== "") {
+});
 
-            document.getElementById("profileImage").src = data.profileImage;
 
-        }
 
-    })
 
-    .catch(error => {
 
-        alert(error.message);
 
-    });
+
+
+
+// ==========================================
+// LOAD DOCTOR PROFILE
+// ==========================================
+
+
+async function loadProfile(){
+
+
+
+const doctorId =
+localStorage.getItem("doctorId");
+
+
+
+if(!doctorId){
+
+alert("Doctor session expired");
+
+window.location.href="login.html";
+
+return;
 
 }
 
-// ==========================================
-// Save Doctor Profile
-// ==========================================
 
-function saveProfile() {
 
-    const doctorId = localStorage.getItem("doctorId");
 
-    const doctor = {
 
-        name: document.getElementById("name").value,
-        email: document.getElementById("email").value,
-        phone: document.getElementById("phone").value,
-        specialization: document.getElementById("specialization").value,
-        department: document.getElementById("department").value,
-        qualification: document.getElementById("qualification").value,
-        experience: parseInt(document.getElementById("experience").value) || 0,
-        about: document.getElementById("about").value,
-        profileImage: document.getElementById("profileImage").src
+try{
 
-    };
 
-    fetch(API_URL + "/doctors/profile/" + doctorId, {
+const response =
+await fetch(
 
-        method: "PUT",
+BASE_URL+
+"/doctors/profile/"
++
+doctorId,
 
-        headers: {
+{
 
-            "Authorization": "Bearer " + localStorage.getItem("token"),
-            "Content-Type": "application/json"
+headers:{
 
-        },
 
-        body: JSON.stringify(doctor)
+"Authorization":
+"Bearer "+token
 
-    })
-
-    .then(response => {
-
-        if (!response.ok) {
-
-            throw new Error("Unable to update profile.");
-
-        }
-
-        return response.json();
-
-    })
-
-    .then(data => {
-
-        alert("✅ Profile Updated Successfully");
-
-        localStorage.setItem("name", data.name);
-        localStorage.setItem("email", data.email);
-
-    })
-
-    .catch(error => {
-
-        alert(error.message);
-
-    });
 
 }
 
+
+}
+
+);
+
+
+
+
+if(!response.ok){
+
+throw new Error(
+"Unable to load doctor profile"
+);
+
+}
+
+
+
+
+const doctor =
+await response.json();
+
+
+
+
+
+// =========================
+// Form Fields
+// =========================
+
+
+setValue(
+"doctorFullName",
+doctor.name
+);
+
+
+
+setValue(
+"doctorEmail",
+doctor.email
+);
+
+
+
+setValue(
+"doctorPhone",
+doctor.phone
+);
+
+
+
+setValue(
+"doctorSpecialization",
+doctor.specialization
+);
+
+
+
+
+
+// =========================
+// Profile Header
+// =========================
+
+
+setText(
+"profileName",
+doctor.name
+);
+
+
+
+setText(
+"profileEmail",
+doctor.email
+);
+
+
+
+setText(
+"profileSpecialization",
+doctor.specialization
+);
+
+
+
+setText(
+"doctorName",
+doctor.name
+);
+
+
+
+
+
+
+}
+
+catch(error){
+
+console.error(error);
+
+alert(error.message);
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
 // ==========================================
-// Load Profile Automatically
+// UPDATE PROFILE
 // ==========================================
 
-window.onload = function () {
 
-    loadProfile();
+async function updateDoctorProfile(){
+
+
+
+const doctorId =
+localStorage.getItem("doctorId");
+
+
+
+
+
+const doctor = {
+
+
+name:
+getValue(
+"doctorFullName"
+),
+
+
+
+email:
+getValue(
+"doctorEmail"
+),
+
+
+
+phone:
+getValue(
+"doctorPhone"
+),
+
+
+
+specialization:
+getValue(
+"doctorSpecialization"
+)
+
+
 
 };
+
+
+
+
+
+
+try{
+
+
+
+const response =
+await fetch(
+
+BASE_URL+
+"/doctors/profile/"
++
+doctorId,
+
+{
+
+
+method:"PUT",
+
+
+headers:{
+
+
+"Content-Type":
+"application/json",
+
+
+"Authorization":
+"Bearer "+token
+
+
+},
+
+
+body:
+JSON.stringify(doctor)
+
+
+
+}
+
+);
+
+
+
+
+
+if(!response.ok){
+
+throw new Error(
+"Profile update failed"
+);
+
+}
+
+
+
+
+const data =
+await response.json();
+
+
+
+
+alert(
+"Profile Updated Successfully ✅"
+);
+
+
+
+
+localStorage.setItem(
+"name",
+data.name
+);
+
+
+
+
+loadProfile();
+
+
+
+
+}
+
+
+
+catch(error){
+
+console.error(error);
+
+alert(error.message);
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ==========================================
+// CHANGE PASSWORD
+// ==========================================
+
+
+async function changePassword(){
+
+
+
+const doctorId =
+localStorage.getItem("doctorId");
+
+
+
+const oldPassword =
+getValue(
+"oldPassword"
+);
+
+
+
+const newPassword =
+getValue(
+"newPassword"
+);
+
+
+
+const confirmPassword =
+getValue(
+"confirmPassword"
+);
+
+
+
+
+
+
+if(
+oldPassword==="" ||
+newPassword==="" ||
+confirmPassword===""
+
+){
+
+
+alert(
+"Please fill all password fields"
+);
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+if(newPassword !== confirmPassword){
+
+
+alert(
+"New password and confirm password not matching"
+);
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+try{
+
+
+
+const response =
+await fetch(
+
+BASE_URL+
+"/doctors/change-password/"
++
+doctorId,
+
+{
+
+
+method:"PUT",
+
+
+headers:{
+
+
+"Content-Type":
+"application/json",
+
+
+"Authorization":
+"Bearer "+token
+
+
+},
+
+
+body:JSON.stringify({
+
+oldPassword:
+oldPassword,
+
+
+newPassword:
+newPassword
+
+
+})
+
+
+}
+
+);
+
+
+
+
+
+
+if(!response.ok){
+
+
+const msg =
+await response.text();
+
+
+throw new Error(msg);
+
+
+}
+
+
+
+
+
+
+alert(
+"Password Updated Successfully ✅"
+);
+
+
+
+
+
+document.getElementById(
+"oldPassword"
+).value="";
+
+
+
+document.getElementById(
+"newPassword"
+).value="";
+
+
+
+document.getElementById(
+"confirmPassword"
+).value="";
+
+
+
+
+}
+
+
+
+catch(error){
+
+
+console.error(error);
+
+
+alert(error.message);
+
+
+}
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ==========================================
+// DOCTOR STATISTICS
+// ==========================================
+
+
+async function loadDoctorStats(){
+
+
+
+const doctorId =
+localStorage.getItem("doctorId");
+
+
+
+try{
+
+
+
+// Patients
+
+
+const patientResponse =
+await fetch(
+
+BASE_URL+
+"/patients/doctor/"
++
+doctorId
+
+);
+
+
+
+const patients =
+await patientResponse.json();
+
+
+
+
+
+setText(
+"profilePatients",
+patients.length
+);
+
+
+
+
+
+
+
+
+
+// Appointments
+
+
+const appointmentResponse =
+await fetch(
+
+BASE_URL+
+"/appointments/doctor/"
++
+doctorId
+
+);
+
+
+
+const appointments =
+await appointmentResponse.json();
+
+
+
+
+
+setText(
+"profileAppointments",
+appointments.length
+);
+
+
+
+
+
+
+
+
+
+// Prescriptions
+
+
+const prescriptionResponse =
+await fetch(
+
+BASE_URL+
+"/prescriptions/doctor/"
++
+doctorId
+
+);
+
+
+
+const prescriptions =
+await prescriptionResponse.json();
+
+
+
+
+
+setText(
+"profilePrescriptions",
+prescriptions.length
+);
+
+
+
+
+
+
+}
+
+catch(error){
+
+
+console.log(
+"Statistics loading failed"
+);
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ==========================================
+// HELPERS
+// ==========================================
+
+
+function setValue(id,value){
+
+
+const element =
+document.getElementById(id);
+
+
+
+if(element){
+
+element.value =
+value || "";
+
+}
+
+
+}
+
+
+
+
+
+
+
+function getValue(id){
+
+
+const element =
+document.getElementById(id);
+
+
+
+if(element){
+
+return element.value.trim();
+
+}
+
+
+return "";
+
+}
+
+
+
+
+
+
+
+function setText(id,value){
+
+
+const element =
+document.getElementById(id);
+
+
+
+if(element){
+
+element.innerHTML =
+value || "-";
+
+}
+
+
+}
+
+
+
+
+
+
+
+// ==========================================
+// GLOBAL FUNCTIONS
+// ==========================================
+
+
+window.updateDoctorProfile =
+updateDoctorProfile;
+
+
+window.changePassword =
+changePassword;

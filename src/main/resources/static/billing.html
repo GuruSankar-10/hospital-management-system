@@ -4,138 +4,244 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Billing Management</title>
+
+<title>HMS PRO | Billing Management</title>
+
 
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 
+
 <link rel="stylesheet" href="css/theme.css">
+
 <link rel="stylesheet" href="css/admin.css">
 
 
 </head>
 
 
+
 <body>
 
 
-<!-- Sidebar -->
 
-<div class="sidebar">
+
+
+<!-- ================= SIDEBAR ================= -->
+
+
+<aside class="sidebar">
+
+
 
 <div class="logo">
 
-<h2>🏥 HMS</h2>
 
-<p>Hospital Management</p>
+<div class="logo-icon">
+
+<i class="fa-solid fa-hospital"></i>
 
 </div>
 
 
-<nav>
+
+<div>
+
+<h2>HMS PRO</h2>
+
+<p>Hospital System</p>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<nav class="menu">
+
 
 
 <a href="admin-dashboard.html">
 
-<i class="fas fa-house"></i>
 
-Dashboard
+<i class="fa-solid fa-chart-line"></i>
+
+
+<span>Dashboard</span>
+
 
 </a>
+
+
+
+
 
 
 
 <a href="admin-doctors.html">
 
-<i class="fas fa-user-doctor"></i>
 
-Doctors
+<i class="fa-solid fa-user-doctor"></i>
+
+
+<span>Doctors</span>
+
 
 </a>
+
+
+
+
 
 
 
 <a href="admin-staff.html">
 
-<i class="fas fa-user-nurse"></i>
 
-Staff
+<i class="fa-solid fa-user-nurse"></i>
+
+
+<span>Staff</span>
+
 
 </a>
+
+
+
+
 
 
 
 <a href="patients.html">
 
-<i class="fas fa-bed"></i>
 
-Patients
+<i class="fa-solid fa-bed-pulse"></i>
+
+
+<span>Patients</span>
+
 
 </a>
+
+
+
+
 
 
 
 <a href="appointments.html">
 
-<i class="fas fa-calendar-check"></i>
 
-Appointments
+<i class="fa-solid fa-calendar-check"></i>
+
+
+<span>Appointments</span>
+
 
 </a>
+
+
+
+
 
 
 
 <a href="billing.html" class="active">
 
-<i class="fas fa-file-invoice-dollar"></i>
 
-Billing
+<i class="fa-solid fa-file-invoice-dollar"></i>
+
+
+<span>Billing</span>
+
 
 </a>
+
+
+
+
 
 
 
 <a href="records.html">
 
-<i class="fas fa-file-medical"></i>
 
-Records
+<i class="fa-solid fa-file-medical"></i>
+
+
+<span>Medical Records</span>
+
+
+</a>
+
+
+
+
+
+
+
+<a href="javascript:void(0)" onclick="logout()">
+
+
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+
+
+<span>Logout</span>
+
+
 
 </a>
 
 
 
-<a href="#" onclick="logout()">
-
-<i class="fas fa-right-from-bracket"></i>
-
-Logout
-
-</a>
 
 
 </nav>
 
 
-</div>
+</aside>
 
 
 
 
 
-<!-- Main -->
+
+
+
+
+<!-- ================= MAIN ================= -->
+
 
 <div class="main">
 
 
 
-<!-- Topbar -->
 
-<div class="topbar">
+
+
+
+<!-- ================= TOPBAR ================= -->
+
+
+
+<header class="topbar">
+
+
+
 
 
 <div class="welcome">
@@ -143,14 +249,15 @@ Logout
 
 <h1>
 
-💳 Billing Management
+Billing Management 💳
 
 </h1>
 
 
+
 <p>
 
-Create and manage hospital bills
+Professional hospital invoice and payment system
 
 </p>
 
@@ -159,15 +266,198 @@ Create and manage hospital bills
 
 
 
-<div class="profile">
 
 
-<i class="fas fa-user-shield"></i>
+
+
+
+<div class="top-actions">
+
+
+
+
+
+<div class="profile-box">
+
+
+<i class="fa-solid fa-circle-user"></i>
+
+
+<div>
+
+
+<strong id="adminName">
+
+Admin
+
+</strong>
+
+
+<small>
+
+Administrator
+
+</small>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+</header>
+
+
+
+
+
+
+
+
+
+<!-- ================= BILLING BANNER ================= -->
+
+
+
+<section class="dashboard-banner">
+
+
+
+
+
+<div class="banner-content">
+
+
+
+<h2>
+
+Hospital Billing & Invoice Center
+
+</h2>
+
+
+
+<p>
+
+Generate invoices, manage payments,
+track revenue and maintain billing records.
+
+</p>
+
+
+
+
+
+<div class="banner-buttons">
+
+
+
+<button onclick="createBill()">
+
+
+
+<i class="fa-solid fa-file-circle-plus"></i>
+
+
+Generate Bill
+
+
+</button>
+
+
+
+
+
+
+
+<button onclick="location.href='admin-dashboard.html'">
+
+
+
+<i class="fa-solid fa-arrow-left"></i>
+
+
+Dashboard
+
+
+</button>
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="banner-image">
+
+
+<i class="fa-solid fa-file-invoice-dollar"></i>
+
+
+</div>
+
+
+
+
+
+</section>
+<!-- ================= BILLING STATISTICS ================= -->
+
+
+<section class="stats-container">
+
+
+
+
+
+<div class="stat-card appointments">
+
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-indian-rupee-sign"></i>
+
+</div>
+
+
+
+<div class="stat-info">
+
+
+<p>Total Revenue</p>
+
+
+<h2 id="totalRevenue">
+
+₹0
+
+</h2>
 
 
 <span>
 
-Admin
+Hospital Earnings
 
 </span>
 
@@ -175,38 +465,6 @@ Admin
 </div>
 
 
-</div>
-
-
-
-
-
-
-
-<!-- Summary Cards -->
-
-
-<div class="cards">
-
-
-<div class="card">
-
-<div>
-
-<p>Total Revenue</p>
-
-<h2 id="totalRevenue">
-
-0
-
-</h2>
-
-
-</div>
-
-
-<i class="fas fa-indian-rupee-sign"></i>
-
 
 </div>
 
@@ -214,11 +472,25 @@ Admin
 
 
 
-<div class="card">
 
-<div>
+
+
+<div class="stat-card staff">
+
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-circle-check"></i>
+
+</div>
+
+
+
+<div class="stat-info">
+
 
 <p>Paid Bills</p>
+
 
 <h2 id="paidBills">
 
@@ -227,11 +499,16 @@ Admin
 </h2>
 
 
+<span>
+
+Completed Payments
+
+</span>
+
+
 </div>
 
 
-<i class="fas fa-circle-check"></i>
-
 
 </div>
 
@@ -239,11 +516,25 @@ Admin
 
 
 
-<div class="card">
 
-<div>
 
-<p>Unpaid Bills</p>
+
+<div class="stat-card doctors">
+
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-clock"></i>
+
+</div>
+
+
+
+<div class="stat-info">
+
+
+<p>Pending Bills</p>
+
 
 <h2 id="unpaidBills">
 
@@ -252,21 +543,42 @@ Admin
 </h2>
 
 
+<span>
+
+Awaiting Payment
+
+</span>
+
+
 </div>
 
 
-<i class="fas fa-clock"></i>
-
 
 </div>
 
 
 
-<div class="card">
 
-<div>
+
+
+
+
+<div class="stat-card patients">
+
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-file-invoice"></i>
+
+</div>
+
+
+
+<div class="stat-info">
+
 
 <p>Total Bills</p>
+
 
 <h2 id="totalBills">
 
@@ -275,78 +587,525 @@ Admin
 </h2>
 
 
-</div>
+<span>
 
+Generated Invoices
 
-<i class="fas fa-file-invoice"></i>
-
-
-</div>
-
+</span>
 
 
 </div>
 
 
 
+</div>
 
 
 
 
 
 
-<!-- Add Bill -->
+</section>
 
 
-<div class="quick-actions">
+
+
+
+
+
+
+
+<!-- ================= CREATE BILL SECTION ================= -->
+
+
+
+<section class="dashboard-card">
+
+
+
+
+
+<div class="card-header">
+
+
+
+<div>
 
 
 <h2>
 
-<i class="fas fa-plus"></i>
+<i class="fa-solid fa-file-invoice-dollar"></i>
 
-Create Bill
+Create New Bill
 
 </h2>
 
 
+<p style="color:#64748b">
 
-<div class="input-group">
+Generate professional hospital invoices
 
-
-<input 
-type="number"
-id="amount"
-placeholder="Bill Amount">
+</p>
 
 
+</div>
 
-<select id="paymentStatus">
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="form-grid">
+
+
+
+
+
+<div>
+
+
+<label>
+
+Patient
+
+</label>
+
+
+<select id="patientId">
 
 
 <option value="">
 
-Payment Status
-
-</option>
-
-
-<option value="PAID">
-
-PAID
-
-</option>
-
-
-<option value="UNPAID">
-
-UNPAID
+Select Patient
 
 </option>
 
 
 </select>
 
+
+</div>
+
+
+
+
+
+
+
+
+<div>
+
+
+<label>
+
+Appointment
+
+</label>
+
+
+<select id="appointmentId">
+
+
+<option value="">
+
+Select Appointment
+
+</option>
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div>
+
+
+<label>
+
+Doctor Name
+
+</label>
+
+
+<input
+
+type="text"
+
+id="doctorName"
+
+placeholder="Auto Filled"
+
+readonly>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div>
+
+
+<label>
+
+Department
+
+</label>
+
+
+<input
+
+type="text"
+
+id="department"
+
+placeholder="Auto Filled"
+
+readonly>
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<hr style="margin:25px 0;">
+
+
+
+
+
+
+
+
+
+<h3>
+
+
+<i class="fa-solid fa-money-bill-wave"></i>
+
+
+Bill Charges
+
+
+</h3>
+
+
+
+
+
+
+
+
+
+<div class="form-grid">
+
+
+
+
+
+<div>
+
+
+<label>
+
+Consultation Fee
+
+</label>
+
+
+<input
+
+type="number"
+
+id="consultationFee"
+
+value="500"
+
+oninput="calculateBill()">
+
+
+</div>
+
+
+
+
+
+
+
+
+<div>
+
+
+<label>
+
+Medicine Charges
+
+</label>
+
+
+<input
+
+type="number"
+
+id="medicineFee"
+
+value="0"
+
+oninput="calculateBill()">
+
+
+</div>
+
+
+
+
+
+
+
+
+<div>
+
+
+<label>
+
+Lab Charges
+
+</label>
+
+
+<input
+
+type="number"
+
+id="labFee"
+
+value="0"
+
+oninput="calculateBill()">
+
+
+</div>
+
+
+
+
+
+
+
+
+<div>
+
+
+<label>
+
+Room Charges
+
+</label>
+
+
+<input
+
+type="number"
+
+id="roomFee"
+
+value="0"
+
+oninput="calculateBill()">
+
+
+</div>
+
+
+
+
+
+
+
+
+<div>
+
+
+<label>
+
+Other Charges
+
+</label>
+
+
+<input
+
+type="number"
+
+id="otherFee"
+
+value="0"
+
+oninput="calculateBill()">
+
+
+</div>
+
+
+
+
+
+
+
+
+<div>
+
+
+<label>
+
+GST (%)
+
+</label>
+
+
+<input
+
+type="number"
+
+id="gst"
+
+value="18"
+
+oninput="calculateBill()">
+
+
+</div>
+
+
+
+
+
+
+
+
+<div>
+
+
+<label>
+
+Discount (%)
+
+</label>
+
+
+<input
+
+type="number"
+
+id="discount"
+
+value="0"
+
+oninput="calculateBill()">
+
+
+</div>
+
+
+
+
+
+
+
+
+<div>
+
+
+<label>
+
+Total Amount
+
+</label>
+
+
+<input
+
+type="number"
+
+id="amount"
+
+readonly>
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+<!-- ================= PAYMENT DETAILS ================= -->
+
+
+<hr style="margin:25px 0;">
+
+
+
+<h3>
+
+<i class="fa-solid fa-credit-card"></i>
+
+Payment Details
+
+</h3>
+
+
+
+
+
+<div class="form-grid">
+
+
+
+
+
+<div>
+
+
+<label>
+
+Payment Method
+
+</label>
 
 
 
@@ -355,7 +1114,7 @@ UNPAID
 
 <option value="">
 
-Payment Method
+Select Payment Method
 
 </option>
 
@@ -369,43 +1128,130 @@ Cash
 
 <option>
 
-Card
+UPI
 
 </option>
 
 
 <option>
 
-UPI
+Credit Card
 
 </option>
+
+
+<option>
+
+Debit Card
+
+</option>
+
+
+<option>
+
+Net Banking
+
+</option>
+
+
+<option>
+
+Insurance
+
+</option>
+
+
+<option>
+
+Wallet
+
+</option>
+
 
 
 </select>
 
 
-
-<input
-
-type="number"
-
-id="patientId"
-
-placeholder="Patient ID">
+</div>
 
 
 
 
 
-<input
-
-type="number"
-
-id="appointmentId"
-
-placeholder="Appointment ID">
 
 
+
+<div>
+
+
+<label>
+
+Payment Status
+
+</label>
+
+
+
+<select id="paymentStatus">
+
+
+<option value="">
+
+Select Status
+
+</option>
+
+
+<option value="PAID">
+
+Paid
+
+</option>
+
+
+<option value="UNPAID">
+
+Unpaid
+
+</option>
+
+
+<option value="PENDING">
+
+Pending
+
+</option>
+
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+<div class="banner-buttons">
 
 
 
@@ -416,6 +1262,9 @@ class="btn"
 onclick="createBill()">
 
 
+<i class="fa-solid fa-file-circle-plus"></i>
+
+
 Generate Bill
 
 
@@ -423,10 +1272,81 @@ Generate Bill
 
 
 
+
+
+
+
+<button
+
+class="btn"
+
+onclick="printCurrentBill()">
+
+
+<i class="fa-solid fa-print"></i>
+
+
+Print Invoice
+
+
+</button>
+
+
+
+
+
+
+
+<button
+
+class="btn"
+
+onclick="downloadBillPDF()">
+
+
+<i class="fa-solid fa-file-pdf"></i>
+
+
+Download PDF
+
+
+</button>
+
+
+
+
+
+
+
+<button
+
+class="whatsappBtn"
+
+onclick="shareCurrentBill()">
+
+
+
+<i class="fab fa-whatsapp"></i>
+
+
+WhatsApp
+
+
+</button>
+
+
+
+
+
 </div>
 
 
-</div>
+
+
+
+
+
+</section>
 
 
 
@@ -436,19 +1356,49 @@ Generate Bill
 
 
 
-<!-- Search -->
+<!-- ================= BILLING RECORDS ================= -->
 
 
-<div class="recent-card">
+
+<section class="dashboard-card">
+
+
+
+
+
+<div class="card-header">
+
+
+<div>
 
 
 <h2>
 
-<i class="fas fa-list"></i>
+<i class="fa-solid fa-list"></i>
 
-Bills List
+Billing Records
 
 </h2>
+
+
+<p style="color:#64748b">
+
+View generated invoices and payment history
+
+</p>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
 
 
 
@@ -460,9 +1410,20 @@ id="searchBill"
 
 class="search-box"
 
-placeholder="Search Bill..."
+placeholder="Search Invoice..."
 
-onkeyup="searchBills()">
+onkeyup="searchBills()"
+
+>
+
+
+
+
+
+
+
+
+<div class="table-container">
 
 
 
@@ -471,22 +1432,29 @@ onkeyup="searchBills()">
 <table>
 
 
+
 <thead>
 
 
 <tr>
 
-<th>ID</th>
 
-<th>Amount</th>
+<th>Invoice</th>
 
-<th>Status</th>
-
-<th>Method</th>
 
 <th>Patient</th>
 
-<th>Action</th>
+
+<th>Amount</th>
+
+
+<th>Status</th>
+
+
+<th>Payment</th>
+
+
+<th>Actions</th>
 
 
 </tr>
@@ -496,10 +1464,18 @@ onkeyup="searchBills()">
 
 
 
+
+
+
 <tbody id="billingTable">
 
 
+<!-- Billing Data Loaded Here -->
+
+
 </tbody>
+
+
 
 
 
@@ -507,6 +1483,8 @@ onkeyup="searchBills()">
 
 
 
+
+
 </div>
 
 
@@ -515,7 +1493,231 @@ onkeyup="searchBills()">
 
 
 
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ================= PAYMENT INFORMATION ================= -->
+
+
+
+<section class="dashboard-card">
+
+
+
+
+
+<h2>
+
+<i class="fa-solid fa-circle-info"></i>
+
+Payment Information
+
+</h2>
+
+
+
+
+
+
+
+
+<div class="info-grid">
+
+
+
+
+
+
+
+<div class="info-card">
+
+
+<h3>
+
+💳 Accepted Payments
+
+</h3>
+
+
+<br>
+
+
+<p>✔ Cash</p>
+
+<p>✔ UPI</p>
+
+<p>✔ Credit Card</p>
+
+<p>✔ Debit Card</p>
+
+<p>✔ Insurance</p>
+
+<p>✔ Wallet</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="info-card">
+
+
+<h3>
+
+📱 Scan To Pay
+
+</h3>
+
+
+<br>
+
+
+
+<img
+
+src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=HospitalManagementPayment"
+
+width="180"
+
+>
+
+
+<br><br>
+
+
+<b>
+
+UPI ID
+
+</b>
+
+
+<p>
+
+hospital@upi
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="info-card">
+
+
+<h3>
+
+🏥 Hospital Details
+
+</h3>
+
+
+<br>
+
+
+<p>
+
+City Hospital
+
+</p>
+
+
+<p>
+
+24×7 Emergency
+
+</p>
+
+
+<p>
+
++91 9876543210
+
+</p>
+
+
+<p>
+
+billing@hospital.com
+
+</p>
+
+
+<p>
+
+www.cityhospital.com
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ================= FOOTER ================= -->
+
+
+
 <footer class="footer">
+
+
+<h3>
+
+🏥 HMS PRO
+
+</h3>
+
+
+<p>
+
+Professional Billing & Invoice Management
+
+</p>
+
 
 <p>
 
@@ -523,7 +1725,13 @@ onkeyup="searchBills()">
 
 </p>
 
+
+
 </footer>
+
+
+
+
 
 
 
@@ -535,9 +1743,48 @@ onkeyup="searchBills()">
 
 
 
-<script src="js/logout.js"></script>
+
+
+<!-- ================= SCRIPTS ================= -->
+
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+
+const admin =
+localStorage.getItem("name")
+||
+"Admin";
+
+
+document.getElementById("adminName").innerHTML =
+admin;
+
+
+
+document.getElementById("invoiceNo").innerHTML =
+"Invoice : INV-" + Date.now();
+
+
+
+document.getElementById("billDate").innerHTML =
+new Date().toLocaleString();
+
+
+
+});
+
+</script>
+
+
+
+<script src="js/auth.js"></script>
 
 <script src="js/billing.js"></script>
+
 
 
 </body>

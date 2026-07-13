@@ -1,210 +1,391 @@
+// ======================================
+// HMS PRO ADMIN JAVASCRIPT
+// ======================================
+
+
+console.log("Admin JS Loaded");
+
+
+
 const BASE_URL =
 window.location.hostname === "localhost"
-? "http://localhost:8080"
-: "https://hospital-management-system-6pok.onrender.com";
+?
+"http://localhost:8080"
+:
+"https://hospital-management-system-6pok.onrender.com";
 
-// ===============================
-// Dashboard Load
-// ===============================
 
-window.onload = () => {
 
-    loadDashboard();
 
-    loadAppointments();
+// ======================================
+// PAGE LOAD
+// ======================================
 
-    loadPatients();
 
-    loadDate();
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
 
-    loadAdminName();
 
-};
+loadAppointments();
 
-// ===============================
-// Dashboard Counts
-// ===============================
+loadPatients();
 
-async function loadDashboard(){
+loadAdminName();
 
-    try{
+loadDate();
 
-        const [
-            doctors,
-            staff,
-            patients,
-            appointments
-        ] = await Promise.all([
 
-            fetch(BASE_URL + "/doctors").then(res=>res.json()),
+});
 
-            fetch(BASE_URL + "/staff").then(res=>res.json()),
 
-            fetch(BASE_URL + "/patients").then(res=>res.json()),
 
-            fetch(BASE_URL + "/appointments").then(res=>res.json())
 
-        ]);
 
-        // Cards
 
-        document.getElementById("doctorCount").innerText = doctors.length;
 
-        document.getElementById("staffCount").innerText = staff.length;
 
-        document.getElementById("patientCount").innerText = patients.length;
 
-        document.getElementById("appointmentCount").innerText = appointments.length;
+// ======================================
+// LOAD APPOINTMENTS
+// ======================================
 
-    }
-
-    catch(error){
-
-        console.error(error);
-
-    }
-
-}
-
-// ===============================
-// Recent Appointments
-// ===============================
 
 async function loadAppointments(){
 
-    try{
 
-        const response = await fetch(BASE_URL + "/appointments");
+try{
 
-        const appointments = await response.json();
 
-        let rows = "";
+const response =
+await fetch(
+BASE_URL + "/appointments"
+);
 
-        appointments
-        .slice(-5)
-        .reverse()
-        .forEach(a=>{
 
-            rows += `
 
-            <tr>
+if(!response.ok){
 
-                <td>${a.id}</td>
-
-                <td>${a.patient ? a.patient.name : "-"}</td>
-
-                <td>${a.doctor ? a.doctor.name : "-"}</td>
-
-                <td>${a.appointmentDate}</td>
-
-                <td>${a.status}</td>
-
-            </tr>
-
-            `;
-
-        });
-
-        document.getElementById("appointmentTable").innerHTML = rows;
-
-    }
-
-    catch(error){
-
-        console.log(error);
-
-    }
+throw new Error(
+"Appointments API Error"
+);
 
 }
 
-// ===============================
-// Recent Patients
-// ===============================
+
+
+const appointments =
+await response.json();
+
+
+
+let rows="";
+
+
+
+appointments
+.slice(-5)
+.reverse()
+.forEach(a=>{
+
+
+
+rows += `
+
+<tr>
+
+<td>
+${a.id ?? "-"}
+</td>
+
+
+<td>
+${a.patient?.name ?? "-"}
+</td>
+
+
+<td>
+${a.doctor?.name ?? "-"}
+</td>
+
+
+<td>
+${a.appointmentDate ?? "-"}
+</td>
+
+
+<td>
+
+<span class="badge badge-success">
+
+${a.status ?? "Pending"}
+
+</span>
+
+</td>
+
+
+</tr>
+
+
+`;
+
+
+
+});
+
+
+
+
+
+const table =
+document.getElementById(
+"appointmentTable"
+);
+
+
+
+if(table){
+
+table.innerHTML =
+rows || 
+`
+<tr>
+<td colspan="5">
+No appointments found
+</td>
+</tr>
+`;
+
+}
+
+
+
+
+}
+
+catch(error){
+
+console.error(
+"Appointment Loading Error:",
+error
+);
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ======================================
+// LOAD PATIENTS
+// ======================================
+
 
 async function loadPatients(){
 
-    try{
 
-        const response = await fetch(BASE_URL + "/patients");
+try{
 
-        const patients = await response.json();
 
-        let rows = "";
+const response =
+await fetch(
+BASE_URL + "/patients"
+);
 
-        patients
-        .slice(-5)
-        .reverse()
-        .forEach(p=>{
 
-            rows += `
 
-            <tr>
+if(!response.ok){
 
-                <td>${p.id}</td>
-
-                <td>${p.name}</td>
-
-                <td>${p.age}</td>
-
-                <td>${p.disease}</td>
-
-            </tr>
-
-            `;
-
-        });
-
-        document.getElementById("patientTable").innerHTML = rows;
-
-    }
-
-    catch(error){
-
-        console.log(error);
-
-    }
+throw new Error(
+"Patients API Error"
+);
 
 }
 
-// ===============================
-// Admin Name
-// ===============================
+
+
+const patients =
+await response.json();
+
+
+
+let rows="";
+
+
+
+patients
+.slice(-5)
+.reverse()
+.forEach(p=>{
+
+
+rows += `
+
+<tr>
+
+
+<td>
+${p.id ?? "-"}
+</td>
+
+
+<td>
+${p.name ?? "-"}
+</td>
+
+
+<td>
+${p.age ?? "-"}
+</td>
+
+
+<td>
+${p.disease ?? "-"}
+</td>
+
+
+
+</tr>
+
+`;
+
+
+
+});
+
+
+
+
+
+const table =
+document.getElementById(
+"patientTable"
+);
+
+
+
+if(table){
+
+table.innerHTML =
+rows ||
+`
+<tr>
+<td colspan="4">
+No patients found
+</td>
+</tr>
+`;
+
+}
+
+
+
+}
+
+
+catch(error){
+
+
+console.error(
+"Patient Loading Error:",
+error
+);
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ======================================
+// ADMIN NAME
+// ======================================
+
 
 function loadAdminName(){
 
-    const admin = localStorage.getItem("name");
 
-    if(admin){
 
-        document.getElementById("adminName").innerHTML = admin;
+const admin =
+localStorage.getItem(
+"name"
+);
 
-    }
+
+
+const element =
+document.getElementById(
+"adminName"
+);
+
+
+
+if(admin && element){
+
+
+element.innerText =
+admin;
+
 
 }
 
-// ===============================
-// Current Date
-// ===============================
+
+
+}
+
+
+
+
+
+
+
+
+
+// ======================================
+// DATE
+// ======================================
+
 
 function loadDate(){
 
-    const today = new Date();
 
-    document.getElementById("todayDate").innerHTML =
-        today.toDateString();
+
+const date =
+document.getElementById(
+"todayDate"
+);
+
+
+
+if(date){
+
+
+date.innerText =
+new Date()
+.toDateString();
+
 
 }
 
-// ===============================
-// Refresh Dashboard Every 30 sec
-// ===============================
 
-setInterval(()=>{
 
-    loadDashboard();
-
-    loadAppointments();
-
-    loadPatients();
-
-},30000);
+}

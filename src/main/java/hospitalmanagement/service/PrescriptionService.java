@@ -1,56 +1,232 @@
 package hospitalmanagement.service;
 
+
 import hospitalmanagement.entity.Prescription;
 import hospitalmanagement.repository.PrescriptionRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
+
+
 
 @Service
 public class PrescriptionService {
 
+
+
+
     @Autowired
-    private PrescriptionRepository repository;
+    private PrescriptionRepository prescriptionRepository;
 
+
+
+
+
+
+
+    // =====================================
     // Save Prescription
-    public Prescription save(Prescription prescription) {
-        return repository.save(prescription);
+    // =====================================
+
+    public Prescription save(
+            Prescription prescription) {
+
+
+
+        return prescriptionRepository.save(
+                prescription
+        );
+
+
     }
 
+
+
+
+
+
+
+
+    // =====================================
     // Get All Prescriptions
-    public List<Prescription> getAll() {
-        return repository.findAll();
+    // =====================================
+
+    public List<Prescription> getAll(){
+
+
+
+        return prescriptionRepository.findAll();
+
+
     }
 
+
+
+
+
+
+
+
+
+    // =====================================
     // Get Prescription By ID
-    public Prescription getById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Prescription Not Found"));
+    // =====================================
+
+    public Prescription getById(Long id){
+
+
+
+        return prescriptionRepository.findById(id)
+
+                .orElseThrow(
+                    () -> new RuntimeException(
+                    "Prescription Not Found"
+                    )
+                );
+
+
     }
 
+
+
+
+
+
+
+
+
+    // =====================================
     // Update Prescription
-    public Prescription update(Long id, Prescription prescription) {
+    // =====================================
 
-        Prescription old = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Prescription Not Found"));
+    public Prescription update(
+            Long id,
+            Prescription newPrescription){
 
-        old.setMedicine(prescription.getMedicine());
-        old.setNotes(prescription.getNotes());
 
-        // NEW
-        old.setDoctor(prescription.getDoctor());
-        old.setPatient(prescription.getPatient());
 
-        return repository.save(old);
+        Prescription oldPrescription =
+                getById(id);
+
+
+
+
+
+        oldPrescription.setMedicine(
+                newPrescription.getMedicine()
+        );
+
+
+
+        oldPrescription.setNotes(
+                newPrescription.getNotes()
+        );
+
+
+
+        oldPrescription.setDoctor(
+                newPrescription.getDoctor()
+        );
+
+
+
+        oldPrescription.setPatient(
+                newPrescription.getPatient()
+        );
+
+
+
+
+        return prescriptionRepository.save(
+                oldPrescription
+        );
+
+
+
     }
 
+
+
+
+
+
+
+
+
+    // =====================================
     // Delete Prescription
-    public void delete(Long id) {
-        repository.deleteById(id);
+    // =====================================
+
+    public void delete(Long id){
+
+
+
+        Prescription prescription =
+                getById(id);
+
+
+
+        prescriptionRepository.delete(
+                prescription
+        );
+
+
+
     }
-    public List<Prescription> getPrescriptionsByDoctor(Long doctorId) {
-        return repository.findByDoctorId(doctorId);
+
+
+
+
+
+
+
+
+
+    // =====================================
+    // Doctor Wise Prescriptions
+    // =====================================
+
+    public List<Prescription> getPrescriptionsByDoctor(
+            Long doctorId){
+
+
+
+        return prescriptionRepository
+                .findByDoctorId(doctorId);
+
+
+
     }
+
+
+
+
+
+
+
+
+
+    // =====================================
+    // Patient Wise Prescription History
+    // =====================================
+
+    public List<Prescription> getPrescriptionsByPatient(
+            Long patientId){
+
+
+
+        return prescriptionRepository
+                .findByPatientId(patientId);
+
+
+
+    }
+
+
+
+
+
 }

@@ -1,402 +1,914 @@
+console.log("APPOINTMENT JS LOADED");
+
+
+// ==========================================
+// BASE URL
+// ==========================================
+
+
 const BASE_URL =
 window.location.hostname === "localhost"
-? "http://localhost:8080"
-: "https://hospital-management-system-6pok.onrender.com";
+?
+"http://localhost:8080"
+:
+"https://hospital-management-system-6pok.onrender.com";
 
-const API = BASE_URL + "/appointments";
-const PATIENT_API = BASE_URL + "/patients";
-const DOCTOR_API = BASE_URL + "/doctors";
+
+
+const API =
+BASE_URL + "/appointments";
+
+
+const PATIENT_API =
+BASE_URL + "/patients";
+
+
+const DOCTOR_API =
+BASE_URL + "/doctors";
+
+
 
 let deleteAppointmentId = null;
 
-// ===============================
-// Page Load
-// ===============================
 
-window.onload = function () {
 
-    loadAppointments();
-    loadPatients();
-    loadDoctors();
 
-    document
-        .getElementById("searchAppointment")
-        .addEventListener("keyup", searchAppointment);
+
+
+
+
+
+// ==========================================
+// PAGE LOAD
+// ==========================================
+
+
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
+
+
+loadAppointments();
+
+loadPatients();
+
+loadDoctors();
+
+
+
+const search =
+document.getElementById(
+"searchAppointment"
+);
+
+
+
+if(search){
+
+search.addEventListener(
+"keyup",
+searchAppointment
+);
+
+}
+
+
+
+});
+
+
+
+
+
+
+
+
+
+// ==========================================
+// LOAD APPOINTMENTS
+// ==========================================
+
+
+async function loadAppointments(){
+
+
+try{
+
+
+const response =
+await fetch(API);
+
+
+
+const appointments =
+await response.json();
+
+
+
+displayAppointments(
+appointments
+);
+
+
+
+updateCards(
+appointments
+);
+
+
+
+}
+
+catch(error){
+
+console.error(error);
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+// ==========================================
+// DISPLAY APPOINTMENTS
+// ==========================================
+
+
+function displayAppointments(data){
+
+
+
+let rows="";
+
+
+
+data.forEach(a=>{
+
+
+let status =
+(a.status || "")
+.toUpperCase();
+
+
+
+
+let badgeClass="";
+
+
+
+if(status==="CONFIRMED")
+badgeClass="success";
+
+
+else if(status==="PENDING")
+badgeClass="warning";
+
+
+else if(status==="CANCELLED")
+badgeClass="danger";
+
+
+
+
+rows += `
+
+
+<tr>
+
+
+<td>${a.id}</td>
+
+
+<td>${a.patient?.name || "-"}</td>
+
+
+<td>${a.doctor?.name || "-"}</td>
+
+
+<td>${a.appointmentDate || "-"}</td>
+
+
+<td>${a.appointmentTime || "-"}</td>
+
+
+<td>
+
+<span class="status ${badgeClass}">
+
+${status || "-"}
+
+</span>
+
+
+</td>
+
+
+
+<td>
+
+
+<button
+class="btn"
+onclick="editAppointment(${a.id})">
+
+
+<i class="fa-solid fa-pen"></i>
+
+
+</button>
+
+
+
+
+<button
+class="deleteBtn"
+onclick="deleteAppointment(${a.id})">
+
+
+<i class="fa-solid fa-trash"></i>
+
+
+</button>
+
+
+
+</td>
+
+
+
+</tr>
+
+
+`;
+
+
+
+});
+
+
+
+
+
+
+const table =
+document.getElementById(
+"appointmentTable"
+);
+
+
+
+if(table){
+
+
+table.innerHTML =
+
+rows ||
+
+`
+
+<tr>
+
+<td colspan="7">
+
+No Appointments Found
+
+</td>
+
+</tr>
+
+`;
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ==========================================
+// UPDATE CARDS
+// ==========================================
+
+
+function updateCards(data){
+
+
+
+updateCount(
+"appointmentCount",
+data.length
+);
+
+
+
+let confirmed=0;
+
+let pending=0;
+
+let cancelled=0;
+
+
+
+
+data.forEach(a=>{
+
+
+let status =
+(a.status || "")
+.toUpperCase();
+
+
+
+if(status==="CONFIRMED")
+confirmed++;
+
+
+else if(status==="PENDING")
+pending++;
+
+
+else if(status==="CANCELLED")
+cancelled++;
+
+
+
+});
+
+
+
+
+updateCount(
+"confirmedCount",
+confirmed
+);
+
+
+updateCount(
+"pendingCount",
+pending
+);
+
+
+updateCount(
+"cancelledCount",
+cancelled
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+function updateCount(id,value){
+
+
+const el =
+document.getElementById(id);
+
+
+if(el){
+
+el.innerText=value;
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+// ==========================================
+// LOAD PATIENTS
+// ==========================================
+
+
+async function loadPatients(){
+
+
+const response =
+await fetch(PATIENT_API);
+
+
+
+const patients =
+await response.json();
+
+
+
+const select =
+document.getElementById(
+"patientSelect"
+);
+
+
+
+if(!select)return;
+
+
+
+select.innerHTML =
+`
+<option value="">
+Select Patient
+</option>
+`;
+
+
+
+
+patients.forEach(p=>{
+
+
+select.innerHTML +=
+
+`
+<option value="${p.id}">
+${p.name}
+</option>
+`;
+
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+
+// ==========================================
+// LOAD DOCTORS
+// ==========================================
+
+
+async function loadDoctors(){
+
+
+const response =
+await fetch(DOCTOR_API);
+
+
+
+const doctors =
+await response.json();
+
+
+
+const select =
+document.getElementById(
+"doctorSelect"
+);
+
+
+
+if(!select)return;
+
+
+
+select.innerHTML =
+`
+<option value="">
+Select Doctor
+</option>
+`;
+
+
+
+
+doctors.forEach(d=>{
+
+
+select.innerHTML +=
+
+`
+<option value="${d.id}">
+${d.name}
+</option>
+`;
+
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+
+// ==========================================
+// SEARCH
+// ==========================================
+
+
+async function searchAppointment(){
+
+
+const keyword =
+document.getElementById(
+"searchAppointment"
+)
+.value
+.toLowerCase();
+
+
+
+const response =
+await fetch(API);
+
+
+
+const data =
+await response.json();
+
+
+
+const filtered =
+data.filter(a=>
+
+
+(a.patient?.name||"")
+.toLowerCase()
+.includes(keyword)
+
+
+||
+
+
+(a.doctor?.name||"")
+.toLowerCase()
+.includes(keyword)
+
+
+||
+
+
+(a.status||"")
+.toLowerCase()
+.includes(keyword)
+
+
+
+);
+
+
+
+displayAppointments(
+filtered
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ==========================================
+// MODAL
+// ==========================================
+
+
+function openAppointmentModal(){
+
+
+
+document.getElementById(
+"modalTitle"
+).innerHTML="New Appointment";
+
+
+
+document.getElementById(
+"appointmentId"
+).value="";
+
+
+
+document.getElementById(
+"appointmentModal"
+).style.display="flex";
+
+
+
+}
+
+
+
+
+function closeAppointmentModal(){
+
+
+
+document.getElementById(
+"appointmentModal"
+).style.display="none";
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ==========================================
+// SAVE
+// ==========================================
+
+
+async function saveAppointment(){
+
+
+
+const id =
+document.getElementById(
+"appointmentId"
+).value;
+
+
+
+const appointment={
+
+
+appointmentDate:
+appointmentDate.value,
+
+
+appointmentTime:
+appointmentTime.value,
+
+
+status:
+appointmentStatus.value,
+
+
+patient:{
+id:
+patientSelect.value
+},
+
+
+doctor:{
+id:
+doctorSelect.value
+}
+
 
 };
 
-// ===============================
-// Load Appointments
-// ===============================
 
-async function loadAppointments() {
 
-    try {
 
-        const response = await fetch(API);
 
-        const appointments = await response.json();
 
-        displayAppointments(appointments);
+const url =
+id
+?
+API+"/"+id
+:
+API;
 
-        updateCards(appointments);
 
-    } catch (e) {
 
-        console.error(e);
+const method =
+id
+?
+"PUT"
+:
+"POST";
 
-    }
 
-}
 
-// ===============================
-// Display Appointments
-// ===============================
 
-function displayAppointments(appointments) {
+await fetch(url,{
 
-    let rows = "";
+method,
 
-    appointments.forEach(a => {
+headers:{
 
-        rows += `
+"Content-Type":
+"application/json"
 
-        <tr>
+},
 
-            <td>${a.id}</td>
+body:
+JSON.stringify(appointment)
 
-            <td>${a.patient ? a.patient.name : "-"}</td>
+});
 
-            <td>${a.doctor ? a.doctor.name : "-"}</td>
 
-            <td>${a.appointmentDate}</td>
 
-            <td>${a.appointmentTime}</td>
+closeAppointmentModal();
 
-            <td>${a.status}</td>
+loadAppointments();
 
-            <td>
 
-                <button class="editBtn"
-                    onclick="editAppointment(${a.id})">
-
-                    <i class="fa fa-edit"></i>
-
-                </button>
-
-                <button class="deleteBtn"
-                    onclick="deleteAppointment(${a.id})">
-
-                    <i class="fa fa-trash"></i>
-
-                </button>
-
-            </td>
-
-        </tr>
-
-        `;
-
-    });
-
-    document.getElementById("appointmentTable").innerHTML = rows;
 
 }
 
-// ===============================
-// Dashboard Cards
-// ===============================
 
-function updateCards(appointments) {
 
-    document.getElementById("appointmentCount").innerHTML =
-        appointments.length;
 
-    let confirmed = 0;
-    let pending = 0;
-    let cancelled = 0;
 
-    appointments.forEach(a => {
 
-        const status = (a.status || "").toUpperCase();
 
-        if (status === "CONFIRMED")
-            confirmed++;
 
-        else if (status === "PENDING")
-            pending++;
 
-        else if (status === "CANCELLED")
-            cancelled++;
+// ==========================================
+// EDIT
+// ==========================================
 
-    });
 
-    document.getElementById("confirmedCount").innerHTML = confirmed;
-    document.getElementById("pendingCount").innerHTML = pending;
-    document.getElementById("cancelledCount").innerHTML = cancelled;
+async function editAppointment(id){
 
-}
 
-// ===============================
-// Load Patients
-// ===============================
 
-async function loadPatients() {
+const response =
+await fetch(
+API+"/"+id
+);
 
-    const response = await fetch(PATIENT_API);
 
-    const patients = await response.json();
 
-    const select = document.getElementById("patientSelect");
+const a =
+await response.json();
 
-    select.innerHTML =
-        '<option value="">Select Patient</option>';
 
-    patients.forEach(p => {
 
-        select.innerHTML +=
-            `<option value="${p.id}">${p.name}</option>`;
+appointmentId.value=a.id;
 
-    });
+patientSelect.value=
+a.patient?.id || "";
 
-}
 
-// ===============================
-// Load Doctors
-// ===============================
+doctorSelect.value=
+a.doctor?.id || "";
 
-async function loadDoctors() {
 
-    const response = await fetch(DOCTOR_API);
+appointmentDate.value=
+a.appointmentDate;
 
-    const doctors = await response.json();
 
-    const select = document.getElementById("doctorSelect");
+appointmentTime.value=
+a.appointmentTime;
 
-    select.innerHTML =
-        '<option value="">Select Doctor</option>';
 
-    doctors.forEach(d => {
+appointmentStatus.value=
+a.status;
 
-        select.innerHTML +=
-            `<option value="${d.id}">${d.name}</option>`;
 
-    });
+
+modalTitle.innerHTML=
+"Edit Appointment";
+
+
+
+appointmentModal.style.display=
+"flex";
+
 
 }
 
-// ===============================
-// Search
-// ===============================
 
-async function searchAppointment() {
 
-    const keyword =
-        document.getElementById("searchAppointment")
-        .value
-        .toLowerCase();
 
-    const response = await fetch(API);
 
-    const appointments = await response.json();
 
-    const filtered = appointments.filter(a =>
 
-        (a.patient?.name || "")
-            .toLowerCase()
-            .includes(keyword)
 
-        ||
 
-        (a.doctor?.name || "")
-            .toLowerCase()
-            .includes(keyword)
+// ==========================================
+// DELETE
+// ==========================================
 
-        ||
 
-        (a.status || "")
-            .toLowerCase()
-            .includes(keyword)
+function deleteAppointment(id){
 
-    );
 
-    displayAppointments(filtered);
+deleteAppointmentId=id;
+
+
+deleteModal.style.display=
+"flex";
+
 
 }
 
-// ===============================
-// Open Modal
-// ===============================
 
-function openAppointmentModal() {
 
-    document.getElementById("modalTitle").innerHTML =
-        "New Appointment";
 
-    document.getElementById("appointmentId").value = "";
 
-    document.getElementById("patientSelect").value = "";
+function closeDeleteModal(){
 
-    document.getElementById("doctorSelect").value = "";
 
-    document.getElementById("appointmentDate").value = "";
+deleteModal.style.display=
+"none";
 
-    document.getElementById("appointmentTime").value = "";
-
-    document.getElementById("appointmentStatus").value = "";
-
-    document.getElementById("appointmentModal").style.display = "block";
 
 }
 
-function closeAppointmentModal() {
 
-    document.getElementById("appointmentModal").style.display = "none";
 
-}
 
-// ===============================
-// Save Appointment
-// ===============================
+async function confirmDelete(){
 
-async function saveAppointment() {
 
-    const id = document.getElementById("appointmentId").value;
+await fetch(
 
-    const appointment = {
+API+"/"+deleteAppointmentId,
 
-        appointmentDate:
-            document.getElementById("appointmentDate").value,
+{
 
-        appointmentTime:
-            document.getElementById("appointmentTime").value,
-
-        status:
-            document.getElementById("appointmentStatus").value,
-
-        doctor: {
-
-            id: document.getElementById("doctorSelect").value
-
-        },
-
-        patient: {
-
-            id: document.getElementById("patientSelect").value
-
-        }
-
-    };
-
-    if (
-
-        !appointment.appointmentDate ||
-
-        !appointment.appointmentTime ||
-
-        !appointment.status ||
-
-        !appointment.doctor.id ||
-
-        !appointment.patient.id
-
-    ) {
-
-        alert("Please fill all fields");
-
-        return;
-
-    }
-
-    const url = id ? API + "/" + id : API;
-
-    const method = id ? "PUT" : "POST";
-
-    await fetch(url, {
-
-        method: method,
-
-        headers: {
-
-            "Content-Type": "application/json"
-
-        },
-
-        body: JSON.stringify(appointment)
-
-    });
-
-    closeAppointmentModal();
-
-    loadAppointments();
+method:"DELETE"
 
 }
 
-// ===============================
-// Edit
-// ===============================
+);
 
-async function editAppointment(id) {
 
-    const response = await fetch(API + "/" + id);
 
-    const a = await response.json();
+deleteAppointmentId=null;
 
-    document.getElementById("modalTitle").innerHTML =
-        "Edit Appointment";
 
-    document.getElementById("appointmentId").value = a.id;
+closeDeleteModal();
 
-    document.getElementById("patientSelect").value =
-        a.patient ? a.patient.id : "";
 
-    document.getElementById("doctorSelect").value =
-        a.doctor ? a.doctor.id : "";
+loadAppointments();
 
-    document.getElementById("appointmentDate").value =
-        a.appointmentDate;
-
-    document.getElementById("appointmentTime").value =
-        a.appointmentTime;
-
-    document.getElementById("appointmentStatus").value =
-        a.status;
-
-    document.getElementById("appointmentModal").style.display =
-        "block";
 
 }
 
-// ===============================
-// Delete
-// ===============================
 
-function deleteAppointment(id) {
 
-    deleteAppointmentId = id;
 
-    document.getElementById("deleteModal").style.display =
-        "block";
 
-}
 
-function closeDeleteModal() {
 
-    document.getElementById("deleteModal").style.display =
-        "none";
 
-}
 
-async function confirmDelete() {
+// GLOBAL
 
-    await fetch(API + "/" + deleteAppointmentId, {
+window.openAppointmentModal=openAppointmentModal;
 
-        method: "DELETE"
+window.closeAppointmentModal=closeAppointmentModal;
 
-    });
+window.saveAppointment=saveAppointment;
 
-    closeDeleteModal();
+window.editAppointment=editAppointment;
 
-    loadAppointments();
+window.deleteAppointment=deleteAppointment;
 
-}
+window.confirmDelete=confirmDelete;
+
+window.closeDeleteModal=closeDeleteModal;
+
+window.searchAppointment=searchAppointment;

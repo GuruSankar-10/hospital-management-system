@@ -1,129 +1,285 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>Doctor Appointments</title>
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-<link rel="stylesheet" href="css/theme.css">
-<link rel="stylesheet" href="css/doctor.css">
-
-</head>
-
-<body>
-
-<!-- ================= Sidebar ================= -->
+<!-- ================= SIDEBAR ================= -->
 
 <div class="sidebar">
 
+
 <div class="logo">
 
-<h2>👨‍⚕️ HMS</h2>
 
-<p>Doctor Panel</p>
+<h2>
 
-</div>
+🩺 HMS PRO
 
-<nav>
+</h2>
 
-<a href="doctor-dashboard.html">
-
-<i class="fas fa-house"></i>
-
-<span>Dashboard</span>
-
-</a>
-
-<a href="doctor-patients.html">
-
-<i class="fas fa-bed"></i>
-
-<span>My Patients</span>
-
-</a>
-
-<a href="doctor-appointments.html" class="active">
-
-<i class="fas fa-calendar-check"></i>
-
-<span>Appointments</span>
-
-</a>
-
-<a href="doctor-prescriptions.html">
-
-<i class="fas fa-file-prescription"></i>
-
-<span>Prescriptions</span>
-
-</a>
-
-<a href="doctor-profile.html">
-
-<i class="fas fa-user-doctor"></i>
-
-<span>Profile</span>
-
-</a>
-
-<a href="#" onclick="logout()">
-
-<i class="fas fa-right-from-bracket"></i>
-
-<span>Logout</span>
-
-</a>
-
-</nav>
-
-</div>
-
-<!-- ================= Main ================= -->
-
-<div class="main">
-
-<div class="topbar">
-
-<div>
-
-<h1>
-
-My Appointments
-
-</h1>
 
 <p>
 
-Manage Today's Appointments
+Doctor Portal
 
 </p>
 
+
 </div>
+
+
+
+
+
+<nav>
+
+
+
+<a href="doctor-dashboard.html">
+
+
+<i class="fas fa-house"></i>
+
+<span>
+
+Dashboard
+
+</span>
+
+
+</a>
+
+
+
+
+
+
+<a href="doctor-patients.html">
+
+
+<i class="fas fa-bed-pulse"></i>
+
+
+<span>
+
+My Patients
+
+</span>
+
+
+</a>
+
+
+
+
+
+
+
+<a href="doctor-appointments.html" class="active">
+
+
+<i class="fas fa-calendar-check"></i>
+
+
+<span>
+
+Appointments
+
+</span>
+
+
+</a>
+
+
+
+
+
+
+
+<a href="doctor-prescriptions.html">
+
+
+<i class="fas fa-file-prescription"></i>
+
+
+<span>
+
+Prescriptions
+
+</span>
+
+
+</a>
+
+
+
+
+
+
+
+<a href="records.html">
+
+
+<i class="fas fa-file-medical"></i>
+
+
+<span>
+
+Medical Records
+
+</span>
+
+
+</a>
+
+
+
+
+
+
+
+<a href="doctor-profile.html">
+
+
+<i class="fas fa-user-doctor"></i>
+
+
+<span>
+
+Profile
+
+</span>
+
+
+</a>
+
+
+
+
+
+
+
+<a href="#" onclick="logout()">
+
+
+
+<i class="fas fa-right-from-bracket"></i>
+
+
+<span>
+
+Logout
+
+</span>
+
+
+</a>
+
+
+
+
+
+</nav>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- ================= MAIN ================= -->
+
+<div class="main">
+
+
+
+
+
+
+
+
+<!-- ================= TOPBAR ================= -->
+
+
+
+<div class="topbar">
+
+
+
+
+
+<div class="welcome">
+
+
+
+<h1>
+
+
+My Appointments 📅
+
+
+</h1>
+
+
+
+
+<p>
+
+
+Manage patient consultations and appointment status
+
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
 
 <div class="top-right">
 
+
+
+
+
 <div class="search-box">
+
 
 <i class="fas fa-search"></i>
 
+
+
 <input
+
 type="text"
+
 id="searchAppointment"
-placeholder="Search Appointment">
+
+placeholder="Search patient or status..."
+
+>
+
 
 </div>
 
+
+
+
+
+
+
 <div class="profile">
 
-<i class="fas fa-user-circle"></i>
+
+<i class="fas fa-user-doctor"></i>
+
+
 
 <span id="doctorName">
 
@@ -131,19 +287,151 @@ Doctor
 
 </span>
 
-</div>
+
 
 </div>
 
+
+
+
+
+
 </div>
 
-<!-- ================= Dashboard Cards ================= -->
 
-<div class="cards">
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- ================= APPOINTMENT BANNER ================= -->
+
+
+
+<section class="dashboard-banner">
+
+
+
+
+
+<div>
+
+
+<h2>
+
+
+🩺 Today's Consultation Schedule
+
+
+</h2>
+
+
+
+
+
+<p>
+
+
+Review appointments, consult patients and update treatment status.
+
+
+</p>
+
+
+
+
+
+
+
+<div class="banner-buttons">
+
+
+
+
+
+<button onclick="location.href='doctor-patients.html'">
+
+
+<i class="fas fa-bed-pulse"></i>
+
+
+View Patients
+
+
+</button>
+
+
+
+
+
+
+
+<button onclick="location.href='doctor-prescriptions.html'">
+
+
+<i class="fas fa-file-prescription"></i>
+
+
+Create Prescription
+
+
+</button>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="banner-icon">
+
+
+<i class="fas fa-calendar-check"></i>
+
+
+</div>
+
+
+
+
+
+</section>
+<!-- ================= APPOINTMENT STATISTICS ================= -->
+
+
+<section class="cards">
+
+
+
+
 
 <div class="card">
 
+
 <div>
+
 
 <h2 id="appointmentCount">
 
@@ -151,21 +439,34 @@ Doctor
 
 </h2>
 
+
 <p>
 
 Total Appointments
 
 </p>
 
+
 </div>
+
 
 <i class="fas fa-calendar-check"></i>
 
+
 </div>
+
+
+
+
+
+
+
 
 <div class="card">
 
+
 <div>
+
 
 <h2 id="pendingCount">
 
@@ -173,21 +474,34 @@ Total Appointments
 
 </h2>
 
+
 <p>
 
 Pending
 
 </p>
 
+
 </div>
+
 
 <i class="fas fa-hourglass-half"></i>
 
+
 </div>
+
+
+
+
+
+
+
 
 <div class="card">
 
+
 <div>
+
 
 <h2 id="confirmedCount">
 
@@ -195,21 +509,34 @@ Pending
 
 </h2>
 
+
 <p>
 
 Confirmed
 
 </p>
 
+
 </div>
+
 
 <i class="fas fa-circle-check"></i>
 
+
 </div>
+
+
+
+
+
+
+
 
 <div class="card">
 
+
 <div>
+
 
 <h2 id="completedCount">
 
@@ -217,201 +544,539 @@ Confirmed
 
 </h2>
 
+
 <p>
 
 Completed
 
 </p>
 
+
 </div>
+
 
 <i class="fas fa-check-double"></i>
 
-</div>
 
 </div>
 
-<!-- ================= Appointment Table ================= -->
 
-<div class="recent-card">
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ================= APPOINTMENT TABLE ================= -->
+
+
+
+<section class="recent-card">
+
+
+
+
+
+<div class="card-header">
+
+
+<h2>
+
+
+<i class="fas fa-calendar-days"></i>
+
+
+Appointment Schedule
+
+
+</h2>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="table-container">
+
+
+
+<table>
+
+
+
+<thead>
+
+
+<tr>
+
+
+<th>ID</th>
+
+
+<th>Patient</th>
+
+
+<th>Date</th>
+
+
+<th>Time</th>
+
+
+<th>Status</th>
+
+
+<th>Actions</th>
+
+
+
+</tr>
+
+
+</thead>
+
+
+
+
+
+
+
+
+<tbody id="appointmentTable">
+
+
+<!-- Loaded from doctor-appointments.js -->
+
+
+</tbody>
+
+
+
+
+
+
+</table>
+
+
+
+</div>
+
+
+
+
+
+
+
+</section>
+<!-- ================= STATUS UPDATE MODAL ================= -->
+
+
+<div id="statusModal" class="modal">
+
+
+
+<div class="modal-content">
+
+
+
+
 
 <h2>
 
 <i class="fas fa-calendar-check"></i>
 
-Appointment List
-
-</h2>
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>ID</th>
-
-<th>Patient</th>
-
-<th>Date</th>
-
-<th>Time</th>
-
-<th>Status</th>
-
-<th>Actions</th>
-
-</tr>
-
-</thead>
-
-<tbody id="appointmentTable">
-
-<!-- Loaded from doctor-appointments.js -->
-
-</tbody>
-</table>
-
-</div>
-
-<!-- ===========================
-      Update Status Modal
-=========================== -->
-
-<div id="statusModal" class="modal">
-
-<div class="modal-content">
-
-<h2>
-
 Update Appointment Status
 
 </h2>
 
-<input
-type="hidden"
-id="appointmentId">
 
-<label>Status</label>
+
+
+
+<input
+
+type="hidden"
+
+id="appointmentId"
+
+>
+
+
+
+
+
+
+
+<label>
+
+Appointment Status
+
+</label>
+
+
+
+
+
 
 <select id="appointmentStatus">
 
-<option value="PENDING">Pending</option>
 
-<option value="CONFIRMED">Confirmed</option>
 
-<option value="COMPLETED">Completed</option>
+<option value="PENDING">
 
-<option value="CANCELLED">Cancelled</option>
+Pending
+
+</option>
+
+
+
+<option value="CONFIRMED">
+
+Confirmed
+
+</option>
+
+
+
+<option value="COMPLETED">
+
+Completed
+
+</option>
+
+
+
+<option value="CANCELLED">
+
+Cancelled
+
+</option>
+
+
 
 </select>
 
-<div
-style="
+
+
+
+
+
+
+<div style="
 display:flex;
 justify-content:flex-end;
 gap:15px;
-margin-top:25px;">
+margin-top:25px;
+">
+
+
+
+
+
 
 <button
+
 class="deleteBtn"
+
 onclick="closeStatusModal()">
+
 
 Cancel
 
+
 </button>
+
+
+
+
+
+
 
 <button
+
 class="btn"
+
 onclick="updateStatus()">
 
-Update
+
+
+<i class="fas fa-save"></i>
+
+
+Update Status
+
+
 
 </button>
 
-</div>
+
+
+
+
 
 </div>
 
+
+
+
+
 </div>
 
-<!-- ===========================
-      Quick Actions
-=========================== -->
 
-<div class="quick-actions">
+</div>
+
+
+
+
+
+
+
+
+
+<!-- ================= QUICK ACTIONS ================= -->
+
+
+
+<section class="quick-actions">
+
+
+
+
 
 <h2>
 
+
+<i class="fas fa-bolt"></i>
+
+
 Quick Actions
+
 
 </h2>
 
+
+
+
+
+
+
+
+
 <div class="action-buttons">
 
-<button
-onclick="location.href='doctor-dashboard.html'">
+
+
+
+
+<button onclick="location.href='doctor-dashboard.html'">
+
 
 <i class="fas fa-chart-line"></i>
 
+
 Dashboard
+
 
 </button>
 
-<button
-onclick="location.href='doctor-patients.html'">
 
-<i class="fas fa-bed"></i>
+
+
+
+
+
+<button onclick="location.href='doctor-patients.html'">
+
+
+<i class="fas fa-bed-pulse"></i>
+
 
 My Patients
 
+
 </button>
 
-<button
-onclick="location.href='doctor-prescriptions.html'">
+
+
+
+
+
+
+<button onclick="location.href='doctor-prescriptions.html'">
+
 
 <i class="fas fa-file-prescription"></i>
 
+
 Prescriptions
+
 
 </button>
 
-</div>
+
+
+
+
+
+
+<button onclick="location.href='records.html'">
+
+
+<i class="fas fa-file-medical"></i>
+
+
+Medical Records
+
+
+</button>
+
+
+
+
+
 
 </div>
 
-<!-- ===========================
-          Footer
-=========================== -->
+
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ================= FOOTER ================= -->
+
+
 
 <footer class="footer">
 
+
+
+<h3>
+
+🩺 HMS PRO Doctor Portal
+
+</h3>
+
+
+
+
+
 <p>
 
-© 2026 Hospital Management System | Doctor Portal
+Appointment Management System
 
 </p>
 
+
+
+
+
+<p>
+
+© 2026 Hospital Management System
+
+</p>
+
+
+
 </footer>
+
+
+
+
+
+
 
 </div>
 
+
+
+
+
+
+
+
+
+<!-- ================= SCRIPTS ================= -->
+
+
+
 <script>
 
-const doctorName = localStorage.getItem("name");
+
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
+
+
+const name =
+
+localStorage.getItem("name")
+
+||
+
+"Doctor";
+
+
+
+const doctorName =
+
+document.getElementById(
+"doctorName"
+);
+
+
 
 if(doctorName){
 
-    document.getElementById("doctorName").innerHTML =
-    doctorName;
+
+doctorName.innerHTML =
+name;
+
 
 }
 
+
+
+});
+
+
+
 </script>
+
+
+
+
 
 <script src="js/auth.js"></script>
 
 <script src="js/doctor-appointments.js"></script>
+
+
+
+
 
 </body>
 

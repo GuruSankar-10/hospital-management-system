@@ -4,380 +4,1089 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Doctor Management</title>
+
+<title>HMS PRO | Doctor Management</title>
+
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+
 <link rel="stylesheet" href="css/theme.css">
+
 <link rel="stylesheet" href="css/admin.css">
+
 
 </head>
 
+
+
 <body>
 
-<!-- Sidebar -->
 
-<div class="sidebar">
 
-    <div class="logo">
-        <h2>🏥 HMS</h2>
-        <p>Hospital Management</p>
-    </div>
+<!-- ================= SIDEBAR ================= -->
 
-    <nav>
 
-        <a href="admin-dashboard.html">
-            <i class="fas fa-house"></i>
-            <span>Dashboard</span>
-        </a>
+<aside class="sidebar">
 
-        <a href="admin-doctors.html" class="active">
-            <i class="fas fa-user-doctor"></i>
-            <span>Doctors</span>
-        </a>
 
-        <a href="admin-staff.html">
-            <i class="fas fa-user-nurse"></i>
-            <span>Staff</span>
-        </a>
 
-        <a href="patients.html">
-            <i class="fas fa-bed"></i>
-            <span>Patients</span>
-        </a>
+<div class="logo">
 
-        <a href="appointments.html">
-            <i class="fas fa-calendar-check"></i>
-            <span>Appointments</span>
-        </a>
 
-        <a href="billing.html">
-            <i class="fas fa-file-invoice-dollar"></i>
-            <span>Billing</span>
-        </a>
+<div class="logo-icon">
 
-        <a href="records.html">
-            <i class="fas fa-file-medical"></i>
-            <span>Medical Records</span>
-        </a>
-
-        <a href="#" onclick="logout()">
-            <i class="fas fa-right-from-bracket"></i>
-            <span>Logout</span>
-        </a>
-
-    </nav>
+<i class="fa-solid fa-hospital"></i>
 
 </div>
 
-<!-- Main -->
+
+
+<div>
+
+<h2>HMS PRO</h2>
+
+<p>Hospital System</p>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+<nav class="menu">
+
+
+
+<a href="admin-dashboard.html">
+
+
+<i class="fa-solid fa-chart-line"></i>
+
+
+<span>Dashboard</span>
+
+
+</a>
+
+
+
+
+
+<a href="admin-doctors.html" class="active">
+
+
+<i class="fa-solid fa-user-doctor"></i>
+
+
+<span>Doctors</span>
+
+
+</a>
+
+
+
+
+
+<a href="admin-staff.html">
+
+
+<i class="fa-solid fa-user-nurse"></i>
+
+
+<span>Staff</span>
+
+
+</a>
+
+
+
+
+
+<a href="patients.html">
+
+
+<i class="fa-solid fa-bed-pulse"></i>
+
+
+<span>Patients</span>
+
+
+</a>
+
+
+
+
+
+<a href="appointments.html">
+
+
+<i class="fa-solid fa-calendar-check"></i>
+
+
+<span>Appointments</span>
+
+
+</a>
+
+
+
+
+
+<a href="billing.html">
+
+
+<i class="fa-solid fa-file-invoice-dollar"></i>
+
+
+<span>Billing</span>
+
+
+</a>
+
+
+
+
+
+<a href="records.html">
+
+
+<i class="fa-solid fa-file-medical"></i>
+
+
+<span>Medical Records</span>
+
+
+</a>
+
+
+
+
+
+<a href="javascript:void(0)" onclick="logout()">
+
+
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+
+
+<span>Logout</span>
+
+
+
+</a>
+
+
+
+
+
+</nav>
+
+
+</aside>
+
+
+
+
+
+
+
+
+
+<!-- ================= MAIN ================= -->
+
 
 <div class="main">
 
-    <!-- Topbar -->
 
-    <div class="topbar">
 
-        <div class="welcome">
-            <h1>Doctor Management</h1>
-            <p>Manage hospital doctors</p>
-        </div>
 
-        <div class="top-right">
 
-            <div class="search-box">
 
-                <i class="fas fa-search"></i>
 
-                <input
-                    type="text"
-                    id="searchDoctor"
-                    placeholder="Search Doctor..."
-                    onkeyup="searchDoctor()">
+<!-- ================= TOPBAR ================= -->
 
-            </div>
 
-            <div class="profile">
 
-                <i class="fas fa-user-shield"></i>
+<header class="topbar">
 
-                <span>Admin</span>
 
-            </div>
 
-        </div>
+<div class="welcome">
 
-    </div>
 
-    <!-- Statistics -->
+<h1>
 
-    <div class="cards">
+Doctor Management 👨‍⚕️
 
-        <div class="card">
-            <div>
-                <p>Total Doctors</p>
-                <h2 id="doctorCount">0</h2>
-            </div>
-            <i class="fas fa-user-doctor"></i>
-        </div>
+</h1>
 
-        <div class="card">
-            <div>
-                <p>Cardiology</p>
-                <h2 id="cardiologyCount">0</h2>
-            </div>
-            <i class="fas fa-heart-pulse"></i>
-        </div>
 
-        <div class="card">
-            <div>
-                <p>Neurology</p>
-                <h2 id="neurologyCount">0</h2>
-            </div>
-            <i class="fas fa-brain"></i>
-        </div>
+<p>
 
-        <div class="card">
-            <div>
-                <p>General</p>
-                <h2 id="generalCount">0</h2>
-            </div>
-            <i class="fas fa-stethoscope"></i>
-        </div>
+Manage hospital doctors and specialists
 
-    </div>
+</p>
 
-    <!-- Toolbar -->
 
-    <div class="quick-actions">
+</div>
 
-        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;">
 
-            <h2>
-                <i class="fas fa-user-doctor"></i>
-                Doctor List
-            </h2>
 
-            <button class="btn" onclick="openDoctorModal()">
 
-                <i class="fas fa-plus"></i>
 
-                Add Doctor
 
-            </button>
 
-        </div>
 
-    </div>
+<div class="top-actions">
 
-    <!-- Doctor Table -->
 
-    <div class="recent-card">
 
-        <table>
 
-            <thead>
 
-                <tr>
+<div class="search-box">
 
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Specialization</th>
-                    <th>Phone</th>
-                    <th>Actions</th>
 
-                </tr>
+<i class="fa-solid fa-search"></i>
 
-            </thead>
 
-            <tbody id="doctorTable">
 
-            </tbody>
+<input
 
-        </table>
+type="text"
 
-    </div>
-	<!-- ===========================
-	        Add / Edit Doctor Modal
-	=========================== -->
+id="searchDoctor"
 
-	<div id="doctorModal" class="modal">
+placeholder="Search Doctor..."
 
-	    <div class="modal-content">
+onkeyup="searchDoctor()"
 
-	        <h2 id="modalTitle">
 
-	            <i class="fas fa-user-doctor"></i>
 
-	            Add Doctor
+>
 
-	        </h2>
 
-	        <input
-	            type="hidden"
-	            id="doctorId">
+</div>
 
-	        <label>Doctor Name</label>
 
-	        <input
-	            type="text"
-	            id="doctorName"
-	            placeholder="Enter Doctor Name"
-	            required>
 
-	        <label>Email</label>
 
-	        <input
-	            type="email"
-	            id="doctorEmail"
-	            placeholder="Enter Email"
-	            required>
 
-	        <label>Password</label>
 
-	        <div class="password-box">
 
-	            <input
-	                type="password"
-	                id="doctorPassword"
-	                placeholder="Enter Password"
-	                required>
 
-	            <i
-	                class="fas fa-eye"
-	                id="togglePassword"
-	                onclick="togglePassword()"></i>
+<button class="icon-btn">
 
-	        </div>
 
-	        <label>Specialization</label>
+<i class="fa-solid fa-bell"></i>
 
-	        <select id="doctorSpecialization">
 
-	            <option value="">Select Specialization</option>
+</button>
 
-	            <option>General</option>
 
-	            <option>Cardiology</option>
 
-	            <option>Neurology</option>
 
-	            <option>Orthopedic</option>
 
-	            <option>Pediatrics</option>
 
-	            <option>Dermatology</option>
 
-	            <option>ENT</option>
+<div class="profile-box">
 
-	            <option>Gynecology</option>
 
-	        </select>
+<i class="fa-solid fa-circle-user"></i>
 
-	        <label>Phone Number</label>
 
-	        <input
-	            type="text"
-	            id="doctorPhone"
-	            maxlength="10"
-	            placeholder="Enter Phone Number"
-	            required>
+<div>
 
-	        <div class="modal-buttons">
 
-	            <button
-	                class="deleteBtn"
-	                onclick="closeDoctorModal()">
+<strong>Admin</strong>
 
-	                Cancel
 
-	            </button>
+<small>Administrator</small>
 
-	            <button
-	                class="btn"
-	                onclick="saveDoctor()">
 
-	                <i class="fas fa-floppy-disk"></i>
+</div>
 
-	                Save Doctor
 
-	            </button>
+</div>
 
-	        </div>
 
-	    </div>
 
-	</div>
 
-	<!-- ===========================
-	      Delete Confirmation
-	=========================== -->
 
-	<div id="deleteModal" class="modal">
+</div>
 
-	    <div class="modal-content">
 
-	        <h2>
 
-	            <i class="fas fa-trash"></i>
 
-	            Delete Doctor
+</header>
 
-	        </h2>
 
-	        <br>
 
-	        <p>
 
-	            Are you sure you want to delete this doctor?
 
-	        </p>
 
-	        <br>
 
-	        <div class="modal-buttons">
 
-	            <button
-	                class="btn"
-	                onclick="closeDeleteModal()">
 
-	                Cancel
+<!-- ================= PAGE BANNER ================= -->
 
-	            </button>
 
-	            <button
-	                class="deleteBtn"
-	                onclick="confirmDelete()">
 
-	                Delete
+<section class="dashboard-banner">
 
-	            </button>
 
-	        </div>
 
-	    </div>
 
-	</div>
 
-	<footer class="footer">
+<div class="banner-content">
 
-	    <p>
 
-	        © 2026 Hospital Management System | Admin Panel
 
-	    </p>
+<h2>
 
-	</footer>
+Doctor Management Center
 
-	</div>
+</h2>
 
-	<script src="js/auth.js"></script>
-	<script src="js/admin-doctors.js"></script>
 
-	</body>
 
-	</html>
+<p>
+
+Add, update, search and manage all doctors
+working in the hospital.
+
+</p>
+
+
+
+
+
+<div class="banner-buttons">
+
+
+
+<button onclick="openDoctorModal()">
+
+
+
+<i class="fa-solid fa-user-plus"></i>
+
+
+Add Doctor
+
+
+</button>
+
+
+
+
+
+<button onclick="location.href='admin-dashboard.html'">
+
+
+
+<i class="fa-solid fa-arrow-left"></i>
+
+
+Dashboard
+
+
+</button>
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="banner-image">
+
+
+<i class="fa-solid fa-user-doctor"></i>
+
+
+</div>
+
+
+
+
+
+</section>
+<!-- ================= DOCTOR STATISTICS ================= -->
+
+
+<section class="stats-container">
+
+
+
+
+
+<div class="stat-card doctors">
+
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-user-doctor"></i>
+
+</div>
+
+
+
+<div class="stat-info">
+
+
+<p>Total Doctors</p>
+
+
+<h2 id="doctorCount">
+
+0
+
+</h2>
+
+
+<span>
+
+Registered Doctors
+
+</span>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="stat-card patients">
+
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-heart-pulse"></i>
+
+</div>
+
+
+
+<div class="stat-info">
+
+
+<p>Cardiology</p>
+
+
+<h2 id="cardiologyCount">
+
+0
+
+</h2>
+
+
+<span>
+
+Heart Specialists
+
+</span>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="stat-card staff">
+
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-brain"></i>
+
+</div>
+
+
+
+<div class="stat-info">
+
+
+<p>Neurology</p>
+
+
+<h2 id="neurologyCount">
+
+0
+
+</h2>
+
+
+<span>
+
+Brain Specialists
+
+</span>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="stat-card appointments">
+
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-stethoscope"></i>
+
+</div>
+
+
+
+<div class="stat-info">
+
+
+<p>General</p>
+
+
+<h2 id="generalCount">
+
+0
+
+</h2>
+
+
+<span>
+
+General Doctors
+
+</span>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ================= DOCTOR LIST ================= -->
+
+
+
+<section class="dashboard-card">
+
+
+
+
+
+<div class="card-header">
+
+
+
+<div>
+
+
+<h2>
+
+<i class="fa-solid fa-user-doctor"></i>
+
+Doctor List
+
+</h2>
+
+
+<p style="color:#64748b">
+
+Manage doctors information
+
+</p>
+
+
+</div>
+
+
+
+
+
+<button onclick="openDoctorModal()">
+
+
+<i class="fa-solid fa-plus"></i>
+
+
+Add Doctor
+
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="table-container">
+
+
+
+
+
+<table>
+
+
+
+<thead>
+
+
+<tr>
+
+
+<th>ID</th>
+
+
+<th>Name</th>
+
+
+<th>Email</th>
+
+
+<th>Specialization</th>
+
+
+<th>Phone</th>
+
+
+<th>Actions</th>
+
+
+
+</tr>
+
+
+</thead>
+
+
+
+
+
+
+<tbody id="doctorTable">
+
+
+
+<!-- Data loaded from admin-doctors.js -->
+
+
+
+</tbody>
+
+
+
+
+
+</table>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+</section>
+
+<!-- ================= DOCTOR STATISTICS ================= -->
+
+
+<section class="stats-container">
+
+
+
+
+
+<div class="stat-card doctors">
+
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-user-doctor"></i>
+
+</div>
+
+
+
+<div class="stat-info">
+
+
+<p>Total Doctors</p>
+
+
+<h2 id="doctorCount">
+
+0
+
+</h2>
+
+
+<span>
+
+Registered Doctors
+
+</span>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="stat-card patients">
+
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-heart-pulse"></i>
+
+</div>
+
+
+
+<div class="stat-info">
+
+
+<p>Cardiology</p>
+
+
+<h2 id="cardiologyCount">
+
+0
+
+</h2>
+
+
+<span>
+
+Heart Specialists
+
+</span>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="stat-card staff">
+
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-brain"></i>
+
+</div>
+
+
+
+<div class="stat-info">
+
+
+<p>Neurology</p>
+
+
+<h2 id="neurologyCount">
+
+0
+
+</h2>
+
+
+<span>
+
+Brain Specialists
+
+</span>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="stat-card appointments">
+
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-stethoscope"></i>
+
+</div>
+
+
+
+<div class="stat-info">
+
+
+<p>General</p>
+
+
+<h2 id="generalCount">
+
+0
+
+</h2>
+
+
+<span>
+
+General Doctors
+
+</span>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ================= DOCTOR LIST ================= -->
+
+
+
+<section class="dashboard-card">
+
+
+
+
+
+<div class="card-header">
+
+
+
+<div>
+
+
+<h2>
+
+<i class="fa-solid fa-user-doctor"></i>
+
+Doctor List
+
+</h2>
+
+
+<p style="color:#64748b">
+
+Manage doctors information
+
+</p>
+
+
+</div>
+
+
+
+
+
+<button onclick="openDoctorModal()">
+
+
+<i class="fa-solid fa-plus"></i>
+
+
+Add Doctor
+
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="table-container">
+
+
+
+
+
+<table>
+
+
+
+<thead>
+
+
+<tr>
+
+
+<th>ID</th>
+
+
+<th>Name</th>
+
+
+<th>Email</th>
+
+
+<th>Specialization</th>
+
+
+<th>Phone</th>
+
+
+<th>Actions</th>
+
+
+
+</tr>
+
+
+</thead>
+
+
+
+
+
+
+<tbody id="doctorTable">
+
+
+
+<!-- Data loaded from admin-doctors.js -->
+
+
+
+</tbody>
+
+
+
+
+
+</table>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+</section>

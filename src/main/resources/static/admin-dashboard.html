@@ -1,655 +1,1386 @@
-	<!DOCTYPE html>
-	<html lang="en">
-	
-	<head>
-	
-	<meta charset="UTF-8">
-	
-	<meta name="viewport"
-	content="width=device-width, initial-scale=1.0">
-	
-	<title>Hospital Management System</title>
-	
-	<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-	
-	<link rel="stylesheet" href="css/theme.css">
-	
-	<link rel="stylesheet" href="css/admin.css">
-	
-	</head>
-	
-	<body>
-	
-	<!-- ================= Sidebar ================= -->
-	
-	<div class="sidebar">
-	
-	<div class="logo">
-	
-	<h2>🏥 HMS</h2>
-	
-	<p>Hospital Management</p>
-	
-	</div>
-	
-	<nav>
-	
-	<a href="admin-dashboard.html" class="active">
-	
-	<i class="fas fa-house"></i>
-	
-	<span>Dashboard</span>
-	
-	</a>
-	
-	<a href="admin-doctors.html">
-	
-	<i class="fas fa-user-doctor"></i>
-	
-	<span>Doctors</span>
-	
-	</a>
-	
-	<a href="admin-staff.html">
-	
-	<i class="fas fa-user-nurse"></i>
-	
-	<span>Staff</span>
-	
-	</a>
-	
-	<a href="patients.html">
-	
-	<i class="fas fa-bed"></i>
-	
-	<span>Patients</span>
-	
-	</a>
-	
-	<a href="appointments.html">
-	
-	<i class="fas fa-calendar-check"></i>
-	
-	<span>Appointments</span>
-	
-	</a>
-	
-	<a href="billing.html">
-	
-	<i class="fas fa-file-invoice-dollar"></i>
-	
-	<span>Billing</span>
-	
-	</a>
-	
-	<a href="records.html">
-	
-	<i class="fas fa-file-medical"></i>
-	
-	<span>Medical Records</span>
-	
-	</a>
-	
-	<a href="#" onclick="logout()">
-	
-	<i class="fas fa-right-from-bracket"></i>
-	
-	<span>Logout</span>
-	
-	</a>
-	
-	</nav>
-	
-	</div>
-	
-	<!-- ================= Main ================= -->
-	
-	<div class="main">
-	
-	<!-- ================= Topbar ================= -->
-	
-	<div class="topbar">
-	
-	<div class="welcome">
-	
-	<h1>
-	
-	Welcome,
-	
-	<span id="adminName">
-	
-	Administrator
-	
-	</span>
-	
-	👋
-	
-	</h1>
-	
-	<p id="todayDate"></p>
-	
-	</div>
-	
-	<div class="top-right">
-	
-	<div class="search-box">
-	
-	<i class="fas fa-search"></i>
-	
-	<input
-	type="text"
-	placeholder="Search Dashboard">
-	
-	</div>
-	
-	<button class="icon-btn">
-	
-	<i class="fas fa-bell"></i>
-	
-	</button>
-	
-	<button class="icon-btn">
-	
-	<i class="fas fa-envelope"></i>
-	
-	</button>
-	
-	<div class="profile">
-	
-	<i class="fas fa-user-circle"></i>
-	
-	<span>Admin</span>
-	
-	</div>
-	
-	</div>
-	
-	</div>
-	
-	<!-- ================= Banner ================= -->
-	
-	<div class="welcome-banner">
-	
-	<div>
-	
-	<h2>
-	
-	Hospital Management Dashboard
-	
-	</h2>
-	
-	<p>
-	
-	Manage Doctors, Staff, Patients,
-	Appointments, Billing and Medical Records
-	from one place.
-	
-	</p>
-	
-	</div>
-	
-	<div>
-	
-	<i class="fas fa-hospital banner-icon"></i>
-	
-	</div>
-	
-	</div>
-	
-	<!-- ================= Dashboard Cards ================= -->
-	
-	<div class="cards">
-	
-	<div class="card">
-	
-	<div>
-	
-	<p>Total Doctors</p>
-	
-	<h2 id="doctorCount">
-	
-	0
-	
-	</h2>
-	
-	</div>
-	
-	<i class="fas fa-user-doctor"></i>
-	
-	</div>
-	
-	<div class="card">
-	
-	<div>
-	
-	<p>Total Staff</p>
-	
-	<h2 id="staffCount">
-	
-	0
-	
-	</h2>
-	
-	</div>
-	
-	<i class="fas fa-user-nurse"></i>
-	
-	</div>
-	
-	<div class="card">
-	
-	<div>
-	
-	<p>Total Patients</p>
-	
-	<h2 id="patientCount">
-	
-	0
-	
-	</h2>
-	
-	</div>
-	
-	<i class="fas fa-bed"></i>
-	
-	</div>
-	
-	<div class="card">
-	
-	<div>
-	
-	<p>Total Appointments</p>
-	
-	<h2 id="appointmentCount">
-	
-	0
-	
-	</h2>
-	
-	</div>
-	
-	<i class="fas fa-calendar-check"></i>
-	
-	</div>
-	
-	</div>
-	
-	<!-- ================= Quick Actions ================= -->
-	
-	<div class="quick-actions">
-	
-	<h2>
-	
-	<i class="fas fa-bolt"></i>
-	
-	Quick Actions
-	
-	</h2>
-	
-	<div class="action-buttons">
-	
-	<button onclick="location.href='admin-doctors.html'">
-	
-	<i class="fas fa-user-plus"></i>
-	
-	Add Doctor
-	
-	</button>
-	
-	<button onclick="location.href='admin-staff.html'">
-	
-	<i class="fas fa-user-nurse"></i>
-	
-	Add Staff
-	
-	</button>
-	
-	<button onclick="location.href='patients.html'">
-	
-	<i class="fas fa-bed"></i>
-	
-	Add Patient
-	
-	</button>
-	
-	<button onclick="location.href='appointments.html'">
-	
-	<i class="fas fa-calendar-plus"></i>
-	
-	Book Appointment
-	
-	</button>
-	
-	<button onclick="location.href='billing.html'">
-	
-	<i class="fas fa-file-invoice-dollar"></i>
-	
-	Generate Bill
-	
-	</button>
-	
-	</div>
-	
-	</div>
-	
-	<!-- ================= Dashboard Grid ================= -->
-	
-	<div class="dashboard-grid">
-	
-	<div class="recent-card">
-	
-	<h2>
-	
-	<i class="fas fa-calendar-days"></i>
-	
-	Recent Appointments
-	
-	</h2>
-	
-	<table>
-	
-	<thead>
-	
-	<tr>
-	
-	<th>ID</th>
-	
-	<th>Patient</th>
-	
-	<th>Doctor</th>
-	
-	<th>Date</th>
-	
-	<th>Status</th>
-	
-	</tr>
-	
-	</thead>
-	
-	<tbody id="appointmentTable">
-	
-	<!-- Dynamic Data From admin.js -->
-	
-	</tbody>
-	</table>
-	
-	</div>
-	
-	<!-- ================= Recent Patients ================= -->
-	
-	<div class="recent-card">
-	
-	<h2>
-	
-	<i class="fas fa-bed"></i>
-	
-	Recent Patients
-	
-	</h2>
-	
-	<table>
-	
-	<thead>
-	
-	<tr>
-	
-	<th>ID</th>
-	
-	<th>Name</th>
-	
-	<th>Age</th>
-	
-	<th>Disease</th>
-	
-	</tr>
-	
-	</thead>
-	
-	<tbody id="patientTable">
-	
-	<!-- Dynamic Data From admin.js -->
-	
-	</tbody>
-	
-	</table>
-	
-	</div>
-	
-	</div>
-	
-	<!-- ================= Bottom Dashboard ================= -->
-	
-	<div class="dashboard-grid">
-	
-	<!-- Hospital Summary -->
-	
-	<div class="recent-card">
-	
-	<h2>
-	
-	<i class="fas fa-chart-pie"></i>
-	
-	Hospital Summary
-	
-	</h2>
-	
-	<div class="summary-box">
-	
-	<div class="summary-item">
-	
-	<i class="fas fa-user-doctor"></i>
-	
-	<div>
-	
-	<h4>Total Doctors</h4>
-	
-	<p id="summaryDoctorCount">0</p>
-	
-	</div>
-	
-	</div>
-	
-	<div class="summary-item">
-	
-	<i class="fas fa-user-nurse"></i>
-	
-	<div>
-	
-	<h4>Total Staff</h4>
-	
-	<p id="summaryStaffCount">0</p>
-	
-	</div>
-	
-	</div>
-	
-	<div class="summary-item">
-	
-	<i class="fas fa-bed"></i>
-	
-	<div>
-	
-	<h4>Total Patients</h4>
-	
-	<p id="summaryPatientCount">0</p>
-	
-	</div>
-	
-	</div>
-	
-	<div class="summary-item">
-	
-	<i class="fas fa-calendar-check"></i>
-	
-	<div>
-	
-	<h4>Total Appointments</h4>
-	
-	<p id="summaryAppointmentCount">0</p>
-	
-	</div>
-	
-	</div>
-	
-	</div>
-	
-	</div>
-	
-	<!-- System Status -->
-	
-	<div class="recent-card">
-	
-	<h2>
-	
-	<i class="fas fa-server"></i>
-	
-	System Status
-	
-	</h2>
-	
-	<div class="status-list">
-	
-	<div class="status-item">
-	
-	<span>Database</span>
-	
-	<strong id="dbStatus">
-	
-	Connected
-	
-	</strong>
-	
-	</div>
-	
-	<div class="status-item">
-	
-	<span>Backend API</span>
-	
-	<strong>
-	
-	Running
-	
-	</strong>
-	
-	</div>
-	
-	<div class="status-item">
-	
-	<span>Authentication</span>
-	
-	<strong>
-	
-	Secure
-	
-	</strong>
-	
-	</div>
-	
-	<div class="status-item">
-	
-	<span>Server Status</span>
-	
-	<strong>
-	
-	Online
-	
-	</strong>
-	
-	</div>
-	
-	</div>
-	
-	</div>
-	
-	</div>
-	<!-- ================= Analytics ================= -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HMS | Admin Dashboard</title>
 
 
-	<div class="dashboard-grid">
+<!-- Font Awesome -->
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 
-	<div class="recent-card">
+<!-- Dashboard Styles -->
+<link rel="stylesheet" href="css/theme.css">
+
+<link rel="stylesheet" href="css/admin.css">
 
 
-	<h2>
-
-	<i class="fas fa-chart-line"></i>
-
-	Patient Growth
-
-	</h2>
+</head>
 
 
-	<canvas id="patientChart"></canvas>
+<body>
 
 
-	</div>
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar">
+
+
+<div class="logo">
+
+<div class="logo-icon">
+<i class="fa-solid fa-hospital"></i>
+</div>
+
+<div>
+
+<h2>HMS PRO</h2>
+
+<p>Hospital System</p>
+
+</div>
+
+</div>
 
 
 
-	<div class="recent-card">
+<nav class="menu">
 
 
-	<h2>
+<a href="admin-dashboard.html" class="active">
 
-	<i class="fas fa-chart-pie"></i>
+<i class="fa-solid fa-chart-line"></i>
 
-	Appointment Status
+<span>Dashboard</span>
 
-	</h2>
-
-
-	<canvas id="appointmentChart"></canvas>
+</a>
 
 
-	</div>
+
+<a href="admin-doctors.html">
+
+<i class="fa-solid fa-user-doctor"></i>
+
+<span>Doctors</span>
+
+</a>
 
 
-	</div>
-	
-	<!-- ================= Footer ================= -->
-	
-	<footer class="footer">
-	
-	<p>
-	
-	© 2026 Hospital Management System | Admin Dashboard
-	
-	</p>
-	
-	</footer>
-	
-	</div>
-	
-	<!-- ================= Scripts ================= -->
-	
-	<script>
-	
-	// Admin Name
-	
-	const adminName = localStorage.getItem("name");
-	
-	if(adminName){
-	
-	document.getElementById("adminName").textContent = adminName;
-	
-	}
-	
-	// Current Date
-	
-	const today = new Date();
-	
-	document.getElementById("todayDate").textContent =
-	today.toDateString();
-	
-	</script>
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	<script src="js/auth.js"></script>
-	<script src="js/admin.js"></script>
 
-	<script src="js/admin-dashboard.js"></script>
-	
-	</body>
-	
-	</html>
+<a href="admin-staff.html">
+
+<i class="fa-solid fa-user-nurse"></i>
+
+<span>Staff</span>
+
+</a>
+
+
+
+<a href="patients.html">
+
+<i class="fa-solid fa-bed-pulse"></i>
+
+<span>Patients</span>
+
+</a>
+
+
+
+<a href="appointments.html">
+
+<i class="fa-solid fa-calendar-check"></i>
+
+<span>Appointments</span>
+
+</a>
+
+
+
+<a href="billing.html">
+
+<i class="fa-solid fa-file-invoice-dollar"></i>
+
+<span>Billing</span>
+
+</a>
+
+
+
+<a href="records.html">
+
+<i class="fa-solid fa-file-medical"></i>
+
+<span>Medical Records</span>
+
+</a>
+
+
+
+<a href="javascript:void(0)" onclick="logout()">
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+<span>Logout</span>
+
+</a>
+
+
+</nav>
+
+
+</aside>
+
+
+
+
+
+<!-- ================= MAIN AREA ================= -->
+
+
+<div class="main">
+
+
+
+<!-- ================= TOPBAR ================= -->
+
+
+<header class="topbar">
+
+
+<div class="welcome">
+
+
+<h1>
+
+Good Morning,
+
+<span id="adminName">
+
+Administrator
+
+</span>
+
+👋
+
+</h1>
+
+
+<p id="todayDate"></p>
+
+
+</div>
+
+
+
+
+
+<div class="top-actions">
+
+
+<div class="search-box">
+
+
+<i class="fa-solid fa-search"></i>
+
+
+<input type="text"
+id="dashboardSearch"
+placeholder="Search dashboard">
+
+
+</div>
+
+
+
+
+
+<button class="icon-btn">
+
+<i class="fa-solid fa-bell"></i>
+
+</button>
+
+
+
+
+<button class="icon-btn">
+
+<i class="fa-solid fa-envelope"></i>
+
+</button>
+
+
+
+
+<div class="profile-box">
+
+
+<i class="fa-solid fa-circle-user"></i>
+
+
+<div>
+
+<strong>Admin</strong>
+
+<small>Administrator</small>
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+</header>
+
+
+
+
+
+
+
+<!-- ================= HERO SECTION ================= -->
+
+
+<section class="dashboard-banner">
+
+
+<div class="banner-content">
+
+
+<h2>
+
+Hospital Management Dashboard
+
+</h2>
+
+
+<p>
+
+Manage doctors, patients, staff,
+appointments and hospital operations
+from one centralized platform.
+
+</p>
+
+
+
+<div class="banner-buttons">
+
+
+<button onclick="location.href='admin-doctors.html'">
+
+<i class="fa-solid fa-user-plus"></i>
+
+Add Doctor
+
+</button>
+
+
+
+<button onclick="location.href='admin-staff.html'">
+
+<i class="fa-solid fa-user-nurse"></i>
+
+Add Staff
+
+</button>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+<div class="banner-image">
+
+
+<i class="fa-solid fa-hospital-user"></i>
+
+
+</div>
+
+
+</section>
+
+<!-- ================= STATISTICS CARDS ================= -->
+
+
+<section class="stats-container">
+
+
+<div class="stat-card doctors">
+
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-user-doctor"></i>
+
+</div>
+
+
+<div class="stat-info">
+
+
+<p>Total Doctors</p>
+
+
+<h2 id="doctorCount">
+
+0
+
+</h2>
+
+
+<span>
+
+Active Medical Team
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<div class="stat-card patients">
+
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-bed-pulse"></i>
+
+</div>
+
+
+<div class="stat-info">
+
+
+<p>Total Patients</p>
+
+
+<h2 id="patientCount">
+
+0
+
+</h2>
+
+
+<span>
+
+Registered Patients
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="stat-card staff">
+
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-user-nurse"></i>
+
+</div>
+
+
+<div class="stat-info">
+
+
+<p>Total Staff</p>
+
+
+<h2 id="staffCount">
+
+0
+
+</h2>
+
+
+<span>
+
+Hospital Employees
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="stat-card appointments">
+
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-calendar-check"></i>
+
+</div>
+
+
+<div class="stat-info">
+
+
+<p>Total Appointments</p>
+
+
+<h2 id="appointmentCount">
+
+0
+
+</h2>
+
+
+<span>
+
+Patient Visits
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ================= QUICK ACTIONS ================= -->
+
+
+<section class="quick-section">
+
+
+
+<div class="section-title">
+
+
+<h2>
+
+<i class="fa-solid fa-bolt"></i>
+
+Quick Actions
+
+</h2>
+
+
+<p>
+
+Frequently used hospital operations
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+<div class="quick-grid">
+
+
+
+
+
+<div class="quick-card"
+onclick="location.href='admin-doctors.html'">
+
+
+<div class="quick-icon">
+
+<i class="fa-solid fa-user-plus"></i>
+
+</div>
+
+
+<h3>
+
+Add Doctor
+
+</h3>
+
+
+<p>
+
+Register new doctors
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="quick-card"
+onclick="location.href='admin-staff.html'">
+
+
+<div class="quick-icon">
+
+<i class="fa-solid fa-user-nurse"></i>
+
+</div>
+
+
+<h3>
+
+Add Staff
+
+</h3>
+
+
+<p>
+
+Manage hospital staff
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="quick-card"
+onclick="location.href='patients.html'">
+
+
+<div class="quick-icon">
+
+<i class="fa-solid fa-hospital-user"></i>
+
+</div>
+
+
+<h3>
+
+Patients
+
+</h3>
+
+
+<p>
+
+View patient records
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="quick-card"
+onclick="location.href='appointments.html'">
+
+
+<div class="quick-icon">
+
+<i class="fa-solid fa-calendar-plus"></i>
+
+</div>
+
+
+<h3>
+
+Appointments
+
+</h3>
+
+
+<p>
+
+Schedule appointments
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="quick-card"
+onclick="location.href='billing.html'">
+
+
+<div class="quick-icon">
+
+<i class="fa-solid fa-file-invoice-dollar"></i>
+
+</div>
+
+
+<h3>
+
+Billing
+
+</h3>
+
+
+<p>
+
+Generate invoices
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="quick-card"
+onclick="location.href='records.html'">
+
+
+<div class="quick-icon">
+
+<i class="fa-solid fa-file-medical"></i>
+
+</div>
+
+
+<h3>
+
+Medical Records
+
+</h3>
+
+
+<p>
+
+Manage health records
+
+</p>
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+</section>
+
+<!-- ================= MAIN DASHBOARD GRID ================= -->
+
+
+<section class="dashboard-grid">
+
+
+
+<!-- ================= RECENT APPOINTMENTS ================= -->
+
+
+<div class="dashboard-card">
+
+
+<div class="card-header">
+
+<h2>
+
+<i class="fa-solid fa-calendar-days"></i>
+
+Recent Appointments
+
+</h2>
+
+
+<button onclick="location.href='appointments.html'">
+
+View All
+
+</button>
+
+
+</div>
+
+
+
+
+
+<div class="table-container">
+
+
+<table>
+
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+
+<th>Patient</th>
+
+<th>Doctor</th>
+
+<th>Date</th>
+
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+
+
+
+<tbody id="appointmentTable">
+
+<!-- Data loaded from admin-dashboard.js -->
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- ================= RECENT PATIENTS ================= -->
+
+
+<div class="dashboard-card">
+
+
+<div class="card-header">
+
+
+<h2>
+
+<i class="fa-solid fa-bed-pulse"></i>
+
+Recent Patients
+
+</h2>
+
+
+<button onclick="location.href='patients.html'">
+
+View All
+
+</button>
+
+
+</div>
+
+
+
+
+
+<div class="table-container">
+
+
+<table>
+
+
+<thead>
+
+
+<tr>
+
+
+<th>ID</th>
+
+<th>Name</th>
+
+<th>Age</th>
+
+<th>Disease</th>
+
+
+</tr>
+
+
+</thead>
+
+
+
+
+<tbody id="patientTable">
+
+
+<!-- Data loaded from admin-dashboard.js -->
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- ================= SUMMARY SECTION ================= -->
+
+
+<section class="bottom-grid">
+
+
+
+
+
+
+<div class="dashboard-card">
+
+
+<div class="card-header">
+
+
+<h2>
+
+<i class="fa-solid fa-chart-pie"></i>
+
+Hospital Summary
+
+</h2>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="summary-list">
+
+
+
+
+
+<div class="summary-item">
+
+
+<div class="summary-icon">
+
+<i class="fa-solid fa-user-doctor"></i>
+
+</div>
+
+
+<div>
+
+
+<h4>Total Doctors</h4>
+
+<p id="summaryDoctorCount">0</p>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="summary-item">
+
+
+<div class="summary-icon">
+
+<i class="fa-solid fa-user-nurse"></i>
+
+</div>
+
+
+<div>
+
+
+<h4>Total Staff</h4>
+
+<p id="summaryStaffCount">0</p>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="summary-item">
+
+
+<div class="summary-icon">
+
+<i class="fa-solid fa-bed"></i>
+
+</div>
+
+
+<div>
+
+
+<h4>Total Patients</h4>
+
+<p id="summaryPatientCount">0</p>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="summary-item">
+
+
+<div class="summary-icon">
+
+<i class="fa-solid fa-calendar-check"></i>
+
+</div>
+
+
+<div>
+
+
+<h4>Total Appointments</h4>
+
+<p id="summaryAppointmentCount">0</p>
+
+
+</div>
+
+
+</div>
+
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- ================= SYSTEM STATUS ================= -->
+
+
+<div class="dashboard-card">
+
+
+<div class="card-header">
+
+
+<h2>
+
+<i class="fa-solid fa-server"></i>
+
+System Status
+
+</h2>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="status-container">
+
+
+
+
+
+<div class="status-row">
+
+<span>
+
+Database
+
+</span>
+
+
+<strong class="success"
+id="dbStatus">
+
+Connected
+
+</strong>
+
+
+</div>
+
+
+
+
+
+
+<div class="status-row">
+
+
+<span>
+
+Backend API
+
+</span>
+
+
+<strong class="success">
+
+Running
+
+</strong>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="status-row">
+
+
+<span>
+
+Authentication
+
+</span>
+
+
+<strong class="success">
+
+Secure
+
+</strong>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="status-row">
+
+
+<span>
+
+Server
+
+</span>
+
+
+<strong class="success">
+
+Online
+
+</strong>
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ================= ANALYTICS ================= -->
+
+
+<section class="analytics-grid">
+
+
+
+
+
+<div class="dashboard-card chart-card">
+
+
+<div class="card-header">
+
+
+<h2>
+
+<i class="fa-solid fa-chart-line"></i>
+
+Patient Growth
+
+</h2>
+
+
+</div>
+
+
+
+<canvas id="patientChart"></canvas>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="dashboard-card chart-card">
+
+
+<div class="card-header">
+
+
+<h2>
+
+<i class="fa-solid fa-chart-pie"></i>
+
+Appointment Status
+
+</h2>
+
+
+</div>
+
+
+
+<canvas id="appointmentChart"></canvas>
+
+
+
+</div>
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ================= FOOTER ================= -->
+
+
+<footer class="footer">
+
+
+<p>
+
+© 2026 HMS PRO | Hospital Management System
+
+</p>
+
+
+</footer>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+
+
+<script>
+
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+
+let name = localStorage.getItem("name");
+
+
+if(name){
+
+document.getElementById("adminName").textContent=name;
+
+}
+
+
+
+document.getElementById("todayDate").textContent =
+new Date().toDateString();
+
+
+
+});
+
+
+</script>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script src="js/auth.js"></script>
+
+
+<script src="js/admin.js"></script>
+
+
+<script src="js/admin-dashboard.js"></script>
+
+
+
+
+
+</body>
+
+
+</html>

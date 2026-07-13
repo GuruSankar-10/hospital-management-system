@@ -1,112 +1,225 @@
 package hospitalmanagement.controller;
 
+
 import hospitalmanagement.entity.MedicalRecord;
 import hospitalmanagement.service.MedicalRecordService;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
+
+
 
 @RestController
 @RequestMapping("/medical-records")
 @CrossOrigin(origins = "*")
 public class MedicalRecordController {
 
+
+
+
     @Autowired
     private MedicalRecordService medicalRecordService;
 
+
+
+
+
     // =====================================
-    // Add Medical Record
+    // CREATE MEDICAL RECORD
     // =====================================
+
 
     @PostMapping
-    public ResponseEntity<MedicalRecord> addMedicalRecord(
+    public ResponseEntity<?> addMedicalRecord(
             @RequestBody MedicalRecord medicalRecord) {
 
-        return ResponseEntity.ok(
-                medicalRecordService.saveMedicalRecord(medicalRecord));
+
+        try {
+
+
+            return ResponseEntity.ok(
+                    medicalRecordService.saveMedicalRecord(medicalRecord)
+            );
+
+
+        }
+        catch(Exception e){
+
+
+            return ResponseEntity
+                    .badRequest()
+                    .body(e.getMessage());
+
+
+        }
+
 
     }
 
+
+
+
+
+
+
+
+
     // =====================================
-    // Get All Medical Records
+    // GET ALL RECORDS
     // =====================================
+
 
     @GetMapping
-    public ResponseEntity<List<MedicalRecord>> getAllMedicalRecords() {
+    public ResponseEntity<List<MedicalRecord>> getAllMedicalRecords(){
+
 
         return ResponseEntity.ok(
-                medicalRecordService.getAllMedicalRecords());
+                medicalRecordService.getAllMedicalRecords()
+        );
+
 
     }
 
+
+
+
+
+
+
+
+
     // =====================================
-    // Get Medical Record By ID
+    // GET BY ID
     // =====================================
+
 
     @GetMapping("/{id}")
     public ResponseEntity<MedicalRecord> getMedicalRecord(
-            @PathVariable Long id) {
+            @PathVariable Long id){
+
 
         return ResponseEntity.ok(
-                medicalRecordService.getMedicalRecordById(id));
+                medicalRecordService.getMedicalRecordById(id)
+        );
+
 
     }
 
+
+
+
+
+
+
+
+
     // =====================================
-    // Get Records By Patient
+    // PATIENT HISTORY
     // =====================================
+
 
     @GetMapping("/patient/{patientId}")
     public ResponseEntity<List<MedicalRecord>> getPatientRecords(
-            @PathVariable Long patientId) {
+            @PathVariable Long patientId){
+
 
         return ResponseEntity.ok(
-                medicalRecordService.getPatientRecords(patientId));
+                medicalRecordService.getPatientRecords(patientId)
+        );
+
 
     }
 
+
+
+
+
+
+
+
+
     // =====================================
-    // Get Records By Doctor
+    // DOCTOR RECORDS
     // =====================================
+
 
     @GetMapping("/doctor/{doctorId}")
     public ResponseEntity<List<MedicalRecord>> getDoctorRecords(
-            @PathVariable Long doctorId) {
+            @PathVariable Long doctorId){
+
 
         return ResponseEntity.ok(
-                medicalRecordService.getDoctorRecords(doctorId));
+                medicalRecordService.getDoctorRecords(doctorId)
+        );
+
 
     }
 
+
+
+
+
+
+
+
+
     // =====================================
-    // Update Medical Record
+    // UPDATE
     // =====================================
+
 
     @PutMapping("/{id}")
     public ResponseEntity<MedicalRecord> updateMedicalRecord(
             @PathVariable Long id,
-            @RequestBody MedicalRecord medicalRecord) {
+            @RequestBody MedicalRecord medicalRecord){
+
+
 
         return ResponseEntity.ok(
-                medicalRecordService.updateMedicalRecord(id, medicalRecord));
+                medicalRecordService.updateMedicalRecord(
+                        id,
+                        medicalRecord
+                )
+        );
+
 
     }
 
+
+
+
+
+
+
+
+
     // =====================================
-    // Delete Medical Record
+    // DELETE
     // =====================================
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteMedicalRecord(
-            @PathVariable Long id) {
+            @PathVariable Long id){
+
+
 
         medicalRecordService.deleteMedicalRecord(id);
 
-        return ResponseEntity.ok("Medical Record Deleted Successfully");
+
+
+        return ResponseEntity.ok(
+                "Medical Record Deleted Successfully"
+        );
+
 
     }
+
+
 
 }

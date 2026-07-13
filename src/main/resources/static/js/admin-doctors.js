@@ -153,10 +153,7 @@ function openDoctorModal() {
 
     const modal = document.getElementById("doctorModal");
 
-    modal.style.display = "flex";
-    modal.style.opacity = "1";
-    modal.style.visibility = "visible";
-    modal.style.zIndex = "99999";
+ modal.style.display = "flex";
 
 }
 
@@ -168,9 +165,7 @@ function closeDoctorModal() {
 
     const modal = document.getElementById("doctorModal");
 
-    modal.style.display = "none";
-    modal.style.opacity = "0";
-    modal.style.visibility = "hidden";
+  modal.style.display = "none";
 
 }
 // ==========================
@@ -395,10 +390,7 @@ function editDoctor(id) {
 
         const modal = document.getElementById("doctorModal");
 
-        modal.style.display = "flex";
-        modal.style.visibility = "visible";
-        modal.style.opacity = "1";
-        modal.style.zIndex = "99999";
+       modal.style.display = "flex";
 
     })
 

@@ -4,156 +4,260 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Medical Records</title>
+
+<title>HMS PRO | Medical Records</title>
+
 
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 
+
 <link rel="stylesheet" href="css/theme.css">
+
 <link rel="stylesheet" href="css/admin.css">
 
 
 </head>
 
 
+
 <body>
 
 
-<!-- Sidebar -->
 
-<div class="sidebar">
+
+
+<!-- ================= SIDEBAR ================= -->
+
+
+<aside class="sidebar">
+
 
 
 <div class="logo">
 
-<h2>🏥 HMS</h2>
 
-<p>Hospital Management</p>
+<div class="logo-icon">
+
+<i class="fa-solid fa-hospital"></i>
 
 </div>
 
 
 
-<nav>
+<div>
+
+<h2>HMS PRO</h2>
+
+<p>Hospital System</p>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<nav class="menu">
+
 
 
 <a href="admin-dashboard.html">
 
-<i class="fas fa-house"></i>
 
-Dashboard
+<i class="fa-solid fa-chart-line"></i>
+
+
+<span>Dashboard</span>
+
 
 </a>
+
+
+
+
 
 
 
 <a href="admin-doctors.html">
 
-<i class="fas fa-user-doctor"></i>
 
-Doctors
+<i class="fa-solid fa-user-doctor"></i>
+
+
+<span>Doctors</span>
+
 
 </a>
+
+
+
+
 
 
 
 <a href="admin-staff.html">
 
-<i class="fas fa-user-nurse"></i>
 
-Staff
+<i class="fa-solid fa-user-nurse"></i>
+
+
+<span>Staff</span>
+
 
 </a>
+
+
+
+
 
 
 
 <a href="patients.html">
 
-<i class="fas fa-bed"></i>
 
-Patients
+<i class="fa-solid fa-bed-pulse"></i>
+
+
+<span>Patients</span>
+
 
 </a>
+
+
+
+
 
 
 
 <a href="appointments.html">
 
-<i class="fas fa-calendar-check"></i>
 
-Appointments
+<i class="fa-solid fa-calendar-check"></i>
+
+
+<span>Appointments</span>
+
 
 </a>
+
+
+
+
 
 
 
 <a href="billing.html">
 
-<i class="fas fa-file-invoice-dollar"></i>
 
-Billing
+<i class="fa-solid fa-file-invoice-dollar"></i>
+
+
+<span>Billing</span>
+
 
 </a>
+
+
+
+
 
 
 
 <a href="records.html" class="active">
 
-<i class="fas fa-file-medical"></i>
 
-Medical Records
+<i class="fa-solid fa-file-medical"></i>
+
+
+<span>Medical Records</span>
+
+
+</a>
+
+
+
+
+
+
+
+<a href="javascript:void(0)" onclick="logout()">
+
+
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+
+
+<span>Logout</span>
+
+
 
 </a>
 
 
 
-<a href="#" onclick="logout()">
-
-<i class="fas fa-right-from-bracket"></i>
-
-Logout
-
-</a>
 
 
 </nav>
 
 
-</div>
+</aside>
 
 
 
 
 
 
-<!-- Main -->
+
+
+
+<!-- ================= MAIN ================= -->
 
 
 <div class="main">
 
 
 
-<!-- Topbar -->
 
-<div class="topbar">
+
+
+
+<!-- ================= TOPBAR ================= -->
+
+
+
+<header class="topbar">
+
+
+
 
 
 <div class="welcome">
 
+
 <h1>
 
-📁 Medical Records
+Medical Records 📁
 
 </h1>
 
 
+
 <p>
 
-Manage Patient Medical History
+Manage patient history and clinical information
 
 </p>
 
@@ -162,13 +266,240 @@ Manage Patient Medical History
 
 
 
-<div class="profile">
 
-<i class="fas fa-user-shield"></i>
+
+
+
+
+<div class="top-actions">
+
+
+
+
+
+<div class="search-box">
+
+
+<i class="fa-solid fa-search"></i>
+
+
+
+<input
+
+type="text"
+
+id="searchRecord"
+
+placeholder="Search Medical Records..."
+
+>
+
+
+</div>
+
+
+
+
+
+
+
+<button class="icon-btn">
+
+
+<i class="fa-solid fa-bell"></i>
+
+
+</button>
+
+
+
+
+
+
+
+
+<div class="profile-box">
+
+
+<i class="fa-solid fa-circle-user"></i>
+
+
+<div>
+
+
+<strong id="adminName">
+
+Admin
+
+</strong>
+
+
+<small>
+
+Administrator
+
+</small>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+</header>
+
+
+
+
+
+
+
+
+
+<!-- ================= RECORDS BANNER ================= -->
+
+
+
+<section class="dashboard-banner">
+
+
+
+
+
+<div class="banner-content">
+
+
+
+<h2>
+
+Medical History Management Center
+
+</h2>
+
+
+
+<p>
+
+Store, manage and track patient diagnosis,
+treatment details and doctor notes.
+
+</p>
+
+
+
+
+
+<div class="banner-buttons">
+
+
+
+<button onclick="document.getElementById('diagnosis').focus()">
+
+
+
+<i class="fa-solid fa-file-circle-plus"></i>
+
+
+Add Medical Record
+
+
+</button>
+
+
+
+
+
+
+
+<button onclick="location.href='admin-dashboard.html'">
+
+
+
+<i class="fa-solid fa-arrow-left"></i>
+
+
+Dashboard
+
+
+</button>
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="banner-image">
+
+
+<i class="fa-solid fa-file-medical"></i>
+
+
+</div>
+
+
+
+
+
+</section>
+
+<!-- ================= RECORD STATISTICS ================= -->
+
+
+<section class="stats-container">
+
+
+
+
+
+<div class="stat-card patients">
+
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-folder-open"></i>
+
+</div>
+
+
+
+<div class="stat-info">
+
+
+<p>Total Records</p>
+
+
+<h2 id="recordCount">
+
+0
+
+</h2>
+
 
 <span>
 
-Admin
+Medical History
 
 </span>
 
@@ -176,6 +507,7 @@ Admin
 </div>
 
 
+
 </div>
 
 
@@ -185,64 +517,421 @@ Admin
 
 
 
-<!-- Add Record -->
+<div class="stat-card appointments">
 
 
-<div class="quick-actions">
+<div class="stat-icon">
+
+<i class="fa-solid fa-calendar-day"></i>
+
+</div>
+
+
+
+<div class="stat-info">
+
+
+<p>Today's Visits</p>
+
+
+<h2 id="todayRecords">
+
+0
+
+</h2>
+
+
+<span>
+
+Recent Consultations
+
+</span>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="stat-card doctors">
+
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-user-doctor"></i>
+
+</div>
+
+
+
+<div class="stat-info">
+
+
+<p>Doctors Involved</p>
+
+
+<h2 id="doctorRecords">
+
+0
+
+</h2>
+
+
+<span>
+
+Medical Team
+
+</span>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="stat-card staff">
+
+
+<div class="stat-icon">
+
+<i class="fa-solid fa-hospital-user"></i>
+
+</div>
+
+
+
+<div class="stat-info">
+
+
+<p>Patients Covered</p>
+
+
+<h2 id="patientRecords">
+
+0
+
+</h2>
+
+
+<span>
+
+Registered Patients
+
+</span>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ================= ADD MEDICAL RECORD ================= -->
+
+
+
+<section class="dashboard-card">
+
+
+
+
+
+<div class="card-header">
+
+
+<div>
 
 
 <h2>
 
-<i class="fas fa-plus"></i>
+<i class="fa-solid fa-file-circle-plus"></i>
 
 Add Medical Record
 
 </h2>
 
 
+<p style="color:#64748b">
 
-<div class="input-group">
+Create patient diagnosis and treatment history
+
+</p>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="form-grid">
+
+
+
+
+
+<div>
+
+
+<label>
+
+Diagnosis
+
+</label>
 
 
 <input
+
 type="text"
+
 id="diagnosis"
-placeholder="Diagnosis">
 
+placeholder="Enter Diagnosis"
+
+>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div>
+
+
+<label>
+
+Symptoms
+
+</label>
 
 
 <input
+
 type="text"
-id="doctorNotes"
-placeholder="Doctor Notes">
 
+id="symptoms"
+
+placeholder="Enter Symptoms"
+
+>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div>
+
+
+<label>
+
+Treatment
+
+</label>
 
 
 <input
+
 type="text"
-id="testResults"
-placeholder="Test Results">
 
+id="treatment"
+
+placeholder="Enter Treatment"
+
+>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div>
+
+
+<label>
+
+Visit Date
+
+</label>
 
 
 <input
+
 type="date"
-id="recordDate">
 
+id="visitDate"
+
+>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div>
+
+
+<label>
+
+Patient ID
+
+</label>
 
 
 <input
+
 type="number"
+
 id="patientId"
-placeholder="Patient ID">
 
+placeholder="Enter Patient ID"
+
+>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div>
+
+
+<label>
+
+Doctor ID
+
+</label>
 
 
 <input
-type="number"
-id="doctorId"
-placeholder="Doctor ID">
 
+type="number"
+
+id="doctorId"
+
+placeholder="Enter Doctor ID"
+
+>
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+<div>
+
+
+<label>
+
+Doctor Notes
+
+</label>
+
+
+<textarea
+
+id="notes"
+
+placeholder="Enter Medical Notes"
+
+rows="4"
+
+></textarea>
+
+
+</div>
+
+
+
+
+
+
+
+
+<br>
 
 
 
@@ -253,40 +942,65 @@ class="btn"
 
 onclick="addRecord()">
 
-Save Record
+
+<i class="fa-solid fa-floppy-disk"></i>
+
+
+Save Medical Record
+
 
 </button>
 
 
 
-</div>
-
-
-</div>
 
 
 
 
+</section>
+<!-- ================= MEDICAL RECORDS TABLE ================= -->
+
+
+<section class="dashboard-card">
 
 
 
 
 
+<div class="card-header">
 
-<!-- Records Table -->
 
 
-<div class="recent-card">
+<div>
 
 
 <h2>
 
-<i class="fas fa-folder-open"></i>
+<i class="fa-solid fa-folder-open"></i>
 
-Patient Records
+Medical Records
 
 </h2>
 
+
+<p style="color:#64748b">
+
+View patient diagnosis and treatment history
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+<div class="search-box">
+
+
+<i class="fa-solid fa-search"></i>
 
 
 <input
@@ -295,12 +1009,30 @@ type="text"
 
 id="searchRecord"
 
-class="search-box"
+placeholder="Search Records..."
 
-placeholder="Search Record..."
+onkeyup="searchRecords()"
 
-onkeyup="searchRecords()">
+>
 
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="table-container">
 
 
 
@@ -309,26 +1041,39 @@ onkeyup="searchRecords()">
 <table>
 
 
+
 <thead>
 
 
 <tr>
 
+
 <th>ID</th>
 
-<th>Diagnosis</th>
-
-<th>Notes</th>
-
-<th>Test Results</th>
-
-<th>Date</th>
 
 <th>Patient</th>
 
+
 <th>Doctor</th>
 
-<th>Action</th>
+
+<th>Diagnosis</th>
+
+
+<th>Symptoms</th>
+
+
+<th>Treatment</th>
+
+
+<th>Notes</th>
+
+
+<th>Visit Date</th>
+
+
+<th>Actions</th>
+
 
 
 </tr>
@@ -338,14 +1083,26 @@ onkeyup="searchRecords()">
 
 
 
+
+
+
 <tbody id="recordTable">
+
+
+
+<!-- Records loaded from records.js -->
+
 
 
 </tbody>
 
 
 
+
+
 </table>
+
+
 
 
 
@@ -357,7 +1114,175 @@ onkeyup="searchRecords()">
 
 
 
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ================= MEDICAL INFO ================= -->
+
+
+
+<section class="dashboard-card">
+
+
+
+
+
+<h2>
+
+<i class="fa-solid fa-circle-info"></i>
+
+Medical Records Information
+
+</h2>
+
+
+
+
+
+
+
+
+<div class="info-grid">
+
+
+
+
+
+
+
+<div class="info-card">
+
+
+<h3>
+
+🩺 Diagnosis
+
+</h3>
+
+
+<br>
+
+
+<p>
+
+Maintain accurate disease and health information.
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="info-card">
+
+
+<h3>
+
+💊 Treatment
+
+</h3>
+
+
+<br>
+
+
+<p>
+
+Track medicines, procedures and patient care.
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="info-card">
+
+
+<h3>
+
+👨‍⚕️ Doctor Notes
+
+</h3>
+
+
+<br>
+
+
+<p>
+
+Store important clinical observations.
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ================= FOOTER ================= -->
+
+
+
 <footer class="footer">
+
+
+<h3>
+
+🏥 HMS PRO
+
+</h3>
+
+
+
+<p>
+
+Professional Medical Records Management
+
+</p>
+
 
 
 <p>
@@ -367,7 +1292,12 @@ onkeyup="searchRecords()">
 </p>
 
 
+
 </footer>
+
+
+
+
 
 
 
@@ -377,9 +1307,57 @@ onkeyup="searchRecords()">
 
 
 
-<script src="js/logout.js"></script>
+
+
+
+
+<!-- ================= SCRIPTS ================= -->
+
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+
+const admin =
+
+localStorage.getItem("name")
+
+||
+
+"Admin";
+
+
+
+const element =
+
+document.getElementById("adminName");
+
+
+
+if(element){
+
+element.innerHTML = admin;
+
+}
+
+
+
+});
+
+</script>
+
+
+
+
+
+<script src="js/auth.js"></script>
 
 <script src="js/records.js"></script>
+
+
+
 
 
 </body>

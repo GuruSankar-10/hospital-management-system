@@ -1,78 +1,96 @@
 package hospitalmanagement.entity;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 
+
 @Entity
-@Table(name = "prescriptions")
+@Table(name="prescriptions")
 public class Prescription {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @Column(length = 1000)
-    private String medicine;
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private Long id;
 
-    @Column(length = 1000)
-    private String notes;
 
-    @ManyToOne
-    @JoinColumn(name = "doctor_id")
-    private Doctor doctor;
+@Column(length = 1000)
+private String medicine;
 
-    @ManyToOne
-    @JoinColumn(name = "patient_id")
-    private Patient patient;
 
-    public Prescription() {
-    }
+@Column(length = 1000)
+private String notes;
 
-    public Prescription(Long id, String medicine, String notes,
-                        Doctor doctor, Patient patient) {
-        this.id = id;
-        this.medicine = medicine;
-        this.notes = notes;
-        this.doctor = doctor;
-        this.patient = patient;
-    }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+@ManyToOne
+@JoinColumn(name="doctor_id")
+@JsonIgnoreProperties({"prescriptions"})
+private Doctor doctor;
 
-    public String getMedicine() {
-        return medicine;
-    }
 
-    public void setMedicine(String medicine) {
-        this.medicine = medicine;
-    }
 
-    public String getNotes() {
-        return notes;
-    }
+@ManyToOne
+@JoinColumn(name="patient_id")
+@JsonIgnoreProperties({"prescriptions"})
+private Patient patient;
 
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
 
-    public Doctor getDoctor() {
-        return doctor;
-    }
 
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
-    }
+public Prescription(){}
 
-    public Patient getPatient() {
-        return patient;
-    }
 
-    public void setPatient(Patient patient) {
-        this.patient = patient;
-    }
+
+public Long getId(){
+return id;
+}
+
+
+public void setId(Long id){
+this.id=id;
+}
+
+
+public String getMedicine(){
+return medicine;
+}
+
+
+public void setMedicine(String medicine){
+this.medicine=medicine;
+}
+
+
+public String getNotes(){
+return notes;
+}
+
+
+public void setNotes(String notes){
+this.notes=notes;
+}
+
+
+public Doctor getDoctor(){
+return doctor;
+}
+
+
+public void setDoctor(Doctor doctor){
+this.doctor=doctor;
+}
+
+
+public Patient getPatient(){
+return patient;
+}
+
+
+public void setPatient(Patient patient){
+this.patient=patient;
+}
+
+
 }

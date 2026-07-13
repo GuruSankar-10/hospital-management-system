@@ -8,240 +8,1062 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>Doctor Patients</title>
+
+<title>HMS PRO | My Patients</title>
+
+
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
+
+
 <link rel="stylesheet" href="css/theme.css">
+
 <link rel="stylesheet" href="css/doctor.css">
+
+
 
 </head>
 
+
 <body>
 
-<!-- ================= Sidebar ================= -->
+
+
+<!-- ================= SIDEBAR ================= -->
+
 
 <div class="sidebar">
 
-<h2>🏥 HMS</h2>
 
-<a href="doctor-dashboard.html">
-<i class="fas fa-house"></i>
-Dashboard
-</a>
 
-<a href="doctor-patients.html" class="active">
-<i class="fas fa-bed"></i>
-My Patients
-</a>
+<div class="logo">
 
-<a href="doctor-appointments.html">
-<i class="fas fa-calendar-check"></i>
-Appointments
-</a>
 
-<a href="doctor-prescriptions.html">
-<i class="fas fa-file-prescription"></i>
-Prescriptions
-</a>
+<h2>
 
-<a href="doctor-medical-records.html">
-<i class="fas fa-notes-medical"></i>
-Medical Records
-</a>
-
-<a href="doctor-profile.html">
-<i class="fas fa-user-doctor"></i>
-Profile
-</a>
-
-<a href="#" onclick="logout()">
-<i class="fas fa-right-from-bracket"></i>
-Logout
-</a>
-
-</div>
-
-<!-- ================= Main ================= -->
-
-<div class="main">
-
-<div class="topbar">
-
-<div>
-
-<h2>My Patients</h2>
-
-<p>Manage your assigned patients</p>
-
-</div>
-
-<div class="profile">
-
-<i class="fas fa-user-doctor"></i>
-
-<span id="doctorName"></span>
-
-</div>
-
-</div>
-
-<!-- Search -->
-
-<div class="search-box">
-
-<input
-type="text"
-id="searchPatient"
-placeholder="Search patient by name, disease or phone">
-
-</div>
-
-<!-- Statistics -->
-
-<div class="cards">
-
-<div class="card">
-
-<h2 id="patientCount">0</h2>
-
-<p>Total Patients</p>
-
-</div>
-
-<div class="card">
-
-<h2 id="feverCount">0</h2>
-
-<p>Fever</p>
-
-</div>
-
-<div class="card">
-
-<h2 id="otherCount">0</h2>
-
-<p>Other Diseases</p>
-
-</div>
-
-<div class="card">
-
-<h2 id="todayCount">0</h2>
-
-<p>Today's Patients</p>
-
-</div>
-
-</div>
-
-<!-- Table -->
-
-<div class="table-card">
-
-<h2 style="margin-bottom:20px;">
-
-<i class="fas fa-bed"></i>
-
-Patient List
+🩺 HMS PRO
 
 </h2>
 
-<table>
 
-<thead>
+<p>
 
-<tr>
+Doctor Portal
 
-<th>ID</th>
+</p>
 
-<th>Name</th>
-
-<th>Age</th>
-
-<th>Disease</th>
-
-<th>Phone</th>
-
-<th>View</th>
-
-<th>Medical Record</th>
-
-<th>Prescription</th>
-
-<th>Edit</th>
-
-<th>Delete</th>
-
-</tr>
-
-</thead>
-
-<tbody id="patientTable">
-
-</tbody>
-
-</table>
 
 </div>
 
+
+
+
+
+
+
+<nav>
+
+
+
+
+<a href="doctor-dashboard.html">
+
+
+<i class="fas fa-house"></i>
+
+
+<span>
+
+Dashboard
+
+</span>
+
+
+</a>
+
+
+
+
+
+
+
+<a href="doctor-patients.html"
+class="active">
+
+
+<i class="fas fa-bed-pulse"></i>
+
+
+<span>
+
+My Patients
+
+</span>
+
+
+</a>
+
+
+
+
+
+
+
+<a href="doctor-appointments.html">
+
+
+<i class="fas fa-calendar-check"></i>
+
+
+<span>
+
+Appointments
+
+</span>
+
+
+</a>
+
+
+
+
+
+
+
+<a href="doctor-prescriptions.html">
+
+
+<i class="fas fa-file-prescription"></i>
+
+
+<span>
+
+Prescriptions
+
+</span>
+
+
+</a>
+
+
+
+
+
+
+
+<a href="doctor-medical-records.html">
+
+
+<i class="fas fa-file-medical"></i>
+
+
+<span>
+
+Medical Records
+
+</span>
+
+
+</a>
+
+
+
+
+
+
+
+<a href="doctor-profile.html">
+
+
+<i class="fas fa-user-doctor"></i>
+
+
+<span>
+
+Profile
+
+</span>
+
+
+</a>
+
+
+
+
+
+
+
+<a href="#" onclick="logout()">
+
+
+
+<i class="fas fa-right-from-bracket"></i>
+
+
+<span>
+
+Logout
+
+</span>
+
+
+</a>
+
+
+
+
+
+
+</nav>
+
+
+
+
+
 </div>
 
-<!-- ================= Modal ================= -->
 
-<div id="patientModal"
-class="modal"
-style="display:none;">
 
-<div class="modal-content">
 
-<h2>Patient Details</h2>
 
-<br>
 
-<p><b>Name :</b> <span id="detailName"></span></p>
 
-<br>
 
-<p><b>Age :</b> <span id="detailAge"></span></p>
 
-<br>
+<!-- ================= MAIN ================= -->
 
-<p><b>Disease :</b> <span id="detailDisease"></span></p>
 
-<br>
 
-<p><b>Phone :</b> <span id="detailPhone"></span></p>
+<div class="main">
 
-<br>
 
-<p><b>Assigned Staff :</b> <span id="detailStaff"></span></p>
 
-<br>
 
-<button
-class="view-btn"
-onclick="closePatientModal()">
 
-Close
+
+
+<!-- ================= TOPBAR ================= -->
+
+
+
+<div class="topbar">
+
+
+
+
+
+<div class="welcome">
+
+
+
+<h1>
+
+
+My Patients 🩺
+
+
+</h1>
+
+
+
+
+
+<p>
+
+
+Manage your assigned patients and medical history
+
+
+</p>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="top-right">
+
+
+
+
+
+<div class="search-box">
+
+
+<i class="fas fa-search"></i>
+
+
+
+<input
+
+type="text"
+
+id="searchPatient"
+
+placeholder="Search patient by name, disease or phone"
+
+>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="profile">
+
+
+<i class="fas fa-user-doctor"></i>
+
+
+
+<span id="doctorName">
+
+Doctor
+
+</span>
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- ================= PATIENT BANNER ================= -->
+
+
+
+<section class="dashboard-banner">
+
+
+
+
+
+<div>
+
+
+<h2>
+
+
+👨‍⚕️ Patient Care Management
+
+
+</h2>
+
+
+
+
+
+<p>
+
+
+View patient details, medical history and manage treatments easily.
+
+
+</p>
+
+
+
+
+
+<div class="banner-buttons">
+
+
+
+
+
+<button onclick="location.href='doctor-appointments.html'">
+
+
+<i class="fas fa-calendar-check"></i>
+
+
+Appointments
+
 
 </button>
 
-</div>
+
+
+
+
+
+
+<button onclick="location.href='doctor-prescriptions.html'">
+
+
+<i class="fas fa-file-prescription"></i>
+
+
+Create Prescription
+
+
+</button>
+
+
+
+
+
 
 </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="banner-icon">
+
+
+<i class="fas fa-users"></i>
+
+
+</div>
+
+
+
+
+
+
+</section>
+<!-- ================= PATIENT STATISTICS ================= -->
+
+
+<section class="cards">
+
+
+
+
+
+<div class="card">
+
+
+<div>
+
+
+<h2 id="patientCount">
+
+0
+
+</h2>
+
+
+<p>
+
+Total Patients
+
+</p>
+
+
+</div>
+
+
+
+<i class="fas fa-bed-pulse"></i>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<div>
+
+
+<h2 id="feverCount">
+
+0
+
+</h2>
+
+
+<p>
+
+Fever Cases
+
+</p>
+
+
+</div>
+
+
+
+<i class="fas fa-temperature-high"></i>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<div>
+
+
+<h2 id="otherCount">
+
+0
+
+</h2>
+
+
+<p>
+
+Other Diseases
+
+</p>
+
+
+</div>
+
+
+
+<i class="fas fa-virus"></i>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<div>
+
+
+<h2 id="todayCount">
+
+0
+
+</h2>
+
+
+<p>
+
+Today's Visits
+
+</p>
+
+
+</div>
+
+
+
+<i class="fas fa-calendar-day"></i>
+
+
+
+</div>
+
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ================= PATIENT TABLE ================= -->
+
+
+
+<section class="recent-card">
+
+
+
+
+
+<div class="card-header">
+
+
+<h2>
+
+
+<i class="fas fa-users"></i>
+
+
+Assigned Patients
+
+
+</h2>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="table-container">
+
+
+
+<table>
+
+
+
+<thead>
+
+
+<tr>
+
+
+
+<th>ID</th>
+
+
+<th>Name</th>
+
+
+<th>Age</th>
+
+
+<th>Disease</th>
+
+
+<th>Phone</th>
+
+
+<th>View</th>
+
+
+<th>History</th>
+
+
+<th>Prescription</th>
+
+
+<th>Edit</th>
+
+
+<th>Delete</th>
+
+
+
+</tr>
+
+
+</thead>
+
+
+
+
+
+
+<tbody id="patientTable">
+
+
+<!-- Loaded by doctor-patients.js -->
+
+
+</tbody>
+
+
+
+
+
+
+</table>
+
+
+
+</div>
+
+
+
+
+
+
+
+</section>
+<!-- ================= PATIENT DETAILS MODAL ================= -->
+
+
+<div id="patientModal" class="modal">
+
+
+
+<div class="modal-content">
+
+
+
+
+
+<h2>
+
+<i class="fas fa-user-injured"></i>
+
+Patient Details
+
+</h2>
+
+
+
+
+
+<br>
+
+
+
+
+
+<p>
+
+<b>Name :</b>
+
+<span id="detailName">
+
+</span>
+
+</p>
+
+
+
+
+<br>
+
+
+
+
+<p>
+
+<b>Age :</b>
+
+<span id="detailAge">
+
+</span>
+
+</p>
+
+
+
+
+
+<br>
+
+
+
+
+<p>
+
+<b>Disease :</b>
+
+<span id="detailDisease">
+
+</span>
+
+</p>
+
+
+
+
+
+<br>
+
+
+
+
+<p>
+
+<b>Phone :</b>
+
+<span id="detailPhone">
+
+</span>
+
+</p>
+
+
+
+
+
+<br>
+
+
+
+
+<p>
+
+<b>Assigned Staff :</b>
+
+<span id="detailStaff">
+
+</span>
+
+</p>
+
+
+
+
+
+
+
+<br><br>
+
+
+
+
+
+<div style="display:flex;gap:15px;">
+
+
+
+
+
+<button
+
+class="btn"
+
+onclick="viewPatientHistory()">
+
+
+<i class="fas fa-file-medical"></i>
+
+
+Medical History
+
+
+</button>
+
+
+
+
+
+
+
+<button
+
+class="deleteBtn"
+
+onclick="closePatientModal()">
+
+
+
+Close
+
+
+
+</button>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- ================= FOOTER ================= -->
+
+
+
+<footer class="footer">
+
+
+
+<h3>
+
+🩺 HMS PRO Doctor Portal
+
+</h3>
+
+
+
+
+
+<p>
+
+Patient Management System
+
+</p>
+
+
+
+
+
+<p>
+
+© 2026 Hospital Management System
+
+</p>
+
+
+
+</footer>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- ================= SCRIPTS ================= -->
+
+
 
 <script>
 
-document.getElementById("doctorName").innerHTML =
-localStorage.getItem("name") || "Doctor";
+
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
+
+
+const doctor =
+
+localStorage.getItem("name")
+
+||
+
+"Doctor";
+
+
+
+const nameElement =
+
+document.getElementById(
+"doctorName"
+);
+
+
+
+if(nameElement){
+
+
+nameElement.innerHTML =
+doctor;
+
+
+}
+
+
+
+
+}
+
+);
+
+
+
+
 
 </script>
 
+
+
+
+
 <script src="js/auth.js"></script>
 
+
 <script src="js/doctor-patients.js"></script>
+
+
+
+
+
 
 </body>
 

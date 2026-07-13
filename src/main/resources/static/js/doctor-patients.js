@@ -1,160 +1,297 @@
 // ==========================================
-// Doctor Patients
+// HMS PRO Doctor Patients
 // ==========================================
 
-// API URL
-const isLocal =
-    window.location.hostname === "localhost" ||
-    window.location.hostname === "127.0.0.1";
 
-const API_URL = isLocal
-    ? "http://localhost:8080"
-    : "https://hospital-management-system-6pok.onrender.com";
+console.log("Doctor Patients JS Loaded");
 
-const doctorId = localStorage.getItem("doctorId");
-if (!doctorId) {
-    alert("Session expired. Please login again.");
-    window.location.href = "login.html";
-}
-let patients = [];
 
-// ==========================================
-// Page Load
-// ==========================================
 
-window.onload = function () {
+// ================================
+// BASE URL
+// ================================
 
-    loadPatients();
 
-    document
-        .getElementById("searchPatient")
-        .addEventListener("keyup", searchPatient);
+const BASE_URL =
 
-};
+window.location.hostname === "localhost"
 
-// ==========================================
-// Load Patients
-// ==========================================
+?
 
-async function loadPatients() {
+"http://localhost:8080"
 
-    try {
+:
 
-        const response = await fetch(
-            API_URL + "/patients/doctor/" + doctorId,
-            {
-                headers: {
-                    "Authorization":
-                        "Bearer " + localStorage.getItem("token")
-                }
-            }
-        );
+"https://hospital-management-system-6pok.onrender.com";
 
-        if (!response.ok) {
 
-            throw new Error("Unable to load patients.");
 
-        }
 
-        patients = await response.json();
+const doctorId =
+localStorage.getItem("doctorId");
 
-        displayPatients(patients);
 
-        updateCards(patients);
 
-    }
+if(!doctorId){
 
-    catch (error) {
+alert("Session expired. Please login again.");
 
-        console.error(error);
-
-        alert(error.message);
-
-    }
+window.location.href="login.html";
 
 }
 
-// ==========================================
-// Display Patients
-// ==========================================
 
-function displayPatients(list) {
 
-    let rows = "";
+let patients=[];
 
-    list.forEach(patient => {
+let selectedPatientId=null;
 
-        rows += `
+
+
+
+
+
+
+// ================================
+// PAGE LOAD
+// ================================
+
+
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
+
+
+loadPatients();
+
+
+
+const search =
+document.getElementById(
+"searchPatient"
+);
+
+
+
+if(search){
+
+search.addEventListener(
+"keyup",
+searchPatient
+);
+
+}
+
+
+
+});
+
+
+
+
+
+
+
+
+
+// ================================
+// LOAD PATIENTS
+// ================================
+
+
+async function loadPatients(){
+
+
+try{
+
+
+const response = await fetch(
+
+BASE_URL+
+"/patients/doctor/"+
+doctorId
+
+);
+
+
+
+if(!response.ok){
+
+throw new Error(
+"Unable to load patients"
+);
+
+}
+
+
+
+patients =
+await response.json();
+
+
+
+displayPatients(patients);
+
+
+updateCards(patients);
+
+
+
+}
+
+catch(error){
+
+console.error(error);
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ================================
+// DISPLAY PATIENTS
+// ================================
+
+
+function displayPatients(list){
+
+
+
+let rows="";
+
+
+
+list.forEach(p=>{
+
+
+rows+=`
+
 
 <tr>
 
-<td>${patient.id}</td>
 
-<td>${patient.name}</td>
+<td>${p.id}</td>
 
-<td>${patient.age}</td>
 
-<td>${patient.disease}</td>
+<td>${p.name || "-"}</td>
 
-<td>${patient.phone}</td>
+
+<td>${p.age || "-"}</td>
+
+
+<td>${p.disease || "-"}</td>
+
+
+<td>${p.phone || "-"}</td>
+
+
 
 <td>
 
-<button
-class="view-btn"
-onclick="viewPatient(${patient.id})">
+<button class="view-btn"
+onclick="viewPatient(${p.id})">
 
-<i class="fas fa-eye"></i>
+<i class="fa fa-eye"></i>
 
 </button>
 
 </td>
 
+
+
+
 <td>
 
-<button
-class="record-btn"
-onclick="openMedicalRecord(${patient.id})">
+<button class="record-btn"
+onclick="openMedicalRecord(${p.id})">
 
-<i class="fas fa-notes-medical"></i>
+<i class="fa fa-file-medical"></i>
 
 </button>
 
 </td>
 
+
+
+
 <td>
 
-<button
-class="prescription-btn"
-onclick="openPrescription(${patient.id})">
+<button class="prescription-btn"
+onclick="openPrescription(${p.id})">
 
-<i class="fas fa-file-prescription"></i>
+<i class="fa fa-prescription"></i>
 
 </button>
 
 </td>
 
+
+
+
+
 <td>
 
-<button
-class="edit-btn"
-onclick="editPatient(${patient.id})">
+<button class="edit-btn"
+onclick="editPatient(${p.id})">
 
-<i class="fas fa-pen"></i>
+<i class="fa fa-pen"></i>
 
 </button>
 
 </td>
 
+
+
+
+
+
 <td>
 
-<button
-class="delete-btn"
-onclick="deletePatient(${patient.id})">
+<button class="delete-btn"
+onclick="deletePatient(${p.id})">
 
-<i class="fas fa-trash"></i>
+<i class="fa fa-trash"></i>
 
 </button>
+
+</td>
+
+
+
+</tr>
+
+
+`;
+
+
+
+});
+
+
+
+document.getElementById(
+"patientTable"
+).innerHTML =
+
+
+rows ||
+
+`
+
+<tr>
+
+<td colspan="10">
+
+No Patients Found
 
 </td>
 
@@ -162,217 +299,482 @@ onclick="deletePatient(${patient.id})">
 
 `;
 
-    });
 
-    document.getElementById("patientTable").innerHTML = rows;
 
 }
 
-// ==========================================
-// Dashboard Cards
-// ==========================================
 
-function updateCards(list) {
 
-    document.getElementById("patientCount").innerHTML =
-        list.length;
 
-    let fever = 0;
 
-    let other = 0;
 
-    list.forEach(patient => {
 
-        if (
 
-            patient.disease &&
-            patient.disease.toLowerCase().includes("fever")
 
-        ) {
+// ================================
+// CARDS
+// ================================
 
-            fever++;
 
-        }
+function updateCards(list){
 
-        else {
 
-            other++;
 
-        }
+setValue(
+"patientCount",
+list.length
+);
 
-    });
 
-    document.getElementById("feverCount").innerHTML =
-        fever;
 
-    document.getElementById("otherCount").innerHTML =
-        other;
+let fever=0;
 
-    document.getElementById("todayCount").innerHTML =
-        list.length;
+let other=0;
 
-}
 
-// ==========================================
-// Search
-// ==========================================
 
-function searchPatient() {
+list.forEach(p=>{
 
-    const keyword =
 
-        document
-        .getElementById("searchPatient")
-        .value
-        .toLowerCase();
+if(
 
-    const filtered = patients.filter(patient =>
+p.disease &&
+p.disease
+.toLowerCase()
+.includes("fever")
 
-		(patient.name || "").toLowerCase().includes(keyword)
+)
 
-		||
+{
 
-		(patient.disease || "").toLowerCase().includes(keyword)
-
-		||
-
-		(patient.phone || "").toLowerCase().includes(keyword)
-
-    );
-
-    displayPatients(filtered);
+fever++;
 
 }
 
-// ==========================================
-// View Patient
-// ==========================================
+else{
 
-function viewPatient(id) {
-
-    const patient = patients.find(p => p.id == id);
-
-    if (!patient) return;
-
-    document.getElementById("detailName").innerHTML =
-        patient.name;
-
-    document.getElementById("detailAge").innerHTML =
-        patient.age;
-
-    document.getElementById("detailDisease").innerHTML =
-        patient.disease;
-
-    document.getElementById("detailPhone").innerHTML =
-        patient.phone;
-
-    document.getElementById("detailStaff").innerHTML =
-        patient.staff ? patient.staff.name : "-";
-
-    document.getElementById("patientModal").style.display =
-        "block";
+other++;
 
 }
 
-// ==========================================
-// Close Modal
-// ==========================================
 
-function closePatientModal() {
 
-    document.getElementById("patientModal").style.display =
-        "none";
+});
 
-}
 
-// ==========================================
-// Medical Record
-// ==========================================
 
-function openMedicalRecord(patientId) {
 
-    localStorage.setItem("patientId", patientId);
 
-    window.location.href =
-        "doctor-medical-records.html";
+setValue(
+"feverCount",
+fever
+);
 
-}
 
-// ==========================================
-// Prescription
-// ==========================================
 
-function openPrescription(patientId) {
+setValue(
+"otherCount",
+other
+);
 
-    localStorage.setItem("patientId", patientId);
 
-    window.location.href =
-        "doctor-prescriptions.html";
+
+setValue(
+"todayCount",
+list.length
+);
+
+
 
 }
 
-// ==========================================
-// Edit Patient
-// ==========================================
 
-function editPatient(patientId) {
 
-    localStorage.setItem("editPatientId", patientId);
 
-    alert("Edit Patient module will be added next.");
+
+
+
+
+
+// ================================
+// SEARCH
+// ================================
+
+
+function searchPatient(){
+
+
+
+let value =
+document
+.getElementById(
+"searchPatient"
+)
+.value
+.toLowerCase();
+
+
+
+
+
+let filtered =
+patients.filter(p=>
+
+(p.name||"")
+.toLowerCase()
+.includes(value)
+
+||
+
+(p.disease||"")
+.toLowerCase()
+.includes(value)
+
+||
+
+(p.phone||"")
+.includes(value)
+
+);
+
+
+
+displayPatients(filtered);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ================================
+// VIEW PATIENT
+// ================================
+
+
+function viewPatient(id){
+
+
+let patient =
+patients.find(
+p=>p.id==id
+);
+
+
+
+if(!patient)return;
+
+
+
+selectedPatientId=id;
+
+
+
+setValue(
+"detailName",
+patient.name
+);
+
+
+
+setValue(
+"detailAge",
+patient.age
+);
+
+
+
+setValue(
+"detailDisease",
+patient.disease
+);
+
+
+
+setValue(
+"detailPhone",
+patient.phone
+);
+
+
+
+setValue(
+
+"detailStaff",
+
+patient.staff
+?
+patient.staff.name
+:
+"-"
+
+);
+
+
+
+
+document.getElementById(
+"patientModal"
+).style.display="flex";
+
+
 
 }
 
-// ==========================================
-// Delete Patient
-// ==========================================
 
-async function deletePatient(patientId) {
 
-    if (!confirm("Delete this patient?")) {
 
-        return;
 
-    }
 
-    try {
 
-        const response = await fetch(
 
-            API_URL + "/patients/" + patientId,
 
-            {
-                method: "DELETE",
+function closePatientModal(){
 
-                headers: {
 
-                    "Authorization":
-                        "Bearer " + localStorage.getItem("token")
+document.getElementById(
+"patientModal"
+).style.display="none";
 
-                }
-
-            }
-
-        );
-
-        if (!response.ok) {
-
-            throw new Error("Unable to delete patient.");
-
-        }
-
-        alert("Patient Deleted Successfully");
-
-        loadPatients();
-
-    }
-
-    catch (error) {
-
-        console.error(error);
-
-        alert(error.message);
-
-    }
 
 }
+
+
+
+
+
+
+
+
+
+// ================================
+// MEDICAL RECORD
+// ================================
+
+
+function openMedicalRecord(id){
+
+
+localStorage.setItem(
+"patientId",
+id
+);
+
+
+
+window.location.href=
+"doctor-medical-records.html";
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ================================
+// PRESCRIPTION
+// ================================
+
+
+function openPrescription(id){
+
+
+localStorage.setItem(
+"patientId",
+id
+);
+
+
+
+window.location.href=
+"doctor-prescriptions.html";
+
+
+}
+
+
+
+
+
+
+
+
+
+// ================================
+// VIEW HISTORY FROM MODAL
+// ================================
+
+
+function viewPatientHistory(){
+
+
+if(selectedPatientId){
+
+
+openMedicalRecord(
+selectedPatientId
+);
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ================================
+// EDIT
+// ================================
+
+
+function editPatient(id){
+
+
+localStorage.setItem(
+"editPatientId",
+id
+);
+
+
+
+alert(
+"Edit Patient feature will be connected next."
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ================================
+// DELETE
+// ================================
+
+
+async function deletePatient(id){
+
+
+
+if(!confirm(
+"Delete this patient?"
+))
+
+return;
+
+
+
+
+await fetch(
+
+BASE_URL+
+"/patients/"+
+id,
+
+{
+
+method:"DELETE"
+
+}
+
+);
+
+
+
+alert(
+"Patient Deleted Successfully"
+);
+
+
+
+loadPatients();
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ================================
+// SAFE SET
+// ================================
+
+
+function setValue(id,value){
+
+
+let el =
+document.getElementById(id);
+
+
+
+if(el){
+
+el.innerHTML =
+value || "-";
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+// ================================
+// GLOBAL
+// ================================
+
+
+window.viewPatient=viewPatient;
+
+window.closePatientModal=closePatientModal;
+
+window.openMedicalRecord=openMedicalRecord;
+
+window.openPrescription=openPrescription;
+
+window.viewPatientHistory=viewPatientHistory;
+
+window.editPatient=editPatient;
+
+window.deletePatient=deletePatient;
+
+window.searchPatient=searchPatient;

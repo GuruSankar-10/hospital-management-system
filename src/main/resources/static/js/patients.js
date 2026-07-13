@@ -1,533 +1,977 @@
+console.log("PATIENT JS LOADED");
+
+
 // ==========================================
-// Patients Management
+// BASE URL
 // ==========================================
+
 
 const BASE_URL =
 window.location.hostname === "localhost"
-    ? "http://localhost:8080"
-    : "https://hospital-management-system-6pok.onrender.com";
+?
+"http://localhost:8080"
+:
+"https://hospital-management-system-6pok.onrender.com";
 
-const API = BASE_URL + "/patients";
-const DOCTOR_API = BASE_URL + "/doctors";
-const STAFF_API = BASE_URL + "/staff";
+
+
+const API =
+BASE_URL + "/patients";
+
+
+const DOCTOR_API =
+BASE_URL + "/doctors";
+
+
+const STAFF_API =
+BASE_URL + "/staff";
+
+
 
 let deletePatientId = null;
 
-// ===============================
-// Page Load
-// ===============================
 
-window.onload = function () {
 
-    loadPatients();
-    loadDoctors();
-    loadStaff();
 
-    document
-        .getElementById("searchPatient")
-        .addEventListener("keyup", searchPatient);
+
+// ==========================================
+// PAGE LOAD
+// ==========================================
+
+
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
+
+
+loadPatients();
+
+loadDoctors();
+
+loadStaff();
+
+
+
+const search =
+document.getElementById(
+"searchPatient"
+);
+
+
+
+if(search){
+
+search.addEventListener(
+"keyup",
+searchPatient
+);
+
+}
+
+
+});
+
+
+
+
+
+
+
+
+
+// ==========================================
+// LOAD PATIENTS
+// ==========================================
+
+
+async function loadPatients(){
+
+
+try{
+
+
+const response =
+await fetch(API);
+
+
+
+if(!response.ok){
+
+throw new Error(
+"Unable to load patients"
+);
+
+}
+
+
+
+const patients =
+await response.json();
+
+
+
+displayPatients(patients);
+
+updateCards(patients);
+
+
+
+}
+
+catch(error){
+
+console.error(error);
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ==========================================
+// DISPLAY PATIENTS
+// ==========================================
+
+
+function displayPatients(patients){
+
+
+
+let rows="";
+
+
+
+
+patients.forEach(p=>{
+
+
+rows += `
+
+
+<tr>
+
+
+<td>${p.id ?? "-"}</td>
+
+
+<td>${p.name ?? "-"}</td>
+
+
+<td>${p.age ?? "-"}</td>
+
+
+<td>${p.disease ?? "-"}</td>
+
+
+<td>${p.phone ?? "-"}</td>
+
+
+<td>${p.doctor?.name ?? "-"}</td>
+
+
+<td>${p.staff?.fullName ?? p.staff?.name ?? "-"}</td>
+
+
+
+<td>
+
+
+<button
+class="btn"
+onclick="editPatient(${p.id})">
+
+
+<i class="fa-solid fa-pen"></i>
+
+
+</button>
+
+
+
+
+
+<button
+class="deleteBtn"
+onclick="deletePatient(${p.id})">
+
+
+<i class="fa-solid fa-trash"></i>
+
+
+</button>
+
+
+
+</td>
+
+
+</tr>
+
+
+`;
+
+
+});
+
+
+
+
+
+
+const table =
+document.getElementById(
+"patientTable"
+);
+
+
+
+if(table){
+
+
+table.innerHTML =
+
+rows ||
+
+`
+
+<tr>
+
+<td colspan="8">
+
+No Patients Found
+
+</td>
+
+</tr>
+
+`;
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ==========================================
+// UPDATE CARDS
+// ==========================================
+
+
+function updateCards(patients){
+
+
+
+updateCount(
+"patientCount",
+patients.length
+);
+
+
+
+let doctors=0;
+
+let staff=0;
+
+let diseases=new Set();
+
+
+
+
+patients.forEach(p=>{
+
+
+if(p.doctor){
+
+doctors++;
+
+}
+
+
+if(p.staff){
+
+staff++;
+
+}
+
+
+if(p.disease){
+
+diseases.add(
+p.disease
+);
+
+}
+
+
+
+});
+
+
+
+
+
+updateCount(
+"doctorAssigned",
+doctors
+);
+
+
+updateCount(
+"staffAssigned",
+staff
+);
+
+
+updateCount(
+"diseaseCount",
+diseases.size
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+function updateCount(id,value){
+
+
+
+const el =
+document.getElementById(id);
+
+
+
+if(el){
+
+el.innerText=value;
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+// ==========================================
+// LOAD DOCTORS
+// ==========================================
+
+
+async function loadDoctors(){
+
+
+try{
+
+
+const response =
+await fetch(DOCTOR_API);
+
+
+
+const doctors =
+await response.json();
+
+
+
+const select =
+document.getElementById(
+"doctorSelect"
+);
+
+
+
+if(!select)return;
+
+
+
+select.innerHTML =
+`
+<option value="">
+Select Doctor
+</option>
+`;
+
+
+
+
+doctors.forEach(d=>{
+
+
+select.innerHTML +=
+
+`
+<option value="${d.id}">
+${d.name}
+</option>
+`;
+
+
+});
+
+
+
+}
+
+catch(error){
+
+console.error(error);
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+// ==========================================
+// LOAD STAFF
+// ==========================================
+
+
+async function loadStaff(){
+
+
+try{
+
+
+const response =
+await fetch(STAFF_API);
+
+
+
+const staff =
+await response.json();
+
+
+
+const select =
+document.getElementById(
+"staffSelect"
+);
+
+
+
+if(!select)return;
+
+
+
+select.innerHTML =
+
+`
+<option value="">
+Select Staff
+</option>
+`;
+
+
+
+
+staff.forEach(s=>{
+
+
+select.innerHTML +=
+
+`
+<option value="${s.id}">
+${s.fullName || s.name}
+</option>
+`;
+
+
+
+});
+
+
+
+}
+
+catch(error){
+
+console.error(error);
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ==========================================
+// SEARCH
+// ==========================================
+
+
+async function searchPatient(){
+
+
+
+const keyword =
+document.getElementById(
+"searchPatient"
+)
+.value
+.toLowerCase();
+
+
+
+const response =
+await fetch(API);
+
+
+
+const patients =
+await response.json();
+
+
+
+
+const filtered =
+patients.filter(p=>
+
+
+(p.name||"")
+.toLowerCase()
+.includes(keyword)
+
+
+||
+
+(p.disease||"")
+.toLowerCase()
+.includes(keyword)
+
+
+||
+
+(p.phone||"")
+.includes(keyword)
+
+
+);
+
+
+
+displayPatients(filtered);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ==========================================
+// OPEN MODAL
+// ==========================================
+
+
+function openPatientModal(){
+
+
+
+document.getElementById(
+"modalTitle"
+).innerHTML="Add Patient";
+
+
+
+document.getElementById(
+"patientId"
+).value="";
+
+
+
+document.getElementById(
+"patientModal"
+).style.display="flex";
+
+
+
+}
+
+
+
+
+
+
+
+
+
+function closePatientModal(){
+
+
+
+document.getElementById(
+"patientModal"
+).style.display="none";
+
+
+}
+
+
+
+
+
+
+
+
+
+// ==========================================
+// SAVE PATIENT
+// ==========================================
+
+
+async function savePatient(){
+
+
+
+const id =
+document.getElementById(
+"patientId"
+).value;
+
+
+
+const patient={
+
+
+name:
+document.getElementById(
+"patientName"
+).value,
+
+
+age:
+Number(
+document.getElementById(
+"patientAge"
+).value
+),
+
+
+disease:
+document.getElementById(
+"patientDisease"
+).value,
+
+
+phone:
+document.getElementById(
+"patientPhone"
+).value,
+
+
+doctor:{
+id:
+document.getElementById(
+"doctorSelect"
+).value
+},
+
+
+staff:{
+id:
+document.getElementById(
+"staffSelect"
+).value
+}
+
 
 };
 
-// ===============================
-// Load Patients
-// ===============================
 
-async function loadPatients() {
 
-    try {
 
-        const response = await fetch(API);
 
-        if (!response.ok) {
 
-            throw new Error("Unable to load patients.");
+const url =
+id
+?
+API+"/"+id
+:
+API;
 
-        }
 
-        const patients = await response.json();
 
-        displayPatients(patients);
+const method =
+id
+?
+"PUT"
+:
+"POST";
 
-        updateCards(patients);
 
-    }
 
-    catch (error) {
 
-        console.error(error);
+try{
 
-        alert(error.message);
 
-    }
+await fetch(url,{
 
-}
+method,
 
-// ===============================
-// Display Patients
-// ===============================
+headers:{
 
-function displayPatients(patients) {
+"Content-Type":
+"application/json"
 
-    let rows = "";
+},
 
-    patients.forEach(p => {
+body:
+JSON.stringify(patient)
 
-        rows += `
 
-        <tr>
+});
 
-            <td>${p.id}</td>
 
-            <td>${p.name}</td>
 
-            <td>${p.age}</td>
+closePatientModal();
 
-            <td>${p.disease}</td>
 
-            <td>${p.phone}</td>
+loadPatients();
 
-            <td>${p.doctor ? p.doctor.name : "-"}</td>
 
-            <td>${p.staff ? p.staff.name : "-"}</td>
-
-            <td>
-
-                <button class="editBtn"
-                    onclick="editPatient(${p.id})">
-
-                    <i class="fa fa-edit"></i>
-
-                </button>
-
-                <button class="deleteBtn"
-                    onclick="deletePatient(${p.id})">
-
-                    <i class="fa fa-trash"></i>
-
-                </button>
-
-            </td>
-
-        </tr>
-
-        `;
-
-    });
-
-    document.getElementById("patientTable").innerHTML = rows;
 
 }
 
-// ===============================
-// Statistics
-// ===============================
+catch(error){
 
-function updateCards(patients) {
-
-    document.getElementById("patientCount").innerHTML =
-        patients.length;
-
-    let doctorAssigned = 0;
-    let staffAssigned = 0;
-    let disease = new Set();
-
-    patients.forEach(p => {
-
-        if (p.doctor) doctorAssigned++;
-
-        if (p.staff) staffAssigned++;
-
-        if (p.disease) disease.add(p.disease);
-
-    });
-
-    document.getElementById("doctorAssigned").innerHTML =
-        doctorAssigned;
-
-    document.getElementById("staffAssigned").innerHTML =
-        staffAssigned;
-
-    document.getElementById("diseaseCount").innerHTML =
-        disease.size;
+console.error(error);
 
 }
 
-// ===============================
-// Load Doctors
-// ===============================
 
-async function loadDoctors() {
-
-    try {
-
-        const response = await fetch(DOCTOR_API);
-
-        if (!response.ok) {
-
-            throw new Error("Unable to load doctors.");
-
-        }
-
-        const doctors = await response.json();
-
-        const select =
-            document.getElementById("doctorSelect");
-
-        select.innerHTML =
-            '<option value="">Select Doctor</option>';
-
-        doctors.forEach(d => {
-
-            select.innerHTML +=
-                `<option value="${d.id}">${d.name}</option>`;
-
-        });
-
-    }
-
-    catch (error) {
-
-        console.error(error);
-
-    }
 
 }
 
-// ===============================
-// Load Staff
-// ===============================
 
-async function loadStaff() {
 
-    try {
 
-        const response = await fetch(STAFF_API);
 
-        if (!response.ok) {
 
-            throw new Error("Unable to load staff.");
 
-        }
 
-        const staff = await response.json();
 
-        const select =
-            document.getElementById("staffSelect");
+// ==========================================
+// EDIT PATIENT
+// ==========================================
 
-        select.innerHTML =
-            '<option value="">Select Staff</option>';
 
-        staff.forEach(s => {
+async function editPatient(id){
 
-            select.innerHTML +=
-                `<option value="${s.id}">${s.name}</option>`;
 
-        });
+const response =
+await fetch(
+API+"/"+id
+);
 
-    }
 
-    catch (error) {
 
-        console.error(error);
+const p =
+await response.json();
 
-    }
 
-}
 
-// ===============================
-// Search
-// ===============================
+document.getElementById(
+"patientId"
+).value=p.id;
 
-async function searchPatient() {
 
-    const keyword =
-        document.getElementById("searchPatient")
-        .value
-        .toLowerCase();
+document.getElementById(
+"patientName"
+).value=p.name;
 
-    const response = await fetch(API);
 
-    const patients = await response.json();
+document.getElementById(
+"patientAge"
+).value=p.age;
 
-    const filtered = patients.filter(p =>
 
-        (p.name || "")
-            .toLowerCase()
-            .includes(keyword)
+document.getElementById(
+"patientDisease"
+).value=p.disease;
 
-        ||
 
-        (p.disease || "")
-            .toLowerCase()
-            .includes(keyword)
+document.getElementById(
+"patientPhone"
+).value=p.phone;
 
-        ||
 
-        (p.phone || "")
-            .toLowerCase()
-            .includes(keyword)
 
-    );
+document.getElementById(
+"doctorSelect"
+).value=p.doctor?.id || "";
 
-    displayPatients(filtered);
 
-}
 
-// ===============================
-// Open Modal
-// ===============================
+document.getElementById(
+"staffSelect"
+).value=p.staff?.id || "";
 
-function openPatientModal() {
 
-    document.getElementById("modalTitle").innerHTML =
-        "Add Patient";
 
-    document.getElementById("patientId").value = "";
-    document.getElementById("patientName").value = "";
-    document.getElementById("patientAge").value = "";
-    document.getElementById("patientDisease").value = "";
-    document.getElementById("patientPhone").value = "";
-    document.getElementById("doctorSelect").value = "";
-    document.getElementById("staffSelect").value = "";
+document.getElementById(
+"modalTitle"
+).innerHTML="Edit Patient";
 
-    document.getElementById("patientModal").style.display =
-        "block";
+
+
+document.getElementById(
+"patientModal"
+).style.display="flex";
+
+
 
 }
 
-function closePatientModal() {
 
-    document.getElementById("patientModal").style.display =
-        "none";
+
+
+
+
+
+
+
+// ==========================================
+// DELETE
+// ==========================================
+
+
+function deletePatient(id){
+
+
+
+deletePatientId=id;
+
+
+
+document.getElementById(
+"deleteModal"
+).style.display="flex";
+
+
+
+}
+
+
+
+
+
+function closeDeleteModal(){
+
+
+document.getElementById(
+"deleteModal"
+).style.display="none";
+
 
 }
 
-// ===============================
-// Save Patient
-// ===============================
 
-async function savePatient() {
 
-    const id =
-        document.getElementById("patientId").value;
 
-    const patient = {
 
-        name:
-            document.getElementById("patientName").value.trim(),
 
-        age:
-            parseInt(document.getElementById("patientAge").value),
+async function confirmDelete(){
 
-        disease:
-            document.getElementById("patientDisease").value.trim(),
 
-        phone:
-            document.getElementById("patientPhone").value.trim(),
 
-        doctor: {
+await fetch(
 
-            id:
-                document.getElementById("doctorSelect").value
+API+"/"+deletePatientId,
 
-        },
+{
 
-        staff: {
-
-            id:
-                document.getElementById("staffSelect").value
-
-        }
-
-    };
-
-    if (
-
-        !patient.name ||
-
-        !patient.age ||
-
-        !patient.disease ||
-
-        !patient.phone ||
-
-        !patient.doctor.id ||
-
-        !patient.staff.id
-
-    ) {
-
-        alert("Please fill all fields.");
-
-        return;
-
-    }
-
-    const url =
-        id ? API + "/" + id : API;
-
-    const method =
-        id ? "PUT" : "POST";
-
-    try {
-
-        const response = await fetch(url, {
-
-            method: method,
-
-            headers: {
-
-                "Content-Type": "application/json"
-
-            },
-
-            body: JSON.stringify(patient)
-
-        });
-
-        if (!response.ok) {
-
-            throw new Error("Unable to save patient.");
-
-        }
-
-        closePatientModal();
-
-        loadPatients();
-
-    }
-
-    catch (error) {
-
-        console.error(error);
-
-        alert(error.message);
-
-    }
+method:"DELETE"
 
 }
-// ===============================
-// Edit Patient
-// ===============================
 
-async function editPatient(id) {
+);
 
-    try {
 
-        const response = await fetch(API + "/" + id);
 
-        if (!response.ok) {
+deletePatientId=null;
 
-            throw new Error("Unable to load patient.");
 
-        }
+closeDeleteModal();
 
-        const p = await response.json();
 
-        document.getElementById("modalTitle").innerHTML =
-            "Edit Patient";
+loadPatients();
 
-        document.getElementById("patientId").value =
-            p.id;
 
-        document.getElementById("patientName").value =
-            p.name || "";
-
-        document.getElementById("patientAge").value =
-            p.age || "";
-
-        document.getElementById("patientDisease").value =
-            p.disease || "";
-
-        document.getElementById("patientPhone").value =
-            p.phone || "";
-
-        document.getElementById("doctorSelect").value =
-            p.doctor ? p.doctor.id : "";
-
-        document.getElementById("staffSelect").value =
-            p.staff ? p.staff.id : "";
-
-        document.getElementById("patientModal").style.display =
-            "block";
-
-    }
-
-    catch (error) {
-
-        console.error(error);
-
-        alert(error.message);
-
-    }
 
 }
 
-// ===============================
-// Delete Patient
-// ===============================
 
-function deletePatient(id) {
 
-    deletePatientId = id;
 
-    document.getElementById("deleteModal").style.display =
-        "block";
 
-}
 
-// ===============================
-// Close Delete Modal
-// ===============================
 
-function closeDeleteModal() {
 
-    document.getElementById("deleteModal").style.display =
-        "none";
 
-}
+// GLOBAL FUNCTIONS
 
-// ===============================
-// Confirm Delete
-// ===============================
+window.openPatientModal=openPatientModal;
 
-async function confirmDelete() {
+window.closePatientModal=closePatientModal;
 
-    try {
+window.savePatient=savePatient;
 
-        const response = await fetch(
+window.editPatient=editPatient;
 
-            API + "/" + deletePatientId,
+window.deletePatient=deletePatient;
 
-            {
+window.confirmDelete=confirmDelete;
 
-                method: "DELETE"
+window.closeDeleteModal=closeDeleteModal;
 
-            }
-
-        );
-
-        if (!response.ok) {
-
-            throw new Error("Unable to delete patient.");
-
-        }
-
-        closeDeleteModal();
-
-        loadPatients();
-
-        alert("Patient deleted successfully.");
-
-    }
-
-    catch (error) {
-
-        console.error(error);
-
-        alert(error.message);
-
-    }
-
-}
+window.searchPatient=searchPatient;
