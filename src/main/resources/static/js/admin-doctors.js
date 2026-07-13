@@ -375,6 +375,7 @@ function editDoctor(id) {
     })
 
     .then(doctor => {
+		console.log("Doctor Response:", doctor);
 
         document.getElementById("modalTitle").innerHTML = "Edit Doctor";
 
