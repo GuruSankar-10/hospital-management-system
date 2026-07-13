@@ -1,6 +1,5 @@
 package hospitalmanagement.config;
 
-
 import hospitalmanagement.security.CustomUserDetailsService;
 import hospitalmanagement.security.JwtAuthenticationFilter;
 
@@ -9,9 +8,8 @@ import org.springframework.context.annotation.Configuration;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,17 +17,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
-
 @Configuration
 public class SecurityConfig {
 
-
     private final JwtAuthenticationFilter jwtFilter;
-
     private final CustomUserDetailsService userDetailsService;
-
-
 
     public SecurityConfig(
             JwtAuthenticationFilter jwtFilter,
@@ -37,20 +29,12 @@ public class SecurityConfig {
 
         this.jwtFilter = jwtFilter;
         this.userDetailsService = userDetailsService;
-
     }
-
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-
         return new BCryptPasswordEncoder();
-
     }
-
-
-
 
     @Bean
     public AuthenticationManager authenticationManager(
@@ -58,42 +42,26 @@ public class SecurityConfig {
             throws Exception {
 
         return configuration.getAuthenticationManager();
-
     }
-
-
-
-
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http)
             throws Exception {
 
-
         http
+            .csrf(csrf -> csrf.disable())
 
-        .csrf(csrf -> csrf.disable())
+            .cors(cors -> {})
 
+            .sessionManagement(session ->
+                    session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-        .cors(cors -> {})
+            .userDetailsService(userDetailsService)
 
+            .authorizeHttpRequests(auth -> auth
 
-        .sessionManagement(session ->
-                session.sessionCreationPolicy(
-                        SessionCreationPolicy.STATELESS
-                )
-        )
-
-
-        .userDetailsService(userDetailsService)
-
-
-        .authorizeHttpRequests(auth -> auth
-
-
-                // Public Pages
+                // HTML
                 .requestMatchers(
-
                         "/",
                         "/index.html",
                         "/login.html",
@@ -111,69 +79,32 @@ public class SecurityConfig {
                         "/staff-patients.html",
                         "/staff-appointments.html",
                         "/staff-profile.html"
-
                 ).permitAll()
 
-
-
-                // Static files
+                // Static
                 .requestMatchers(
-
                         "/css/**",
                         "/js/**",
                         "/images/**",
                         "/favicon.ico"
-
                 ).permitAll()
 
-
-
-                // Authentication
-                .requestMatchers("/auth/**")
-                .permitAll()
-
-
-
                 // APIs
-                .requestMatchers("/staff/**")
-                .permitAll()
+                .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/admin/**").permitAll()
+                .requestMatchers("/staff/**").permitAll()
+                .requestMatchers("/doctors/**").permitAll()
+                .requestMatchers("/patients/**").permitAll()
+                .requestMatchers("/appointments/**").permitAll()
+                .requestMatchers("/billing/**").permitAll()
+                .requestMatchers("/dashboard/**").permitAll()
 
+                .anyRequest().permitAll()
+            )
 
-                .requestMatchers("/doctors/**")
-                .permitAll()
-
-
-                .requestMatchers("/patients/**")
-                .permitAll()
-
-
-                .requestMatchers("/appointments/**")
-                .permitAll()
-
-
-                .requestMatchers("/billing/**")
-                .permitAll()
-
-
-                .requestMatchers("/dashboard/**")
-                .permitAll()
-
-
-
-                .anyRequest()
-                .permitAll()
-
-
-        )
-
-
-        .addFilterBefore(
-                jwtFilter,
-                UsernamePasswordAuthenticationFilter.class
-        );
-
+            .addFilterBefore(jwtFilter,
+                    UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
-
     }
 }

@@ -373,7 +373,7 @@ function saveDoctor() {
 
     }
 
-}
+
 
 // ==========================
 // Delete Doctor
