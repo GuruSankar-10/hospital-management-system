@@ -1,7 +1,12 @@
 console.log("Records JS Loaded");
 
 
-const RECORD_API = "http://localhost:8080/records";
+const BASE_URL =
+window.location.hostname === "localhost"
+? "http://localhost:8080"
+: "https://hospital-management-system-6pok.onrender.com";
+
+const RECORD_API = BASE_URL + "/records";
 
 
 let records = [];

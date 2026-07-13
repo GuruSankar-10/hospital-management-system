@@ -1,4 +1,7 @@
-const BASE_URL = "http://localhost:8080";
+const BASE_URL =
+window.location.hostname === "localhost"
+? "http://localhost:8080"
+: "https://hospital-management-system-6pok.onrender.com";
 
 // ===============================
 // Dashboard Load

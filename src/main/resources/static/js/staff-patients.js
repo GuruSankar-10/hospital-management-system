@@ -1,7 +1,12 @@
 console.log("Staff Patient JS Loaded");
 
 
-const PATIENT_API = "http://localhost:8080/patients";
+const BASE_URL =
+window.location.hostname === "localhost"
+? "http://localhost:8080"
+: "https://hospital-management-system-6pok.onrender.com";
+
+const PATIENT_API = BASE_URL + "/patients";
 
 let patientsData = [];
 

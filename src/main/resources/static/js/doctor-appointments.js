@@ -1,10 +1,16 @@
+const BASE_URL =
+window.location.hostname === "localhost"
+? "http://localhost:8080"
+: "https://hospital-management-system-6pok.onrender.com";
+
 const doctorId = localStorage.getItem("doctorId");
 
 const API =
-"http://localhost:8080/appointments/doctor/" + doctorId;
+BASE_URL + "/appointments/doctor/" + doctorId;
 
 const STATUS_API =
-"http://localhost:8080/appointments";
+BASE_URL + "/appointments";
+
 
 let appointments = [];
 

@@ -1,10 +1,19 @@
+// ==========================================
+// Doctor Dashboard
+// ==========================================
+
+const BASE_URL =
+window.location.hostname === "localhost"
+? "http://localhost:8080"
+: "https://hospital-management-system-6pok.onrender.com";
+
 const doctorId = localStorage.getItem("doctorId");
 
 const PATIENT_API =
-"http://localhost:8080/patients/doctor/" + doctorId;
+BASE_URL + "/patients/doctor/" + doctorId;
 
 const APPOINTMENT_API =
-"http://localhost:8080/appointments/doctor/" + doctorId;
+BASE_URL + "/appointments/doctor/" + doctorId;
 
 // ===============================
 // Page Load

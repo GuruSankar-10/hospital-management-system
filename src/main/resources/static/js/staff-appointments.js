@@ -1,7 +1,12 @@
 console.log("Staff Appointment JS Loaded");
 
 
-const APPOINTMENT_API = "http://localhost:8080/appointments";
+const BASE_URL =
+window.location.hostname === "localhost"
+? "http://localhost:8080"
+: "https://hospital-management-system-6pok.onrender.com";
+
+const APPOINTMENT_API = BASE_URL + "/appointments";
 
 
 let appointmentData = [];

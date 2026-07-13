@@ -1,7 +1,12 @@
 console.log("Billing JS Loaded");
 
 
-const BILLING_API = "http://localhost:8080/billing";
+const BASE_URL =
+window.location.hostname === "localhost"
+? "http://localhost:8080"
+: "https://hospital-management-system-6pok.onrender.com";
+
+const BILLING_API = BASE_URL + "/billing";
 
 
 let bills = [];

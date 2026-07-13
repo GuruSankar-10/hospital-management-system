@@ -1,93 +1,81 @@
 console.log("Admin Dashboard JS Loaded");
 
+// ==========================
+// Base URL
+// ==========================
+
+const BASE_URL =
+window.location.hostname === "localhost"
+? "http://localhost:8080"
+: "https://hospital-management-system-6pok.onrender.com";
 
 const DASHBOARD_API =
-"http://localhost:8080/dashboard/stats";
-
+BASE_URL + "/dashboard/stats";
 
 // ==========================
 // Load Dashboard Statistics
 // ==========================
 
+function loadDashboardStats() {
 
-function loadDashboardStats(){
+    fetch(DASHBOARD_API)
 
+    .then(response => {
 
-fetch(DASHBOARD_API)
+        if (!response.ok) {
+            throw new Error("Unable to load dashboard");
+        }
 
+        return response.json();
 
-.then(response=>response.json())
+    })
 
+    .then(data => {
 
-.then(data=>{
+        console.log(data);
 
+        // Cards
+        document.getElementById("doctorCount").innerHTML =
+        data.doctors;
 
-console.log(data);
+        document.getElementById("staffCount").innerHTML =
+        data.staff;
 
+        document.getElementById("patientCount").innerHTML =
+        data.patients;
 
-// Cards
+        document.getElementById("appointmentCount").innerHTML =
+        data.appointments;
 
-document.getElementById("doctorCount").innerHTML =
-data.doctors;
+        // Summary
+        document.getElementById("summaryDoctorCount").innerHTML =
+        data.doctors;
 
+        document.getElementById("summaryStaffCount").innerHTML =
+        data.staff;
 
-document.getElementById("staffCount").innerHTML =
-data.staff;
+        document.getElementById("summaryPatientCount").innerHTML =
+        data.patients;
 
+        document.getElementById("summaryAppointmentCount").innerHTML =
+        data.appointments;
 
-document.getElementById("patientCount").innerHTML =
-data.patients;
+    })
 
+    .catch(error => {
 
-document.getElementById("appointmentCount").innerHTML =
-data.appointments;
+        console.error(error);
 
-
-
-// Summary
-
-
-document.getElementById("summaryDoctorCount").innerHTML =
-data.doctors;
-
-
-document.getElementById("summaryStaffCount").innerHTML =
-data.staff;
-
-
-document.getElementById("summaryPatientCount").innerHTML =
-data.patients;
-
-
-document.getElementById("summaryAppointmentCount").innerHTML =
-data.appointments;
-
-
-
-})
-
-
-.catch(error=>{
-
-console.log(error);
-
-});
-
+    });
 
 }
-
-
-
 
 // ==========================
 // Load On Page Open
 // ==========================
 
+window.onload = function () {
 
-window.onload=function(){
-
-
-loadDashboardStats();
-
+    loadDashboardStats();
 
 };
