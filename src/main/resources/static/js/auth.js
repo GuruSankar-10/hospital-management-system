@@ -2,9 +2,10 @@
                 HMS PRO AUTHENTICATION
 =========================================================*/
 
-const AUTH_API = window.AUTH_API;
 
-if (!AUTH_API) {
+// AUTH_API comes from config.js
+
+if (typeof AUTH_API === "undefined") {
 
     console.error("AUTH_API is not defined.");
 
@@ -61,25 +62,26 @@ async function login() {
 
     try {
 
+
         const response = await fetch(
 
             AUTH_API + "/login",
 
             {
 
-                method: "POST",
+                method:"POST",
 
-                headers: {
+                headers:{
 
-                    "Content-Type": "application/json"
+                    "Content-Type":"application/json"
 
                 },
 
-                body: JSON.stringify({
+                body:JSON.stringify({
 
-                    email: email,
+                    email:email,
 
-                    password: password
+                    password:password
 
                 })
 
@@ -88,58 +90,64 @@ async function login() {
         );
 
 
-        if (!response.ok) {
 
-            hideLoading(loginButton);
+        if(!response.ok){
 
-            let message = "Invalid Email or Password";
 
-            try {
+            let message =
+            "Invalid Email or Password";
+
+
+            try{
 
                 const error =
-                    await response.json();
+                await response.json();
 
-                if (error.message) {
 
-                    message = error.message;
+                if(error.message){
+
+                    message =
+                    error.message;
 
                 }
 
             }
 
-            catch (e) {
+            catch(e){
 
                 console.error(e);
 
             }
+
 
             throw new Error(message);
 
         }
 
 
+
         const data =
-            await response.json();
+        await response.json();
 
 
-        /*=====================================
-                STORE USER
-        =====================================*/
 
         localStorage.setItem(
             "token",
             data.token
         );
 
+
         localStorage.setItem(
             "role",
             data.role
         );
 
+
         localStorage.setItem(
             "name",
             data.fullName
         );
+
 
         localStorage.setItem(
             "email",
@@ -147,7 +155,7 @@ async function login() {
         );
 
 
-        if (data.doctorId != null) {
+        if(data.doctorId != null){
 
             localStorage.setItem(
                 "doctorId",
@@ -157,39 +165,45 @@ async function login() {
         }
 
 
+
         rememberUser();
+
 
         hideLoading(loginButton);
 
-        alert("Welcome " + data.fullName);
+
+        alert(
+            "Welcome " + data.fullName
+        );
 
 
-        /*=====================================
-                REDIRECT
-        =====================================*/
 
-        switch (data.role) {
+        switch(data.role){
+
 
             case "ADMIN":
 
                 window.location.href =
-                    "admin-dashboard.html";
+                "admin-dashboard.html";
 
                 break;
+
 
             case "DOCTOR":
 
                 window.location.href =
-                    "doctor-dashboard.html";
+                "doctor-dashboard.html";
 
                 break;
+
 
             case "STAFF":
 
                 window.location.href =
-                    "staff-dashboard.html";
+                "staff-dashboard.html";
 
                 break;
+
 
             default:
 
@@ -197,85 +211,138 @@ async function login() {
 
         }
 
+
+
     }
 
-    catch (error) {
+
+    catch(error){
+
 
         hideLoading(loginButton);
 
+
         console.error(error);
+
 
         alert(error.message);
 
+
     }
 
+
 }
+
+
+
 /*=========================================================
                 REMEMBER USER
 =========================================================*/
 
-function rememberUser() {
 
-    const emailInput = document.getElementById("email");
+function rememberUser(){
 
-    if (!emailInput) return;
 
-    const email = emailInput.value.trim();
+    const emailInput =
+    document.getElementById("email");
 
-    if (email !== "") {
 
-        localStorage.setItem("rememberEmail", email);
+    if(!emailInput)
+    return;
+
+
+    const email =
+    emailInput.value.trim();
+
+
+    if(email !== ""){
+
+
+        localStorage.setItem(
+            "rememberEmail",
+            email
+        );
+
 
     }
 
+
 }
+
+
 
 
 /*=========================================================
                 BUTTON LOADING
 =========================================================*/
 
-function showLoading(button) {
 
-    if (!button) return;
+function showLoading(button){
 
-    button.disabled = true;
 
-    button.dataset.originalText = button.innerHTML;
+    if(!button)
+    return;
+
+
+    button.disabled=true;
+
+
+    button.dataset.originalText =
+    button.innerHTML;
+
 
     button.innerHTML =
-        '<i class="fas fa-spinner fa-spin"></i> Signing In...';
+    '<i class="fas fa-spinner fa-spin"></i> Signing In...';
+
 
 }
 
-function hideLoading(button) {
 
-    if (!button) return;
 
-    button.disabled = false;
+function hideLoading(button){
+
+
+    if(!button)
+    return;
+
+
+    button.disabled=false;
+
 
     button.innerHTML =
-        button.dataset.originalText || "Login Securely";
+    button.dataset.originalText ||
+    "Login Securely";
+
 
 }
+
 
 
 /*=========================================================
                 FORGOT PASSWORD
 =========================================================*/
 
-async function resetPassword() {
+
+async function resetPassword(){
+
 
     const email =
-        document.getElementById("resetEmail").value.trim();
+    document.getElementById("resetEmail")
+    .value.trim();
+
 
     const newPassword =
-        document.getElementById("newPassword").value.trim();
+    document.getElementById("newPassword")
+    .value.trim();
+
 
     const confirmPassword =
-        document.getElementById("confirmPassword").value.trim();
+    document.getElementById("confirmPassword")
+    .value.trim();
 
-    if (!email || !newPassword || !confirmPassword) {
+
+
+    if(!email || !newPassword || !confirmPassword){
 
         alert("Please fill all fields.");
 
@@ -283,7 +350,9 @@ async function resetPassword() {
 
     }
 
-    if (newPassword !== confirmPassword) {
+
+
+    if(newPassword !== confirmPassword){
 
         alert("Passwords do not match.");
 
@@ -291,23 +360,28 @@ async function resetPassword() {
 
     }
 
-    try {
 
-        const response = await fetch(
+
+    try{
+
+
+        const response =
+        await fetch(
 
             AUTH_API + "/forgot-password",
 
             {
 
-                method: "POST",
+                method:"POST",
 
-                headers: {
+                headers:{
 
-                    "Content-Type": "application/json"
+                    "Content-Type":"application/json"
 
                 },
 
-                body: JSON.stringify({
+
+                body:JSON.stringify({
 
                     email,
 
@@ -319,257 +393,265 @@ async function resetPassword() {
 
         );
 
-        if (!response.ok) {
 
-            throw new Error("Unable to reset password.");
+
+        if(!response.ok){
+
+            throw new Error(
+            "Unable to reset password.");
 
         }
 
-        alert("✅ Password Updated Successfully");
+
+
+        alert(
+        "✅ Password Updated Successfully");
 
         closeForgotPassword();
 
+
     }
 
-    catch (error) {
+
+    catch(error){
+
 
         console.error(error);
 
         alert(error.message);
 
+
     }
 
+
 }
+
 
 
 /*=========================================================
-                FORGOT PASSWORD MODAL
+                MODAL
 =========================================================*/
 
-function openForgotPassword() {
+
+function openForgotPassword(){
 
     const modal =
-        document.getElementById("forgotModal");
+    document.getElementById("forgotModal");
 
-    if (modal) {
 
-        modal.style.display = "flex";
+    if(modal){
+
+        modal.style.display="flex";
 
     }
 
 }
 
-function closeForgotPassword() {
+
+
+function closeForgotPassword(){
+
 
     const modal =
-        document.getElementById("forgotModal");
+    document.getElementById("forgotModal");
 
-    if (modal) {
 
-        modal.style.display = "none";
+    if(modal){
+
+        modal.style.display="none";
 
     }
 
-    const fields = [
-
-        "resetEmail",
-
-        "newPassword",
-
-        "confirmPassword"
-
-    ];
-
-    fields.forEach(id => {
-
-        const input = document.getElementById(id);
-
-        if (input) {
-
-            input.value = "";
-
-        }
-
-    });
 
 }
+
+
 
 
 /*=========================================================
-                TOGGLE PASSWORD
+                PASSWORD TOGGLE
 =========================================================*/
 
-function togglePassword(inputId, iconId) {
+
+function togglePassword(inputId,iconId){
+
 
     const input =
-        document.getElementById(inputId);
+    document.getElementById(inputId);
+
 
     const icon =
-        document.getElementById(iconId);
+    document.getElementById(iconId);
 
-    if (!input || !icon) return;
 
-    if (input.type === "password") {
+    if(!input || !icon)
+    return;
 
-        input.type = "text";
 
-        icon.className = "fas fa-eye-slash";
+
+    if(input.type==="password"){
+
+
+        input.type="text";
+
+        icon.className =
+        "fas fa-eye-slash";
+
 
     }
 
-    else {
+    else{
 
-        input.type = "password";
 
-        icon.className = "fas fa-eye";
+        input.type="password";
+
+        icon.className =
+        "fas fa-eye";
+
 
     }
+
 
 }
+
+
+
 /*=========================================================
                 LOGOUT
 =========================================================*/
 
-function logout() {
 
-    if (!confirm("Are you sure you want to logout?")) {
+function logout(){
 
-        return;
 
-    }
+    localStorage.clear();
 
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    localStorage.removeItem("doctorId");
-    localStorage.removeItem("name");
-    localStorage.removeItem("email");
 
-    window.location.href = "login.html";
+    window.location.href =
+    "login.html";
+
 
 }
+
 
 
 /*=========================================================
-                CHECK LOGIN
+                LOGIN CHECK
 =========================================================*/
 
-function checkLogin() {
 
-    const token = localStorage.getItem("token");
+function checkLogin(){
 
-    return token !== null && token !== "";
+
+    const token =
+    localStorage.getItem("token");
+
+
+    return token !== null &&
+    token !== "";
+
 
 }
+
 
 
 /*=========================================================
                 CURRENT USER
 =========================================================*/
 
-function getCurrentUser() {
+
+function getCurrentUser(){
+
 
     return {
 
-        token: localStorage.getItem("token"),
+        token:
+        localStorage.getItem("token"),
 
-        role: localStorage.getItem("role"),
 
-        name: localStorage.getItem("name"),
+        role:
+        localStorage.getItem("role"),
 
-        email: localStorage.getItem("email"),
 
-        doctorId: localStorage.getItem("doctorId")
+        name:
+        localStorage.getItem("name"),
+
+
+        email:
+        localStorage.getItem("email"),
+
+
+        doctorId:
+        localStorage.getItem("doctorId")
 
     };
 
+
 }
+
 
 
 /*=========================================================
                 DOM READY
 =========================================================*/
 
-document.addEventListener("DOMContentLoaded", () => {
 
-    const emailInput = document.getElementById("email");
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
 
-    const savedEmail = localStorage.getItem("rememberEmail");
 
-    if (emailInput && savedEmail) {
+const emailInput =
+document.getElementById("email");
 
-        emailInput.value = savedEmail;
 
-    }
+const savedEmail =
+localStorage.getItem(
+"rememberEmail"
+);
+
+
+
+if(emailInput && savedEmail){
+
+    emailInput.value =
+    savedEmail;
+
+}
+
 
 });
 
 
-/*=========================================================
-                ENTER KEY LOGIN
-=========================================================*/
-
-document.addEventListener("keydown", (event) => {
-
-    if (event.key !== "Enter") return;
-
-    const email =
-        document.getElementById("email");
-
-    const password =
-        document.getElementById("password");
-
-    if (email && password) {
-
-        login();
-
-    }
-
-});
-
-
-/*=========================================================
-                CLOSE MODAL
-=========================================================*/
-
-window.addEventListener("click", (event) => {
-
-    const modal =
-        document.getElementById("forgotModal");
-
-    if (modal && event.target === modal) {
-
-        closeForgotPassword();
-
-    }
-
-});
-
-
-/*=========================================================
-                ESC KEY
-=========================================================*/
-
-document.addEventListener("keydown", (event) => {
-
-    if (event.key === "Escape") {
-
-        closeForgotPassword();
-
-    }
-
-});
 
 
 /*=========================================================
                 DEBUG
 =========================================================*/
 
-console.log("====================================");
 
-console.log("🏥 HMS PRO Authentication Loaded");
+console.log(
+"===================================="
+);
 
-console.log("AUTH API :", AUTH_API);
 
-console.log("Logged In :", checkLogin());
+console.log(
+"🏥 HMS PRO Authentication Loaded"
+);
 
-console.log("====================================");
+
+console.log(
+"AUTH API :",
+AUTH_API
+);
+
+
+console.log(
+"Logged In :",
+checkLogin()
+);
+
+
+console.log(
+"===================================="
+);
