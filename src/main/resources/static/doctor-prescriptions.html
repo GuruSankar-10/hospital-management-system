@@ -8,318 +8,145 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>Doctor Prescriptions</title>
-
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
+<title>HMS PRO | Doctor Prescriptions</title>
 
 <link rel="stylesheet" href="css/theme.css">
-
+<link rel="stylesheet" href="css/common.css">
 <link rel="stylesheet" href="css/doctor.css">
 
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 </head>
 
-
 <body>
-
-
 
 <!-- ================= SIDEBAR ================= -->
 
-
 <div class="sidebar">
-
-
 
 <div class="logo">
 
+<h2>🩺 HMS PRO</h2>
 
-<h2>
-
-🩺 HMS PRO
-
-</h2>
-
-
-<p>
-
-Doctor Portal
-
-</p>
-
+<p>Doctor Portal</p>
 
 </div>
 
-
-
-
-
 <nav>
-
-
 
 <a href="doctor-dashboard.html">
 
-
 <i class="fas fa-house"></i>
 
-
-<span>
-
-Dashboard
-
-</span>
-
+<span>Dashboard</span>
 
 </a>
-
-
-
-
-
-
 
 <a href="doctor-patients.html">
 
-
 <i class="fas fa-bed-pulse"></i>
 
-
-<span>
-
-My Patients
-
-</span>
-
+<span>My Patients</span>
 
 </a>
-
-
-
-
-
-
 
 <a href="doctor-appointments.html">
 
-
 <i class="fas fa-calendar-check"></i>
 
-
-<span>
-
-Appointments
-
-</span>
-
+<span>Appointments</span>
 
 </a>
-
-
-
-
-
-
 
 <a href="doctor-prescriptions.html"
 class="active">
 
-
-
 <i class="fas fa-file-prescription"></i>
 
-
-<span>
-
-Prescriptions
-
-</span>
-
+<span>Prescriptions</span>
 
 </a>
-
-
-
-
-
-
 
 <a href="doctor-medical-records.html">
 
-
 <i class="fas fa-file-medical"></i>
 
-
-<span>
-
-Medical Records
-
-</span>
-
+<span>Medical Records</span>
 
 </a>
-
-
-
-
-
-
 
 <a href="doctor-profile.html">
 
-
 <i class="fas fa-user-doctor"></i>
 
-
-<span>
-
-Profile
-
-</span>
-
+<span>Profile</span>
 
 </a>
 
-
-
-
-
-
-
-<a href="#" onclick="logout()">
-
-
+<a href="#"
+onclick="logout()">
 
 <i class="fas fa-right-from-bracket"></i>
 
-
-<span>
-
-Logout
-
-</span>
-
+<span>Logout</span>
 
 </a>
 
-
-
-
-
 </nav>
 
-
-
 </div>
-
-
-
-
-
-
-
-
 
 <!-- ================= MAIN ================= -->
 
-
-
 <div class="main">
-
-
-
-
-
-
 
 <!-- ================= TOPBAR ================= -->
 
-
 <div class="topbar">
-
-
-
-
 
 <div class="welcome">
 
-
-
 <h1>
 
-
-💊 Prescription Management
-
+Digital Prescriptions 💊
 
 </h1>
 
-
-
 <p>
 
-
-Create and manage patient prescriptions
-
+Create, manage and review patient prescriptions.
 
 </p>
 
-
-
 </div>
-
-
-
-
-
-
-
 
 <div class="top-right">
 
-
-
-
-
 <div class="search-box">
-
-
 
 <i class="fas fa-search"></i>
 
-
-
 <input
-
 type="text"
-
 id="searchPrescription"
-
-placeholder="Search Prescription..."
-
-onkeyup="searchPrescription()"
-
-
->
-
-
+placeholder="Search prescription...">
 
 </div>
 
-
-
-
-
-
-
 <div class="profile">
 
-
 <i class="fas fa-user-doctor"></i>
-
-
 
 <span id="doctorName">
 
@@ -327,1301 +154,386 @@ Doctor
 
 </span>
 
-
+</div>
 
 </div>
 
-
-
-
-
-
 </div>
 
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- ================= PRESCRIPTION BANNER ================= -->
-
-
+<!-- ================= BANNER ================= -->
 
 <section class="dashboard-banner">
 
-
-
-
-
 <div>
-
-
 
 <h2>
 
-
-🩺 Digital Prescription System
-
+💊 Prescription Management
 
 </h2>
 
-
-
-
-
 <p>
 
-
-Prescribe medicines, track patient history and manage treatments easily.
-
+Issue digital prescriptions, manage medicines and print reports.
 
 </p>
-
-
-
-
-
 
 <div class="banner-buttons">
 
-
-
-
-
-<button onclick="openPrescriptionModal()">
-
-
-
-<i class="fas fa-plus"></i>
-
-
-New Prescription
-
-
-
-</button>
-
-
-
-
-
-
-
-
 <button onclick="location.href='doctor-patients.html'">
 
-
-<i class="fas fa-users"></i>
-
-
-View Patients
-
-
-</button>
-
-
-
-
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="banner-icon">
-
-
-<i class="fas fa-file-prescription"></i>
-
-
-</div>
-
-
-
-
-
-
-</section>
-<!-- ================= PRESCRIPTION STATISTICS ================= -->
-
-
-<section class="cards">
-
-
-
-<div class="card">
-
-
-<div>
-
-
-<h2 id="totalPrescription">
-
-0
-
-</h2>
-
-
-<p>
-
-Total Prescriptions
-
-</p>
-
-
-</div>
-
-
-<i class="fas fa-file-prescription"></i>
-
-
-</div>
-
-
-
-
-
-
-<div class="card">
-
-
-<div>
-
-
-<h2 id="todayPrescription">
-
-0
-
-</h2>
-
-
-<p>
-
-Today's Prescription
-
-</p>
-
-
-</div>
-
-
-<i class="fas fa-calendar-day"></i>
-
-
-</div>
-
-
-
-
-
-
-<div class="card">
-
-
-<div>
-
-
-<h2 id="patientTreated">
-
-0
-
-</h2>
-
-
-<p>
-
-Patients Treated
-
-</p>
-
-
-</div>
-
-
-<i class="fas fa-user-injured"></i>
-
-
-</div>
-
-
-
-
-
-
-<div class="card">
-
-
-<div>
-
-
-<h2 id="medicineCount">
-
-0
-
-</h2>
-
-
-<p>
-
-Medicines Prescribed
-
-</p>
-
-
-</div>
-
-
-<i class="fas fa-pills"></i>
-
-
-</div>
-
-
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- ================= CREATE PRESCRIPTION ================= -->
-
-
-<section class="quick-actions">
-
-
-
-
-
-<h2>
-
-
-<i class="fas fa-pen-medical"></i>
-
-
-Create Prescription
-
-
-</h2>
-
-
-
-
-
-
-
-<br>
-
-
-
-
-
-
-
-<div class="form-grid">
-
-
-
-
-
-<div>
-
-
-<label>
-
-Select Patient
-
-</label>
-
-
-
-<select id="patientSelect">
-
-
-<option value="">Select Patient</option>
-
-
-</select>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<div>
-
-
-<label>
-
-Diagnosis
-
-</label>
-
-
-
-<input
-
-type="text"
-
-id="diagnosis"
-
-placeholder="Enter diagnosis"
-
-
->
-
-
-</div>
-
-
-
-
-
-
-
-
-<div>
-
-
-<label>
-
-Follow Up Date
-
-</label>
-
-
-
-<input
-
-type="date"
-
-id="followUpDate"
-
-
->
-
-
-</div>
-
-
-
-
-
-
-
-
-<div>
-
-
-<label>
-
-Doctor Signature
-
-</label>
-
-
-
-<input
-
-type="text"
-
-id="doctorSignature"
-
-placeholder="Doctor name"
-
-
->
-
-
-</div>
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<br>
-
-
-
-
-
-
-
-<h3>
-
-💊 Medicines
-
-</h3>
-
-
-
-
-
-
-
-<div class="form-grid">
-
-
-
-
-
-<div>
-
-
-<label>
-
-Select Medicine
-
-</label>
-
-
-
-<select id="medicineSelect">
-
-
-<option value="">
-
-Select Medicine
-
-</option>
-
-
-</select>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<div>
-
-
-<label>
-
-Dosage
-
-</label>
-
-
-
-<input
-
-type="text"
-
-id="dosage"
-
-placeholder="Example: 1 tablet"
-
-
->
-
-
-</div>
-
-
-
-
-
-
-
-
-<div>
-
-
-<label>
-
-Duration
-
-</label>
-
-
-
-<input
-
-type="text"
-
-id="duration"
-
-placeholder="Example: 5 days"
-
-
->
-
-
-</div>
-
-
-
-
-
-
-
-<div>
-
-
-<label>
-
-Instructions
-
-</label>
-
-
-
-<input
-
-type="text"
-
-id="instructions"
-
-placeholder="After food"
-
-
->
-
-
-</div>
-
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<br>
-
-
-
-
-
-
-
-<button
-
-class="btn"
-
-onclick="addMedicine()">
-
-
-
-<i class="fas fa-plus"></i>
-
-
-Add Medicine
-
-
-
-</button>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- Medicine Preview Table -->
-
-
-
-<div class="recent-card">
-
-
-
-<h3>
-
-
-Selected Medicines
-
-
-</h3>
-
-
-
-
-
-
-<table>
-
-
-
-<thead>
-
-
-
-<tr>
-
-
-<th>
-
-Medicine
-
-</th>
-
-
-<th>
-
-Dosage
-
-</th>
-
-
-<th>
-
-Duration
-
-</th>
-
-
-<th>
-
-Instructions
-
-</th>
-
-
-<th>
-
-Action
-
-</th>
-
-
-</tr>
-
-
-
-</thead>
-
-
-
-
-
-
-
-<tbody id="medicineTable">
-
-
-</tbody>
-
-
-
-
-
-
-</table>
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<br>
-
-
-
-
-
-
-
-<button
-
-class="btn"
-
-onclick="savePrescription()">
-
-
-
-<i class="fas fa-save"></i>
-
-
-Save Prescription
-
-
-
-</button>
-
-
-
-
-
-
-
-
-</section>
-<!-- ================= PRESCRIPTION HISTORY ================= -->
-
-
-<section class="recent-card">
-
-
-
-<div style="
-display:flex;
-justify-content:space-between;
-align-items:center;
-flex-wrap:wrap;
-gap:15px;
-">
-
-
-
-<h2>
-
-
-<i class="fas fa-folder-open"></i>
-
-
-Prescription History
-
-
-</h2>
-
-
-
-
-
-</div>
-
-
-
-
-
-
-<br>
-
-
-
-
-
-
-<table>
-
-
-
-<thead>
-
-
-
-<tr>
-
-
-
-<th>ID</th>
-
-
-<th>Patient</th>
-
-
-<th>Doctor</th>
-
-
-<th>Medicine</th>
-
-
-<th>Notes</th>
-
-
-<th>Actions</th>
-
-
-
-</tr>
-
-
-
-</thead>
-
-
-
-
-
-
-
-<tbody id="prescriptionTable">
-
-
-
-<!-- Loaded from doctor-prescriptions.js -->
-
-
-
-</tbody>
-
-
-
-
-
-
-</table>
-
-
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- ================= PRESCRIPTION VIEW MODAL ================= -->
-
-
-
-<div id="prescriptionModal" class="modal">
-
-
-
-<div class="modal-content">
-
-
-
-
-
-<h2>
-
-
-<i class="fas fa-file-medical"></i>
-
-
-Prescription Details
-
-
-</h2>
-
-
-
-
-
-
-<br>
-
-
-
-
-
-<p>
-
-<b>Patient :</b>
-
-<span id="viewPatient"></span>
-
-
-</p>
-
-
-
-
-
-
-
-<br>
-
-
-
-
-
-<p>
-
-<b>Medicine :</b>
-
-<span id="viewMedicine"></span>
-
-
-</p>
-
-
-
-
-
-
-
-<br>
-
-
-
-
-
-<p>
-
-<b>Notes :</b>
-
-<span id="viewNotes"></span>
-
-
-</p>
-
-
-
-
-
-
-
-<br>
-
-
-
-
-
-<div style="
-display:flex;
-gap:15px;
-justify-content:flex-end;
-">
-
-
-
-
-
-
-<button
-
-class="btn"
-
-onclick="printPrescription()">
-
-
-
-<i class="fas fa-print"></i>
-
-
-Print
-
-
-
-</button>
-
-
-
-
-
-
-
-
-<button
-
-class="deleteBtn"
-
-onclick="closePrescriptionModal()">
-
-
-
-Close
-
-
-
-</button>
-
-
-
-
-
-
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- ================= QUICK ACTIONS ================= -->
-
-
-<section class="quick-actions">
-
-
-
-<h2>
-
-<i class="fas fa-bolt"></i>
-
-
-Quick Actions
-
-
-</h2>
-
-
-
-
-
-
-
-<div class="action-buttons">
-
-
-
-
-
-<button onclick="location.href='doctor-dashboard.html'">
-
-
-<i class="fas fa-chart-line"></i>
-
-
-Dashboard
-
-
-</button>
-
-
-
-
-
-
-
-<button onclick="location.href='doctor-patients.html'">
-
-
-<i class="fas fa-bed"></i>
-
+<i class="fas fa-bed-pulse"></i>
 
 Patients
 
-
 </button>
-
-
-
-
-
-
 
 <button onclick="location.href='doctor-appointments.html'">
 
-
 <i class="fas fa-calendar-check"></i>
-
 
 Appointments
 
-
 </button>
-
-
-
-
-
-
 
 </div>
 
+</div>
 
+<div class="banner-icon">
 
+<i class="fas fa-file-prescription"></i>
 
+</div>
 
+</section>
+<section class="cards">
 
+<div class="card">
+
+<div>
+
+<h2 id="prescriptionCount">0</h2>
+
+<p>Total Prescriptions</p>
+
+</div>
+
+<i class="fas fa-file-prescription"></i>
+
+</div>
+
+<div class="card">
+
+<div>
+
+<h2 id="todayPrescriptionCount">0</h2>
+
+<p>Today's Prescriptions</p>
+
+</div>
+
+<i class="fas fa-calendar-day"></i>
+
+</div>
+
+<div class="card">
+
+<div>
+
+<h2 id="medicineCount">0</h2>
+
+<p>Medicines Issued</p>
+
+</div>
+
+<i class="fas fa-pills"></i>
+
+</div>
+
+<div class="card">
+
+<div>
+
+<h2 id="patientServedCount">0</h2>
+
+<p>Patients Served</p>
+
+</div>
+
+<i class="fas fa-user-check"></i>
+
+</div>
+
+</section>
+<!-- ================= PRESCRIPTION TABLE ================= -->
+
+<section class="recent-card">
+
+    <div class="card-header">
+
+        <h2>
+
+            <i class="fas fa-file-prescription"></i>
+
+            My Prescriptions
+
+        </h2>
+
+        <button class="btn" onclick="openPrescriptionModal()">
+
+            <i class="fas fa-plus"></i>
+
+            New Prescription
+
+        </button>
+
+    </div>
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Patient</th>
+
+                    <th>Diagnosis</th>
+
+                    <th>Medicine</th>
+
+                    <th>Date</th>
+
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="prescriptionTable">
+
+                <!-- Loaded from doctor-prescriptions.js -->
+
+            </tbody>
+
+        </table>
+
+    </div>
 
 </section>
 
 
 
+<!-- ================= PRESCRIPTION MODAL ================= -->
 
+<div id="prescriptionModal" class="modal">
 
+    <div class="modal-content">
 
+        <h2>
+
+            <i class="fas fa-file-prescription"></i>
+
+            Create Prescription
+
+        </h2>
+
+        <input type="hidden" id="prescriptionId">
+
+        <label>Patient</label>
+
+        <select id="patientSelect">
+
+            <option value="">Select Patient</option>
+
+        </select>
+
+        <label>Diagnosis</label>
+
+        <textarea id="diagnosis"
+                  rows="3"
+                  placeholder="Diagnosis"></textarea>
+
+        <label>Medicine</label>
+
+        <textarea id="medicine"
+                  rows="3"
+                  placeholder="Medicine Name & Dosage"></textarea>
+
+        <label>Advice</label>
+
+        <textarea id="advice"
+                  rows="3"
+                  placeholder="Doctor Advice"></textarea>
+
+        <div style="display:flex;justify-content:flex-end;gap:15px;margin-top:25px;">
+
+            <button class="deleteBtn"
+                    onclick="closePrescriptionModal()">
+
+                Cancel
+
+            </button>
+
+            <button class="btn"
+                    onclick="savePrescription()">
+
+                <i class="fas fa-save"></i>
+
+                Save Prescription
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- ================= QUICK ACTIONS ================= -->
+
+<section class="quick-actions">
+
+    <h2>
+
+        <i class="fas fa-bolt"></i>
+
+        Quick Actions
+
+    </h2>
+
+    <div class="action-buttons">
+
+        <button onclick="location.href='doctor-dashboard.html'">
+
+            <i class="fas fa-chart-line"></i>
+
+            Dashboard
+
+        </button>
+
+        <button onclick="location.href='doctor-patients.html'">
+
+            <i class="fas fa-bed-pulse"></i>
+
+            My Patients
+
+        </button>
+
+        <button onclick="location.href='doctor-appointments.html'">
+
+            <i class="fas fa-calendar-check"></i>
+
+            Appointments
+
+        </button>
+
+        <button onclick="location.href='doctor-medical-records.html'">
+
+            <i class="fas fa-file-medical"></i>
+
+            Medical Records
+
+        </button>
+
+        <button onclick="location.href='doctor-profile.html'">
+
+            <i class="fas fa-user-doctor"></i>
+
+            Profile
+
+        </button>
+
+    </div>
+
+</section>
 
 
 
 <!-- ================= FOOTER ================= -->
 
-
-
 <footer class="footer">
 
+    <h3>
 
+        🩺 HMS PRO Doctor Portal
 
-<h3>
+    </h3>
 
-🩺 HMS PRO Doctor Portal
+    <p>
 
-</h3>
+        Professional Healthcare Management System
 
+    </p>
 
+    <p>
 
+        © 2026 Hospital Management System
 
-
-<p>
-
-Digital Prescription Management System
-
-</p>
-
-
-
-
-
-<p>
-
-© 2026 Hospital Management System
-
-</p>
-
-
-
-
+    </p>
 
 </footer>
-
-
-
-
-
-
-
-
 
 </div>
 
 
 
-
-
-
-
-
+<!-- ================= MODAL SCRIPT ================= -->
 
 <script>
 
+function openPrescriptionModal(){
 
-document.addEventListener(
-"DOMContentLoaded",
-()=>{
-
-
-const doctor =
-localStorage.getItem("name")
-||
-"Doctor";
-
-
-
-const element =
-document.getElementById(
-"doctorName"
-);
-
-
-
-if(element){
-
-element.innerHTML =
-doctor;
+    document.getElementById("prescriptionModal").style.display="flex";
 
 }
 
+function closePrescriptionModal(){
 
+    document.getElementById("prescriptionModal").style.display="none";
+
+}
+
+window.onclick=function(event){
+
+    const modal=document.getElementById("prescriptionModal");
+
+    if(event.target===modal){
+
+        closePrescriptionModal();
+
+    }
+
+};
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+    const doctorName=
+
+    localStorage.getItem("name") || "Doctor";
+
+    document.getElementById("doctorName").innerHTML=
+
+    doctorName;
 
 });
-
 
 </script>
 
 
 
+<!-- ================= JS ================= -->
 
-
-
+<script src="js/config.js"></script>
 
 <script src="js/auth.js"></script>
 
-
 <script src="js/doctor-prescriptions.js"></script>
 
-
-
 <script src="js/theme.js"></script>
-
-
 
 </body>
 

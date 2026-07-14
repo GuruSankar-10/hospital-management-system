@@ -5,19 +5,28 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 
 <title>HMS PRO | Medical Records</title>
 
 
 
+<!-- Font Awesome -->
+
 <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 
+
+<!-- Theme -->
 
 <link rel="stylesheet" href="css/theme.css">
+
+<link rel="stylesheet" href="css/common.css">
+
+<link rel="stylesheet" href="css/animations.css">
 
 <link rel="stylesheet" href="css/admin.css">
 
@@ -25,18 +34,17 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 </head>
 
 
-
 <body>
 
 
 
 
-
-<!-- ================= SIDEBAR ================= -->
+<!-- ======================================
+                SIDEBAR
+======================================= -->
 
 
 <aside class="sidebar">
-
 
 
 <div class="logo">
@@ -50,7 +58,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
 
 
-<div>
+<div class="logo-text">
 
 <h2>HMS PRO</h2>
 
@@ -59,10 +67,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 </div>
 
 
-
 </div>
-
-
 
 
 
@@ -75,16 +80,11 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
 <a href="admin-dashboard.html">
 
-
 <i class="fa-solid fa-chart-line"></i>
-
 
 <span>Dashboard</span>
 
-
 </a>
-
-
 
 
 
@@ -92,16 +92,11 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
 <a href="admin-doctors.html">
 
-
 <i class="fa-solid fa-user-doctor"></i>
-
 
 <span>Doctors</span>
 
-
 </a>
-
-
 
 
 
@@ -109,16 +104,11 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
 <a href="admin-staff.html">
 
-
 <i class="fa-solid fa-user-nurse"></i>
-
 
 <span>Staff</span>
 
-
 </a>
-
-
 
 
 
@@ -126,16 +116,11 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
 <a href="patients.html">
 
-
 <i class="fa-solid fa-bed-pulse"></i>
-
 
 <span>Patients</span>
 
-
 </a>
-
-
 
 
 
@@ -143,16 +128,11 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
 <a href="appointments.html">
 
-
 <i class="fa-solid fa-calendar-check"></i>
-
 
 <span>Appointments</span>
 
-
 </a>
-
-
 
 
 
@@ -160,29 +140,22 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
 <a href="billing.html">
 
-
 <i class="fa-solid fa-file-invoice-dollar"></i>
-
 
 <span>Billing</span>
 
-
 </a>
 
 
 
 
 
-
-
-<a href="records.html" class="active">
-
+<a href="records.html"
+class="active">
 
 <i class="fa-solid fa-file-medical"></i>
 
-
 <span>Medical Records</span>
-
 
 </a>
 
@@ -190,23 +163,14 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
 
 
-
-
-<a href="javascript:void(0)" onclick="logout()">
-
-
+<a href="#"
+onclick="logout()">
 
 <i class="fa-solid fa-right-from-bracket"></i>
 
-
-
 <span>Logout</span>
 
-
-
 </a>
-
-
 
 
 
@@ -221,9 +185,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
 
 
-
-
-<!-- ================= MAIN ================= -->
+<!-- ======================================
+                MAIN
+======================================= -->
 
 
 <div class="main">
@@ -233,12 +197,48 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
 
 
-
-<!-- ================= TOPBAR ================= -->
-
+<!-- ======================================
+                TOPBAR
+======================================= -->
 
 
 <header class="topbar">
+
+
+
+<div>
+
+
+
+<div class="breadcrumb">
+
+
+<i class="fa-solid fa-house"></i>
+
+
+<span>
+
+Admin
+
+</span>
+
+
+
+<i class="fa-solid fa-angle-right"></i>
+
+
+
+<span class="active-page">
+
+Medical Records
+
+</span>
+
+
+
+</div>
+
+
 
 
 
@@ -249,21 +249,27 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
 <h1>
 
-Medical Records 📁
+Medical Records 📄
 
 </h1>
 
 
 
+
+
 <p>
 
-Manage patient history and clinical information
+Manage patient history, diagnosis and treatment records.
 
 </p>
 
 
+
 </div>
 
+
+
+</div>
 
 
 
@@ -275,12 +281,11 @@ Manage patient history and clinical information
 
 
 
-
-
 <div class="search-box">
 
 
 <i class="fa-solid fa-search"></i>
+
 
 
 
@@ -290,13 +295,39 @@ type="text"
 
 id="searchRecord"
 
-placeholder="Search Medical Records..."
+placeholder="Search Records..."
 
->
+onkeyup="searchRecord()">
+
 
 
 </div>
 
+
+
+
+
+
+
+<button
+
+id="themeToggle"
+
+class="icon-btn">
+
+
+
+<i
+
+id="themeIcon"
+
+class="fa-solid fa-moon">
+
+</i>
+
+
+
+</button>
 
 
 
@@ -317,43 +348,46 @@ placeholder="Search Medical Records..."
 
 
 
-
 <div class="profile-box">
 
 
-<i class="fa-solid fa-circle-user"></i>
+
+<img
+
+src="https://ui-avatars.com/api/?name=Administrator&background=2563eb&color=ffffff">
+
+
+
 
 
 <div>
 
 
-<strong id="adminName">
+<strong>
 
-Admin
+Administrator
 
 </strong>
 
 
+
 <small>
 
-Administrator
+Hospital Admin
 
 </small>
 
 
-</div>
-
 
 </div>
-
-
-
 
 
 </div>
 
 
 
+
+</div>
 
 
 
@@ -366,14 +400,12 @@ Administrator
 
 
 
-
-<!-- ================= RECORDS BANNER ================= -->
-
+<!-- ======================================
+                HERO SECTION
+======================================= -->
 
 
 <section class="dashboard-banner">
-
-
 
 
 
@@ -381,20 +413,46 @@ Administrator
 
 
 
+
+
+<span class="status-badge">
+
+
+<i class="fa-solid fa-file-medical"></i>
+
+
+HMS Medical Records System
+
+
+</span>
+
+
+
+
+
+
+
 <h2>
 
-Medical History Management Center
+Patient Medical History
 
 </h2>
 
 
 
+
+
+
+
 <p>
 
-Store, manage and track patient diagnosis,
-treatment details and doctor notes.
+Store and manage diagnoses,
+prescriptions, reports and treatment details.
 
 </p>
+
+
+
 
 
 
@@ -404,39 +462,53 @@ treatment details and doctor notes.
 
 
 
-<button onclick="document.getElementById('diagnosis').focus()">
+
+
+<button
+
+class="primary-btn"
+
+onclick="openRecordModal()">
 
 
 
-<i class="fa-solid fa-file-circle-plus"></i>
+<i class="fa-solid fa-plus"></i>
 
 
-Add Medical Record
+Add Record
+
+
+</button>
+
+
+
+
+
+
+
+
+<button
+
+class="secondary-btn"
+
+onclick="loadRecords()">
+
+
+
+<i class="fa-solid fa-rotate"></i>
+
+
+Refresh
 
 
 </button>
 
 
-
-
-
-
-
-<button onclick="location.href='admin-dashboard.html'">
-
-
-
-<i class="fa-solid fa-arrow-left"></i>
-
-
-Dashboard
-
-
-</button>
 
 
 
 </div>
+
 
 
 
@@ -453,191 +525,14 @@ Dashboard
 <div class="banner-image">
 
 
-<i class="fa-solid fa-file-medical"></i>
+
+<div class="hero-circle">
+
+
+<i class="fa-solid fa-notes-medical"></i>
 
 
 </div>
-
-
-
-
-
-</section>
-
-<!-- ================= RECORD STATISTICS ================= -->
-
-
-<section class="stats-container">
-
-
-
-
-
-<div class="stat-card patients">
-
-
-<div class="stat-icon">
-
-<i class="fa-solid fa-folder-open"></i>
-
-</div>
-
-
-
-<div class="stat-info">
-
-
-<p>Total Records</p>
-
-
-<h2 id="recordCount">
-
-0
-
-</h2>
-
-
-<span>
-
-Medical History
-
-</span>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="stat-card appointments">
-
-
-<div class="stat-icon">
-
-<i class="fa-solid fa-calendar-day"></i>
-
-</div>
-
-
-
-<div class="stat-info">
-
-
-<p>Today's Visits</p>
-
-
-<h2 id="todayRecords">
-
-0
-
-</h2>
-
-
-<span>
-
-Recent Consultations
-
-</span>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="stat-card doctors">
-
-
-<div class="stat-icon">
-
-<i class="fa-solid fa-user-doctor"></i>
-
-</div>
-
-
-
-<div class="stat-info">
-
-
-<p>Doctors Involved</p>
-
-
-<h2 id="doctorRecords">
-
-0
-
-</h2>
-
-
-<span>
-
-Medical Team
-
-</span>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="stat-card staff">
-
-
-<div class="stat-icon">
-
-<i class="fa-solid fa-hospital-user"></i>
-
-</div>
-
-
-
-<div class="stat-info">
-
-
-<p>Patients Covered</p>
-
-
-<h2 id="patientRecords">
-
-0
-
-</h2>
-
-
-<span>
-
-Registered Patients
-
-</span>
-
-
-</div>
-
 
 
 </div>
@@ -656,46 +551,56 @@ Registered Patients
 
 
 
+<!-- ======================================
+            STATISTICS START
+======================================= -->
 
-<!-- ================= ADD MEDICAL RECORD ================= -->
 
+<section class="stats-grid">
+	<!-- ======================================
+	        MEDICAL RECORD STATISTICS
+	======================================= -->
 
 
-<section class="dashboard-card">
+	<div class="stat-card">
 
 
+	<div class="stat-icon blue">
 
+	<i class="fa-solid fa-folder-open"></i>
 
+	</div>
 
-<div class="card-header">
 
 
-<div>
+	<div class="stat-content">
 
 
-<h2>
+	<h2 id="totalRecords">
 
-<i class="fa-solid fa-file-circle-plus"></i>
+	0
 
-Add Medical Record
+	</h2>
 
-</h2>
 
+	<p>
 
-<p style="color:#64748b">
+	Total Records
 
-Create patient diagnosis and treatment history
+	</p>
 
-</p>
 
+	<span>
 
-</div>
+	Patient History
 
+	</span>
 
 
-</div>
+	</div>
 
 
+	</div>
 
 
 
@@ -703,326 +608,332 @@ Create patient diagnosis and treatment history
 
 
 
-<div class="form-grid">
+	<div class="stat-card">
 
 
+	<div class="stat-icon green">
 
 
+	<i class="fa-solid fa-flask"></i>
 
-<div>
 
+	</div>
 
-<label>
 
-Diagnosis
 
-</label>
 
+	<div class="stat-content">
 
-<input
 
-type="text"
+	<h2 id="labRecords">
 
-id="diagnosis"
+	0
 
-placeholder="Enter Diagnosis"
+	</h2>
 
->
 
+	<p>
 
-</div>
+	Lab Reports
 
+	</p>
 
 
+	<span>
 
+	Medical Tests
 
+	</span>
 
 
+	</div>
 
-<div>
 
+	</div>
 
-<label>
 
-Symptoms
 
-</label>
 
 
-<input
 
-type="text"
 
-id="symptoms"
+	<div class="stat-card">
 
-placeholder="Enter Symptoms"
 
->
+	<div class="stat-icon orange">
 
 
-</div>
+	<i class="fa-solid fa-prescription-bottle-medical"></i>
 
 
+	</div>
 
 
 
 
+	<div class="stat-content">
 
 
-<div>
+	<h2 id="prescriptionRecords">
 
+	0
 
-<label>
+	</h2>
 
-Treatment
 
-</label>
+	<p>
 
+	Prescriptions
 
-<input
+	</p>
 
-type="text"
 
-id="treatment"
+	<span>
 
-placeholder="Enter Treatment"
+	Medicine Records
 
->
+	</span>
 
 
-</div>
+	</div>
 
 
+	</div>
 
 
 
 
 
 
-<div>
 
+	<div class="stat-card">
 
-<label>
 
-Visit Date
+	<div class="stat-icon red">
 
-</label>
 
+	<i class="fa-solid fa-stethoscope"></i>
 
-<input
 
-type="date"
+	</div>
 
-id="visitDate"
 
->
 
 
-</div>
+	<div class="stat-content">
 
 
+	<h2 id="diagnosisRecords">
 
+	0
 
+	</h2>
 
 
+	<p>
 
+	Diagnosis
 
-<div>
+	</p>
 
 
-<label>
+	<span>
 
-Patient ID
+	Treatment Details
 
-</label>
+	</span>
 
 
-<input
+	</div>
 
-type="number"
 
-id="patientId"
+	</div>
 
-placeholder="Enter Patient ID"
 
->
 
+	</section>
 
-</div>
 
 
 
 
 
 
+	<!-- ======================================
+	                FILTER SECTION
+	======================================= -->
 
 
-<div>
+	<section class="dashboard-card">
 
 
-<label>
+	<div class="card-header">
 
-Doctor ID
 
-</label>
+	<h2>
 
 
-<input
+	<i class="fa-solid fa-filter"></i>
 
-type="number"
 
-id="doctorId"
+	Filter Medical Records
 
-placeholder="Enter Doctor ID"
 
->
+	</h2>
 
 
-</div>
+	</div>
 
 
 
 
 
 
+	<div class="filter-grid">
 
-</div>
 
 
 
 
+	<div class="form-group">
 
 
+	<label>
 
+	Patient
 
-<br>
+	</label>
 
 
 
+	<select
 
+	id="patientFilter"
 
-<div>
+	onchange="filterRecords()">
 
 
-<label>
 
-Doctor Notes
+	<option value="">
 
-</label>
+	All Patients
 
+	</option>
 
-<textarea
 
-id="notes"
+	</select>
 
-placeholder="Enter Medical Notes"
 
-rows="4"
+	</div>
 
-></textarea>
 
 
-</div>
 
 
 
 
 
+	<div class="form-group">
 
 
+	<label>
 
-<br>
+	Doctor
 
+	</label>
 
 
 
-<button
+	<select
 
-class="btn"
+	id="doctorFilter"
 
-onclick="addRecord()">
+	onchange="filterRecords()">
 
 
-<i class="fa-solid fa-floppy-disk"></i>
 
+	<option value="">
 
-Save Medical Record
+	All Doctors
 
+	</option>
 
-</button>
 
+	</select>
 
 
+	</div>
 
 
 
 
-</section>
-<!-- ================= MEDICAL RECORDS TABLE ================= -->
 
 
-<section class="dashboard-card">
 
 
+	<div class="form-group">
 
 
+	<label>
 
-<div class="card-header">
+	Record Type
 
+	</label>
 
 
-<div>
 
+	<select
 
-<h2>
+	id="recordTypeFilter"
 
-<i class="fa-solid fa-folder-open"></i>
+	onchange="filterRecords()">
 
-Medical Records
 
-</h2>
 
+	<option value="">
 
-<p style="color:#64748b">
+	All Types
 
-View patient diagnosis and treatment history
+	</option>
 
-</p>
 
 
-</div>
+	<option>
 
+	Diagnosis
 
+	</option>
 
 
 
+	<option>
 
-<div class="search-box">
+	Prescription
 
+	</option>
 
-<i class="fa-solid fa-search"></i>
 
 
-<input
+	<option>
 
-type="text"
+	Lab Report
 
-id="searchRecord"
+	</option>
 
-placeholder="Search Records..."
 
-onkeyup="searchRecords()"
 
->
+	<option>
 
+	Other
 
-</div>
+	</option>
 
 
+	</select>
 
 
 
-</div>
+	</div>
 
 
 
@@ -1030,83 +941,90 @@ onkeyup="searchRecords()"
 
 
 
+	<div class="form-group">
 
 
-<div class="table-container">
+	<label>
 
+	Date
 
+	</label>
 
 
 
-<table>
+	<input
 
+	type="date"
 
+	id="recordDateFilter"
 
-<thead>
+	onchange="filterRecords()">
 
 
-<tr>
 
+	</div>
 
-<th>ID</th>
 
 
-<th>Patient</th>
+	</div>
 
 
-<th>Doctor</th>
+	</section>
 
 
-<th>Diagnosis</th>
 
 
-<th>Symptoms</th>
 
 
-<th>Treatment</th>
 
+	<!-- ======================================
+	            RECORD TABLE
+	======================================= -->
 
-<th>Notes</th>
 
+	<section class="dashboard-card">
 
-<th>Visit Date</th>
 
 
-<th>Actions</th>
+	<div class="card-header">
 
 
 
-</tr>
+	<h2>
 
 
-</thead>
+	<i class="fa-solid fa-file-medical"></i>
 
 
+	Medical Records List
 
 
+	</h2>
 
 
-<tbody id="recordTable">
 
 
 
-<!-- Records loaded from records.js -->
+	<button
 
+	class="primary-btn"
 
+	onclick="openRecordModal()">
 
-</tbody>
 
 
+	<i class="fa-solid fa-plus"></i>
 
 
+	Add Record
 
-</table>
 
+	</button>
 
 
 
 
-</div>
+	</div>
 
 
 
@@ -1114,252 +1032,716 @@ onkeyup="searchRecords()"
 
 
 
-</section>
+	<div class="table-responsive">
 
 
 
+	<table>
 
 
 
+	<thead>
 
 
+	<tr>
 
-<!-- ================= MEDICAL INFO ================= -->
 
+	<th>ID</th>
 
 
-<section class="dashboard-card">
+	<th>Patient</th>
 
 
+	<th>Doctor</th>
 
 
+	<th>Type</th>
 
-<h2>
 
-<i class="fa-solid fa-circle-info"></i>
+	<th>Description</th>
 
-Medical Records Information
 
-</h2>
+	<th>Date</th>
 
 
+	<th>Actions</th>
 
 
+	</tr>
 
 
+	</thead>
 
 
-<div class="info-grid">
 
 
 
 
+	<tbody id="recordsTable">
 
 
+	<!-- Loaded by records.js -->
 
-<div class="info-card">
 
+	</tbody>
 
-<h3>
 
-🩺 Diagnosis
 
-</h3>
 
+	</table>
 
-<br>
 
 
-<p>
+	</div>
 
-Maintain accurate disease and health information.
 
-</p>
 
+	</section>
+	<!-- ======================================
+	            RECORD MODAL
+	======================================= -->
 
-</div>
 
+	<div
 
+	id="recordModal"
 
+	class="modal-overlay">
 
 
 
+	<div class="modal">
 
 
-<div class="info-card">
 
 
-<h3>
 
-💊 Treatment
 
-</h3>
+	<!-- MODAL HEADER -->
 
 
-<br>
+	<div class="modal-header">
 
 
-<p>
+	<h2 id="modalTitle">
 
-Track medicines, procedures and patient care.
 
-</p>
+	<i class="fa-solid fa-file-medical"></i>
 
 
-</div>
+	Add Medical Record
 
 
+	</h2>
 
 
 
 
 
+	<button
 
-<div class="info-card">
+	class="close-btn"
 
+	onclick="closeRecordModal()">
 
-<h3>
 
-👨‍⚕️ Doctor Notes
 
-</h3>
+	<i class="fa-solid fa-xmark"></i>
 
 
-<br>
+	</button>
 
 
-<p>
 
-Store important clinical observations.
+	</div>
 
-</p>
 
 
-</div>
 
 
 
 
+	<!-- MODAL BODY -->
 
 
+	<div class="modal-body">
 
 
-</div>
 
+	<input
 
+	type="hidden"
 
+	id="recordId">
 
 
 
 
-</section>
 
 
+	<div class="form-grid">
 
 
 
 
 
+	<div class="form-group">
 
 
-<!-- ================= FOOTER ================= -->
+	<label>
 
+	Patient
 
+	</label>
 
-<footer class="footer">
 
 
-<h3>
+	<select
 
-🏥 HMS PRO
+	id="recordPatient">
 
-</h3>
 
 
+	<option value="">
 
-<p>
+	Select Patient
 
-Professional Medical Records Management
+	</option>
 
-</p>
 
 
+	</select>
 
-<p>
 
-© 2026 Hospital Management System
+	</div>
 
-</p>
 
 
 
-</footer>
 
 
 
+	<div class="form-group">
 
 
+	<label>
 
+	Doctor
 
-</div>
+	</label>
 
 
 
+	<select
 
+	id="recordDoctor">
 
 
 
+	<option value="">
 
+	Select Doctor
 
-<!-- ================= SCRIPTS ================= -->
+	</option>
 
 
 
-<script>
+	</select>
 
-document.addEventListener("DOMContentLoaded",()=>{
 
+	</div>
 
-const admin =
 
-localStorage.getItem("name")
 
-||
 
-"Admin";
 
 
 
-const element =
 
-document.getElementById("adminName");
+	<div class="form-group">
 
 
+	<label>
 
-if(element){
+	Record Type
 
-element.innerHTML = admin;
+	</label>
 
-}
 
 
+	<select
 
-});
+	id="recordType">
 
-</script>
 
 
+	<option>
 
+	Diagnosis
 
+	</option>
 
-<script src="js/auth.js"></script>
 
-<script src="js/records.js"></script>
 
-<script src="js/theme.js"></script>
+	<option>
 
+	Prescription
 
+	</option>
 
-</body>
 
-</html>
+
+	<option>
+
+	Lab Report
+
+	</option>
+
+
+
+	<option>
+
+	Other
+
+	</option>
+
+
+
+	</select>
+
+
+	</div>
+
+
+
+
+
+
+
+	<div class="form-group">
+
+
+	<label>
+
+	Record Date
+
+	</label>
+
+
+
+	<input
+
+	type="date"
+
+	id="recordDate">
+
+
+
+	</div>
+
+
+
+
+
+
+
+	<div class="form-group full-width">
+
+
+	<label>
+
+	Diagnosis
+
+	</label>
+
+
+
+	<textarea
+
+	id="recordDiagnosis"
+
+	placeholder="Enter diagnosis details">
+
+	</textarea>
+
+
+	</div>
+
+
+
+
+
+
+
+	<div class="form-group full-width">
+
+
+	<label>
+
+	Prescription
+
+	</label>
+
+
+
+	<textarea
+
+	id="recordPrescription"
+
+	placeholder="Enter medicine details">
+
+	</textarea>
+
+
+	</div>
+
+
+
+
+
+
+
+	<div class="form-group full-width">
+
+
+	<label>
+
+	Notes
+
+	</label>
+
+
+
+	<textarea
+
+	id="recordNotes"
+
+	placeholder="Additional notes">
+
+	</textarea>
+
+
+	</div>
+
+
+
+
+
+	</div>
+
+
+
+
+	</div>
+
+
+
+
+
+
+
+	<!-- MODAL FOOTER -->
+
+
+	<div class="modal-footer">
+
+
+
+	<button
+
+	class="secondary-btn"
+
+	onclick="closeRecordModal()">
+
+
+
+	<i class="fa-solid fa-xmark"></i>
+
+
+	Cancel
+
+
+	</button>
+
+
+
+
+
+
+
+	<button
+
+	class="primary-btn"
+
+	onclick="saveRecord()">
+
+
+
+	<i class="fa-solid fa-floppy-disk"></i>
+
+
+	Save Record
+
+
+	</button>
+
+
+
+	</div>
+
+
+
+
+
+	</div>
+
+
+
+	</div>
+
+
+
+
+
+
+
+
+	<!-- ======================================
+	            DELETE MODAL
+	======================================= -->
+
+
+	<div
+
+	id="deleteModal"
+
+	class="modal-overlay">
+
+
+
+	<div class="delete-modal">
+
+
+
+
+
+	<div class="modal-header">
+
+
+	<h2>
+
+
+	<i class="fa-solid fa-trash"></i>
+
+
+	Delete Record
+
+
+	</h2>
+
+
+	</div>
+
+
+
+
+
+
+
+	<div class="modal-body">
+
+
+	<p>
+
+	Are you sure you want to delete this medical record?
+
+	</p>
+
+
+
+	<p class="warning-text">
+
+	This action cannot be undone.
+
+	</p>
+
+
+
+	</div>
+
+
+
+
+
+
+
+	<div class="modal-footer">
+
+
+
+	<button
+
+	class="secondary-btn"
+
+	onclick="closeDeleteModal()">
+
+
+
+	Cancel
+
+
+	</button>
+
+
+
+
+
+
+
+	<button
+
+	class="primary-btn danger"
+
+	onclick="confirmDelete()">
+
+
+
+	Delete
+
+
+	</button>
+
+
+
+
+	</div>
+
+
+
+	</div>
+
+
+
+	</div>
+	/* ======================================
+	                FOOTER
+	======================================= */
+
+
+	<footer class="footer">
+
+
+	<div class="footer-left">
+
+	© 2026 HMS PRO - Hospital Management System
+
+	</div>
+
+
+
+
+	<div class="footer-right">
+
+	Medical Records Module | Version 2.0
+
+	</div>
+
+
+
+	</footer>
+
+
+
+
+
+	</div>
+	<!-- END MAIN -->
+
+
+
+
+
+
+
+	<!-- ======================================
+	            LOADING OVERLAY
+	======================================= -->
+
+
+	<div
+
+	id="loadingOverlay"
+
+	class="loading-overlay">
+
+
+
+	<div class="loader">
+
+
+
+	<div class="spinner"></div>
+
+
+
+	<p>
+
+	Loading Medical Records...
+
+	</p>
+
+
+
+	</div>
+
+
+
+	</div>
+
+
+
+
+
+
+
+	<!-- ======================================
+	                TOAST
+	======================================= -->
+
+
+	<div
+
+	id="toastContainer">
+
+
+	</div>
+
+
+
+
+
+
+
+	<!-- ======================================
+	                JAVASCRIPT
+	======================================= -->
+
+
+	<script src="js/theme.js"></script>
+
+
+	<script src="js/common.js"></script>
+
+
+	<script src="js/records.js"></script>
+
+
+
+
+
+
+
+	</body>
+
+
+	</html>

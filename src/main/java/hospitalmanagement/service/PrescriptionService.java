@@ -1,232 +1,123 @@
 package hospitalmanagement.service;
 
-
 import hospitalmanagement.entity.Prescription;
 import hospitalmanagement.repository.PrescriptionRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+import java.time.LocalDate;
 import java.util.List;
-
-
 
 @Service
 public class PrescriptionService {
 
-
-
-
     @Autowired
     private PrescriptionRepository prescriptionRepository;
-
-
-
-
-
-
 
     // =====================================
     // Save Prescription
     // =====================================
 
-    public Prescription save(
-            Prescription prescription) {
+    public Prescription save(Prescription prescription) {
 
+        if (prescription.getCreatedAt() == null) {
 
+            prescription.setCreatedAt(LocalDate.now());
 
-        return prescriptionRepository.save(
-                prescription
-        );
+        }
 
+        return prescriptionRepository.save(prescription);
 
     }
-
-
-
-
-
-
-
 
     // =====================================
     // Get All Prescriptions
     // =====================================
 
-    public List<Prescription> getAll(){
-
-
+    public List<Prescription> getAll() {
 
         return prescriptionRepository.findAll();
 
-
     }
 
-
-
-
-
-
-
-
-
     // =====================================
-    // Get Prescription By ID
+    // Get Prescription By Id
     // =====================================
 
-    public Prescription getById(Long id){
-
-
+    public Prescription getById(Long id) {
 
         return prescriptionRepository.findById(id)
 
-                .orElseThrow(
-                    () -> new RuntimeException(
-                    "Prescription Not Found"
-                    )
-                );
-
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Prescription Not Found"));
 
     }
-
-
-
-
-
-
-
-
 
     // =====================================
     // Update Prescription
     // =====================================
 
-    public Prescription update(
-            Long id,
-            Prescription newPrescription){
-
-
+    public Prescription update(Long id,
+                               Prescription newPrescription) {
 
         Prescription oldPrescription =
                 getById(id);
 
-
-
-
-
         oldPrescription.setMedicine(
-                newPrescription.getMedicine()
-        );
-
-
+                newPrescription.getMedicine());
 
         oldPrescription.setNotes(
-                newPrescription.getNotes()
-        );
-
-
+                newPrescription.getNotes());
 
         oldPrescription.setDoctor(
-                newPrescription.getDoctor()
-        );
-
-
+                newPrescription.getDoctor());
 
         oldPrescription.setPatient(
-                newPrescription.getPatient()
-        );
-
-
-
+                newPrescription.getPatient());
 
         return prescriptionRepository.save(
-                oldPrescription
-        );
-
-
+                oldPrescription);
 
     }
-
-
-
-
-
-
-
-
 
     // =====================================
     // Delete Prescription
     // =====================================
 
-    public void delete(Long id){
-
-
+    public void delete(Long id) {
 
         Prescription prescription =
                 getById(id);
 
-
-
         prescriptionRepository.delete(
-                prescription
-        );
-
-
+                prescription);
 
     }
-
-
-
-
-
-
-
-
 
     // =====================================
     // Doctor Wise Prescriptions
     // =====================================
 
     public List<Prescription> getPrescriptionsByDoctor(
-            Long doctorId){
-
-
+            Long doctorId) {
 
         return prescriptionRepository
                 .findByDoctorId(doctorId);
 
-
-
     }
 
-
-
-
-
-
-
-
-
     // =====================================
-    // Patient Wise Prescription History
+    // Patient Wise Prescriptions
     // =====================================
 
     public List<Prescription> getPrescriptionsByPatient(
-            Long patientId){
-
-
+            Long patientId) {
 
         return prescriptionRepository
                 .findByPatientId(patientId);
 
-
-
     }
-
-
-
-
 
 }

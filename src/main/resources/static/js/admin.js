@@ -2,390 +2,169 @@
 // HMS PRO ADMIN JAVASCRIPT
 // ======================================
 
-
 console.log("Admin JS Loaded");
 
-
-
-const BASE_URL =
-window.location.hostname === "localhost"
-?
-"http://localhost:8080"
-:
-"https://hospital-management-system-6pok.onrender.com";
-
-
-
+// API_URL is loaded from config.js
 
 // ======================================
 // PAGE LOAD
 // ======================================
 
+document.addEventListener("DOMContentLoaded", () => {
 
-document.addEventListener(
-"DOMContentLoaded",
-()=>{
+    loadAppointments();
 
+    loadPatients();
 
-loadAppointments();
+    loadAdminName();
 
-loadPatients();
-
-loadAdminName();
-
-loadDate();
-
+    loadDate();
 
 });
-
-
-
-
-
-
-
-
 
 // ======================================
 // LOAD APPOINTMENTS
 // ======================================
 
+async function loadAppointments() {
 
-async function loadAppointments(){
+    try {
 
+        const response = await fetch(API_URL + "/appointments");
 
-try{
+        if (!response.ok) {
+            throw new Error("Appointments API Error");
+        }
 
+        const appointments = await response.json();
 
-const response =
-await fetch(
-BASE_URL + "/appointments"
-);
+        let rows = "";
 
+        appointments
+            .slice(-5)
+            .reverse()
+            .forEach(a => {
 
+                rows += `
+                    <tr>
+                        <td>${a.id ?? "-"}</td>
+                        <td>${a.patient?.name ?? "-"}</td>
+                        <td>${a.doctor?.name ?? "-"}</td>
+                        <td>${a.appointmentDate ?? "-"}</td>
+                        <td>
+                            <span class="badge badge-success">
+                                ${a.status ?? "Pending"}
+                            </span>
+                        </td>
+                    </tr>
+                `;
 
-if(!response.ok){
+            });
 
-throw new Error(
-"Appointments API Error"
-);
+        const table = document.getElementById("appointmentTable");
 
-}
+        if (table) {
 
+            table.innerHTML = rows || `
+                <tr>
+                    <td colspan="5">No appointments found</td>
+                </tr>
+            `;
 
+        }
 
-const appointments =
-await response.json();
+    } catch (error) {
 
+        console.error("Appointment Loading Error:", error);
 
-
-let rows="";
-
-
-
-appointments
-.slice(-5)
-.reverse()
-.forEach(a=>{
-
-
-
-rows += `
-
-<tr>
-
-<td>
-${a.id ?? "-"}
-</td>
-
-
-<td>
-${a.patient?.name ?? "-"}
-</td>
-
-
-<td>
-${a.doctor?.name ?? "-"}
-</td>
-
-
-<td>
-${a.appointmentDate ?? "-"}
-</td>
-
-
-<td>
-
-<span class="badge badge-success">
-
-${a.status ?? "Pending"}
-
-</span>
-
-</td>
-
-
-</tr>
-
-
-`;
-
-
-
-});
-
-
-
-
-
-const table =
-document.getElementById(
-"appointmentTable"
-);
-
-
-
-if(table){
-
-table.innerHTML =
-rows || 
-`
-<tr>
-<td colspan="5">
-No appointments found
-</td>
-</tr>
-`;
+    }
 
 }
-
-
-
-
-}
-
-catch(error){
-
-console.error(
-"Appointment Loading Error:",
-error
-);
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
 
 // ======================================
 // LOAD PATIENTS
 // ======================================
 
+async function loadPatients() {
 
-async function loadPatients(){
+    try {
 
+        const response = await fetch(API_URL + "/patients");
 
-try{
+        if (!response.ok) {
+            throw new Error("Patients API Error");
+        }
 
+        const patients = await response.json();
 
-const response =
-await fetch(
-BASE_URL + "/patients"
-);
+        let rows = "";
 
+        patients
+            .slice(-5)
+            .reverse()
+            .forEach(p => {
 
+                rows += `
+                    <tr>
+                        <td>${p.id ?? "-"}</td>
+                        <td>${p.name ?? "-"}</td>
+                        <td>${p.age ?? "-"}</td>
+                        <td>${p.disease ?? "-"}</td>
+                    </tr>
+                `;
 
-if(!response.ok){
+            });
 
-throw new Error(
-"Patients API Error"
-);
+        const table = document.getElementById("patientTable");
 
-}
+        if (table) {
 
+            table.innerHTML = rows || `
+                <tr>
+                    <td colspan="4">No patients found</td>
+                </tr>
+            `;
 
+        }
 
-const patients =
-await response.json();
+    } catch (error) {
 
+        console.error("Patient Loading Error:", error);
 
-
-let rows="";
-
-
-
-patients
-.slice(-5)
-.reverse()
-.forEach(p=>{
-
-
-rows += `
-
-<tr>
-
-
-<td>
-${p.id ?? "-"}
-</td>
-
-
-<td>
-${p.name ?? "-"}
-</td>
-
-
-<td>
-${p.age ?? "-"}
-</td>
-
-
-<td>
-${p.disease ?? "-"}
-</td>
-
-
-
-</tr>
-
-`;
-
-
-
-});
-
-
-
-
-
-const table =
-document.getElementById(
-"patientTable"
-);
-
-
-
-if(table){
-
-table.innerHTML =
-rows ||
-`
-<tr>
-<td colspan="4">
-No patients found
-</td>
-</tr>
-`;
+    }
 
 }
-
-
-
-}
-
-
-catch(error){
-
-
-console.error(
-"Patient Loading Error:",
-error
-);
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
 
 // ======================================
 // ADMIN NAME
 // ======================================
 
+function loadAdminName() {
 
-function loadAdminName(){
+    const admin = localStorage.getItem("name");
 
+    const element = document.getElementById("adminName");
 
+    if (admin && element) {
 
-const admin =
-localStorage.getItem(
-"name"
-);
+        element.innerText = admin;
 
-
-
-const element =
-document.getElementById(
-"adminName"
-);
-
-
-
-if(admin && element){
-
-
-element.innerText =
-admin;
-
+    }
 
 }
-
-
-
-}
-
-
-
-
-
-
-
-
 
 // ======================================
 // DATE
 // ======================================
 
+function loadDate() {
 
-function loadDate(){
+    const date = document.getElementById("todayDate");
 
+    if (date) {
 
+        date.innerText = new Date().toDateString();
 
-const date =
-document.getElementById(
-"todayDate"
-);
-
-
-
-if(date){
-
-
-date.innerText =
-new Date()
-.toDateString();
-
-
-}
-
-
+    }
 
 }

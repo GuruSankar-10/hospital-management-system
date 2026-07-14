@@ -5,19 +5,26 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 
 <title>HMS PRO | Appointment Management</title>
 
 
+<!-- Font Awesome -->
 
 <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 
+<!-- Theme -->
 
 <link rel="stylesheet" href="css/theme.css">
+
+<link rel="stylesheet" href="css/common.css">
+
+<link rel="stylesheet" href="css/animations.css">
 
 <link rel="stylesheet" href="css/admin.css">
 
@@ -25,18 +32,16 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 </head>
 
 
-
 <body>
 
 
 
-
-
-<!-- ================= SIDEBAR ================= -->
+<!-- ======================================
+                SIDEBAR
+======================================= -->
 
 
 <aside class="sidebar">
-
 
 
 <div class="logo">
@@ -50,7 +55,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
 
 
-<div>
+<div class="logo-text">
 
 <h2>HMS PRO</h2>
 
@@ -59,12 +64,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 </div>
 
 
-
 </div>
-
-
-
-
 
 
 
@@ -72,142 +72,90 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 <nav class="menu">
 
 
-
 <a href="admin-dashboard.html">
-
 
 <i class="fa-solid fa-chart-line"></i>
 
-
 <span>Dashboard</span>
 
-
 </a>
-
-
-
-
 
 
 
 <a href="admin-doctors.html">
 
-
 <i class="fa-solid fa-user-doctor"></i>
-
 
 <span>Doctors</span>
 
-
 </a>
-
-
-
-
 
 
 
 <a href="admin-staff.html">
 
-
 <i class="fa-solid fa-user-nurse"></i>
-
 
 <span>Staff</span>
 
-
 </a>
-
-
-
 
 
 
 
 <a href="patients.html">
 
-
 <i class="fa-solid fa-bed-pulse"></i>
-
 
 <span>Patients</span>
 
-
 </a>
 
 
 
 
-
-
-
-<a href="appointments.html" class="active">
-
+<a href="appointments.html"
+class="active">
 
 <i class="fa-solid fa-calendar-check"></i>
 
-
 <span>Appointments</span>
 
-
 </a>
-
-
-
 
 
 
 
 <a href="billing.html">
 
-
 <i class="fa-solid fa-file-invoice-dollar"></i>
-
 
 <span>Billing</span>
 
-
 </a>
-
-
-
 
 
 
 
 <a href="records.html">
 
-
 <i class="fa-solid fa-file-medical"></i>
-
 
 <span>Medical Records</span>
 
-
 </a>
 
 
 
 
-
-
-
-<a href="javascript:void(0)" onclick="logout()">
-
-
+<a href="#"
+onclick="logout()">
 
 <i class="fa-solid fa-right-from-bracket"></i>
 
-
-
 <span>Logout</span>
 
-
-
 </a>
-
-
-
 
 
 </nav>
@@ -219,11 +167,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
 
 
-
-
-
-
-<!-- ================= MAIN ================= -->
+<!-- ======================================
+                MAIN
+======================================= -->
 
 
 <div class="main">
@@ -232,13 +178,39 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
 
 
-
-
-<!-- ================= TOPBAR ================= -->
-
+<!-- ======================================
+                TOPBAR
+======================================= -->
 
 
 <header class="topbar">
+
+
+
+<div>
+
+
+
+<div class="breadcrumb">
+
+
+<i class="fa-solid fa-house"></i>
+
+
+<span>Admin</span>
+
+
+<i class="fa-solid fa-angle-right"></i>
+
+
+<span class="active-page">
+
+Appointments
+
+</span>
+
+
+</div>
 
 
 
@@ -257,7 +229,7 @@ Appointment Management 📅
 
 <p>
 
-Schedule and manage doctor appointments
+Schedule appointments and manage doctor-patient visits.
 
 </p>
 
@@ -265,6 +237,8 @@ Schedule and manage doctor appointments
 </div>
 
 
+
+</div>
 
 
 
@@ -275,13 +249,10 @@ Schedule and manage doctor appointments
 
 
 
-
-
 <div class="search-box">
 
 
 <i class="fa-solid fa-search"></i>
-
 
 
 <input
@@ -292,12 +263,33 @@ id="searchAppointment"
 
 placeholder="Search Appointment..."
 
->
+onkeyup="searchAppointment()">
+
 
 
 </div>
 
 
+
+
+
+<button
+
+id="themeToggle"
+
+class="icon-btn">
+
+
+<i
+
+id="themeIcon"
+
+class="fa-solid fa-moon">
+
+</i>
+
+
+</button>
 
 
 
@@ -316,36 +308,41 @@ placeholder="Search Appointment..."
 
 
 
-
-
 <div class="profile-box">
 
 
-<i class="fa-solid fa-circle-user"></i>
+<img
+
+src="https://ui-avatars.com/api/?name=Administrator&background=2563eb&color=ffffff">
+
 
 
 <div>
 
 
-<strong>Admin</strong>
+<strong>
+
+Administrator
+
+</strong>
 
 
-<small>Administrator</small>
+<small>
+
+Hospital Admin
+
+</small>
 
 
 </div>
 
 
-</div>
-
-
-
-
 
 </div>
 
 
 
+</div>
 
 
 
@@ -355,17 +352,12 @@ placeholder="Search Appointment..."
 
 
 
-
-
-
-
-<!-- ================= APPOINTMENT BANNER ================= -->
-
+<!-- ======================================
+                HERO SECTION
+======================================= -->
 
 
 <section class="dashboard-banner">
-
-
 
 
 
@@ -373,18 +365,36 @@ placeholder="Search Appointment..."
 
 
 
+
+<span class="status-badge">
+
+
+<i class="fa-solid fa-calendar-check"></i>
+
+
+HMS Appointment Management
+
+
+</span>
+
+
+
+
+
 <h2>
 
-Appointment Management Center
+Doctor Appointment Schedule
 
 </h2>
 
 
 
+
+
 <p>
 
-Book, track and manage appointments
-between patients and doctors.
+Manage patient appointments,
+doctor availability and visit schedules.
 
 </p>
 
@@ -396,300 +406,11 @@ between patients and doctors.
 
 
 
-<button onclick="openAppointmentModal()">
+<button
 
+class="primary-btn"
 
-
-<i class="fa-solid fa-calendar-plus"></i>
-
-
-New Appointment
-
-
-</button>
-
-
-
-
-
-
-
-<button onclick="location.href='admin-dashboard.html'">
-
-
-
-<i class="fa-solid fa-arrow-left"></i>
-
-
-Dashboard
-
-
-</button>
-
-
-
-</div>
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="banner-image">
-
-
-<i class="fa-solid fa-calendar-check"></i>
-
-
-</div>
-
-
-
-
-
-</section>
-<!-- ================= APPOINTMENT STATISTICS ================= -->
-
-
-<section class="stats-container">
-
-
-
-
-
-<div class="stat-card appointments">
-
-
-<div class="stat-icon">
-
-<i class="fa-solid fa-calendar-check"></i>
-
-</div>
-
-
-
-<div class="stat-info">
-
-
-<p>Total Appointments</p>
-
-
-<h2 id="appointmentCount">
-
-0
-
-</h2>
-
-
-<span>
-
-Scheduled Visits
-
-</span>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="stat-card staff">
-
-
-<div class="stat-icon">
-
-<i class="fa-solid fa-circle-check"></i>
-
-</div>
-
-
-
-<div class="stat-info">
-
-
-<p>Confirmed</p>
-
-
-<h2 id="confirmedCount">
-
-0
-
-</h2>
-
-
-<span>
-
-Approved Visits
-
-</span>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="stat-card doctors">
-
-
-<div class="stat-icon">
-
-<i class="fa-solid fa-hourglass-half"></i>
-
-</div>
-
-
-
-<div class="stat-info">
-
-
-<p>Pending</p>
-
-
-<h2 id="pendingCount">
-
-0
-
-</h2>
-
-
-<span>
-
-Waiting Approval
-
-</span>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="stat-card patients">
-
-
-<div class="stat-icon">
-
-<i class="fa-solid fa-ban"></i>
-
-</div>
-
-
-
-<div class="stat-info">
-
-
-<p>Cancelled</p>
-
-
-<h2 id="cancelledCount">
-
-0
-
-</h2>
-
-
-<span>
-
-Cancelled Visits
-
-</span>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- ================= APPOINTMENT LIST ================= -->
-
-
-
-<section class="dashboard-card">
-
-
-
-
-
-<div class="card-header">
-
-
-
-<div>
-
-
-<h2>
-
-<i class="fa-solid fa-calendar-days"></i>
-
-Appointment List
-
-</h2>
-
-
-<p style="color:#64748b">
-
-Manage patient appointments and schedules
-
-</p>
-
-
-</div>
-
-
-
-
-
-
-
-<button onclick="openAppointmentModal()">
+onclick="openAppointmentModal()">
 
 
 
@@ -703,80 +424,27 @@ New Appointment
 
 
 
+
+
+<button
+
+class="secondary-btn"
+
+onclick="loadAppointments()">
+
+
+
+<i class="fa-solid fa-rotate"></i>
+
+
+Refresh
+
+
+</button>
+
+
+
 </div>
-
-
-
-
-
-
-
-
-
-<div class="table-container">
-
-
-
-
-
-<table>
-
-
-
-<thead>
-
-
-<tr>
-
-
-<th>ID</th>
-
-
-<th>Patient</th>
-
-
-<th>Doctor</th>
-
-
-<th>Date</th>
-
-
-<th>Time</th>
-
-
-<th>Status</th>
-
-
-<th>Actions</th>
-
-
-
-</tr>
-
-
-</thead>
-
-
-
-
-
-
-<tbody id="appointmentTable">
-
-
-
-<!-- Loaded from appointments.js -->
-
-
-
-</tbody>
-
-
-
-
-
-</table>
-
 
 
 
@@ -785,441 +453,1088 @@ New Appointment
 
 
 
+
+
+<div class="banner-image">
+
+
+<div class="hero-circle">
+
+
+<i class="fa-solid fa-calendar-days"></i>
+
+
+</div>
+
+
+</div>
 
 
 
 
 </section>
-<!-- ================= ADD / EDIT APPOINTMENT MODAL ================= -->
 
 
-<div id="appointmentModal" class="modal">
 
 
-<div class="modal-content">
 
+<!-- ======================================
+            STATISTICS START
+======================================= -->
 
 
-<h2 id="modalTitle">
+<section class="stats-grid">
+	<!-- ======================================
+	        APPOINTMENT STATISTICS
+	======================================= -->
 
 
-<i class="fa-solid fa-calendar-plus"></i>
+	<div class="stat-card">
 
 
-New Appointment
+	<div class="stat-icon blue">
 
+	<i class="fa-solid fa-calendar-days"></i>
 
-</h2>
+	</div>
 
 
 
+	<div class="stat-content">
 
 
+	<h2 id="appointmentCount">
 
+	0
 
-<input
-type="hidden"
-id="appointmentId">
+	</h2>
 
 
+	<p>
 
+	Total Appointments
 
+	</p>
 
 
+	<span>
 
-<label>
+	Scheduled Visits
 
-Select Patient
+	</span>
 
-</label>
 
+	</div>
 
-<select id="patientSelect">
 
+	</div>
 
-<option value="">
 
-Select Patient
 
-</option>
 
 
-</select>
+	<div class="stat-card">
 
 
+	<div class="stat-icon green">
 
 
+	<i class="fa-solid fa-circle-check"></i>
 
 
+	</div>
 
 
 
-<label>
 
-Select Doctor
+	<div class="stat-content">
 
-</label>
 
+	<h2 id="completedCount">
 
-<select id="doctorSelect">
+	0
 
+	</h2>
 
-<option value="">
 
-Select Doctor
+	<p>
 
-</option>
+	Completed
 
+	</p>
 
-</select>
 
+	<span>
 
+	Finished Appointments
 
+	</span>
 
 
+	</div>
 
 
+	</div>
 
 
-<label>
 
-Appointment Date
 
-</label>
 
+	<div class="stat-card">
 
-<input
 
-type="date"
+	<div class="stat-icon orange">
 
-id="appointmentDate"
 
->
+	<i class="fa-solid fa-clock"></i>
 
 
+	</div>
 
 
 
 
+	<div class="stat-content">
 
 
+	<h2 id="pendingCount">
 
-<label>
+	0
 
-Appointment Time
+	</h2>
 
-</label>
 
+	<p>
 
-<input
+	Pending
 
-type="time"
+	</p>
 
-id="appointmentTime"
 
->
+	<span>
 
+	Upcoming Visits
 
+	</span>
 
 
+	</div>
 
 
+	</div>
 
 
 
-<label>
 
-Appointment Status
 
-</label>
+	<div class="stat-card">
 
 
-<select id="appointmentStatus">
+	<div class="stat-icon red">
 
 
-<option value="">
+	<i class="fa-solid fa-calendar-xmark"></i>
 
-Select Status
 
-</option>
+	</div>
 
 
 
-<option value="PENDING">
 
-Pending
+	<div class="stat-content">
 
-</option>
 
+	<h2 id="cancelledCount">
 
+	0
 
-<option value="CONFIRMED">
+	</h2>
 
-Confirmed
 
-</option>
+	<p>
 
+	Cancelled
 
+	</p>
 
-<option value="COMPLETED">
 
-Completed
+	<span>
 
-</option>
+	Cancelled Visits
 
+	</span>
 
 
-<option value="CANCELLED">
+	</div>
 
-Cancelled
 
-</option>
+	</div>
 
 
+	</section>
 
-</select>
 
 
 
 
+	<!-- ======================================
+	                FILTER SECTION
+	======================================= -->
 
 
+	<section class="dashboard-card">
 
 
+	<div class="card-header">
 
-<div class="modal-buttons">
 
+	<h2>
 
 
+	<i class="fa-solid fa-filter"></i>
 
 
-<button
+	Filter Appointments
 
-class="deleteBtn"
 
-onclick="closeAppointmentModal()"
+	</h2>
 
->
 
+	</div>
 
-Cancel
 
 
-</button>
 
 
+	<div class="filter-grid">
 
 
 
 
 
+	<div class="form-group">
 
-<button
 
-class="btn"
+	<label>
 
-onclick="saveAppointment()"
+	Doctor
 
->
+	</label>
 
 
-<i class="fa-solid fa-floppy-disk"></i>
+	<select
 
+	id="doctorFilter"
 
-Save Appointment
+	onchange="filterAppointments()">
 
 
-</button>
 
+	<option value="">
 
+	All Doctors
 
+	</option>
 
 
-</div>
+	</select>
 
 
+	</div>
 
 
 
 
 
-</div>
+	<div class="form-group">
 
 
-</div>
+	<label>
 
+	Patient
 
+	</label>
 
 
+	<select
 
+	id="patientFilter"
 
+	onchange="filterAppointments()">
 
 
 
-<!-- ================= DELETE APPOINTMENT MODAL ================= -->
+	<option value="">
 
+	All Patients
 
+	</option>
 
-<div id="deleteModal" class="modal">
 
+	</select>
 
 
-<div class="modal-content">
+	</div>
 
 
 
-<h2>
 
 
-<i class="fa-solid fa-trash"></i>
+	<div class="form-group">
 
 
-Delete Appointment
+	<label>
 
+	Status
 
-</h2>
+	</label>
 
 
+	<select
 
+	id="appointmentStatusFilter"
 
+	onchange="filterAppointments()">
 
 
 
-<p>
+	<option value="">
 
+	All
 
-Are you sure you want to delete this appointment?
+	</option>
 
 
-</p>
+	<option>
 
+	Scheduled
 
+	</option>
 
 
+	<option>
 
+	Completed
 
+	</option>
 
 
+	<option>
 
-<div class="modal-buttons">
+	Cancelled
 
+	</option>
 
 
+	</select>
 
 
-<button
+	</div>
 
-class="btn"
 
-onclick="closeDeleteModal()"
 
->
 
 
-Cancel
+	<div class="form-group">
 
 
-</button>
+	<label>
 
+	Date
 
+	</label>
 
 
+	<input
 
+	type="date"
 
+	id="appointmentDateFilter"
 
+	onchange="filterAppointments()">
 
-<button
 
-class="deleteBtn"
 
-onclick="confirmDelete()"
+	</div>
 
->
 
 
-<i class="fa-solid fa-trash"></i>
+	</div>
 
 
-Delete
 
+	</section>
 
-</button>
 
 
 
 
 
+	<!-- ======================================
+	            APPOINTMENT TABLE
+	======================================= -->
 
 
-</div>
+	<section class="dashboard-card">
 
 
 
+	<div class="card-header">
 
 
 
-</div>
+	<h2>
 
 
-</div>
+	<i class="fa-solid fa-calendar-check"></i>
 
 
+	Appointment List
 
 
+	</h2>
 
 
 
 
+	<button
 
-<!-- ================= FOOTER ================= -->
+	class="primary-btn"
 
+	onclick="openAppointmentModal()">
 
 
-<footer class="footer">
 
+	<i class="fa-solid fa-plus"></i>
 
-<p>
 
+	Add Appointment
 
-© 2026 HMS PRO | Appointment Management Panel
 
+	</button>
 
-</p>
 
 
-</footer>
+	</div>
 
 
 
 
 
+	<div class="table-responsive">
 
 
+	<table>
 
 
-</div>
+	<thead>
 
 
+	<tr>
 
 
+	<th>ID</th>
 
 
+	<th>Patient</th>
 
 
+	<th>Doctor</th>
 
-<!-- ================= SCRIPTS ================= -->
 
+	<th>Date</th>
 
-<script src="js/auth.js"></script>
 
+	<th>Time</th>
 
-<script src="js/appointments.js"></script>
 
+	<th>Reason</th>
 
 
+	<th>Status</th>
 
-<script src="js/theme.js"></script>
 
-</body>
+	<th>Actions</th>
 
-</html>
+
+	</tr>
+
+
+	</thead>
+
+
+
+
+	<tbody id="appointmentTable">
+
+
+	<!-- Loaded by appointments.js -->
+
+
+	</tbody>
+
+
+
+	</table>
+
+
+
+	</div>
+
+
+
+	</section>
+	<!-- ======================================
+	            APPOINTMENT MODAL
+	======================================= -->
+
+
+	<div
+
+	id="appointmentModal"
+
+	class="modal-overlay">
+
+
+	<div class="modal">
+
+
+
+	<!-- MODAL HEADER -->
+
+	<div class="modal-header">
+
+
+	<h2 id="modalTitle">
+
+
+	<i class="fa-solid fa-calendar-plus"></i>
+
+
+	Add Appointment
+
+
+	</h2>
+
+
+
+
+	<button
+
+	class="close-btn"
+
+	onclick="closeAppointmentModal()">
+
+
+
+	<i class="fa-solid fa-xmark"></i>
+
+
+	</button>
+
+
+
+	</div>
+
+
+
+
+
+	<!-- MODAL BODY -->
+
+	<div class="modal-body">
+
+
+
+	<input
+
+	type="hidden"
+
+	id="appointmentId">
+
+
+
+
+
+	<div class="form-grid">
+
+
+
+
+
+	<div class="form-group">
+
+
+	<label>
+
+	Patient
+
+	</label>
+
+
+
+	<select
+
+	id="appointmentPatient">
+
+
+	<option value="">
+
+	Select Patient
+
+	</option>
+
+
+	</select>
+
+
+	</div>
+
+
+
+
+
+	<div class="form-group">
+
+
+	<label>
+
+	Doctor
+
+	</label>
+
+
+
+	<select
+
+	id="appointmentDoctor">
+
+
+	<option value="">
+
+	Select Doctor
+
+	</option>
+
+
+	</select>
+
+
+	</div>
+
+
+
+
+
+
+	<div class="form-group">
+
+
+	<label>
+
+	Appointment Date
+
+	</label>
+
+
+
+	<input
+
+	type="date"
+
+	id="appointmentDate">
+
+
+	</div>
+
+
+
+
+
+	<div class="form-group">
+
+
+	<label>
+
+	Appointment Time
+
+	</label>
+
+
+
+	<input
+
+	type="time"
+
+	id="appointmentTime">
+
+
+	</div>
+
+
+
+
+
+
+	<div class="form-group">
+
+
+	<label>
+
+	Reason
+
+	</label>
+
+
+
+	<input
+
+	type="text"
+
+	id="appointmentReason"
+
+	placeholder="Reason for visit">
+
+
+	</div>
+
+
+
+
+
+
+	<div class="form-group">
+
+
+	<label>
+
+	Status
+
+	</label>
+
+
+
+	<select
+
+	id="appointmentStatus">
+
+
+
+	<option>
+
+	Scheduled
+
+	</option>
+
+
+	<option>
+
+	Completed
+
+	</option>
+
+
+	<option>
+
+	Cancelled
+
+	</option>
+
+
+
+	</select>
+
+
+
+	</div>
+
+
+
+
+
+	</div>
+
+
+
+	</div>
+
+
+
+
+
+
+	<!-- MODAL FOOTER -->
+
+
+	<div class="modal-footer">
+
+
+
+	<button
+
+	class="secondary-btn"
+
+	onclick="closeAppointmentModal()">
+
+
+
+	<i class="fa-solid fa-xmark"></i>
+
+
+	Cancel
+
+
+	</button>
+
+
+
+
+
+	<button
+
+	class="primary-btn"
+
+	onclick="saveAppointment()">
+
+
+
+	<i class="fa-solid fa-floppy-disk"></i>
+
+
+	Save Appointment
+
+
+	</button>
+
+
+
+
+	</div>
+
+
+
+
+	</div>
+
+
+	</div>
+
+
+
+
+
+
+	<!-- ======================================
+	            DELETE MODAL
+	======================================= -->
+
+
+	<div
+
+	id="deleteModal"
+
+	class="modal-overlay">
+
+
+	<div class="delete-modal">
+
+
+
+	<div class="modal-header">
+
+
+	<h2>
+
+
+	<i class="fa-solid fa-trash"></i>
+
+
+	Delete Appointment
+
+
+	</h2>
+
+
+	</div>
+
+
+
+
+
+	<div class="modal-body">
+
+
+	<p>
+
+	Are you sure you want to delete this appointment?
+
+	</p>
+
+
+	<p class="warning-text">
+
+	This action cannot be undone.
+
+	</p>
+
+
+
+	</div>
+
+
+
+
+
+
+	<div class="modal-footer">
+
+
+	<button
+
+	class="secondary-btn"
+
+	onclick="closeDeleteModal()">
+
+
+
+	Cancel
+
+
+	</button>
+
+
+
+
+
+	<button
+
+	class="primary-btn danger"
+
+	onclick="confirmDelete()">
+
+
+
+	Delete
+
+
+	</button>
+
+
+
+	</div>
+
+
+
+	</div>
+
+
+	</div>
+	<!-- ======================================
+	                FOOTER
+	======================================= -->
+
+	<footer class="footer">
+
+
+	<div class="footer-left">
+
+	© 2026 HMS PRO - Hospital Management System
+
+	</div>
+
+
+
+	<div class="footer-right">
+
+	Appointment Management Module | Version 2.0
+
+	</div>
+
+
+
+	</footer>
+
+
+
+	</div>
+	<!-- END MAIN -->
+
+
+
+
+
+	<!-- ======================================
+	            LOADING OVERLAY
+	======================================= -->
+
+
+	<div
+
+	id="loadingOverlay"
+
+	class="loading-overlay">
+
+
+
+	<div class="loader">
+
+
+
+	<div class="spinner"></div>
+
+
+
+	<p>
+
+	Loading Appointments...
+
+	</p>
+
+
+
+	</div>
+
+
+
+	</div>
+
+
+
+
+
+	<!-- ======================================
+	                TOAST
+	======================================= -->
+
+
+	<div
+
+	id="toastContainer">
+
+
+	</div>
+
+
+
+
+
+	<!-- ======================================
+	                JAVASCRIPT
+	======================================= -->
+
+
+	<script src="js/theme.js"></script>
+
+
+	<script src="js/common.js"></script>
+
+
+	<script src="js/appointments.js"></script>
+
+
+
+	</body>
+
+
+	</html>
+	

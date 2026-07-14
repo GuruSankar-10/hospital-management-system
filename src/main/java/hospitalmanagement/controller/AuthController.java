@@ -97,10 +97,29 @@ public class AuthController {
         System.out.println("Password Matches : " + matches);
         System.out.println("==================================");
 
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail().trim(),
-                        request.getPassword()));
+        try {
+
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getEmail().trim(),
+                            request.getPassword()
+                    )
+            );
+
+            System.out.println("✅ AUTHENTICATION SUCCESS");
+
+        }
+        catch(Exception e){
+
+            System.out.println("❌ AUTHENTICATION FAILED");
+
+            e.printStackTrace();
+
+            return ResponseEntity
+                    .badRequest()
+                    .body(e.getMessage());
+
+        }
 
         String token = jwtService.generateToken(user.getEmail());
 
@@ -123,5 +142,19 @@ public class AuthController {
                 doctorId);
 
         return ResponseEntity.ok(response);
+    }
+    @GetMapping("/reset-admin")
+    public String resetAdminPassword(){
+
+        User admin = userRepository.findByEmail("admin@gmail.com")
+                .orElseThrow();
+
+        admin.setPassword(
+                passwordEncoder.encode("admin123")
+        );
+
+        userRepository.save(admin);
+
+        return "Admin password changed to admin123";
     }
 }

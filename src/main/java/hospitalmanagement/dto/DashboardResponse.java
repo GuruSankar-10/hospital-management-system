@@ -2,53 +2,68 @@ package hospitalmanagement.dto;
 
 public class DashboardResponse {
 
-    // Dashboard Counts
     private long doctors;
+
     private long staff;
+
     private long patients;
+
     private long appointments;
 
-    // Billing
     private Double revenue;
+
     private long paidBills;
+
     private long unpaidBills;
 
-    // Medicine
     private long medicines;
-    private long lowStockMedicines;
 
-    // ==========================
-    // Constructors
-    // ==========================
+    private long lowStockMedicines;
 
     public DashboardResponse() {
     }
 
     public DashboardResponse(
+
             long doctors,
+
             long staff,
+
             long patients,
+
             long appointments,
+
             Double revenue,
+
             long paidBills,
+
             long unpaidBills,
+
             long medicines,
-            long lowStockMedicines) {
+
+            long lowStockMedicines
+
+    ) {
 
         this.doctors = doctors;
-        this.staff = staff;
-        this.patients = patients;
-        this.appointments = appointments;
-        this.revenue = revenue;
-        this.paidBills = paidBills;
-        this.unpaidBills = unpaidBills;
-        this.medicines = medicines;
-        this.lowStockMedicines = lowStockMedicines;
-    }
 
-    // ==========================
-    // Getters and Setters
-    // ==========================
+        this.staff = staff;
+
+        this.patients = patients;
+
+        this.appointments = appointments;
+
+        this.revenue = revenue;
+
+        this.paidBills = paidBills;
+
+        this.unpaidBills = unpaidBills;
+
+        this.medicines = medicines;
+
+        this.lowStockMedicines = lowStockMedicines;
+
+    }
 
     public long getDoctors() {
         return doctors;

@@ -1,96 +1,96 @@
 package hospitalmanagement.entity;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 
 @Entity
-@Table(name="prescriptions")
+@Table(name = "prescriptions")
 public class Prescription {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
+    @Column(length = 1000)
+    private String medicine;
 
+    @Column(length = 2000)
+    private String notes;
 
-@Column(length = 1000)
-private String medicine;
+    private LocalDate createdAt;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "doctor_id")
+    @JsonIgnoreProperties({
+            "hibernateLazyInitializer",
+            "handler",
+            "appointments",
+            "prescriptions"
+    })
+    private Doctor doctor;
 
-@Column(length = 1000)
-private String notes;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "patient_id")
+    @JsonIgnoreProperties({
+            "hibernateLazyInitializer",
+            "handler",
+            "appointments",
+            "prescriptions",
+            "doctor"
+    })
+    private Patient patient;
 
+    public Prescription() {
+        this.createdAt = LocalDate.now();
+    }
 
+    public Long getId() {
+        return id;
+    }
 
-@ManyToOne
-@JoinColumn(name="doctor_id")
-@JsonIgnoreProperties({"prescriptions"})
-private Doctor doctor;
+    public void setId(Long id) {
+        this.id = id;
+    }
 
+    public String getMedicine() {
+        return medicine;
+    }
 
+    public void setMedicine(String medicine) {
+        this.medicine = medicine;
+    }
 
-@ManyToOne
-@JoinColumn(name="patient_id")
-@JsonIgnoreProperties({"prescriptions"})
-private Patient patient;
+    public String getNotes() {
+        return notes;
+    }
 
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
 
-public Prescription(){}
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
 
+    public Doctor getDoctor() {
+        return doctor;
+    }
 
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
+    }
 
-public Long getId(){
-return id;
-}
+    public Patient getPatient() {
+        return patient;
+    }
 
-
-public void setId(Long id){
-this.id=id;
-}
-
-
-public String getMedicine(){
-return medicine;
-}
-
-
-public void setMedicine(String medicine){
-this.medicine=medicine;
-}
-
-
-public String getNotes(){
-return notes;
-}
-
-
-public void setNotes(String notes){
-this.notes=notes;
-}
-
-
-public Doctor getDoctor(){
-return doctor;
-}
-
-
-public void setDoctor(Doctor doctor){
-this.doctor=doctor;
-}
-
-
-public Patient getPatient(){
-return patient;
-}
-
-
-public void setPatient(Patient patient){
-this.patient=patient;
-}
-
-
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
 }

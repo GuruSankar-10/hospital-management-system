@@ -1,123 +1,232 @@
-console.log("Staff Appointment JS Loaded");
+/*=========================================================
+            HMS PRO STAFF APPOINTMENTS
+=========================================================*/
 
-// ==========================================
-// Base URL
-// ==========================================
+const STAFF_APPOINTMENT_API = `${API_URL}/appointments`;
 
-const BASE_URL =
-window.location.hostname === "localhost"
-    ? "http://localhost:8080"
-    : "https://hospital-management-system-6pok.onrender.com";
+let appointments = [];
+let filteredAppointments = [];
 
-const APPOINTMENT_API = BASE_URL + "/appointments";
+/*=========================================================
+            PAGE LOAD
+=========================================================*/
 
-let appointmentData = [];
+document.addEventListener("DOMContentLoaded", () => {
 
-// ==============================
-// Page Load
-// ==============================
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    loadAppointments();
+    initializeAppointments();
 
 });
 
-// ==============================
-// Load Appointments
-// ==============================
+/*=========================================================
+            INITIALIZE
+=========================================================*/
 
-function loadAppointments() {
+async function initializeAppointments() {
 
-    fetch(APPOINTMENT_API)
+    showLoading();
 
-    .then(response => {
+    loadStaffName();
 
-        if (!response.ok) {
+    await loadAppointments();
 
-            throw new Error("Unable to load appointments.");
-
-        }
-
-        return response.json();
-
-    })
-
-    .then(data => {
-
-        appointmentData = data;
-
-        displayAppointments(data);
-
-    })
-
-    .catch(error => {
-
-        console.error(error);
-
-        alert(error.message);
-
-    });
+    hideLoading();
 
 }
 
-// ==============================
-// Display Appointments
-// ==============================
+/*=========================================================
+            LOAD STAFF NAME
+=========================================================*/
 
-function displayAppointments(data) {
+function loadStaffName() {
 
-    let rows = "";
+    const name = localStorage.getItem("name") || "Staff";
 
-    data.forEach(app => {
+    const staff = document.getElementById("staffName");
 
-        rows += `
+    if(staff){
+
+        staff.textContent = name;
+
+    }
+
+}
+
+/*=========================================================
+            LOAD APPOINTMENTS
+=========================================================*/
+
+async function loadAppointments() {
+
+    try{
+
+        const response = await fetch(STAFF_APPOINTMENT_API);
+
+        if(!response.ok){
+
+            throw new Error("Unable to load appointments");
+
+        }
+
+        appointments = await response.json();
+
+        filteredAppointments = [...appointments];
+
+        updateStatistics();
+
+        renderAppointments();
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        showToast("Failed to load appointments","error");
+
+    }
+
+}
+
+/*=========================================================
+            UPDATE DASHBOARD
+=========================================================*/
+
+function updateStatistics(){
+
+    document.getElementById("appointmentCount").textContent = appointments.length;
+
+    document.getElementById("todayAppointments").textContent = appointments.length;
+
+    const doctors = new Set();
+
+    let completed = 0;
+
+    let scheduled = 0;
+
+    let cancelled = 0;
+
+    appointments.forEach(app=>{
+
+        if(app.doctor?.name){
+
+            doctors.add(app.doctor.name);
+
+        }
+
+        const status=(app.status || "Scheduled").toLowerCase();
+
+        if(status==="completed"){
+
+            completed++;
+
+        }
+
+        else if(status==="cancelled"){
+
+            cancelled++;
+
+        }
+
+        else{
+
+            scheduled++;
+
+        }
+
+    });
+
+    document.getElementById("doctorCount").textContent = doctors.size;
+
+    document.getElementById("scheduledCount").textContent = scheduled;
+
+    document.getElementById("completedCount").textContent = completed;
+
+    document.getElementById("cancelledCount").textContent = cancelled;
+
+}
+
+console.log("📅 HMS Staff Appointments Loaded");
+/*=========================================================
+            RENDER APPOINTMENTS
+=========================================================*/
+
+function renderAppointments(){
+
+    const table=document.getElementById("appointmentTable");
+
+    if(!table) return;
+
+    table.innerHTML="";
+
+    if(filteredAppointments.length===0){
+
+        table.innerHTML=`
 
         <tr>
 
-            <td>${app.id}</td>
+            <td colspan="7" class="text-center">
 
-            <td>${app.patient ? app.patient.name : "N/A"}</td>
+                No Appointments Found
 
-            <td>${app.doctor ? app.doctor.name : "N/A"}</td>
+            </td>
 
-            <td>${app.appointmentDate || app.date || "N/A"}</td>
+        </tr>
+
+        `;
+
+        return;
+
+    }
+
+    filteredAppointments.forEach(appointment=>{
+
+        const status=appointment.status || "Scheduled";
+
+        let badge="badge-primary";
+
+        if(status.toLowerCase()==="completed"){
+
+            badge="badge-success";
+
+        }
+
+        else if(status.toLowerCase()==="cancelled"){
+
+            badge="badge-danger";
+
+        }
+
+        table.innerHTML+=`
+
+        <tr>
+
+            <td>${appointment.id}</td>
+
+            <td>${appointment.patient?.name ?? "-"}</td>
+
+            <td>${appointment.doctor?.name ?? "-"}</td>
+
+            <td>${appointment.appointmentDate ?? "-"}</td>
+
+            <td>${appointment.appointmentTime ?? "-"}</td>
 
             <td>
 
-                <select onchange="updateStatus(${app.id},this.value)">
+                <span class="badge ${badge}">
 
-                    <option value="PENDING"
-                        ${app.status === "PENDING" ? "selected" : ""}>
-                        PENDING
-                    </option>
+                    ${status}
 
-                    <option value="CONFIRMED"
-                        ${app.status === "CONFIRMED" ? "selected" : ""}>
-                        CONFIRMED
-                    </option>
-
-                    <option value="COMPLETED"
-                        ${app.status === "COMPLETED" ? "selected" : ""}>
-                        COMPLETED
-                    </option>
-
-                    <option value="CANCELLED"
-                        ${app.status === "CANCELLED" ? "selected" : ""}>
-                        CANCELLED
-                    </option>
-
-                </select>
+                </span>
 
             </td>
 
             <td>
 
                 <button
-                    class="deleteBtn"
-                    onclick="deleteAppointment(${app.id})">
+                    class="table-btn view"
+                    onclick="viewAppointment(${appointment.id})">
 
-                    Delete
+                    <i class="fas fa-eye"></i>
 
                 </button>
 
@@ -129,147 +238,310 @@ function displayAppointments(data) {
 
     });
 
-    document.getElementById("appointmentTable").innerHTML = rows;
-
 }
 
-// ==============================
-// Search Appointment
-// ==============================
+/*=========================================================
+            SEARCH
+=========================================================*/
 
-function searchAppointments() {
+function searchAppointments(){
 
-    const value =
-        document.getElementById("searchAppointment")
+    const keyword=document
+        .getElementById("searchAppointment")
         .value
         .toLowerCase();
 
-    const filtered = appointmentData.filter(app => {
+    filteredAppointments=appointments.filter(app=>
 
-        return (
+        (app.patient?.name ?? "")
+        .toLowerCase()
+        .includes(keyword)
 
-            (app.patient?.name || "")
-                .toLowerCase()
-                .includes(value)
+        ||
 
-            ||
+        (app.doctor?.name ?? "")
+        .toLowerCase()
+        .includes(keyword)
 
-            (app.doctor?.name || "")
-                .toLowerCase()
-                .includes(value)
+        ||
 
-            ||
+        (app.status ?? "")
+        .toLowerCase()
+        .includes(keyword)
 
-            (app.status || "")
-                .toLowerCase()
-                .includes(value)
+    );
+
+    filterAppointments();
+
+}
+
+/*=========================================================
+            STATUS FILTER
+=========================================================*/
+
+function filterAppointments(){
+
+    const status=document
+        .getElementById("statusFilter")
+        ?.value;
+
+    if(status && status!==""){
+
+        filteredAppointments=filteredAppointments.filter(app=>
+
+            (app.status ?? "Scheduled")===status
 
         );
 
-    });
+    }
 
-    displayAppointments(filtered);
-
-}
-
-// ==============================
-// Update Status
-// ==============================
-
-function updateStatus(id, status) {
-
-    fetch(APPOINTMENT_API + "/" + id + "/status", {
-
-        method: "PUT",
-
-        headers: {
-
-            "Content-Type": "application/json"
-
-        },
-
-        body: JSON.stringify({
-
-            status: status
-
-        })
-
-    })
-
-    .then(response => {
-
-        if (!response.ok) {
-
-            throw new Error("Status Update Failed");
-
-        }
-
-        return response.json();
-
-    })
-
-    .then(() => {
-
-        alert("Appointment Status Updated");
-
-        loadAppointments();
-
-    })
-
-    .catch(error => {
-
-        console.error(error);
-
-        alert(error.message);
-
-    });
+    renderAppointments();
 
 }
 
-// ==============================
-// Delete Appointment
-// ==============================
+/*=========================================================
+            VIEW APPOINTMENT
+=========================================================*/
 
-function deleteAppointment(id) {
+function viewAppointment(id){
 
-    if (!confirm("Delete this appointment?")) {
+    const appointment=appointments.find(a=>a.id===id);
 
-        return;
+    if(!appointment) return;
+
+    document.getElementById("appointmentDetails").innerHTML=`
+
+        <div class="profile-details">
+
+            <h2>
+
+                Appointment #${appointment.id}
+
+            </h2>
+
+            <hr>
+
+            <p>
+
+                <strong>Patient :</strong>
+
+                ${appointment.patient?.name ?? "-"}
+
+            </p>
+
+            <p>
+
+                <strong>Doctor :</strong>
+
+                ${appointment.doctor?.name ?? "-"}
+
+            </p>
+
+            <p>
+
+                <strong>Date :</strong>
+
+                ${appointment.appointmentDate ?? "-"}
+
+            </p>
+
+            <p>
+
+                <strong>Time :</strong>
+
+                ${appointment.appointmentTime ?? "-"}
+
+            </p>
+
+            <p>
+
+                <strong>Status :</strong>
+
+                ${appointment.status ?? "Scheduled"}
+
+            </p>
+
+        </div>
+
+    `;
+
+    document.getElementById("appointmentModal").style.display="flex";
+
+}
+
+/*=========================================================
+            CLOSE MODAL
+=========================================================*/
+
+function closeAppointmentModal(){
+
+    document.getElementById("appointmentModal").style.display="none";
+
+}
+/*=========================================================
+                LOADING
+=========================================================*/
+
+function showLoading(){
+
+    const loading=document.getElementById("loadingOverlay");
+
+    if(loading){
+
+        loading.style.display="flex";
 
     }
 
-    fetch(APPOINTMENT_API + "/" + id, {
+}
 
-        method: "DELETE"
+function hideLoading(){
 
-    })
+    const loading=document.getElementById("loadingOverlay");
 
-    .then(response => {
+    if(loading){
 
-        if (!response.ok) {
+        loading.style.display="none";
 
-            throw new Error("Delete Failed");
+    }
 
-        }
+}
 
-        return response.text();
+/*=========================================================
+                TOAST
+=========================================================*/
 
-    })
+function showToast(message,type="success"){
 
-    .then(message => {
+    const container=document.getElementById("toastContainer");
 
-        alert(message);
+    if(!container) return;
 
-        loadAppointments();
+    const toast=document.createElement("div");
 
-    })
+    toast.className=`toast ${type}`;
 
-    .catch(error => {
+    toast.innerHTML=`
 
-        console.error(error);
+        <i class="fas ${
+            type==="success"
+            ? "fa-check-circle"
+            : "fa-times-circle"
+        }"></i>
 
-        alert(error.message);
+        <span>${message}</span>
+
+    `;
+
+    container.appendChild(toast);
+
+    setTimeout(()=>{
+
+        toast.remove();
+
+    },3000);
+
+}
+
+/*=========================================================
+                REFRESH
+=========================================================*/
+
+async function refreshAppointments(){
+
+    showLoading();
+
+    await loadAppointments();
+
+    hideLoading();
+
+    showToast("Appointments refreshed");
+
+}
+
+/*=========================================================
+                AUTO REFRESH
+=========================================================*/
+
+setInterval(()=>{
+
+    loadAppointments();
+
+},300000);
+
+/*=========================================================
+                CLOSE MODAL
+=========================================================*/
+
+window.onclick=function(event){
+
+    const modal=document.getElementById("appointmentModal");
+
+    if(event.target===modal){
+
+        closeAppointmentModal();
+
+    }
+
+};
+
+/*=========================================================
+                ESC KEY
+=========================================================*/
+
+document.addEventListener("keydown",(event)=>{
+
+    if(event.key==="Escape"){
+
+        closeAppointmentModal();
+
+    }
+
+});
+
+/*=========================================================
+                FILTER CHANGE
+=========================================================*/
+
+const statusFilter=document.getElementById("statusFilter");
+
+if(statusFilter){
+
+    statusFilter.addEventListener("change",()=>{
+
+        filteredAppointments=[...appointments];
+
+        filterAppointments();
 
     });
 
 }
+
+/*=========================================================
+                WINDOW FOCUS
+=========================================================*/
+
+window.addEventListener("focus",()=>{
+
+    loadAppointments();
+
+});
+
+/*=========================================================
+                PAGE VISIBILITY
+=========================================================*/
+
+document.addEventListener("visibilitychange",()=>{
+
+    if(!document.hidden){
+
+        loadAppointments();
+
+    }
+
+});
+
+/*=========================================================
+                READY
+=========================================================*/
+
+console.log("📅 HMS PRO Staff Appointments Ready");

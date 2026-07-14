@@ -1,175 +1,117 @@
 package hospitalmanagement.controller;
 
-
 import hospitalmanagement.entity.Prescription;
 import hospitalmanagement.service.PrescriptionService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-
 
 @RestController
 @RequestMapping("/prescriptions")
 @CrossOrigin(origins = "*")
 public class PrescriptionController {
 
-
-
     @Autowired
     private PrescriptionService prescriptionService;
-
-
-
 
     // =====================================
     // Save Prescription
     // =====================================
 
     @PostMapping
-    public Prescription savePrescription(
+    public ResponseEntity<Prescription> savePrescription(
             @RequestBody Prescription prescription) {
 
+        Prescription savedPrescription =
+                prescriptionService.save(prescription);
 
-        return prescriptionService.save(prescription);
+        return ResponseEntity.ok(savedPrescription);
 
     }
-
-
-
-
-
 
     // =====================================
     // Get All Prescriptions
     // =====================================
 
     @GetMapping
-    public List<Prescription> getAllPrescriptions() {
+    public ResponseEntity<List<Prescription>> getAllPrescriptions() {
 
-
-        return prescriptionService.getAll();
+        return ResponseEntity.ok(
+                prescriptionService.getAll());
 
     }
 
-
-
-
-
-
     // =====================================
-    // Get Prescription By ID
+    // Get Prescription By Id
     // =====================================
 
     @GetMapping("/{id}")
-    public Prescription getPrescriptionById(
+    public ResponseEntity<Prescription> getPrescriptionById(
             @PathVariable Long id) {
 
-
-        return prescriptionService.getById(id);
+        return ResponseEntity.ok(
+                prescriptionService.getById(id));
 
     }
-
-
-
-
-
-
 
     // =====================================
     // Update Prescription
     // =====================================
 
     @PutMapping("/{id}")
-    public Prescription updatePrescription(
+    public ResponseEntity<Prescription> updatePrescription(
             @PathVariable Long id,
             @RequestBody Prescription prescription) {
 
+        Prescription updatedPrescription =
+                prescriptionService.update(id, prescription);
 
-
-        return prescriptionService.update(
-                id,
-                prescription
-        );
-
+        return ResponseEntity.ok(updatedPrescription);
 
     }
-
-
-
-
-
-
-
 
     // =====================================
     // Delete Prescription
     // =====================================
 
     @DeleteMapping("/{id}")
-    public String deletePrescription(
+    public ResponseEntity<String> deletePrescription(
             @PathVariable Long id) {
-
-
 
         prescriptionService.delete(id);
 
-
-        return "Prescription Deleted Successfully";
-
+        return ResponseEntity.ok(
+                "Prescription Deleted Successfully");
 
     }
-
-
-
-
-
-
-
 
     // =====================================
     // Doctor Wise Prescriptions
     // =====================================
 
     @GetMapping("/doctor/{doctorId}")
-    public List<Prescription> getDoctorPrescriptions(
+    public ResponseEntity<List<Prescription>> getDoctorPrescriptions(
             @PathVariable Long doctorId) {
 
-
-
-        return prescriptionService
-                .getPrescriptionsByDoctor(doctorId);
-
-
+        return ResponseEntity.ok(
+                prescriptionService.getPrescriptionsByDoctor(doctorId));
 
     }
 
-
-
-
-
-
-
-
     // =====================================
-    // Patient Wise Prescription History
+    // Patient Wise Prescriptions
     // =====================================
 
     @GetMapping("/patient/{patientId}")
-    public List<Prescription> getPatientPrescriptions(
+    public ResponseEntity<List<Prescription>> getPatientPrescriptions(
             @PathVariable Long patientId) {
 
-
-
-        return prescriptionService
-                .getPrescriptionsByPatient(patientId);
-
-
+        return ResponseEntity.ok(
+                prescriptionService.getPrescriptionsByPatient(patientId));
 
     }
-
-
 
 }

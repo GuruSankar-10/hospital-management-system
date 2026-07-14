@@ -3,1424 +3,614 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HMS PRO | Doctor Dashboard</title>
 
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/doctor.css">
 
-<title>HMS PRO | Doctor Dashboard</title>
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-
-<link rel="stylesheet" href="css/theme.css">
-
-<link rel="stylesheet" href="css/doctor.css">
-
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 </head>
 
-
 <body>
-
-
-
-
 
 <!-- ================= SIDEBAR ================= -->
 
+<div class="sidebar">
 
-<aside class="sidebar">
+    <div class="logo">
 
+        <h2>🩺 HMS PRO</h2>
 
+        <p>Doctor Portal</p>
 
-<div class="logo">
+    </div>
 
+    <nav>
 
-<div class="logo-icon">
+        <a href="doctor-dashboard.html" class="active">
 
-<i class="fa-solid fa-user-doctor"></i>
+            <i class="fas fa-house"></i>
+
+            <span>Dashboard</span>
+
+        </a>
+
+        <a href="doctor-patients.html">
+
+            <i class="fas fa-bed-pulse"></i>
+
+            <span>My Patients</span>
+
+        </a>
+
+        <a href="doctor-appointments.html">
+
+            <i class="fas fa-calendar-check"></i>
+
+            <span>Appointments</span>
+
+        </a>
+
+        <a href="doctor-prescriptions.html">
+
+            <i class="fas fa-file-prescription"></i>
+
+            <span>Prescriptions</span>
+
+        </a>
+
+        <a href="doctor-medical-records.html">
+
+            <i class="fas fa-file-medical"></i>
+
+            <span>Medical Records</span>
+
+        </a>
+
+        <a href="doctor-profile.html">
+
+            <i class="fas fa-user-doctor"></i>
+
+            <span>Profile</span>
+
+        </a>
+
+        <a href="#" onclick="logout()">
+
+            <i class="fas fa-right-from-bracket"></i>
+
+            <span>Logout</span>
+
+        </a>
+
+    </nav>
 
 </div>
-
-
-
-<div>
-
-<h2>HMS PRO</h2>
-
-<p>Doctor Portal</p>
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-<nav>
-
-
-
-<a href="doctor-dashboard.html" class="active">
-
-<i class="fa-solid fa-chart-line"></i>
-
-<span>Dashboard</span>
-
-</a>
-
-
-
-
-
-
-
-<a href="doctor-patients.html">
-
-<i class="fa-solid fa-bed-pulse"></i>
-
-<span>My Patients</span>
-
-</a>
-
-
-
-
-
-
-
-<a href="doctor-appointments.html">
-
-<i class="fa-solid fa-calendar-check"></i>
-
-<span>Appointments</span>
-
-</a>
-
-
-
-
-
-
-
-<a href="doctor-prescriptions.html">
-
-<i class="fa-solid fa-file-prescription"></i>
-
-<span>Prescriptions</span>
-
-</a>
-
-
-
-
-
-
-
-<a href="doctor-profile.html">
-
-<i class="fa-solid fa-user-doctor"></i>
-
-<span>Profile</span>
-
-</a>
-
-
-
-
-
-
-
-<a href="records.html">
-
-<i class="fa-solid fa-file-medical"></i>
-
-<span>Medical Records</span>
-
-</a>
-
-
-
-
-
-
-
-<a href="javascript:void(0)" onclick="logout()">
-
-<i class="fa-solid fa-right-from-bracket"></i>
-
-<span>Logout</span>
-
-</a>
-
-
-
-</nav>
-
-
-
-</aside>
-
-
-
-
-
-
-
-
 
 <!-- ================= MAIN ================= -->
 
-
 <div class="main">
-
-
-
-
-
-
 
 <!-- ================= TOPBAR ================= -->
 
+<div class="topbar">
 
+    <div class="welcome">
 
-<header class="topbar">
+        <h1>Doctor Dashboard 📊</h1>
 
+        <p>Welcome back! Monitor today's activities and hospital statistics.</p>
 
+    </div>
 
+    <div class="top-right">
 
+        <div class="search-box">
 
-<div class="welcome">
+            <i class="fas fa-search"></i>
 
+            <input
+                type="text"
+                id="dashboardSearch"
+                placeholder="Search patients, appointments...">
 
+        </div>
 
-<h1>
+        <div class="profile">
 
-Welcome Dr.
+            <i class="fas fa-user-doctor"></i>
 
-<span id="doctorName">
+            <span id="doctorName">Doctor</span>
 
-Doctor
+        </div>
 
-</span>
-
-👨‍⚕️
-
-
-</h1>
-
-
-
-
-<p id="todayDate"></p>
-
-
-
-</div>
-
-
-
-
-
-
-
-<div class="top-right">
-
-
-
-
-
-
-<div class="search-box">
-
-
-<i class="fa-solid fa-search"></i>
-
-
-
-<input
-
-type="text"
-
-placeholder="Search Patients..."
-
->
-
+    </div>
 
 </div>
-
-
-
-
-
-
-
-<button class="icon-btn">
-
-
-<i class="fa-solid fa-bell"></i>
-
-
-</button>
-
-
-
-
-
-
-
-
-<div class="profile-box">
-
-
-
-<i class="fa-solid fa-circle-user"></i>
-
-
-
-<div>
-
-
-<strong>
-
-Doctor
-
-
-</strong>
-
-
-<small>
-
-Medical Staff
-
-</small>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
-</header>
-
-
-
-
-
-
-
-
-
-<!-- ================= DOCTOR BANNER ================= -->
-
-
+<!-- ================= DASHBOARD BANNER ================= -->
 
 <section class="dashboard-banner">
 
+    <div>
 
+        <h2>
+            👨‍⚕️ Welcome Dr.
+            <span id="doctorBannerName">Doctor</span>
+        </h2>
 
+        <p>
+            Monitor today's appointments, patients, prescriptions and hospital
+            activities from one beautiful dashboard.
+        </p>
 
+        <div class="banner-buttons">
 
-<div class="banner-content">
+            <button onclick="location.href='doctor-patients.html'">
 
+                <i class="fas fa-bed-pulse"></i>
 
+                My Patients
 
-<h2>
+            </button>
 
-Good Morning Doctor 👨‍⚕️
+            <button onclick="location.href='doctor-appointments.html'">
 
-</h2>
+                <i class="fas fa-calendar-check"></i>
 
+                Appointments
 
+            </button>
 
-<p>
+            <button onclick="location.href='doctor-prescriptions.html'">
 
-Manage your patients, appointments,
-prescriptions and medical records from one place.
+                <i class="fas fa-file-prescription"></i>
 
-</p>
+                Prescriptions
 
+            </button>
+			<button onclick="location.href='doctor-medical-records.html'">
 
+			    <i class="fas fa-file-medical"></i>
 
+			    Medical Records
 
+			</button>
 
+        </div>
 
+    </div>
 
-<div class="banner-buttons">
+    <div class="banner-icon">
 
+        <i class="fas fa-user-doctor"></i>
 
-
-<button onclick="location.href='doctor-patients.html'">
-
-
-<i class="fa-solid fa-bed-pulse"></i>
-
-
-My Patients
-
-
-</button>
-
-
-
-
-
-
-
-<button onclick="location.href='doctor-appointments.html'">
-
-
-<i class="fa-solid fa-calendar-check"></i>
-
-
-Today's Schedule
-
-
-</button>
-
-
-
-
-
-</div>
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="banner-image">
-
-
-<i class="fa-solid fa-stethoscope"></i>
-
-
-</div>
-
-
-
-
-
-
-
-</section>
-<!-- ================= DOCTOR PROFILE CARD ================= -->
-
-
-<section class="dashboard-card">
-
-
-
-<div class="profile-dashboard">
-
-
-
-
-
-<div class="doctor-avatar">
-
-
-<i class="fa-solid fa-user-doctor"></i>
-
-
-</div>
-
-
-
-
-
-
-
-<div class="doctor-details">
-
-
-
-<h2>
-
-Dr. <span id="profileDoctorName">
-
-Doctor
-
-</span>
-
-
-</h2>
-
-
-
-
-<p>
-
-<i class="fa-solid fa-stethoscope"></i>
-
-<span id="doctorSpecialization">
-
-Specialist Doctor
-
-</span>
-
-
-</p>
-
-
-
-
-
-<p>
-
-<i class="fa-solid fa-envelope"></i>
-
-doctor@hospital.com
-
-</p>
-
-
-
-
-
-
-<p>
-
-<i class="fa-solid fa-phone"></i>
-
-+91 XXXXX XXXXX
-
-</p>
-
-
-
-</div>
-
-
-
-
-
-
-
-<div class="doctor-status">
-
-
-<span>
-
-🟢 Available
-
-</span>
-
-
-</div>
-
-
-
-
-
-
-</div>
-
-
+    </div>
 
 </section>
 
-
-
-
-
-
-
-
-
-<!-- ================= STATISTICS CARDS ================= -->
-
-
+<!-- ================= DASHBOARD STATISTICS ================= -->
 
 <section class="cards">
 
+    <div class="card">
 
+        <div>
 
+            <h2 id="patientCount">0</h2>
 
+            <p>Total Patients</p>
 
+        </div>
 
+        <i class="fas fa-bed-pulse"></i>
 
-<div class="card">
+    </div>
 
+    <div class="card">
 
-<div>
+        <div>
 
+            <h2 id="appointmentCount">0</h2>
 
-<p>
+            <p>Today's Appointments</p>
 
-My Patients
+        </div>
 
-</p>
+        <i class="fas fa-calendar-check"></i>
 
+    </div>
 
-<h2 id="patientCount">
+    <div class="card">
 
-0
+        <div>
 
-</h2>
+            <h2 id="completedCount">0</h2>
 
+            <p>Completed</p>
 
-</div>
+        </div>
 
+        <i class="fas fa-check-double"></i>
 
+    </div>
 
-<i class="fa-solid fa-bed-pulse"></i>
+    <div class="card">
 
+        <div>
 
+            <h2 id="pendingCount">0</h2>
 
-</div>
+            <p>Pending</p>
 
+        </div>
 
+        <i class="fas fa-hourglass-half"></i>
 
+    </div>
 
+</section>
 
+<!-- ================= SECOND ROW ================= -->
 
+<section class="cards">
 
+    <div class="card">
 
-<div class="card">
+        <div>
 
+            <h2 id="prescriptionCount">0</h2>
 
-<div>
+            <p>Prescriptions</p>
 
+        </div>
 
-<p>
+        <i class="fas fa-file-prescription"></i>
 
-Today's Appointments
+    </div>
 
-</p>
+    <div class="card">
 
+        <div>
 
-<h2 id="appointmentCount">
+            <h2 id="recordCount">0</h2>
 
-0
+            <p>Medical Records</p>
 
-</h2>
+        </div>
 
+        <i class="fas fa-file-medical"></i>
 
-</div>
+    </div>
 
+    <div class="card">
 
+        <div>
 
-<i class="fa-solid fa-calendar-check"></i>
+            <h2 id="criticalCount">0</h2>
 
+            <p>Critical Patients</p>
 
+        </div>
 
-</div>
+        <i class="fas fa-triangle-exclamation"></i>
 
+    </div>
 
+    <div class="card">
 
+        <div>
 
+            <h2 id="onlineCount">Online</h2>
 
+            <p>Doctor Status</p>
 
+        </div>
 
+        <i class="fas fa-heart-pulse"></i>
 
-<div class="card">
+    </div>
 
+</section>
+<!-- ================= TODAY'S APPOINTMENTS ================= -->
 
-<div>
+<section class="recent-card">
 
+    <div class="card-header">
 
-<p>
+        <h2>
 
-Medical Records
+            <i class="fas fa-calendar-days"></i>
 
-</p>
+            Today's Appointments
 
+        </h2>
 
-<h2 id="recordCount">
+        <button class="btn"
+                onclick="location.href='doctor-appointments.html'">
 
-0
+            <i class="fas fa-arrow-right"></i>
 
-</h2>
+            View All
 
+        </button>
 
-</div>
+    </div>
 
+    <div class="table-container">
 
+        <table>
 
-<i class="fa-solid fa-file-medical"></i>
+            <thead>
 
+                <tr>
 
+                    <th>ID</th>
 
-</div>
+                    <th>Patient</th>
 
+                    <th>Time</th>
 
+                    <th>Status</th>
 
+                    <th>Action</th>
 
+                </tr>
 
+            </thead>
 
+            <tbody id="todayAppointmentTable">
 
+            </tbody>
 
-<div class="card">
+        </table>
 
-
-<div>
-
-
-<p>
-
-Prescriptions
-
-</p>
-
-
-<h2 id="prescriptionCount">
-
-0
-
-</h2>
-
-
-</div>
-
-
-
-<i class="fa-solid fa-file-prescription"></i>
-
-
-
-</div>
-
-
-
-
-
-
+    </div>
 
 </section>
 
 
 
+<!-- ================= RECENT PATIENTS ================= -->
+
+<section class="recent-card">
+
+    <div class="card-header">
+
+        <h2>
+
+            <i class="fas fa-bed-pulse"></i>
+
+            Recent Patients
+
+        </h2>
+
+        <button class="btn"
+                onclick="location.href='doctor-patients.html'">
+
+            <i class="fas fa-arrow-right"></i>
+
+            View All
+
+        </button>
+
+    </div>
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Name</th>
+
+                    <th>Age</th>
+
+                    <th>Disease</th>
+
+                    <th>Phone</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="recentPatientTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
 
 
 
+<!-- ================= RECENT PRESCRIPTIONS ================= -->
 
+<section class="recent-card">
 
+    <div class="card-header">
 
+        <h2>
+
+            <i class="fas fa-file-prescription"></i>
+
+            Recent Prescriptions
+
+        </h2>
+
+        <button class="btn"
+                onclick="location.href='doctor-prescriptions.html'">
+
+            <i class="fas fa-arrow-right"></i>
+
+            View All
+
+        </button>
+
+    </div>
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Patient</th>
+
+                    <th>Medicine</th>
+
+                    <th>Date</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="recentPrescriptionTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
 <!-- ================= QUICK ACTIONS ================= -->
-
-
 
 <section class="quick-actions">
 
+    <h2>
 
+        <i class="fas fa-bolt"></i>
 
+        Quick Actions
 
+    </h2>
 
-<h2>
+    <div class="action-buttons">
 
-<i class="fa-solid fa-bolt"></i>
+        <button onclick="location.href='doctor-patients.html'">
 
-Quick Actions
+            <i class="fas fa-bed-pulse"></i>
 
-</h2>
+            My Patients
 
+        </button>
 
+        <button onclick="location.href='doctor-appointments.html'">
 
+            <i class="fas fa-calendar-check"></i>
 
+            Appointments
 
+        </button>
 
+        <button onclick="location.href='doctor-prescriptions.html'">
 
+            <i class="fas fa-file-prescription"></i>
 
-<div class="action-buttons">
+            Prescriptions
 
+        </button>
 
+        <button onclick="location.href='doctor-medical-records.html'">
 
+            <i class="fas fa-file-medical"></i>
 
+            Medical Records
 
+        </button>
 
+        <button onclick="location.href='doctor-profile.html'">
 
-<button onclick="location.href='doctor-patients.html'">
+            <i class="fas fa-user-doctor"></i>
 
+            Profile
 
-<i class="fa-solid fa-users"></i>
+        </button>
 
-
-View Patients
-
-
-</button>
-
-
-
-
-
-
-
-
-<button onclick="location.href='doctor-appointments.html'">
-
-
-<i class="fa-solid fa-calendar-days"></i>
-
-
-Appointments
-
-
-</button>
-
-
-
-
-
-
-
-
-<button onclick="location.href='doctor-prescriptions.html'">
-
-
-<i class="fa-solid fa-prescription"></i>
-
-
-Create Prescription
-
-
-</button>
-
-
-
-
-
-
-
-
-<button onclick="location.href='records.html'">
-
-
-<i class="fa-solid fa-file-medical"></i>
-
-
-Medical Records
-
-
-</button>
-
-
-
-
-
-
-
-</div>
-
-
-
-
+    </div>
 
 </section>
-<!-- ================= TODAY APPOINTMENTS ================= -->
-
-
-<section class="dashboard-card">
-
-
-
-<div class="card-header">
-
-
-<h2>
-
-<i class="fa-solid fa-calendar-day"></i>
-
-Today's Appointments
-
-</h2>
-
-
-</div>
-
-
-
-
-
-
-
-<div class="table-container">
-
-
-<table>
-
-
-
-<thead>
-
-
-<tr>
-
-
-<th>Patient</th>
-
-
-<th>Date</th>
-
-
-<th>Time</th>
-
-
-<th>Status</th>
-
-
-</tr>
-
-
-</thead>
-
-
-
-
-
-<tbody id="todayAppointments">
-
-
-<!-- Loaded from doctor.js -->
-
-
-</tbody>
-
-
-
-
-
-</table>
-
-
-</div>
-
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- ================= DASHBOARD GRID ================= -->
-
-
-<div class="dashboard-grid">
-
-
-
-
-
-
-
-<!-- Recent Patients -->
-
-
-<div class="dashboard-card">
-
-
-<div class="card-header">
-
-
-<h2>
-
-
-<i class="fa-solid fa-bed-pulse"></i>
-
-
-Recent Patients
-
-
-</h2>
-
-
-
-</div>
-
-
-
-
-
-
-
-<div class="table-container">
-
-
-<table>
-
-
-
-<thead>
-
-
-<tr>
-
-
-<th>Name</th>
-
-
-<th>Age</th>
-
-
-<th>Disease</th>
-
-
-</tr>
-
-
-</thead>
-
-
-
-
-
-<tbody id="recentPatients">
-
-
-<!-- Loaded from doctor.js -->
-
-
-</tbody>
-
-
-
-
-</table>
-
-
-
-</div>
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- Doctor Summary -->
-
-
-<div class="dashboard-card">
-
-
-
-<div class="card-header">
-
-
-<h2>
-
-
-<i class="fa-solid fa-chart-line"></i>
-
-
-Doctor Summary
-
-
-</h2>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="summary-box">
-
-
-<p>
-
-👨‍⚕️ Welcome to your professional dashboard.
-
-</p>
-
-
-<br>
-
-
-<p>
-
-✔ Manage assigned patients
-
-</p>
-
-
-<p>
-
-✔ Check daily appointments
-
-</p>
-
-
-<p>
-
-✔ Update prescriptions
-
-</p>
-
-
-<p>
-
-✔ Maintain medical records
-
-</p>
-
-
-<br>
-
-
-<p>
-
-Have a productive day! 🚀
-
-</p>
-
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- ================= APPOINTMENT STATUS ================= -->
-
-
-
-<section class="dashboard-card">
-
-
-
-
-
-<div class="card-header">
-
-
-<h2>
-
-
-<i class="fa-solid fa-list-check"></i>
-
-
-Appointment Status Overview
-
-
-</h2>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="table-container">
-
-
-
-<table>
-
-
-
-<thead>
-
-
-<tr>
-
-
-<th>Status</th>
-
-
-<th>Total</th>
-
-
-</tr>
-
-
-</thead>
-
-
-
-
-
-
-<tbody>
-
-
-
-<tr>
-
-
-<td>
-
-🟡 Pending
-
-</td>
-
-
-<td id="pendingAppointments">
-
-0
-
-</td>
-
-
-</tr>
-
-
-
-
-
-<tr>
-
-
-<td>
-
-🔵 Confirmed
-
-</td>
-
-
-<td id="confirmedAppointments">
-
-0
-
-</td>
-
-
-</tr>
-
-
-
-
-
-<tr>
-
-
-<td>
-
-🟢 Completed
-
-</td>
-
-
-<td id="completedAppointments">
-
-0
-
-</td>
-
-
-</tr>
-
-
-
-
-
-</tbody>
-
-
-
-</table>
-
-
-
-</div>
-
-
-
-
-
-</section>
-
-
-
-
-
-
 
 
 
 <!-- ================= FOOTER ================= -->
 
-
-
 <footer class="footer">
 
+    <h3>
 
+        🩺 HMS PRO Doctor Portal
 
-<h3>
+    </h3>
 
-🩺 HMS PRO Doctor Portal
+    <p>
 
-</h3>
+        Professional Healthcare Management System
 
+    </p>
 
+    <p>
 
+        © 2026 Hospital Management System
 
-<p>
-
-Professional Doctor Management System
-
-</p>
-
-
-
-
-<p>
-
-© 2026 Hospital Management System
-
-</p>
-
-
+    </p>
 
 </footer>
 
-
-
-
-
-
-
 </div>
 
-
-
-
-
-
-
-
-
-<!-- ================= SCRIPTS ================= -->
-
-
+<!-- ================= PAGE SCRIPT ================= -->
 
 <script>
 
+document.addEventListener("DOMContentLoaded", () => {
 
-document.addEventListener("DOMContentLoaded",()=>{
+    const name = localStorage.getItem("name") || "Doctor";
 
+    document.getElementById("doctorName").innerHTML = name;
 
-const name =
-
-localStorage.getItem("name")
-
-||
-
-"Doctor";
-
-
-
-const doctorName =
-
-document.getElementById("doctorName");
-
-
-
-if(doctorName){
-
-doctorName.innerHTML = name;
-
-}
-
-
-
-
-const profileName =
-
-document.getElementById("profileDoctorName");
-
-
-
-if(profileName){
-
-profileName.innerHTML = name;
-
-}
-
-
-
-
-
-document.getElementById("todayDate").innerHTML =
-
-new Date().toDateString();
-
-
+    document.getElementById("doctorBannerName").innerHTML = name;
 
 });
 
-
-
 </script>
 
+<!-- ================= JS FILES ================= -->
 
-
-
+<script src="js/config.js"></script>
 
 <script src="js/auth.js"></script>
 
-<script src="js/doctor.js"></script>
+<script src="js/doctor-dashboard.js"></script>
 
 <script src="js/theme.js"></script>
 

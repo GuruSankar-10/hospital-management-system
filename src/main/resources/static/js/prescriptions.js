@@ -2,11 +2,6 @@
 // Doctor Prescriptions
 // ==========================================
 
-const BASE_URL =
-window.location.hostname === "localhost"
-    ? "http://localhost:8080"
-    : "https://hospital-management-system-6pok.onrender.com";
-
 const doctorId = localStorage.getItem("doctorId");
 
 if (!doctorId) {
@@ -18,13 +13,13 @@ if (!doctorId) {
 }
 
 const API =
-BASE_URL + "/prescriptions/doctor/" + doctorId;
+API_URL + "/prescriptions/doctor/" + doctorId;
 
 const SAVE_API =
-BASE_URL + "/prescriptions";
+API_URL + "/prescriptions";
 
 const PATIENT_API =
-BASE_URL + "/patients/doctor/" + doctorId;
+API_URL + "/patients/doctor/" + doctorId;
 
 let prescriptions = [];
 

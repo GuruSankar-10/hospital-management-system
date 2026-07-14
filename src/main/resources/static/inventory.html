@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HMS PRO | Inventory</title>
+
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/inventory.css">
+
+</head>
+
+<body>
+
+<div class="main">
+
+    <!-- ===========================
+            PAGE HEADER
+    ============================ -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>💊 Inventory Management</h1>
+
+            <p>
+                Manage medicines, stock and suppliers.
+            </p>
+
+        </div>
+
+        <button
+            class="btn-primary"
+            onclick="openMedicineModal()">
+
+            + Add Medicine
+
+        </button>
+
+    </div>
+
+    <!-- ===========================
+            SUMMARY CARDS
+    ============================ -->
+
+    <div class="inventory-cards">
+
+        <div class="card">
+
+            <h3>Total Medicines</h3>
+
+            <h2 id="totalMedicine">0</h2>
+
+        </div>
+
+        <div class="card">
+
+            <h3>Total Stock</h3>
+
+            <h2 id="totalStock">0</h2>
+
+        </div>
+
+        <div class="card">
+
+            <h3>Low Stock</h3>
+
+            <h2 id="lowStock">0</h2>
+
+        </div>
+
+        <div class="card">
+
+            <h3>Out of Stock</h3>
+
+            <h2 id="outStock">0</h2>
+
+        </div>
+
+    </div>
+
+    <!-- ===========================
+            SEARCH BAR
+    ============================ -->
+
+    <div class="toolbar">
+
+        <input
+            type="text"
+            id="searchMedicine"
+            placeholder="🔍 Search medicine..."
+            onkeyup="searchMedicine()">
+
+        <select
+            id="categoryFilter"
+            onchange="filterCategory()">
+
+            <option value="">All Categories</option>
+
+            <option>Tablet</option>
+
+            <option>Capsule</option>
+
+            <option>Syrup</option>
+
+            <option>Injection</option>
+
+            <option>Ointment</option>
+
+        </select>
+
+    </div>
+
+    <!-- ===========================
+            INVENTORY TABLE
+    ============================ -->
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Medicine</th>
+
+                <th>Category</th>
+
+                <th>Manufacturer</th>
+
+                <th>Price</th>
+
+                <th>Stock</th>
+
+                <th>Expiry Date</th>
+
+                <th>Status</th>
+
+                <th>Action</th>
+
+            </tr>
+
+            </thead>
+
+            <tbody id="medicineTable">
+
+                <!-- Loaded by JavaScript -->
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<!-- ===========================
+        ADD MEDICINE MODAL
+=========================== -->
+
+<div
+    id="medicineModal"
+    class="modal">
+
+    <div class="modal-content">
+
+        <span
+            class="close"
+            onclick="closeMedicineModal()">
+
+            &times;
+
+        </span>
+
+        <h2>Add Medicine</h2>
+
+        <form id="medicineForm">
+
+            <input
+
+                type="text"
+
+                id="medicineName"
+
+                placeholder="Medicine Name"
+
+                required>
+
+            <input
+
+                type="text"
+
+                id="category"
+
+                placeholder="Category">
+
+            <input
+
+                type="text"
+
+                id="manufacturer"
+
+                placeholder="Manufacturer">
+
+            <input
+
+                type="number"
+
+                step="0.01"
+
+                id="price"
+
+                placeholder="Price">
+
+            <input
+
+                type="number"
+
+                id="stock"
+
+                placeholder="Available Stock">
+
+            <input
+
+                type="date"
+
+                id="expiryDate">
+
+            <textarea
+
+                id="description"
+
+                rows="4"
+
+                placeholder="Medicine Description"></textarea>
+
+            <button
+
+                type="submit"
+
+                class="btn-primary">
+
+                Save Medicine
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script src="js/inventory.js"></script>
+
+</body>
+</html>

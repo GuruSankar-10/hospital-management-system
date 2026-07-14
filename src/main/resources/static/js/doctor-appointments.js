@@ -12,64 +12,25 @@ console.log("Doctor Appointments JS Loaded");
 // BASE URL
 // ===============================
 
+const doctorId = localStorage.getItem("doctorId");
 
-const BASE_URL =
+if (!doctorId) {
 
-window.location.hostname === "localhost"
+    alert("Session expired. Please login again.");
 
-?
-
-"http://localhost:8080"
-
-:
-
-"https://hospital-management-system-6pok.onrender.com";
-
-
-
-
-
-const doctorId =
-localStorage.getItem("doctorId");
-
-
-
-
-if(!doctorId){
-
-alert("Session expired. Please login again.");
-
-window.location.href="login.html";
+    window.location.href = "login.html";
 
 }
 
-
-
-
-
-
 const APPOINTMENT_API =
-
-BASE_URL+
-"/appointments/doctor/"+
-doctorId;
-
-
-
-
+    API_URL + "/appointments/doctor/" + doctorId;
 
 const UPDATE_API =
+    API_URL + "/appointments";
 
-BASE_URL+
-"/appointments";
+let appointments = [];
 
-
-
-
-
-let appointments=[];
-
-let selectedAppointmentId=null;
+let selectedAppointmentId = null;
 
 
 

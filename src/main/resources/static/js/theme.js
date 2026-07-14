@@ -1,47 +1,75 @@
+/*=========================================================
+                HMS PRO THEME
+=========================================================*/
+
 document.addEventListener("DOMContentLoaded", () => {
 
     const body = document.body;
-    const icon = document.getElementById("themeIcon");
-
-    // Load saved theme
-    const savedTheme = localStorage.getItem("theme");
-
-    if (savedTheme === "dark") {
-        body.classList.add("dark");
-        if (icon) {
-            icon.classList.remove("fa-moon");
-            icon.classList.add("fa-sun");
-        }
-    }
 
     const toggle = document.getElementById("themeToggle");
 
-    if (toggle) {
-        toggle.addEventListener("click", () => {
+    if (!toggle) return;
 
-            body.classList.toggle("dark");
+    const icon = toggle.querySelector("i");
 
-            if (body.classList.contains("dark")) {
+    /*=========================================
+            LOAD SAVED THEME
+    =========================================*/
 
-                localStorage.setItem("theme", "dark");
+    const savedTheme = localStorage.getItem("theme");
 
-                if (icon) {
-                    icon.classList.remove("fa-moon");
-                    icon.classList.add("fa-sun");
-                }
+    if (savedTheme === "dark") {
 
-            } else {
+        body.classList.add("dark");
 
-                localStorage.setItem("theme", "light");
+        if (icon) {
 
-                if (icon) {
-                    icon.classList.remove("fa-sun");
-                    icon.classList.add("fa-moon");
-                }
+            icon.className = "fa-solid fa-sun";
+
+        }
+
+    } else {
+
+        body.classList.remove("dark");
+
+        if (icon) {
+
+            icon.className = "fa-solid fa-moon";
+
+        }
+
+    }
+
+    /*=========================================
+            TOGGLE THEME
+    =========================================*/
+
+    toggle.addEventListener("click", () => {
+
+        body.classList.toggle("dark");
+
+        if (body.classList.contains("dark")) {
+
+            localStorage.setItem("theme", "dark");
+
+            if (icon) {
+
+                icon.className = "fa-solid fa-sun";
 
             }
 
-        });
-    }
+        } else {
+
+            localStorage.setItem("theme", "light");
+
+            if (icon) {
+
+                icon.className = "fa-solid fa-moon";
+
+            }
+
+        }
+
+    });
 
 });

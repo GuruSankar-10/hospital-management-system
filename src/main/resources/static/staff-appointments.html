@@ -4,103 +4,128 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Staff Appointments</title>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>HMS PRO | Staff Appointments</title>
 
 <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 <link rel="stylesheet" href="css/theme.css">
-<link rel="stylesheet" href="css/admin.css">
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/staff.css">
 
 </head>
 
-
 <body>
 
+<!-- =========================================
+            LOGIN PROTECTION
+========================================= -->
 
-<!-- Sidebar -->
+<script>
 
-<div class="sidebar">
+if(localStorage.getItem("role")!=="STAFF"){
+
+    window.location.href="login.html";
+
+}
+
+</script>
+
+<!-- =========================================
+            SIDEBAR
+========================================= -->
+
+<aside class="sidebar">
 
 <div class="logo">
 
-<h2>🏥 HMS</h2>
+<div class="logo-icon">
+
+<i class="fa-solid fa-hospital"></i>
+
+</div>
+
+<div class="logo-text">
+
+<h2>HMS PRO</h2>
 
 <p>Staff Panel</p>
 
 </div>
 
+</div>
 
-<nav>
-
+<nav class="menu">
 
 <a href="staff-dashboard.html">
 
-<i class="fas fa-house"></i>
+<i class="fa-solid fa-chart-line"></i>
 
-Dashboard
+<span>Dashboard</span>
 
 </a>
-
-
 
 <a href="staff-patients.html">
 
-<i class="fas fa-bed"></i>
+<i class="fa-solid fa-bed-pulse"></i>
 
-Patients
-
-</a>
-
-
-
-<a href="staff-appointments.html" class="active">
-
-<i class="fas fa-calendar-check"></i>
-
-Appointments
+<span>Patients</span>
 
 </a>
 
+<a href="staff-appointments.html"
+class="active">
 
+<i class="fa-solid fa-calendar-check"></i>
 
-<a href="records.html">
-
-<i class="fas fa-file-medical"></i>
-
-Records
+<span>Appointments</span>
 
 </a>
 
+<a href="staff-records.html">
 
+<i class="fa-solid fa-file-medical"></i>
+
+<span>Medical Records</span>
+
+</a>
 
 <a href="staff-profile.html">
 
-<i class="fas fa-user"></i>
+<i class="fa-solid fa-user-nurse"></i>
 
-Profile
+<span>Profile</span>
 
 </a>
 
+<a href="#"
+onclick="logout();return false;">
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+<span>Logout</span>
+
+</a>
 
 </nav>
 
+</aside>
 
-</div>
-
-
-
-
-
-<!-- Main -->
+<!-- =========================================
+            MAIN CONTENT
+========================================= -->
 
 <div class="main">
 
+<!-- =========================================
+            TOPBAR
+========================================= -->
 
-<div class="topbar">
-
+<header class="topbar">
 
 <div class="welcome">
 
@@ -110,97 +135,276 @@ Profile
 
 </h1>
 
-
 <p>
 
-Manage Patient Appointments
+Manage all patient appointments from one place.
 
 </p>
 
+</div>
+
+<div class="top-actions">
+
+<div class="search-box">
+
+<i class="fa-solid fa-search"></i>
+
+<input
+type="text"
+id="searchAppointment"
+placeholder="Search appointment..."
+onkeyup="searchAppointments()">
 
 </div>
 
+<button
+class="icon-btn"
+onclick="refreshAppointments()">
 
-<div class="profile">
+<i class="fa-solid fa-rotate"></i>
 
-<i class="fas fa-user-nurse"></i>
+</button>
 
-<span id="staffName">
+<div class="profile-box">
+
+<img
+src="https://ui-avatars.com/api/?name=Staff&background=0F766E&color=ffffff"
+alt="Profile">
+
+<div>
+
+<strong id="staffName">
 
 Staff
 
+</strong>
+
+<small>
+
+Hospital Staff
+
+</small>
+
+</div>
+
+</div>
+
+</div>
+
+</header>
+
+<!-- =========================================
+            HERO
+========================================= -->
+
+<section class="dashboard-banner">
+
+<div class="banner-content">
+
+<span class="status-badge">
+
+<i class="fa-solid fa-calendar-days"></i>
+
+Appointments
+
 </span>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-<!-- Search -->
-
-<div class="quick-actions">
-
 
 <h2>
 
-<i class="fas fa-search"></i>
-
-Search Appointment
+Hospital Appointment Management
 
 </h2>
 
+<p>
 
+View, search and manage patient appointments quickly and efficiently.
 
-<input
+</p>
 
-type="text"
+<div class="banner-buttons">
 
-id="searchAppointment"
+<button
+class="primary-btn"
+onclick="refreshAppointments()">
 
-class="search-box"
+<i class="fa-solid fa-rotate"></i>
 
-placeholder="Search appointment..."
+Refresh
 
-onkeyup="searchAppointments()">
-
-
+</button>
 
 </div>
 
+</div>
 
+<div class="banner-image">
 
+<div class="hero-circle">
 
+<i class="fa-solid fa-calendar-check"></i>
 
+</div>
 
+</div>
 
-<!-- Appointment Table -->
+</section>
 
+<!-- =========================================
+            STATISTICS
+========================================= -->
 
-<div class="recent-card">
+<section class="stats-grid">
 
+<div class="stat-card">
+
+<div class="stat-icon blue">
+
+<i class="fa-solid fa-calendar-check"></i>
+
+</div>
+
+<div class="stat-content">
+
+<h2 id="appointmentCount">
+
+0
+
+</h2>
+
+<p>Total Appointments</p>
+
+<span>Registered</span>
+
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-icon green">
+
+<i class="fa-solid fa-calendar-day"></i>
+
+</div>
+
+<div class="stat-content">
+
+<h2 id="todayAppointments">
+
+0
+
+</h2>
+
+<p>Today's Appointments</p>
+
+<span>Today's Schedule</span>
+
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-icon orange">
+
+<i class="fa-solid fa-user-doctor"></i>
+
+</div>
+
+<div class="stat-content">
+
+<h2 id="doctorCount">
+
+0
+
+</h2>
+
+<p>Doctors Assigned</p>
+
+<span>Available Doctors</span>
+
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-icon red">
+
+<i class="fa-solid fa-clock"></i>
+
+</div>
+
+<div class="stat-content">
 
 <h2>
 
-<i class="fas fa-calendar-check"></i>
+24×7
+
+</h2>
+
+<p>Hospital Service</p>
+
+<span>Always Available</span>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =========================================
+        APPOINTMENT TABLE STARTS HERE
+========================================= -->
+<!-- =========================================
+            APPOINTMENT TABLE
+========================================= -->
+
+<section class="dashboard-card">
+
+<div class="card-header">
+
+<h2>
+
+<i class="fa-solid fa-calendar-check"></i>
 
 Appointments List
 
 </h2>
 
+<div class="card-actions">
 
+<select
+id="statusFilter"
+class="search-box"
+onchange="filterAppointments()">
+
+<option value="">All Status</option>
+<option value="Scheduled">Scheduled</option>
+<option value="Completed">Completed</option>
+<option value="Cancelled">Cancelled</option>
+
+</select>
+
+<button
+class="primary-btn"
+onclick="refreshAppointments()">
+
+<i class="fa-solid fa-rotate"></i>
+
+Refresh
+
+</button>
+
+</div>
+
+</div>
+
+<div class="table-responsive">
 
 <table>
 
-
 <thead>
-
 
 <tr>
 
@@ -212,84 +416,303 @@ Appointments List
 
 <th>Date</th>
 
+<th>Time</th>
+
 <th>Status</th>
 
 <th>Action</th>
 
-
 </tr>
-
 
 </thead>
 
-
-
 <tbody id="appointmentTable">
 
+<tr>
+
+<td colspan="7" class="text-center">
+
+Loading appointments...
+
+</td>
+
+</tr>
 
 </tbody>
 
-
-
 </table>
-
-
 
 </div>
 
+</section>
 
+<!-- =========================================
+            TODAY SUMMARY
+========================================= -->
 
+<section class="dashboard-grid">
 
+<div class="dashboard-card">
 
+<div class="card-header">
 
+<h2>
 
-<footer class="footer">
+<i class="fa-solid fa-chart-simple"></i>
+
+Today's Summary
+
+</h2>
+
+</div>
+
+<div class="stats-grid">
+
+<div class="stat-card">
+
+<div class="stat-icon blue">
+
+<i class="fa-solid fa-calendar-plus"></i>
+
+</div>
+
+<div class="stat-content">
+
+<h2 id="scheduledCount">
+
+0
+
+</h2>
+
+<p>Scheduled</p>
+
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-icon green">
+
+<i class="fa-solid fa-circle-check"></i>
+
+</div>
+
+<div class="stat-content">
+
+<h2 id="completedCount">
+
+0
+
+</h2>
+
+<p>Completed</p>
+
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-icon red">
+
+<i class="fa-solid fa-circle-xmark"></i>
+
+</div>
+
+<div class="stat-content">
+
+<h2 id="cancelledCount">
+
+0
+
+</h2>
+
+<p>Cancelled</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="dashboard-card">
+
+<div class="card-header">
+
+<h2>
+
+<i class="fa-solid fa-circle-info"></i>
+
+Staff Instructions
+
+</h2>
+
+</div>
+
+<div class="record-view">
+
+<p>✅ Verify patient identity before check-in.</p>
+
+<p>✅ Confirm doctor's availability.</p>
+
+<p>✅ Update appointment status immediately.</p>
+
+<p>✅ Inform patients about any delays.</p>
+
+<p>✅ Maintain patient privacy.</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =========================================
+            APPOINTMENT DETAILS MODAL
+========================================= -->
+
+<div
+id="appointmentModal"
+class="modal-overlay">
+
+<div class="modal">
+
+<div class="modal-header">
+
+<h2>
+
+<i class="fa-solid fa-calendar-check"></i>
+
+Appointment Details
+
+</h2>
+
+<button
+class="close-btn"
+onclick="closeAppointmentModal()">
+
+<i class="fa-solid fa-xmark"></i>
+
+</button>
+
+</div>
+
+<div
+class="modal-body"
+id="appointmentDetails">
+
+Loading...
+
+</div>
+
+<div class="modal-footer">
+
+<button
+class="secondary-btn"
+onclick="closeAppointmentModal()">
+
+Close
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- =========================================
+            LOADING OVERLAY
+========================================= -->
+
+<div
+id="loadingOverlay"
+class="loading-overlay"
+style="display:none;">
+
+<div class="loader">
+
+<div class="spinner"></div>
 
 <p>
 
-© 2026 Hospital Management System | Staff Panel
+Loading Appointments...
 
 </p>
 
-</footer>
-
-
+</div>
 
 </div>
 
+<!-- =========================================
+            TOAST
+========================================= -->
 
+<div id="toastContainer"></div>
 
+<!-- =========================================
+            FOOTER STARTS NEXT
+========================================= -->
+<!-- =========================================
+                FOOTER
+========================================= -->
 
+<footer class="footer">
 
+<div>
 
+© 2026 HMS PRO | Staff Panel
 
-<script src="js/logout.js"></script>
+</div>
 
+<div>
+
+Appointment Management System
+
+</div>
+
+</footer>
+
+</div>
+
+<!-- =========================================
+            PAGE INITIALIZATION
+========================================= -->
 
 <script>
 
+document.addEventListener("DOMContentLoaded",()=>{
 
-if(
-!localStorage.getItem("role") ||
-localStorage.getItem("role") !== "STAFF"
-){
+    const staffName = localStorage.getItem("name") || "Staff";
 
-window.location.href="login.html";
+    const staffElement = document.getElementById("staffName");
 
-}
+    if(staffElement){
 
+        staffElement.textContent = staffName;
 
+    }
 
-document.getElementById("staffName").innerHTML =
-localStorage.getItem("name");
-
-
+});
 
 </script>
 
+<!-- =========================================
+                JAVASCRIPT
+========================================= -->
+
+<script src="js/config.js"></script>
+
+<script src="js/auth.js"></script>
+
+<script src="js/logout.js"></script>
+
+<script src="js/theme.js"></script>
 
 <script src="js/staff-appointments.js"></script>
-<script src="js/theme.js"></script>
 
 </body>
 

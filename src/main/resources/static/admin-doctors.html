@@ -10,11 +10,16 @@
 
     <!-- Font Awesome -->
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="css/theme.css">
-    <link rel="stylesheet" href="css/admin.css">
+	<link rel="stylesheet" href="css/theme.css">
+
+	<link rel="stylesheet" href="css/common.css">
+
+	<link rel="stylesheet" href="css/animations.css">
+
+	<link rel="stylesheet" href="css/admin.css">
 
 </head>
 
@@ -28,57 +33,57 @@
 
     <div class="logo">
 
-        <div class="logo-icon">
-            <i class="fa-solid fa-hospital"></i>
-        </div>
+        <i class="fa-solid fa-hospital"></i>
 
         <div>
+
             <h2>HMS PRO</h2>
-            <p>Hospital System</p>
+            <small>Hospital System</small>
+
         </div>
 
     </div>
 
-    <nav class="menu">
+    <nav>
 
         <a href="admin-dashboard.html">
             <i class="fa-solid fa-chart-line"></i>
-            <span>Dashboard</span>
+            Dashboard
         </a>
 
         <a href="admin-doctors.html" class="active">
             <i class="fa-solid fa-user-doctor"></i>
-            <span>Doctors</span>
+            Doctors
         </a>
 
         <a href="admin-staff.html">
             <i class="fa-solid fa-user-nurse"></i>
-            <span>Staff</span>
+            Staff
         </a>
 
         <a href="patients.html">
             <i class="fa-solid fa-bed-pulse"></i>
-            <span>Patients</span>
+            Patients
         </a>
 
         <a href="appointments.html">
             <i class="fa-solid fa-calendar-check"></i>
-            <span>Appointments</span>
+            Appointments
         </a>
 
         <a href="billing.html">
             <i class="fa-solid fa-file-invoice-dollar"></i>
-            <span>Billing</span>
+            Billing
         </a>
 
         <a href="records.html">
             <i class="fa-solid fa-file-medical"></i>
-            <span>Medical Records</span>
+            Records
         </a>
 
-        <a href="javascript:void(0)" onclick="logout()">
+        <a href="#" onclick="logout()">
             <i class="fa-solid fa-right-from-bracket"></i>
-            <span>Logout</span>
+            Logout
         </a>
 
     </nav>
@@ -86,23 +91,26 @@
 </aside>
 
 <!-- ===========================
-        MAIN CONTENT
+        MAIN
 =========================== -->
 
 <div class="main">
 
 <!-- ===========================
-        TOPBAR
+        TOP BAR
 =========================== -->
 
 <header class="topbar">
 
-    <div class="welcome">
+    <div>
 
-        <h1>Doctor Management 👨‍⚕️</h1>
+        <h1>
+            <i class="fa-solid fa-user-doctor"></i>
+            Doctor Management
+        </h1>
 
         <p>
-            Manage hospital doctors and specialists
+            Manage hospital doctors professionally.
         </p>
 
     </div>
@@ -116,13 +124,29 @@
             <input
                 type="text"
                 id="searchDoctor"
-                placeholder="Search Doctor..."
+                placeholder="Search doctor..."
                 onkeyup="searchDoctor()">
 
         </div>
 
+        <!-- Dark Mode -->
+
+		<button
+		    id="themeToggle"
+		    class="icon-btn"
+		    title="Toggle Theme">
+
+		    <i
+		        id="themeIcon"
+		        class="fa-solid fa-moon">
+		    </i>
+
+		</button>
+
         <button class="icon-btn">
+
             <i class="fa-solid fa-bell"></i>
+
         </button>
 
         <div class="profile-box">
@@ -131,8 +155,9 @@
 
             <div>
 
-                <strong>Admin</strong>
-                <small>Administrator</small>
+                <strong>Administrator</strong>
+
+                <small>Hospital Admin</small>
 
             </div>
 
@@ -143,122 +168,62 @@
 </header>
 
 <!-- ===========================
-        PAGE BANNER
+        STATS
 =========================== -->
 
-<section class="dashboard-banner">
+<section class="stats-grid">
 
-    <div class="banner-content">
-
-        <h2>Doctor Management Center</h2>
-
-        <p>
-            Add, edit, search and manage all hospital doctors.
-        </p>
-
-        <div class="banner-buttons">
-
-            <button onclick="openDoctorModal()">
-
-                <i class="fa-solid fa-user-plus"></i>
-
-                Add Doctor
-
-            </button>
-
-            <button onclick="location.href='admin-dashboard.html'">
-
-                <i class="fa-solid fa-arrow-left"></i>
-
-                Dashboard
-
-            </button>
-
-        </div>
-
-    </div>
-
-    <div class="banner-image">
+    <div class="stat-card">
 
         <i class="fa-solid fa-user-doctor"></i>
 
-    </div>
-
-</section>
-
-<!-- ===========================
-        DOCTOR STATISTICS
-=========================== -->
-
-<section class="stats-container">
-
-    <div class="stat-card doctors">
-
-        <div class="stat-icon">
-            <i class="fa-solid fa-user-doctor"></i>
-        </div>
-
-        <div class="stat-info">
-
-            <p>Total Doctors</p>
+        <div>
 
             <h2 id="doctorCount">0</h2>
 
-            <span>Registered Doctors</span>
+            <p>Total Doctors</p>
 
         </div>
 
     </div>
 
-    <div class="stat-card patients">
+    <div class="stat-card">
 
-        <div class="stat-icon">
-            <i class="fa-solid fa-heart-pulse"></i>
-        </div>
+        <i class="fa-solid fa-user-check"></i>
 
-        <div class="stat-info">
+        <div>
 
-            <p>Cardiology</p>
+            <h2 id="activeDoctorCount">0</h2>
 
-            <h2 id="cardiologyCount">0</h2>
-
-            <span>Heart Specialists</span>
+            <p>Active Doctors</p>
 
         </div>
 
     </div>
 
-    <div class="stat-card staff">
+    <div class="stat-card">
 
-        <div class="stat-icon">
-            <i class="fa-solid fa-brain"></i>
-        </div>
+        <i class="fa-solid fa-building"></i>
 
-        <div class="stat-info">
+        <div>
 
-            <p>Neurology</p>
+            <h2 id="departmentCount">0</h2>
 
-            <h2 id="neurologyCount">0</h2>
-
-            <span>Brain Specialists</span>
+            <p>Departments</p>
 
         </div>
 
     </div>
 
-    <div class="stat-card appointments">
+    <div class="stat-card">
 
-        <div class="stat-icon">
-            <i class="fa-solid fa-stethoscope"></i>
-        </div>
+        <i class="fa-solid fa-calendar-check"></i>
 
-        <div class="stat-info">
+        <div>
 
-            <p>Other Specialists</p>
+            <h2 id="todayAppointmentCount">0</h2>
 
-            <h2 id="generalCount">0</h2>
-
-            <span>General Doctors</span>
+            <p>Today's Appointments</p>
 
         </div>
 
@@ -267,42 +232,89 @@
 </section>
 
 <!-- ===========================
-        DOCTOR LIST
+        FILTERS
 =========================== -->
 
-<section class="dashboard-card">
+<section class="card">
 
     <div class="card-header">
 
-        <div>
+        <h2>
 
-            <h2>
+            <i class="fa-solid fa-filter"></i>
 
-                <i class="fa-solid fa-user-doctor"></i>
+            Doctor Filters
 
-                Doctor List
+        </h2>
 
-            </h2>
+    </div>
 
-            <p style="color:#64748b;">
+    <div class="filter-grid">
 
-                Manage all registered doctors.
+        <select id="departmentFilter">
 
-            </p>
+            <option value="">All Departments</option>
+            <option>Cardiology</option>
+            <option>Neurology</option>
+            <option>Orthopedics</option>
+            <option>Pediatrics</option>
+            <option>Dermatology</option>
+            <option>General Medicine</option>
 
-        </div>
+        </select>
 
-        <button onclick="openDoctorModal()">
+        <select id="statusFilter">
 
-            <i class="fa-solid fa-plus"></i>
+            <option value="">All Status</option>
+            <option>Active</option>
+            <option>Busy</option>
+            <option>On Leave</option>
+
+        </select>
+
+        <button
+            class="primary-btn"
+            onclick="openDoctorModal()">
+
+            <i class="fa-solid fa-user-plus"></i>
 
             Add Doctor
 
         </button>
 
+        <button
+            class="secondary-btn"
+            onclick="loadDoctors()">
+
+            <i class="fa-solid fa-rotate"></i>
+
+            Refresh
+
+        </button>
+
     </div>
 
-    <div class="table-container">
+</section>
+
+<!-- ===========================
+        TABLE
+=========================== -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <h2>
+
+            <i class="fa-solid fa-users"></i>
+
+            Doctor Directory
+
+        </h2>
+
+    </div>
+
+    <div class="table-responsive">
 
         <table>
 
@@ -311,10 +323,11 @@
                 <tr>
 
                     <th>ID</th>
-                    <th>Name</th>
+                    <th>Doctor</th>
+                    <th>Department</th>
                     <th>Email</th>
-                    <th>Specialization</th>
                     <th>Phone</th>
+                    <th>Status</th>
                     <th>Actions</th>
 
                 </tr>
@@ -323,7 +336,7 @@
 
             <tbody id="doctorTable">
 
-                <!-- JavaScript will load doctors here -->
+                <!-- JavaScript -->
 
             </tbody>
 
@@ -333,7 +346,7 @@
 
 </section>
 <!-- ==========================================
-        ADD / EDIT DOCTOR MODAL
+            ADD / EDIT DOCTOR MODAL
 ========================================== -->
 
 <div class="modal-overlay" id="doctorModal">
@@ -342,10 +355,15 @@
 
         <div class="modal-header">
 
-            <h2 id="modalTitle">Add Doctor</h2>
+            <h2 id="modalTitle">
+
+                <i class="fa-solid fa-user-doctor"></i>
+
+                Add Doctor
+
+            </h2>
 
             <button
-                type="button"
                 class="close-btn"
                 onclick="closeDoctorModal()">
 
@@ -361,82 +379,198 @@
                 type="hidden"
                 id="doctorId">
 
-            <div class="form-group">
+            <!-- =========================
+                    PERSONAL DETAILS
+            ========================== -->
 
-                <label>Doctor Name</label>
+            <h3 class="section-title">
 
-                <input
-                    type="text"
-                    id="doctorName"
-                    placeholder="Enter Doctor Name">
+                <i class="fa-solid fa-user"></i>
 
-            </div>
+                Personal Information
 
-            <div class="form-group">
+            </h3>
 
-                <label>Email</label>
+            <div class="form-grid">
 
-                <input
-                    type="email"
-                    id="doctorEmail"
-                    placeholder="Enter Email Address">
+                <div class="form-group">
 
-            </div>
-
-            <div class="form-group">
-
-                <label>Password</label>
-
-                <div class="password-box">
+                    <label>Doctor Name *</label>
 
                     <input
-                        type="password"
-                        id="doctorPassword"
-                        placeholder="Enter Password">
+                        type="text"
+                        id="doctorName"
+                        placeholder="Enter Full Name">
 
-                    <i
-                        id="togglePassword"
-                        class="fa-solid fa-eye"
-                        onclick="togglePassword()"></i>
+                </div>
+
+                <div class="form-group">
+
+                    <label>Email *</label>
+
+                    <input
+                        type="email"
+                        id="doctorEmail"
+                        placeholder="doctor@hospital.com">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Password *</label>
+
+                    <div class="password-box">
+
+                        <input
+                            type="password"
+                            id="doctorPassword"
+                            placeholder="Password">
+
+                        <i
+                            id="togglePassword"
+                            class="fa-solid fa-eye"
+                            onclick="togglePassword()">
+
+                        </i>
+
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Phone Number *</label>
+
+                    <input
+                        type="text"
+                        id="doctorPhone"
+                        placeholder="+91 9876543210">
 
                 </div>
 
             </div>
 
-            <div class="form-group">
+            <!-- =========================
+                PROFESSIONAL DETAILS
+            ========================== -->
 
-                <label>Phone Number</label>
+            <h3 class="section-title">
 
-                <input
-                    type="text"
-                    id="doctorPhone"
-                    placeholder="Enter Phone Number">
+                <i class="fa-solid fa-stethoscope"></i>
+
+                Professional Information
+
+            </h3>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label>Department</label>
+
+                    <select id="doctorSpecialization">
+
+                        <option value="">Select Department</option>
+                        <option>Cardiology</option>
+                        <option>Neurology</option>
+                        <option>Dermatology</option>
+                        <option>Orthopedics</option>
+                        <option>Gynecology</option>
+                        <option>Pediatrics</option>
+                        <option>General Medicine</option>
+
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Qualification</label>
+
+                    <input
+                        type="text"
+                        id="doctorQualification"
+                        placeholder="MBBS, MD">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Experience</label>
+
+                    <input
+                        type="number"
+                        id="doctorExperience"
+                        placeholder="Years">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Consultation Fee</label>
+
+                    <input
+                        type="number"
+                        id="doctorFee"
+                        placeholder="₹ 500">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Room Number</label>
+
+                    <input
+                        type="text"
+                        id="doctorRoom"
+                        placeholder="Room 203">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Shift</label>
+
+                    <select id="doctorShift">
+
+                        <option>Morning</option>
+                        <option>Evening</option>
+                        <option>Night</option>
+                        <option>Full Day</option>
+
+                    </select>
+
+                </div>
 
             </div>
 
-            <div class="form-group">
+            <!-- =========================
+                    STATUS
+            ========================== -->
 
-                <label>Specialization</label>
+            <h3 class="section-title">
 
-                <select id="doctorSpecialization">
+                <i class="fa-solid fa-circle-check"></i>
 
-                    <option value="">Select Specialization</option>
+                Doctor Status
 
-                    <option value="Cardiology">Cardiology</option>
+            </h3>
 
-                    <option value="Neurology">Neurology</option>
+            <div class="form-grid">
 
-                    <option value="Dermatology">Dermatology</option>
+                <div class="form-group">
 
-                    <option value="Orthopedics">Orthopedics</option>
+                    <label>Status</label>
 
-                    <option value="Gynecology">Gynecology</option>
+                    <select id="doctorStatus">
 
-                    <option value="Pediatrics">Pediatrics</option>
+                        <option>Active</option>
+                        <option>Busy</option>
+                        <option>On Leave</option>
 
-                    <option value="General Medicine">General Medicine</option>
+                    </select>
 
-                </select>
+                </div>
 
             </div>
 
@@ -445,15 +579,17 @@
         <div class="modal-footer">
 
             <button
-                class="cancel-btn"
+                class="secondary-btn"
                 onclick="closeDoctorModal()">
+
+                <i class="fa-solid fa-xmark"></i>
 
                 Cancel
 
             </button>
 
             <button
-                class="save-btn"
+                class="primary-btn"
                 onclick="saveDoctor()">
 
                 <i class="fa-solid fa-floppy-disk"></i>
@@ -469,7 +605,7 @@
 </div>
 
 <!-- ==========================================
-        DELETE CONFIRMATION MODAL
+            DELETE MODAL
 ========================================== -->
 
 <div class="modal-overlay" id="deleteModal">
@@ -496,7 +632,7 @@
 
             </p>
 
-            <p style="color:#64748b;">
+            <p class="warning-text">
 
                 This action cannot be undone.
 
@@ -507,7 +643,7 @@
         <div class="modal-footer">
 
             <button
-                class="cancel-btn"
+                class="secondary-btn"
                 onclick="closeDeleteModal()">
 
                 Cancel
@@ -515,7 +651,7 @@
             </button>
 
             <button
-                class="deleteBtn"
+                class="delete-btn"
                 onclick="confirmDelete()">
 
                 Delete
@@ -527,72 +663,62 @@
     </div>
 
 </div>
-<!-- ==========================================
+
+<!-- ===========================
         PAGE HELPERS
-========================================== -->
+=========================== -->
 
 <script>
 
 function logout(){
 
-    localStorage.removeItem("token");
-    localStorage.removeItem("email");
-    localStorage.removeItem("role");
+    localStorage.clear();
 
-    window.location.href = "login.html";
+    window.location.href="login.html";
 
 }
 
-// Close modal using ESC key
-document.addEventListener("keydown", function(e){
+document.addEventListener("keydown",(e)=>{
 
-    if(e.key === "Escape"){
+    if(e.key==="Escape"){
 
         closeDoctorModal();
+
         closeDeleteModal();
 
     }
 
 });
 
-// Close modal when clicking outside
-window.addEventListener("mousedown", function(e){
+window.onclick=function(e){
 
-    const doctorModal = document.getElementById("doctorModal");
-    const deleteModal = document.getElementById("deleteModal");
+    const doctorModal=document.getElementById("doctorModal");
 
-    if(
-        doctorModal &&
-        doctorModal.style.display === "flex" &&
-        e.target === doctorModal
-    ){
+    const deleteModal=document.getElementById("deleteModal");
+
+    if(e.target===doctorModal){
 
         closeDoctorModal();
 
     }
 
-    if(
-        deleteModal &&
-        deleteModal.style.display === "flex" &&
-        e.target === deleteModal
-    ){
+    if(e.target===deleteModal){
 
         closeDeleteModal();
 
     }
 
-});
+};
 
 </script>
 
-<!-- ==========================================
+<!-- ===========================
         JAVASCRIPT
-========================================== -->
+=========================== -->
+
+<script src="js/theme.js"></script>
 
 <script src="js/admin-doctors.js"></script>
 
-</div>
-<script src="js/theme.js"></script>
 </body>
-
 </html>

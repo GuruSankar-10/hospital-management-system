@@ -14,6 +14,9 @@ public class Medicine {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
+    private String strength;
+
     private String category;
 
     private String manufacturer;
@@ -46,6 +49,14 @@ public class Medicine {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getStrength() {
+        return strength;
+    }
+
+    public void setStrength(String strength) {
+        this.strength = strength;
     }
 
     public String getCategory() {

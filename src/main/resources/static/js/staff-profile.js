@@ -4,12 +4,7 @@ console.log("Staff Profile JS Loaded");
 // Base URL
 // ==========================================
 
-const BASE_URL =
-window.location.hostname === "localhost"
-    ? "http://localhost:8080"
-    : "https://hospital-management-system-6pok.onrender.com";
-
-const STAFF_API = BASE_URL + "/staff";
+const STAFF_API = API_URL + "/staff";
 
 // ==========================================
 // Page Load

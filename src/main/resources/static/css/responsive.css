@@ -1,0 +1,744 @@
+/*=========================================================
+        HMS PRO RESPONSIVE DESIGN
+=========================================================*/
+
+/*=========================================================
+        LARGE LAPTOPS (1400px)
+=========================================================*/
+
+@media (max-width:1400px){
+
+    .main{
+
+        padding:25px;
+
+    }
+
+    .stats-grid{
+
+        grid-template-columns:repeat(3,1fr);
+
+    }
+
+}
+
+/*=========================================================
+        LAPTOP (1200px)
+=========================================================*/
+
+@media (max-width:1200px){
+
+    .stats-grid{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+    .dashboard-banner{
+
+        padding:35px;
+
+    }
+
+    .banner-content h2{
+
+        font-size:34px;
+
+    }
+
+}
+
+/*=========================================================
+        TABLET (992px)
+=========================================================*/
+
+@media (max-width:992px){
+
+/*------------------------------------
+        Sidebar
+------------------------------------*/
+
+.sidebar{
+
+    width:85px;
+
+}
+
+.logo{
+
+    padding:20px 10px;
+
+}
+
+.logo-text{
+
+    display:none;
+
+}
+
+.menu{
+
+    padding:15px 8px;
+
+}
+
+.menu a{
+
+    justify-content:center;
+
+    padding:16px;
+
+}
+
+.menu a span{
+
+    display:none;
+
+}
+
+.menu a i{
+
+    margin:0;
+
+    font-size:22px;
+
+}
+
+/*------------------------------------
+        Main
+------------------------------------*/
+
+.main{
+
+    margin-left:85px;
+
+    width:calc(100% - 85px);
+
+    padding:20px;
+
+}
+
+/*------------------------------------
+        Topbar
+------------------------------------*/
+
+.topbar{
+
+    padding:20px;
+
+}
+
+.search-box{
+
+    width:240px;
+
+}
+
+/*------------------------------------
+        Dashboard
+------------------------------------*/
+
+.dashboard-banner{
+
+    flex-direction:column;
+
+    text-align:center;
+
+    gap:30px;
+
+}
+
+.banner-buttons{
+
+    justify-content:center;
+
+}
+
+.hero-circle{
+
+    width:170px;
+
+    height:170px;
+
+    font-size:70px;
+
+}
+
+/*------------------------------------
+        Cards
+------------------------------------*/
+
+.stats-grid{
+
+    grid-template-columns:repeat(2,1fr);
+
+}
+
+.filter-grid{
+
+    grid-template-columns:repeat(2,1fr);
+
+}
+
+.form-grid{
+
+    grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+/*=========================================================
+        MOBILE (768px)
+=========================================================*/
+
+@media (max-width:768px){
+
+/*------------------------------------
+        Sidebar
+------------------------------------*/
+
+.sidebar{
+
+    position:fixed;
+
+    left:-280px;
+
+    top:0;
+
+    width:270px;
+
+    transition:.35s;
+
+    z-index:9999;
+
+}
+
+.sidebar.active{
+
+    left:0;
+
+}
+
+/*------------------------------------
+        Main
+------------------------------------*/
+
+.main{
+
+    margin-left:0;
+
+    width:100%;
+
+    padding:15px;
+
+}
+
+/*------------------------------------
+        Topbar
+------------------------------------*/
+
+.topbar{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    gap:20px;
+
+}
+
+.top-actions{
+
+    width:100%;
+
+    flex-wrap:wrap;
+
+    gap:15px;
+
+}
+
+.search-box{
+
+    width:100%;
+
+}
+
+.profile-box{
+
+    width:100%;
+
+}
+
+/*------------------------------------
+        Banner
+------------------------------------*/
+
+.dashboard-banner{
+
+    padding:25px;
+
+}
+
+.banner-content h2{
+
+    font-size:28px;
+
+}
+
+.banner-buttons{
+
+    flex-direction:column;
+
+    width:100%;
+
+}
+
+.banner-buttons button{
+
+    width:100%;
+
+}
+
+/*------------------------------------
+        Cards
+------------------------------------*/
+
+.stats-grid{
+
+    grid-template-columns:1fr;
+
+}
+
+.stat-card{
+
+    width:100%;
+
+}
+
+/*------------------------------------
+        Forms
+------------------------------------*/
+
+.filter-grid{
+
+    grid-template-columns:1fr;
+
+}
+
+.form-grid{
+
+    grid-template-columns:1fr;
+
+}
+
+.full-width{
+
+    grid-column:auto;
+
+}
+
+}
+/*=========================================================
+        SMALL MOBILE (576px)
+=========================================================*/
+
+@media (max-width:576px){
+
+/*------------------------------------
+        Typography
+------------------------------------*/
+
+body{
+
+    font-size:14px;
+
+}
+
+.welcome h1{
+
+    font-size:24px;
+
+}
+
+.welcome p{
+
+    font-size:14px;
+
+}
+
+.banner-content h2{
+
+    font-size:24px;
+
+}
+
+.banner-content p{
+
+    font-size:14px;
+
+}
+
+/*------------------------------------
+        Buttons
+------------------------------------*/
+
+.primary-btn,
+.secondary-btn{
+
+    width:100%;
+
+    justify-content:center;
+
+    padding:14px;
+
+    font-size:15px;
+
+}
+
+.icon-btn{
+
+    width:45px;
+
+    height:45px;
+
+}
+
+/*------------------------------------
+        Tables
+------------------------------------*/
+
+.table-responsive{
+
+    width:100%;
+
+    overflow-x:auto;
+
+    border-radius:18px;
+
+}
+
+table{
+
+    min-width:900px;
+
+}
+
+thead th{
+
+    font-size:14px;
+
+    padding:14px;
+
+}
+
+tbody td{
+
+    padding:14px;
+
+    font-size:14px;
+
+}
+
+/*------------------------------------
+        Table Buttons
+------------------------------------*/
+
+.table-btn{
+
+    width:36px;
+
+    height:36px;
+
+    margin:3px;
+
+}
+
+/*------------------------------------
+        Cards
+------------------------------------*/
+
+.dashboard-card{
+
+    padding:18px;
+
+}
+
+.card-header{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    gap:15px;
+
+}
+
+.card-header h2{
+
+    font-size:20px;
+
+}
+
+/*------------------------------------
+        Statistics
+------------------------------------*/
+
+.stat-card{
+
+    padding:20px;
+
+    gap:15px;
+
+}
+
+.stat-icon{
+
+    width:60px;
+
+    height:60px;
+
+    font-size:24px;
+
+}
+
+.stat-content h2{
+
+    font-size:28px;
+
+}
+
+/*------------------------------------
+        Profile
+------------------------------------*/
+
+.profile-box{
+
+    justify-content:center;
+
+}
+
+.profile-box img{
+
+    width:50px;
+
+    height:50px;
+
+}
+
+}
+
+/*=========================================================
+        RESPONSIVE MODALS
+=========================================================*/
+
+@media(max-width:768px){
+
+.modal{
+
+    width:98%;
+
+    max-height:95vh;
+
+    overflow-y:auto;
+
+}
+
+.modal-header{
+
+    padding:18px;
+
+}
+
+.modal-body{
+
+    padding:18px;
+
+}
+
+.modal-footer{
+
+    padding:18px;
+
+    flex-direction:column;
+
+}
+
+.modal-footer button{
+
+    width:100%;
+
+}
+
+}
+
+/*=========================================================
+        RESPONSIVE FORMS
+=========================================================*/
+
+@media(max-width:768px){
+
+.form-group{
+
+    width:100%;
+
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+
+    width:100%;
+
+}
+
+textarea{
+
+    min-height:120px;
+
+}
+
+}
+
+/*=========================================================
+        RESPONSIVE FILTERS
+=========================================================*/
+
+@media(max-width:768px){
+
+.filter-grid{
+
+    display:grid;
+
+    grid-template-columns:1fr;
+
+    gap:15px;
+
+}
+
+}
+
+/*=========================================================
+        RESPONSIVE SEARCH
+=========================================================*/
+
+@media(max-width:768px){
+
+.search-box{
+
+    width:100%;
+
+}
+
+}
+
+/*=========================================================
+        RESPONSIVE HERO IMAGE
+=========================================================*/
+
+@media(max-width:768px){
+
+.hero-circle{
+
+    width:140px;
+
+    height:140px;
+
+    font-size:60px;
+
+}
+
+}
+
+/*=========================================================
+        RESPONSIVE FOOTER
+=========================================================*/
+
+@media(max-width:768px){
+
+.footer{
+
+    flex-direction:column;
+
+    text-align:center;
+
+    gap:10px;
+
+}
+
+}
+
+/*=========================================================
+        RESPONSIVE PAGINATION
+=========================================================*/
+
+@media(max-width:768px){
+
+.pagination{
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+}
+
+}
+
+/*=========================================================
+        IMAGES
+=========================================================*/
+
+img{
+
+    max-width:100%;
+
+    height:auto;
+
+    display:block;
+
+}
+
+/*=========================================================
+        RESPONSIVE UTILITIES
+=========================================================*/
+
+.hide-mobile{
+
+    display:block;
+
+}
+
+.show-mobile{
+
+    display:none;
+
+}
+
+@media(max-width:768px){
+
+.hide-mobile{
+
+    display:none !important;
+
+}
+
+.show-mobile{
+
+    display:block !important;
+
+}
+
+}
+
+/*=========================================================
+        TOUCH FRIENDLY
+=========================================================*/
+
+button,
+input,
+select,
+textarea{
+
+    min-height:44px;
+
+}

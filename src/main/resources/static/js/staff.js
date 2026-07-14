@@ -4,27 +4,10 @@ console.log("STAFF JS LOADED");
 // ==========================================
 // BASE URL
 // ==========================================
-
-
-const BASE_URL =
-window.location.hostname === "localhost"
-?
-"http://localhost:8080"
-:
-"https://hospital-management-system-6pok.onrender.com";
-
-
-
 const STAFF_API_URL =
-BASE_URL + "/staff";
-
-
+API_URL + "/staff";
 
 let deleteId = null;
-
-
-
-
 
 
 

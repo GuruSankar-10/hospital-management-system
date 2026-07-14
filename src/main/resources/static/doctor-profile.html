@@ -3,1197 +3,912 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-<title>Doctor Profile</title>
+    <title>HMS PRO | Doctor Profile</title>
 
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/doctor.css">
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- Google Font -->
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
 
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
 
-<link rel="stylesheet" href="css/theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
 
-<link rel="stylesheet" href="css/doctor.css">
+    <!-- Font Awesome -->
 
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 </head>
 
-
 <body>
 
-
-
-<!-- ================= SIDEBAR ================= -->
-
+<!-- =========================================================
+                        SIDEBAR
+========================================================= -->
 
 <div class="sidebar">
 
+    <div class="logo">
 
+        <h2>
 
-<div class="logo">
+            🩺 HMS PRO
 
+        </h2>
 
-<h2>
+        <p>
 
-🩺 HMS PRO
+            Doctor Portal
 
-</h2>
+        </p>
 
+    </div>
 
-<p>
+    <nav>
 
-Doctor Portal
+        <a href="doctor-dashboard.html">
 
-</p>
+            <i class="fas fa-house"></i>
 
+            <span>
+
+                Dashboard
+
+            </span>
+
+        </a>
+
+        <a href="doctor-patients.html">
+
+            <i class="fas fa-bed-pulse"></i>
+
+            <span>
+
+                My Patients
+
+            </span>
+
+        </a>
+
+        <a href="doctor-appointments.html">
+
+            <i class="fas fa-calendar-check"></i>
+
+            <span>
+
+                Appointments
+
+            </span>
+
+        </a>
+
+        <a href="doctor-prescriptions.html">
+
+            <i class="fas fa-file-prescription"></i>
+
+            <span>
+
+                Prescriptions
+
+            </span>
+
+        </a>
+
+        <a href="doctor-medical-records.html">
+
+            <i class="fas fa-file-medical"></i>
+
+            <span>
+
+                Medical Records
+
+            </span>
+
+        </a>
+
+        <a href="doctor-profile.html"
+           class="active">
+
+            <i class="fas fa-user-doctor"></i>
+
+            <span>
+
+                Profile
+
+            </span>
+
+        </a>
+
+        <a href="#"
+           onclick="logout()">
+
+            <i class="fas fa-right-from-bracket"></i>
+
+            <span>
+
+                Logout
+
+            </span>
+
+        </a>
+
+    </nav>
 
 </div>
 
-
-
-
-
-<nav>
-
-
-<a href="doctor-dashboard.html">
-
-
-<i class="fas fa-house"></i>
-
-<span>
-
-Dashboard
-
-</span>
-
-
-</a>
-
-
-
-
-
-<a href="doctor-patients.html">
-
-
-<i class="fas fa-bed"></i>
-
-<span>
-
-My Patients
-
-</span>
-
-
-</a>
-
-
-
-
-
-<a href="doctor-appointments.html">
-
-
-<i class="fas fa-calendar-check"></i>
-
-<span>
-
-Appointments
-
-</span>
-
-
-</a>
-
-
-
-
-
-<a href="doctor-prescriptions.html">
-
-
-<i class="fas fa-file-prescription"></i>
-
-<span>
-
-Prescriptions
-
-</span>
-
-
-</a>
-
-
-
-
-
-<a href="doctor-profile.html"
-class="active">
-
-
-<i class="fas fa-user-doctor"></i>
-
-<span>
-
-Profile
-
-</span>
-
-
-</a>
-
-
-
-
-
-<a href="#" onclick="logout()">
-
-
-
-<i class="fas fa-right-from-bracket"></i>
-
-
-<span>
-
-Logout
-
-</span>
-
-
-</a>
-
-
-
-</nav>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- ================= MAIN ================= -->
-
+<!-- =========================================================
+                        MAIN
+========================================================= -->
 
 <div class="main">
 
-
-
-
-
-<!-- ================= TOPBAR ================= -->
-
+<!-- =========================================================
+                        TOPBAR
+========================================================= -->
 
 <div class="topbar">
 
+    <div class="welcome">
 
+        <h1>
 
+            Doctor Profile 👨‍⚕️
 
+        </h1>
 
-<div class="welcome">
+        <p>
 
+            View and update your professional profile.
 
-<h1>
+        </p>
 
-Doctor Profile 👨‍⚕️
+    </div>
 
-</h1>
+    <div class="top-right">
 
+        <div class="search-box">
 
+            <i class="fas fa-search"></i>
 
-<p>
+            <input
 
-Manage your professional information
+                type="text"
 
-</p>
+                id="profileSearch"
 
+                placeholder="Search..."
 
-</div>
+            >
 
+        </div>
 
+        <div class="profile">
 
+            <i class="fas fa-user-doctor"></i>
 
+            <span id="doctorName">
 
+                Doctor
 
+            </span>
 
-<div class="profile">
+        </div>
 
-
-<i class="fas fa-user-doctor"></i>
-
-
-
-<span id="doctorName">
-
-Doctor
-
-</span>
-
-
-
-</div>
-
-
-
-
+    </div>
 
 </div>
 
+<!-- =========================================================
+                    PROFILE BANNER
+========================================================= -->
 
+<section class="dashboard-banner">
 
+    <div>
 
+        <h2>
 
+            👨‍⚕️ Welcome
 
+            <span id="doctorBannerName">
 
+                Doctor
 
+            </span>
 
-<!-- ================= PROFILE HEADER ================= -->
+        </h2>
 
+        <p>
 
-<section class="profile-banner">
+            Keep your profile up to date for better communication with
+            patients and hospital administrators.
 
+        </p>
 
+        <div class="banner-buttons">
 
+            <button
+                onclick="location.href='doctor-dashboard.html'">
 
+                <i class="fas fa-chart-line"></i>
 
-<div class="doctor-avatar">
+                Dashboard
 
+            </button>
 
-<i class="fas fa-user-doctor"></i>
+            <button
+                onclick="location.href='doctor-appointments.html'">
 
+                <i class="fas fa-calendar-check"></i>
 
-</div>
+                Appointments
 
+            </button>
 
+        </div>
 
+    </div>
 
+    <div class="banner-icon">
 
+        <i class="fas fa-user-doctor"></i>
 
-
-<div>
-
-
-
-<h2 id="profileName">
-
-Doctor Name
-
-</h2>
-
-
-
-
-
-<p>
-
-
-<i class="fas fa-stethoscope"></i>
-
-
-<span id="profileSpecialization">
-
-Specialization
-
-</span>
-
-
-</p>
-
-
-
-
-
-
-
-<p>
-
-
-<i class="fas fa-envelope"></i>
-
-
-<span id="profileEmail">
-
-Email
-
-</span>
-
-
-</p>
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-</section>
-<!-- ================= PROFILE INFORMATION ================= -->
-
-
-<section class="quick-actions">
-
-
-
-<h2>
-
-<i class="fas fa-user-edit"></i>
-
-Personal Information
-
-</h2>
-
-
-
-
-
-<br>
-
-
-
-
-
-<div class="form-grid">
-
-
-
-
-
-<div>
-
-
-<label>
-
-Doctor Name
-
-</label>
-
-
-
-<input
-
-type="text"
-
-id="doctorFullName"
-
-placeholder="Enter Doctor Name"
-
-
->
-
-
-</div>
-
-
-
-
-
-
-
-<div>
-
-
-<label>
-
-Email
-
-</label>
-
-
-
-<input
-
-type="email"
-
-id="doctorEmail"
-
-placeholder="Enter Email"
-
-readonly
-
-
->
-
-
-</div>
-
-
-
-
-
-
-
-<div>
-
-
-<label>
-
-Specialization
-
-</label>
-
-
-
-<select id="doctorSpecialization">
-
-
-
-<option value="">
-
-Select Specialization
-
-</option>
-
-
-
-<option>
-
-General Medicine
-
-</option>
-
-
-
-<option>
-
-Cardiology
-
-</option>
-
-
-
-<option>
-
-Neurology
-
-</option>
-
-
-
-<option>
-
-Orthopedic
-
-</option>
-
-
-
-<option>
-
-Pediatrics
-
-</option>
-
-
-
-<option>
-
-Dermatology
-
-</option>
-
-
-
-<option>
-
-ENT
-
-</option>
-
-
-
-<option>
-
-Gynecology
-
-</option>
-
-
-
-</select>
-
-
-
-</div>
-
-
-
-
-
-
-
-<div>
-
-
-<label>
-
-Phone Number
-
-</label>
-
-
-
-<input
-
-type="text"
-
-id="doctorPhone"
-
-placeholder="Enter Phone Number"
-
-
->
-
-
-
-</div>
-
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<br>
-
-
-
-
-
-
-<button
-
-class="btn"
-
-onclick="updateDoctorProfile()">
-
-
-
-<i class="fas fa-save"></i>
-
-
-Save Profile
-
-
-
-</button>
-
-
-
-
-
+    </div>
 
 </section>
 
-
-
-
-
-
-
-
-
-<!-- ================= CHANGE PASSWORD ================= -->
-
-
-<section class="quick-actions">
-
-
-
-
-
-<h2>
-
-
-<i class="fas fa-lock"></i>
-
-
-Change Password
-
-
-</h2>
-
-
-
-
-
-
-
-<br>
-
-
-
-
-
-
-
-<div class="form-grid">
-
-
-
-
-
-<div>
-
-
-<label>
-
-Current Password
-
-</label>
-
-
-
-<input
-
-type="password"
-
-id="oldPassword"
-
-placeholder="Current Password"
-
-
->
-
-
-
-</div>
-
-
-
-
-
-
-
-<div>
-
-
-<label>
-
-New Password
-
-</label>
-
-
-
-<input
-
-type="password"
-
-id="newPassword"
-
-placeholder="New Password"
-
-
->
-
-
-
-</div>
-
-
-
-
-
-
-
-<div>
-
-
-<label>
-
-Confirm Password
-
-</label>
-
-
-
-<input
-
-type="password"
-
-id="confirmPassword"
-
-placeholder="Confirm Password"
-
-
->
-
-
-
-</div>
-
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<br>
-
-
-
-
-
-
-
-<button
-
-class="btn"
-
-onclick="changePassword()">
-
-
-
-<i class="fas fa-key"></i>
-
-
-Update Password
-
-
-
-</button>
-
-
-
-
-
-
-</section>
-<!-- ================= DOCTOR STATISTICS ================= -->
-
+<!-- =========================================================
+                    DASHBOARD CARDS
+========================================================= -->
 
 <section class="cards">
 
+    <div class="card">
 
+        <div>
 
-<div class="card">
+            <h2 id="patientCount">
 
+                0
 
-<div>
+            </h2>
 
+            <p>
 
-<h2 id="profilePatients">
+                Patients
 
-0
+            </p>
 
-</h2>
+        </div>
 
+        <i class="fas fa-bed-pulse"></i>
 
-<p>
+    </div>
 
-Total Patients
+    <div class="card">
 
-</p>
+        <div>
 
+            <h2 id="appointmentCount">
 
-</div>
+                0
 
+            </h2>
 
-<i class="fas fa-bed"></i>
+            <p>
 
+                Appointments
 
-</div>
+            </p>
 
+        </div>
 
+        <i class="fas fa-calendar-check"></i>
 
+    </div>
 
+    <div class="card">
 
+        <div>
 
-<div class="card">
+            <h2 id="experienceCard">
 
+                0
 
-<div>
+            </h2>
 
+            <p>
 
-<h2 id="profileAppointments">
+                Experience
 
-0
+            </p>
 
-</h2>
+        </div>
 
+        <i class="fas fa-user-graduate"></i>
 
-<p>
+    </div>
 
-Appointments
+    <div class="card">
 
-</p>
+        <div>
 
+            <h2>
 
-</div>
+                ★ 4.9
 
+            </h2>
 
-<i class="fas fa-calendar-check"></i>
+            <p>
 
+                Rating
 
-</div>
+            </p>
 
+        </div>
 
+        <i class="fas fa-star"></i>
 
-
-
-
-
-<div class="card">
-
-
-<div>
-
-
-<h2 id="profilePrescriptions">
-
-0
-
-</h2>
-
-
-<p>
-
-Prescriptions
-
-</p>
-
-
-</div>
-
-
-<i class="fas fa-file-prescription"></i>
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="card">
-
-
-<div>
-
-
-<h2>
-
-⭐
-
-</h2>
-
-
-<p>
-
-Doctor Rating
-
-</p>
-
-
-</div>
-
-
-<i class="fas fa-star"></i>
-
-
-</div>
-
-
-
-
+    </div>
 
 </section>
-
-
-
-
-
-
-
-
-
-<!-- ================= PROFESSIONAL SUMMARY ================= -->
-
+<!-- =========================================================
+                    PROFILE INFORMATION
+========================================================= -->
 
 <section class="recent-card">
 
+    <div class="card-header">
 
+        <h2>
 
+            <i class="fas fa-id-card"></i>
 
+            Personal Information
 
-<h2>
+        </h2>
 
+    </div>
 
-<i class="fas fa-chart-line"></i>
+    <div class="profile-container">
 
+        <!-- ================= LEFT SIDE ================= -->
 
-Professional Summary
+        <div class="profile-left">
 
+            <div class="profile-image">
 
-</h2>
+                <img
+                    id="doctorPhoto"
+                    src="images/doctor.png"
+                    alt="Doctor Photo">
 
+            </div>
 
+            <h2 id="profileName">
 
+                Doctor Name
 
+            </h2>
 
+            <p id="profileSpecialization">
 
+                General Physician
 
-<br>
+            </p>
 
+            <button class="btn">
 
+                <i class="fas fa-camera"></i>
 
+                Upload Photo
 
+            </button>
 
+        </div>
 
+        <!-- ================= RIGHT SIDE ================= -->
 
-<div class="summary">
+        <div class="profile-right">
 
+            <div class="profile-grid">
 
+                <div class="form-group">
 
+                    <label>
 
+                        Full Name
 
-<p>
+                    </label>
 
-👨‍⚕️ Welcome to your HMS PRO Doctor Profile.
+                    <input
+                        type="text"
+                        id="fullName"
+                        placeholder="Doctor Name">
 
-</p>
+                </div>
 
+                <div class="form-group">
 
+                    <label>
 
+                        Email
 
+                    </label>
 
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="doctor@email.com">
 
-<br>
+                </div>
 
+                <div class="form-group">
 
+                    <label>
 
+                        Phone
 
+                    </label>
 
-<p>
+                    <input
+                        type="text"
+                        id="phone"
+                        placeholder="Phone Number">
 
-✔ Manage assigned patients
+                </div>
 
-</p>
+                <div class="form-group">
 
+                    <label>
 
+                        Department
 
+                    </label>
 
+                    <input
+                        type="text"
+                        id="department"
+                        placeholder="Department">
 
+                </div>
 
-<p>
+                <div class="form-group">
 
-✔ Review appointments
+                    <label>
 
-</p>
+                        Specialization
 
+                    </label>
 
+                    <input
+                        type="text"
+                        id="specialization"
+                        placeholder="Specialization">
 
+                </div>
 
+                <div class="form-group">
 
+                    <label>
 
+                        Qualification
 
-<p>
+                    </label>
 
-✔ Create digital prescriptions
+                    <input
+                        type="text"
+                        id="qualification"
+                        placeholder="Qualification">
 
-</p>
+                </div>
 
+                <div class="form-group">
 
+                    <label>
 
+                        Experience (Years)
 
+                    </label>
 
+                    <input
+                        type="number"
+                        id="experience"
+                        placeholder="Experience">
 
+                </div>
 
-<p>
+                <div class="form-group">
 
-✔ Maintain patient medical records
+                    <label>
 
-</p>
+                        Gender
 
+                    </label>
 
+                    <select id="gender">
 
+                        <option value="Male">Male</option>
 
+                        <option value="Female">Female</option>
 
+                        <option value="Other">Other</option>
 
+                    </select>
 
-<p>
+                </div>
 
-✔ Update professional information
+            </div>
 
-</p>
+            <div class="form-group">
 
+                <label>
 
+                    About Doctor
 
+                </label>
 
+                <textarea
+                    id="about"
+                    rows="5"
+                    placeholder="Write a short professional profile..."></textarea>
 
+            </div>
 
-</div>
+            <div
+                style="
+                display:flex;
+                justify-content:flex-end;
+                gap:15px;
+                margin-top:25px;
+                ">
 
+                <button
+                    class="deleteBtn"
+                    type="reset">
 
+                    <i class="fas fa-rotate-left"></i>
 
+                    Reset
 
+                </button>
 
+                <button
+                    class="btn"
+                    onclick="saveProfile()">
+
+                    <i class="fas fa-save"></i>
+
+                    Save Profile
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </section>
 
 
 
+<!-- =========================================================
+                    ACCOUNT INFORMATION
+========================================================= -->
 
+<section class="recent-card">
 
+    <div class="card-header">
 
+        <h2>
 
+            <i class="fas fa-circle-info"></i>
 
+            Account Information
 
-<!-- ================= FOOTER ================= -->
+        </h2>
 
+    </div>
+
+    <div class="profile-grid">
+
+        <div class="form-group">
+
+            <label>
+
+                Doctor ID
+
+            </label>
+
+            <input
+                type="text"
+                id="doctorId"
+                readonly>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>
+
+                Account Status
+
+            </label>
+
+            <input
+                type="text"
+                id="accountStatus"
+                value="ACTIVE"
+                readonly>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>
+
+                Last Login
+
+            </label>
+
+            <input
+                type="text"
+                id="lastLogin"
+                readonly>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>
+
+                Role
+
+            </label>
+
+            <input
+                type="text"
+                value="DOCTOR"
+                readonly>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- =========================================================
+                    CHANGE PASSWORD
+========================================================= -->
+
+<section class="recent-card">
+
+    <div class="card-header">
+
+        <h2>
+
+            <i class="fas fa-lock"></i>
+
+            Security Settings
+
+        </h2>
+
+    </div>
+
+    <div class="profile-grid">
+
+        <div class="form-group">
+
+            <label>
+
+                Current Password
+
+            </label>
+
+            <input
+                type="password"
+                id="currentPassword"
+                placeholder="Current Password">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>
+
+                New Password
+
+            </label>
+
+            <input
+                type="password"
+                id="newPassword"
+                placeholder="New Password">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>
+
+                Confirm Password
+
+            </label>
+
+            <input
+                type="password"
+                id="confirmPassword"
+                placeholder="Confirm Password">
+
+        </div>
+
+    </div>
+
+    <div
+        style="
+        display:flex;
+        justify-content:flex-end;
+        margin-top:25px;
+        ">
+
+        <button
+            class="btn"
+            onclick="changePassword()">
+
+            <i class="fas fa-key"></i>
+
+            Update Password
+
+        </button>
+
+    </div>
+
+</section>
+
+<!-- =========================================================
+                    QUICK ACTIONS
+========================================================= -->
+
+<section class="quick-actions">
+
+    <h2>
+
+        <i class="fas fa-bolt"></i>
+
+        Quick Actions
+
+    </h2>
+
+    <div class="action-buttons">
+
+        <button
+            onclick="location.href='doctor-dashboard.html'">
+
+            <i class="fas fa-chart-line"></i>
+
+            Dashboard
+
+        </button>
+
+        <button
+            onclick="location.href='doctor-patients.html'">
+
+            <i class="fas fa-bed-pulse"></i>
+
+            My Patients
+
+        </button>
+
+        <button
+            onclick="location.href='doctor-appointments.html'">
+
+            <i class="fas fa-calendar-check"></i>
+
+            Appointments
+
+        </button>
+
+        <button
+            onclick="location.href='doctor-prescriptions.html'">
+
+            <i class="fas fa-file-prescription"></i>
+
+            Prescriptions
+
+        </button>
+
+        <button
+            onclick="location.href='doctor-medical-records.html'">
+
+            <i class="fas fa-file-medical"></i>
+
+            Medical Records
+
+        </button>
+
+    </div>
+
+</section>
+
+<!-- =========================================================
+                        FOOTER
+========================================================= -->
 
 <footer class="footer">
 
+    <h3>
 
+        🩺 HMS PRO Doctor Portal
 
-<h3>
+    </h3>
 
-🩺 HMS PRO Doctor Portal
+    <p>
 
-</h3>
+        Professional Healthcare Management System
 
+    </p>
 
+    <p>
 
+        © 2026 Hospital Management System
 
-
-
-<p>
-
-Professional Healthcare Management System
-
-</p>
-
-
-
-
-
-
-
-<p>
-
-© 2026 Hospital Management System
-
-</p>
-
-
-
-
-
+    </p>
 
 </footer>
 
-
-
-
-
-
-
-
 </div>
 
-
-
-
-
-
-
-
-
-<!-- ================= SCRIPTS ================= -->
-
-
+<!-- =========================================================
+                        PAGE SCRIPT
+========================================================= -->
 
 <script>
 
+document.addEventListener("DOMContentLoaded",()=>{
 
-document.addEventListener(
-"DOMContentLoaded",
-()=>{
+    const doctorName =
+    localStorage.getItem("name") || "Doctor";
 
+    document.getElementById("doctorName").innerHTML =
+    doctorName;
 
-const name =
+    document.getElementById("doctorBannerName").innerHTML =
+    doctorName;
 
-localStorage.getItem("name")
+    document.getElementById("profileName").innerHTML =
+    doctorName;
 
-||
+    document.getElementById("doctorId").value =
+    localStorage.getItem("doctorId") || "";
 
-"Doctor";
-
-
-
-const doctorName =
-
-document.getElementById(
-"doctorName"
-);
-
-
-
-if(doctorName){
-
-doctorName.innerHTML =
-name;
-
-}
-
-
+    document.getElementById("lastLogin").value =
+    new Date().toLocaleString();
 
 });
 
-
-
 </script>
 
+<!-- =========================================================
+                        JAVASCRIPT
+========================================================= -->
 
-
-
-
+<script src="js/config.js"></script>
 <script src="js/auth.js"></script>
-
 <script src="js/doctor-profile.js"></script>
-
 <script src="js/theme.js"></script>
-
-
 
 </body>
 

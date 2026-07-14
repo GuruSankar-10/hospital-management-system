@@ -1,89 +1,113 @@
-const BASE_URL = "http://localhost:8080";
+console.log("🏥 HMS PRO Dashboard Loaded");
 
-const DASHBOARD_API = BASE_URL + "/dashboard/stats";
+/*=========================================================
+                    API CONFIGURATION
+=========================================================*/
+const API = {
 
-// ==========================================
-// Dashboard Initialization
-// ==========================================
+    doctors: API_URL + "/doctors",
+
+    patients: API_URL + "/patients",
+
+    appointments: API_URL + "/appointments",
+
+    billing: API_URL + "/billing"
+
+};
+/*=========================================================
+                    GLOBAL DATA
+=========================================================*/
+
+let doctors = [];
+let patients = [];
+let appointments = [];
+let bills = [];
+
+/*=========================================================
+                    PAGE LOAD
+=========================================================*/
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    loadDashboard();
-
-    loadRevenueChart();
-
-    loadPatientChart();
+    initializeDashboard();
 
 });
 
-// ==========================================
-// Load Dashboard Data
-// ==========================================
+/*=========================================================
+                    INITIALIZE
+=========================================================*/
 
-async function loadDashboard() {
+async function initializeDashboard(){
 
-    try {
+    showLoading();
 
-        const response = await fetch(DASHBOARD_API);
+    await Promise.all([
 
-        if (!response.ok) {
+        loadDoctors(),
 
-            throw new Error("Failed to load dashboard");
+        loadPatients(),
+
+        loadAppointments(),
+
+        loadBilling()
+
+    ]);
+
+    updateDashboardCards();
+
+    hideLoading();
+
+}
+
+/*=========================================================
+                    LOADING
+=========================================================*/
+
+function showLoading(){
+
+    const overlay =
+    document.getElementById("loadingOverlay");
+
+    if(overlay){
+
+        overlay.style.display="flex";
+
+    }
+
+}
+
+function hideLoading(){
+
+    const overlay =
+    document.getElementById("loadingOverlay");
+
+    if(overlay){
+
+        overlay.style.display="none";
+
+    }
+
+}
+
+/*=========================================================
+                    LOAD DOCTORS
+=========================================================*/
+
+async function loadDoctors(){
+
+    try{
+
+        const response =
+        await fetch(API.doctors);
+
+        if(!response.ok){
+
+            throw new Error("Unable to load doctors.");
 
         }
 
-        const data = await response.json();
-
-        animateCounter("doctorCount", data.doctors);
-
-        animateCounter("staffCount", data.staff);
-
-        animateCounter("patientCount", data.patients);
-
-        animateCounter("appointmentCount", data.appointments);
-
-        animateCounter("summaryDoctorCount", data.doctors);
-
-        animateCounter("summaryStaffCount", data.staff);
-
-        animateCounter("summaryPatientCount", data.patients);
-
-        animateCounter("summaryAppointmentCount", data.appointments);
-
-        if (document.getElementById("revenue")) {
-
-            document.getElementById("revenue").innerHTML =
-            "₹ " + data.revenue;
-
-        }
-
-        if (document.getElementById("paidBills")) {
-
-            document.getElementById("paidBills").innerHTML =
-            data.paidBills;
-
-        }
-
-        if (document.getElementById("unpaidBills")) {
-
-            document.getElementById("unpaidBills").innerHTML =
-            data.unpaidBills;
-
-        }
-
-        if (document.getElementById("medicineCount")) {
-
-            document.getElementById("medicineCount").innerHTML =
-            data.medicines;
-
-        }
-
-        if (document.getElementById("lowStock")) {
-
-            document.getElementById("lowStock").innerHTML =
-            data.lowStockMedicines;
-
-        }
+        doctors =
+        await response.json();
 
     }
 
@@ -91,69 +115,551 @@ async function loadDashboard() {
 
         console.error(error);
 
+        doctors=[];
+
     }
 
 }
 
-// ==========================================
-// Animated Counter
-// ==========================================
+/*=========================================================
+                    LOAD PATIENTS
+=========================================================*/
 
-function animateCounter(id, endValue) {
+async function loadPatients(){
 
-    const element = document.getElementById(id);
+    try{
 
-    if (!element) return;
+        const response =
+        await fetch(API.patients);
 
-    let current = 0;
+        if(!response.ok){
 
-    const increment = Math.max(
-        1,
-        Math.ceil(endValue / 50)
-    );
-
-    const timer = setInterval(() => {
-
-        current += increment;
-
-        if(current >= endValue){
-
-            current = endValue;
-
-            clearInterval(timer);
+            throw new Error("Unable to load patients.");
 
         }
 
-        element.innerHTML = current;
+        patients =
+        await response.json();
 
-    },20);
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        patients=[];
+
+    }
 
 }
-// ==========================================
-// Revenue Chart
-// ==========================================
 
-let revenueChart;
+/*=========================================================
+                    LOAD APPOINTMENTS
+=========================================================*/
 
-function loadRevenueChart() {
+async function loadAppointments(){
+
+    try{
+
+        const response =
+        await fetch(API.appointments);
+
+        if(!response.ok){
+
+            throw new Error("Unable to load appointments.");
+
+        }
+
+        appointments =
+        await response.json();
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        appointments=[];
+
+    }
+
+}
+
+/*=========================================================
+                    LOAD BILLING
+=========================================================*/
+
+async function loadBilling(){
+
+    try{
+
+        const response =
+        await fetch(API.billing);
+
+        if(!response.ok){
+
+            throw new Error("Unable to load billing.");
+
+        }
+
+        bills =
+        await response.json();
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        bills=[];
+
+    }
+
+}
+
+/*=========================================================
+                UPDATE DASHBOARD CARDS
+=========================================================*/
+
+function updateDashboardCards(){
+
+    setText("doctorCount", doctors.length);
+
+    setText("patientCount", patients.length);
+
+    setText("appointmentCount", appointments.length);
+
+    setText(
+
+        "activeDoctors",
+
+        doctors.filter(d=>
+
+            !d.status ||
+
+            d.status==="Active"
+
+        ).length
+
+    );
+
+    setText(
+
+        "admittedPatients",
+
+        patients.length
+
+    );
+
+    setText(
+
+        "todayVisits",
+
+        appointments.length
+
+    );
+
+    const revenue = bills.reduce(
+
+        (sum,bill)=>
+
+        sum + Number(
+
+            bill.totalAmount ||
+
+            bill.amount ||
+
+            0
+
+        ),
+
+        0
+
+    );
+
+    setText(
+
+        "revenueCount",
+
+        "₹"+revenue.toLocaleString()
+
+    );
+
+    setText(
+
+        "monthlyRevenue",
+
+        "₹"+revenue.toLocaleString()
+
+    );
+
+}
+
+/*=========================================================
+                    HELPER
+=========================================================*/
+
+function setText(id,value){
+
+    const element =
+
+    document.getElementById(id);
+
+    if(element){
+
+        element.textContent=value;
+
+    }
+
+}
+/*=========================================================
+                RECENT DOCTORS TABLE
+=========================================================*/
+
+function loadRecentDoctors(){
+
+    const table =
+    document.getElementById("recentDoctorTable");
+
+    if(!table) return;
+
+    if(doctors.length===0){
+
+        table.innerHTML=`
+
+        <tr>
+
+            <td colspan="3">
+
+                No Doctors Found
+
+            </td>
+
+        </tr>
+
+        `;
+
+        return;
+
+    }
+
+    table.innerHTML = doctors
+
+    .slice(0,5)
+
+    .map(doctor=>`
+
+<tr>
+
+<td>
+
+<div style="display:flex;align-items:center;gap:10px;">
+
+<img
+
+src="https://ui-avatars.com/api/?name=${encodeURIComponent(doctor.name)}&background=2563eb&color=ffffff"
+
+style="width:40px;height:40px;border-radius:50%;">
+
+<div>
+
+<strong>Dr. ${doctor.name}</strong>
+
+</div>
+
+</div>
+
+</td>
+
+<td>
+
+${doctor.specialization || "General"}
+
+</td>
+
+<td>
+
+<span class="badge badge-success">
+
+${doctor.status || "Active"}
+
+</span>
+
+</td>
+
+</tr>
+
+`).join("");
+
+}
+
+/*=========================================================
+                RECENT PATIENTS
+=========================================================*/
+
+function loadRecentPatients(){
+
+    const table =
+    document.getElementById("recentPatientTable");
+
+    if(!table) return;
+
+    if(patients.length===0){
+
+        table.innerHTML=`
+
+        <tr>
+
+            <td colspan="3">
+
+                No Patients Found
+
+            </td>
+
+        </tr>
+
+        `;
+
+        return;
+
+    }
+
+    table.innerHTML = patients
+
+    .slice(0,5)
+
+    .map(patient=>`
+
+<tr>
+
+<td>
+
+${patient.name}
+
+</td>
+
+<td>
+
+${patient.disease || "-"}
+
+</td>
+
+<td>
+
+${patient.doctor?.name || "-"}
+
+</td>
+
+</tr>
+
+`).join("");
+
+}
+
+/*=========================================================
+                TODAY APPOINTMENTS
+=========================================================*/
+
+function loadAppointmentTable(){
+
+    const table =
+    document.getElementById("appointmentTable");
+
+    if(!table) return;
+
+    if(appointments.length===0){
+
+        table.innerHTML=`
+
+        <tr>
+
+            <td colspan="4">
+
+                No Appointments
+
+            </td>
+
+        </tr>
+
+        `;
+
+        return;
+
+    }
+
+    table.innerHTML = appointments
+
+    .slice(0,5)
+
+    .map(a=>`
+
+<tr>
+
+<td>
+
+${a.patient?.name || "-"}
+
+</td>
+
+<td>
+
+${a.doctor?.name || "-"}
+
+</td>
+
+<td>
+
+${a.time || "-"}
+
+</td>
+
+<td>
+
+<span class="badge badge-info">
+
+${a.status || "Scheduled"}
+
+</span>
+
+</td>
+
+</tr>
+
+`).join("");
+
+}
+
+/*=========================================================
+                BILLING TABLE
+=========================================================*/
+
+function loadBillingTable(){
+
+    const table =
+    document.getElementById("billingTable");
+
+    if(!table) return;
+
+    if(bills.length===0){
+
+        table.innerHTML=`
+
+        <tr>
+
+            <td colspan="4">
+
+                No Bills Found
+
+            </td>
+
+        </tr>
+
+        `;
+
+        return;
+
+    }
+
+    table.innerHTML = bills
+
+    .slice(0,5)
+
+    .map(bill=>`
+
+<tr>
+
+<td>
+
+#${bill.id}
+
+</td>
+
+<td>
+
+${bill.patient?.name || "-"}
+
+</td>
+
+<td>
+
+₹${bill.totalAmount || bill.amount || 0}
+
+</td>
+
+<td>
+
+<span class="badge badge-success">
+
+Paid
+
+</span>
+
+</td>
+
+</tr>
+
+`).join("");
+
+}
+
+/*=========================================================
+                LOAD ALL TABLES
+=========================================================*/
+
+function loadDashboardTables(){
+
+    loadRecentDoctors();
+
+    loadRecentPatients();
+
+    loadAppointmentTable();
+
+    loadBillingTable();
+
+}
+/*=========================================================
+                    CHART.JS
+=========================================================*/
+
+let revenueChart = null;
+let appointmentChart = null;
+
+/*=========================================================
+                    INITIALIZE CHARTS
+=========================================================*/
+
+function initializeCharts(){
+
+    loadRevenueChart();
+
+    loadAppointmentChart();
+
+}
+
+/*=========================================================
+                REVENUE CHART
+=========================================================*/
+
+function loadRevenueChart(){
 
     const canvas = document.getElementById("revenueChart");
 
-    if (!canvas) return;
+    if(!canvas) return;
 
-    if (revenueChart) {
+    if(revenueChart){
 
         revenueChart.destroy();
 
     }
 
-    revenueChart = new Chart(canvas, {
+    revenueChart = new Chart(canvas,{
 
-        type: "line",
+        type:"line",
 
-        data: {
+        data:{
 
-            labels: [
+            labels:[
+
                 "Jan",
                 "Feb",
                 "Mar",
@@ -161,63 +667,64 @@ function loadRevenueChart() {
                 "May",
                 "Jun",
                 "Jul"
+
             ],
 
-            datasets: [{
+            datasets:[{
 
-                label: "Hospital Revenue",
+                label:"Revenue",
 
-                data: [
-                    25000,
-                    42000,
-                    38000,
-                    61000,
-                    52000,
-                    70000,
-                    81000
+                data:[
+
+                    120000,
+                    140000,
+                    155000,
+                    180000,
+                    165000,
+                    210000,
+                    bills.reduce(
+
+                        (sum,b)=>
+
+                        sum + Number(
+
+                            b.totalAmount ||
+
+                            b.amount ||
+
+                            0
+
+                        ),
+
+                        0
+
+                    )
+
                 ],
 
-                borderColor: "#2563eb",
+                borderColor:"#2563eb",
 
-                backgroundColor: "rgba(37,99,235,.15)",
+                backgroundColor:"rgba(37,99,235,.15)",
 
-                fill: true,
+                fill:true,
 
-                tension: .4,
-
-                borderWidth: 4,
-
-                pointRadius: 5,
-
-                pointHoverRadius: 8
+                tension:.4
 
             }]
 
         },
 
-        options: {
+        options:{
 
-            responsive: true,
+            responsive:true,
 
-            maintainAspectRatio: false,
+            maintainAspectRatio:false,
 
-            plugins: {
+            plugins:{
 
-                legend: {
+                legend:{
 
-                    display: true,
-
-                    position: "top"
-
-                }
-
-            },
-
-            scales: {
-
-                y: {
-
-                    beginAtZero: true
+                    display:true
 
                 }
 
@@ -229,81 +736,93 @@ function loadRevenueChart() {
 
 }
 
-// ==========================================
-// Patient Statistics Chart
-// ==========================================
+/*=========================================================
+                APPOINTMENT CHART
+=========================================================*/
 
-let patientChart;
+function loadAppointmentChart(){
 
-function loadPatientChart() {
+    const canvas = document.getElementById("appointmentChart");
 
-    const canvas = document.getElementById("patientChart");
+    if(!canvas) return;
 
-    if (!canvas) return;
+    if(appointmentChart){
 
-    if (patientChart) {
-
-        patientChart.destroy();
+        appointmentChart.destroy();
 
     }
 
-    patientChart = new Chart(canvas, {
+    appointmentChart = new Chart(canvas,{
 
-        type: "doughnut",
+        type:"doughnut",
 
-        data: {
+        data:{
 
-            labels: [
+            labels:[
 
-                "Male",
+                "Completed",
 
-                "Female",
+                "Pending",
 
-                "Children"
+                "Cancelled"
 
             ],
 
-            datasets: [{
+            datasets:[{
 
-                data: [
+                data:[
 
-                    120,
+                    appointments.filter(
 
-                    145,
+                        a=>a.status==="Completed"
 
-                    42
+                    ).length,
+
+                    appointments.filter(
+
+                        a=>
+
+                        !a.status ||
+
+                        a.status==="Scheduled" ||
+
+                        a.status==="Pending"
+
+                    ).length,
+
+                    appointments.filter(
+
+                        a=>a.status==="Cancelled"
+
+                    ).length
 
                 ],
 
-                backgroundColor: [
+                backgroundColor:[
+
+                    "#10b981",
 
                     "#2563eb",
 
-                    "#9333ea",
+                    "#ef4444"
 
-                    "#10b981"
-
-                ],
-
-                borderWidth: 0
+                ]
 
             }]
 
         },
 
-        options: {
+        options:{
 
-            responsive: true,
+            responsive:true,
 
-            maintainAspectRatio: false,
+            maintainAspectRatio:false,
 
-            cutout: "65%",
+            plugins:{
 
-            plugins: {
+                legend:{
 
-                legend: {
-
-                    position: "bottom"
+                    position:"bottom"
 
                 }
 
@@ -314,30 +833,190 @@ function loadPatientChart() {
     });
 
 }
-// Refresh dashboard every 30 seconds
 
-setInterval(() => {
+/*=========================================================
+                REFRESH CHARTS
+=========================================================*/
 
-    loadDashboard();
+function refreshCharts(){
 
-},30000);
+    loadRevenueChart();
 
-function updateSyncTime(){
+    loadAppointmentChart();
 
-    const now=new Date();
+}
+/*=========================================================
+                AUTO REFRESH
+=========================================================*/
 
-    document.getElementById("syncTime").innerHTML=
+function refreshDashboard(){
 
-    now.toLocaleTimeString();
+    initializeDashboard();
 
 }
 
-updateSyncTime();
+setInterval(refreshDashboard,30000);
 
-setInterval(updateSyncTime,1000);
+/*=========================================================
+                LIVE CLOCK
+=========================================================*/
+
+function updateLiveClock(){
+
+    const clock=document.getElementById("liveClock");
+
+    if(!clock) return;
+
+    const now=new Date();
+
+    clock.textContent=now.toLocaleTimeString([],{
+
+        hour:"2-digit",
+
+        minute:"2-digit",
+
+        second:"2-digit"
+
+    });
+
+}
+
+setInterval(updateLiveClock,1000);
+
+updateLiveClock();
+
+/*=========================================================
+                TODAY DATE
+=========================================================*/
+
+function updateTodayDate(){
+
+    const date=document.getElementById("todayDate");
+
+    if(!date) return;
+
+    const now=new Date();
+
+    date.textContent=now.toLocaleDateString([],{
+
+        weekday:"long",
+
+        year:"numeric",
+
+        month:"long",
+
+        day:"numeric"
+
+    });
+
+}
+
+updateTodayDate();
+
+/*=========================================================
+                PAGE VISIBILITY
+=========================================================*/
+
+document.addEventListener(
+
+    "visibilitychange",
+
+    ()=>{
+
+        if(!document.hidden){
+
+            refreshDashboard();
+
+        }
+
+    }
+
+);
+
+/*=========================================================
+                WINDOW FOCUS
+=========================================================*/
+
+window.addEventListener(
+
+    "focus",
+
+    ()=>{
+
+        refreshDashboard();
+
+    }
+
+);
+
+/*=========================================================
+                NOTIFICATION
+=========================================================*/
+
+function showNotification(message,type="success"){
+
+    const toast=document.createElement("div");
+
+    toast.className=`toast ${type}`;
+
+    toast.innerHTML=`
+
+        <i class="fa-solid ${
+            type==="success"
+            ? "fa-circle-check"
+            : type==="error"
+            ? "fa-circle-xmark"
+            : "fa-circle-info"
+        }"></i>
+
+        <span>${message}</span>
+
+    `;
+
+    document.body.appendChild(toast);
+
+    setTimeout(()=>{
+
+        toast.remove();
+
+    },3000);
+
+}
+
+/*=========================================================
+                WELCOME MESSAGE
+=========================================================*/
 
 window.addEventListener("load",()=>{
 
-document.body.classList.add("loaded");
+    setTimeout(()=>{
+
+        showNotification(
+
+            "Welcome to HMS PRO Dashboard",
+
+            "success"
+
+        );
+
+    },700);
 
 });
+
+/*=========================================================
+                LOGOUT
+=========================================================*/
+
+function logout(){
+
+    localStorage.clear();
+
+    window.location.href="login.html";
+
+}
+
+/*=========================================================
+                END
+=========================================================*/
+
+console.log("✅ HMS PRO Dashboard Ready");

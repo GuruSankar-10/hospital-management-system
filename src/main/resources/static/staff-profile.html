@@ -4,99 +4,138 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-<title>Staff Profile</title>
+<title>HMS PRO | Staff Profile</title>
 
 <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 <link rel="stylesheet" href="css/theme.css">
-<link rel="stylesheet" href="css/admin.css">
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/staff.css">
 
 </head>
 
-
 <body>
 
+<script>
 
-<!-- Sidebar -->
+const role = localStorage.getItem("role");
 
-<div class="sidebar">
+if(role!=="STAFF"){
+
+    window.location.href="login.html";
+
+}
+
+</script>
+
+<!-- ==========================================
+                SIDEBAR
+=========================================== -->
+
+<aside class="sidebar">
 
 <div class="logo">
 
-<h2>🏥 HMS</h2>
+<div class="logo-icon">
+
+<i class="fa-solid fa-hospital"></i>
+
+</div>
+
+<div class="logo-text">
+
+<h2>HMS PRO</h2>
 
 <p>Staff Panel</p>
 
 </div>
 
+</div>
 
-<nav>
-
+<nav class="menu">
 
 <a href="staff-dashboard.html">
 
-<i class="fas fa-house"></i>
+<i class="fa-solid fa-chart-line"></i>
 
-Dashboard
+<span>Dashboard</span>
 
 </a>
-
 
 <a href="staff-patients.html">
 
-<i class="fas fa-bed"></i>
+<i class="fa-solid fa-bed-pulse"></i>
 
-Patients
+<span>Patients</span>
 
 </a>
-
 
 <a href="staff-appointments.html">
 
-<i class="fas fa-calendar-check"></i>
+<i class="fa-solid fa-calendar-check"></i>
 
-Appointments
+<span>Appointments</span>
 
 </a>
 
+<a href="staff-records.html">
+
+<i class="fa-solid fa-file-medical"></i>
+
+<span>Medical Records</span>
+
+</a>
 
 <a href="staff-profile.html" class="active">
 
-<i class="fas fa-user"></i>
+<i class="fa-solid fa-user"></i>
 
-Profile
+<span>Profile</span>
 
 </a>
-
 
 <a href="#" onclick="logout()">
 
-<i class="fas fa-right-from-bracket"></i>
+<i class="fa-solid fa-right-from-bracket"></i>
 
-Logout
+<span>Logout</span>
 
 </a>
 
-
 </nav>
 
+</aside>
 
-</div>
-
-
-
-
-
-<!-- Main -->
+<!-- ==========================================
+                MAIN
+=========================================== -->
 
 <div class="main">
 
+<header class="topbar">
 
-<div class="topbar">
+<div>
 
+<div class="breadcrumb">
+
+<i class="fa-solid fa-house"></i>
+
+<span>Staff</span>
+
+<i class="fa-solid fa-angle-right"></i>
+
+<span class="active-page">
+
+Profile
+
+</span>
+
+</div>
 
 <div class="welcome">
 
@@ -108,134 +147,289 @@ Logout
 
 <p>
 
-My Account Details
+Manage your account information
 
 </p>
 
+</div>
 
 </div>
 
+<div class="top-actions">
 
+<button
+id="themeToggle"
+class="icon-btn">
 
-<div class="profile">
+<i
+id="themeIcon"
+class="fa-solid fa-moon">
 
-<i class="fas fa-user-nurse"></i>
+</i>
 
-<span id="topName">
+</button>
+
+<div class="profile-box">
+
+<img
+id="profileImage"
+src="https://ui-avatars.com/api/?name=Staff&background=0ea5e9&color=ffffff">
+
+<div>
+
+<strong id="topName">
 
 Staff
 
-</span>
+</strong>
 
+<small>
+
+Hospital Staff
+
+</small>
 
 </div>
 
+</div>
 
 </div>
 
+</header>
 
+<!-- ==========================================
+                PROFILE CARD
+=========================================== -->
 
+<section class="dashboard-card">
 
+<div style="display:flex;
+align-items:center;
+gap:30px;
+flex-wrap:wrap;">
 
+<img
 
+id="mainProfile"
 
-<div class="recent-card">
+src="https://ui-avatars.com/api/?name=Staff&background=0ea5e9&color=ffffff"
 
+style="width:140px;
+height:140px;
+border-radius:50%;
+border:6px solid #14B8A6;">
 
-<h2>
+<div>
 
-<i class="fas fa-id-card"></i>
+<h2
+id="staffName">
 
-Staff Information
+Staff Name
 
 </h2>
 
+<p style="margin-top:10px;color:#6B7280;">
 
-
-<div class="profile-details">
-
-
-<h3 id="staffName">
-
-Name
-
-</h3>
-
-
-<p>
-
-<strong>Email:</strong>
-
-<span id="staffEmail"></span>
+Hospital Staff Member
 
 </p>
-
-
-
-<p>
-
-<strong>Phone:</strong>
-
-<span id="staffPhone"></span>
-
-</p>
-
-
-
-<p>
-
-<strong>Department:</strong>
-
-<span id="staffDepartment"></span>
-
-</p>
-
-
-
-<p>
-
-<strong>Role:</strong>
-
-STAFF
-
-</p>
-
-
 
 </div>
 
+</div>
 
+<hr style="margin:30px 0;">
+<div class="profile-grid">
+
+    <div class="dashboard-card">
+
+        <div class="card-header">
+
+            <h2>
+
+                <i class="fa-solid fa-id-card"></i>
+
+                Personal Information
+
+            </h2>
+
+        </div>
+
+        <div class="form-grid">
+
+            <div class="form-group">
+
+                <label>Full Name</label>
+
+                <input
+                    type="text"
+                    id="staffNameInput"
+                    readonly>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Email</label>
+
+                <input
+                    type="email"
+                    id="staffEmail"
+                    readonly>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Phone</label>
+
+                <input
+                    type="text"
+                    id="staffPhone"
+                    readonly>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Department</label>
+
+                <input
+                    type="text"
+                    id="staffDepartment"
+                    readonly>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Role</label>
+
+                <input
+                    type="text"
+                    value="STAFF"
+                    readonly>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Status</label>
+
+                <input
+                    type="text"
+                    value="Active"
+                    readonly>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
+<!-- ==========================================
+                ACTION BUTTONS
+=========================================== -->
 
+<div
+style="display:flex;
+gap:15px;
+margin-top:25px;
+flex-wrap:wrap;">
 
+<button
+class="primary-btn"
+onclick="editProfile()">
 
+<i class="fa-solid fa-user-pen"></i>
 
+Edit Profile
+
+</button>
+
+<button
+class="secondary-btn"
+onclick="changePassword()">
+
+<i class="fa-solid fa-key"></i>
+
+Change Password
+
+</button>
+
+</div>
+
+<!-- ==========================================
+                FOOTER
+=========================================== -->
 
 <footer class="footer">
 
-<p>
+<div class="footer-left">
 
-© 2026 Hospital Management System | Staff Panel
-
-</p>
-
-</footer>
-
-
+© 2026 HMS PRO | Staff Panel
 
 </div>
 
+<div class="footer-right">
 
+Staff Profile
 
+</div>
 
+</footer>
 
+</div>
+
+<!-- ==========================================
+                SCRIPTS
+=========================================== -->
+
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/common.js"></script>
 <script src="js/logout.js"></script>
-
 <script src="js/staff-profile.js"></script>
 
-<script src="js/theme.js"></script>
-</body>
+<script>
 
+document.addEventListener("DOMContentLoaded",()=>{
+
+    const name=
+        localStorage.getItem("name") || "Staff";
+
+    document.getElementById("topName").textContent=name;
+
+    document.getElementById("staffName").textContent=name;
+
+    document.getElementById("staffNameInput").value=name;
+
+    document.getElementById("profileImage").src=
+    "https://ui-avatars.com/api/?name="+
+    encodeURIComponent(name)+
+    "&background=0ea5e9&color=ffffff";
+
+    document.getElementById("mainProfile").src=
+    document.getElementById("profileImage").src;
+
+});
+
+function editProfile(){
+
+    alert("Edit Profile feature will be added.");
+
+}
+
+function changePassword(){
+
+    window.location.href="forgot-password.html";
+
+}
+
+</script>
+
+</body>
 </html>

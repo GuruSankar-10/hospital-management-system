@@ -1,0 +1,1283 @@
+/*=========================================================
+            HMS PRO PREMIUM ANIMATIONS
+=========================================================*/
+
+
+/*=========================================================
+                    PAGE LOAD
+=========================================================*/
+
+
+.page-enter{
+
+
+    animation:
+
+    pageEnter .6s ease forwards;
+
+
+}
+
+
+
+
+
+
+@keyframes pageEnter{
+
+
+    from{
+
+
+        opacity:0;
+
+
+        transform:
+
+        translateY(25px);
+
+
+    }
+
+
+
+    to{
+
+
+        opacity:1;
+
+
+        transform:
+
+        translateY(0);
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+                    FADE ANIMATION
+=========================================================*/
+
+
+.fade-in{
+
+
+    animation:
+
+    fadeIn .5s ease;
+
+
+}
+
+
+
+
+
+
+@keyframes fadeIn{
+
+
+    from{
+
+
+        opacity:0;
+
+
+    }
+
+
+
+
+    to{
+
+
+        opacity:1;
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+                    SLIDE ANIMATIONS
+=========================================================*/
+
+
+.slide-left{
+
+
+    animation:
+
+    slideLeft .5s ease;
+
+
+}
+
+
+
+
+
+
+@keyframes slideLeft{
+
+
+    from{
+
+
+        opacity:0;
+
+
+        transform:
+
+        translateX(-40px);
+
+
+    }
+
+
+
+
+
+    to{
+
+
+        opacity:1;
+
+
+        transform:
+
+        translateX(0);
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+.slide-right{
+
+
+    animation:
+
+    slideRight .5s ease;
+
+
+}
+
+
+
+
+
+
+@keyframes slideRight{
+
+
+    from{
+
+
+        opacity:0;
+
+
+        transform:
+
+        translateX(40px);
+
+
+    }
+
+
+
+
+
+    to{
+
+
+        opacity:1;
+
+
+        transform:
+
+        translateX(0);
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+                    CARD ANIMATION
+=========================================================*/
+
+
+.animate-card{
+
+
+    animation:
+
+    cardShow .6s ease;
+
+
+}
+
+
+
+
+
+@keyframes cardShow{
+
+
+    from{
+
+
+        opacity:0;
+
+
+        transform:
+
+        translateY(35px)
+
+        scale(.95);
+
+
+    }
+
+
+
+
+
+    to{
+
+
+        opacity:1;
+
+
+        transform:
+
+        translateY(0)
+
+        scale(1);
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+                STAGGER CARDS
+=========================================================*/
+
+
+.card-delay-1{
+
+
+    animation-delay:.1s;
+
+
+}
+
+
+
+.card-delay-2{
+
+
+    animation-delay:.2s;
+
+
+}
+
+
+
+.card-delay-3{
+
+
+    animation-delay:.3s;
+
+
+}
+
+
+
+.card-delay-4{
+
+
+    animation-delay:.4s;
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+                    FLOAT EFFECT
+=========================================================*/
+
+
+.float-animation{
+
+
+    animation:
+
+    floating 3s ease-in-out infinite;
+
+
+}
+
+
+
+
+
+
+@keyframes floating{
+
+
+    0%,100%{
+
+
+        transform:
+
+        translateY(0);
+
+
+    }
+
+
+
+
+    50%{
+
+
+        transform:
+
+        translateY(-10px);
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+                    PULSE EFFECT
+=========================================================*/
+
+
+.pulse{
+
+
+    animation:
+
+    pulseEffect 2s infinite;
+
+
+}
+
+
+
+
+
+
+@keyframes pulseEffect{
+
+
+    0%{
+
+
+        box-shadow:
+
+        0 0 0 0
+
+        rgba(37,99,235,.5);
+
+
+    }
+
+
+
+
+
+    70%{
+
+
+        box-shadow:
+
+        0 0 0 20px
+
+        rgba(37,99,235,0);
+
+
+    }
+
+
+
+
+
+    100%{
+
+
+        box-shadow:
+
+        0 0 0 0
+
+        rgba(37,99,235,0);
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+                    BUTTON ANIMATION
+=========================================================*/
+
+
+.btn-animate{
+
+
+    position:relative;
+
+
+    overflow:hidden;
+
+
+}
+
+
+
+
+
+
+
+.btn-animate::after{
+
+
+    content:"";
+
+
+    position:absolute;
+
+
+    width:
+
+    0;
+
+
+    height:
+
+    0;
+
+
+    background:
+
+    rgba(255,255,255,.4);
+
+
+    border-radius:
+
+    50%;
+
+
+    transform:
+
+    translate(-50%,-50%);
+
+
+    transition:.5s;
+
+
+}
+
+
+
+
+
+
+
+.btn-animate:hover::after{
+
+
+    width:
+
+    300px;
+
+
+    height:
+
+    300px;
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+                    ICON ROTATION
+=========================================================*/
+
+
+.icon-hover{
+
+
+    transition:.4s;
+
+
+}
+
+
+
+
+
+
+
+.icon-hover:hover{
+
+
+    transform:
+
+    rotate(15deg)
+
+    scale(1.15);
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+                    LOADING DOTS
+=========================================================*/
+
+
+.loading-dots span{
+
+
+    display:inline-block;
+
+
+    width:
+
+    10px;
+
+
+    height:
+
+    10px;
+
+
+    margin:
+
+    0 4px;
+
+
+    border-radius:
+
+    50%;
+
+
+    background:
+
+    var(--primary);
+
+
+    animation:
+
+    dots .8s infinite;
+
+
+}
+
+
+
+
+
+
+
+.loading-dots span:nth-child(2){
+
+
+    animation-delay:.2s;
+
+
+}
+
+
+
+
+
+
+
+.loading-dots span:nth-child(3){
+
+
+    animation-delay:.4s;
+
+
+}
+
+
+
+
+
+
+
+@keyframes dots{
+
+
+    0%,80%,100%{
+
+
+        transform:
+
+        scale(0);
+
+
+    }
+
+
+
+
+
+    40%{
+
+
+        transform:
+
+        scale(1);
+
+
+    }
+
+
+}
+/*=========================================================
+                COUNTER ANIMATION
+=========================================================*/
+
+
+.counter-animation{
+
+
+    animation:
+
+    countUp .8s ease;
+
+
+}
+
+
+
+
+
+
+
+@keyframes countUp{
+
+
+    from{
+
+
+        opacity:0;
+
+
+        transform:
+
+        translateY(20px);
+
+
+    }
+
+
+
+
+
+    to{
+
+
+        opacity:1;
+
+
+        transform:
+
+        translateY(0);
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+                SKELETON LOADING
+=========================================================*/
+
+
+.skeleton{
+
+
+    background:
+
+    linear-gradient(
+
+        90deg,
+
+        #e2e8f0 25%,
+
+        #f8fafc 50%,
+
+        #e2e8f0 75%
+
+    );
+
+
+    background-size:
+
+    200% 100%;
+
+
+    animation:
+
+    skeletonLoading 1.5s infinite;
+
+
+    border-radius:
+
+    10px;
+
+
+}
+
+
+
+
+
+
+
+@keyframes skeletonLoading{
+
+
+    from{
+
+
+        background-position:
+
+        200% 0;
+
+
+    }
+
+
+
+
+    to{
+
+
+        background-position:
+
+        -200% 0;
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+                CHART ANIMATION
+=========================================================*/
+
+
+.chart-animate{
+
+
+    animation:
+
+    chartAppear .8s ease;
+
+
+}
+
+
+
+
+
+
+
+@keyframes chartAppear{
+
+
+    from{
+
+
+        opacity:0;
+
+
+        transform:
+
+        scale(.8);
+
+
+    }
+
+
+
+
+
+    to{
+
+
+        opacity:1;
+
+
+        transform:
+
+        scale(1);
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+                NOTIFICATION ANIMATION
+=========================================================*/
+
+
+.notification-enter{
+
+
+    animation:
+
+    notificationIn .4s ease;
+
+
+}
+
+
+
+
+
+
+@keyframes notificationIn{
+
+
+    from{
+
+
+        opacity:0;
+
+
+        transform:
+
+        translateY(-30px);
+
+
+    }
+
+
+
+
+
+    to{
+
+
+        opacity:1;
+
+
+        transform:
+
+        translateY(0);
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+.notification-out{
+
+
+    animation:
+
+    notificationOut .4s ease forwards;
+
+
+}
+
+
+
+
+
+
+
+@keyframes notificationOut{
+
+
+    from{
+
+
+        opacity:1;
+
+
+        transform:
+
+        translateY(0);
+
+
+    }
+
+
+
+
+
+    to{
+
+
+        opacity:0;
+
+
+        transform:
+
+        translateY(-30px);
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+                STATUS DOT ANIMATION
+=========================================================*/
+
+
+.status-online{
+
+
+    width:
+
+    12px;
+
+
+    height:
+
+    12px;
+
+
+    border-radius:
+
+    50%;
+
+
+    background:
+
+    #10b981;
+
+
+    display:inline-block;
+
+
+    animation:
+
+    onlinePulse 2s infinite;
+
+
+}
+
+
+
+
+
+
+
+@keyframes onlinePulse{
+
+
+    0%{
+
+
+        box-shadow:
+
+        0 0 0 0
+
+        rgba(16,185,129,.5);
+
+
+    }
+
+
+
+
+
+    70%{
+
+
+        box-shadow:
+
+        0 0 0 12px
+
+        rgba(16,185,129,0);
+
+
+    }
+
+
+
+
+
+    100%{
+
+
+        box-shadow:
+
+        0 0 0 0
+
+        rgba(16,185,129,0);
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+                IMAGE HOVER
+=========================================================*/
+
+
+.image-hover{
+
+
+    overflow:hidden;
+
+
+}
+
+
+
+
+
+
+
+.image-hover img{
+
+
+    transition:
+
+    .5s ease;
+
+
+}
+
+
+
+
+
+
+
+.image-hover:hover img{
+
+
+    transform:
+
+    scale(1.08);
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+                MOBILE TOUCH EFFECT
+=========================================================*/
+
+
+@media(max-width:768px){
+
+
+    .touch-card:active{
+
+
+        transform:
+
+        scale(.97);
+
+
+    }
+
+
+
+
+    .btn:active{
+
+
+        transform:
+
+        scale(.95);
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+                REDUCED MOTION SUPPORT
+=========================================================*/
+
+
+@media(prefers-reduced-motion:reduce){
+
+
+
+    *,
+
+
+    *::before,
+
+
+    *::after{
+
+
+        animation-duration:
+
+        .01ms !important;
+
+
+        animation-iteration-count:
+
+        1 !important;
+
+
+        transition-duration:
+
+        .01ms !important;
+
+
+    }
+
+
+}

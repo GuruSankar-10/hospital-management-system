@@ -5,19 +5,24 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>HMS PRO | Patient Management</title>
 
 
+<!-- Font Awesome -->
 
 <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 
-
+<!-- Theme -->
 <link rel="stylesheet" href="css/theme.css">
+
+<link rel="stylesheet" href="css/common.css">
+
+<link rel="stylesheet" href="css/animations.css">
 
 <link rel="stylesheet" href="css/admin.css">
 
@@ -25,22 +30,17 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 </head>
 
 
-
 <body>
 
 
-
-
-
-<!-- ================= SIDEBAR ================= -->
-
+<!-- ======================================
+                SIDEBAR
+======================================= -->
 
 <aside class="sidebar">
 
 
-
 <div class="logo">
-
 
 <div class="logo-icon">
 
@@ -49,8 +49,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 </div>
 
 
-
-<div>
+<div class="logo-text">
 
 <h2>HMS PRO</h2>
 
@@ -58,156 +57,92 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
 </div>
 
-
-
 </div>
-
-
-
-
-
 
 
 
 <nav class="menu">
 
 
-
 <a href="admin-dashboard.html">
-
 
 <i class="fa-solid fa-chart-line"></i>
 
-
 <span>Dashboard</span>
 
-
 </a>
-
-
-
-
 
 
 
 <a href="admin-doctors.html">
 
-
 <i class="fa-solid fa-user-doctor"></i>
-
 
 <span>Doctors</span>
 
-
 </a>
-
-
-
-
 
 
 
 <a href="admin-staff.html">
 
-
 <i class="fa-solid fa-user-nurse"></i>
-
 
 <span>Staff</span>
 
-
 </a>
 
 
 
-
-
-
-
-<a href="patients.html" class="active">
-
+<a href="patients.html"
+class="active">
 
 <i class="fa-solid fa-bed-pulse"></i>
 
-
 <span>Patients</span>
 
-
 </a>
-
-
-
-
 
 
 
 <a href="appointments.html">
 
-
 <i class="fa-solid fa-calendar-check"></i>
-
 
 <span>Appointments</span>
 
-
 </a>
-
-
-
-
 
 
 
 <a href="billing.html">
 
-
 <i class="fa-solid fa-file-invoice-dollar"></i>
-
 
 <span>Billing</span>
 
-
 </a>
-
-
-
-
 
 
 
 <a href="records.html">
 
-
 <i class="fa-solid fa-file-medical"></i>
-
 
 <span>Medical Records</span>
 
-
 </a>
 
 
 
-
-
-
-
-<a href="javascript:void(0)" onclick="logout()">
-
-
+<a href="#"
+onclick="logout()">
 
 <i class="fa-solid fa-right-from-bracket"></i>
 
-
-
 <span>Logout</span>
 
-
-
 </a>
-
-
-
 
 
 </nav>
@@ -218,29 +153,45 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
 
 
-
-
-
-
-
-<!-- ================= MAIN ================= -->
+<!-- ======================================
+                MAIN
+======================================= -->
 
 
 <div class="main">
 
 
 
-
-
-
-
-<!-- ================= TOPBAR ================= -->
-
+<!-- ======================================
+                TOPBAR
+======================================= -->
 
 
 <header class="topbar">
 
 
+<div>
+
+
+<div class="breadcrumb">
+
+
+<i class="fa-solid fa-house"></i>
+
+<span>Admin</span>
+
+
+<i class="fa-solid fa-angle-right"></i>
+
+
+<span class="active-page">
+
+Patients
+
+</span>
+
+
+</div>
 
 
 
@@ -249,15 +200,15 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
 <h1>
 
-Patient Management 🏥
+Patient Management 🧑‍⚕️
 
 </h1>
 
 
-
 <p>
 
-Manage patient records and hospital care
+Manage patient records, admissions,
+and medical information.
 
 </p>
 
@@ -265,7 +216,7 @@ Manage patient records and hospital care
 </div>
 
 
-
+</div>
 
 
 
@@ -275,13 +226,10 @@ Manage patient records and hospital care
 
 
 
-
-
 <div class="search-box">
 
 
 <i class="fa-solid fa-search"></i>
-
 
 
 <input
@@ -292,13 +240,31 @@ id="searchPatient"
 
 placeholder="Search Patient..."
 
->
+onkeyup="searchPatient()">
 
 
 </div>
 
 
 
+
+<button
+
+id="themeToggle"
+
+class="icon-btn">
+
+
+<i
+
+id="themeIcon"
+
+class="fa-solid fa-moon">
+
+</i>
+
+
+</button>
 
 
 
@@ -315,22 +281,30 @@ placeholder="Search Patient..."
 
 
 
-
-
-
 <div class="profile-box">
 
 
-<i class="fa-solid fa-circle-user"></i>
+<img
+
+src="https://ui-avatars.com/api/?name=Administrator&background=2563eb&color=ffffff">
+
 
 
 <div>
 
 
-<strong>Admin</strong>
+<strong>
+
+Administrator
+
+</strong>
 
 
-<small>Administrator</small>
+<small>
+
+Hospital Admin
+
+</small>
 
 
 </div>
@@ -340,12 +314,7 @@ placeholder="Search Patient..."
 
 
 
-
-
 </div>
-
-
-
 
 
 
@@ -355,27 +324,34 @@ placeholder="Search Patient..."
 
 
 
-
-
-
-
-<!-- ================= PATIENT BANNER ================= -->
-
+<!-- ======================================
+                HERO SECTION
+======================================= -->
 
 
 <section class="dashboard-banner">
-
-
-
 
 
 <div class="banner-content">
 
 
 
+<span class="status-badge">
+
+
+<i class="fa-solid fa-circle-check"></i>
+
+
+HMS Patient Management
+
+
+</span>
+
+
+
 <h2>
 
-Patient Care Management Center
+Hospital Patient Records
 
 </h2>
 
@@ -383,11 +359,11 @@ Patient Care Management Center
 
 <p>
 
-Add, update and monitor patient information,
-doctor assignments and medical details.
+Manage patient registration,
+medical details, assigned doctors,
+and treatment information.
 
 </p>
-
 
 
 
@@ -395,9 +371,11 @@ doctor assignments and medical details.
 <div class="banner-buttons">
 
 
+<button
 
-<button onclick="openPatientModal()">
+class="primary-btn"
 
+onclick="openPatientModal()">
 
 
 <i class="fa-solid fa-user-plus"></i>
@@ -410,34 +388,28 @@ Add Patient
 
 
 
+<button
+
+class="secondary-btn"
+
+onclick="loadPatients()">
 
 
 
-
-<button onclick="location.href='admin-dashboard.html'">
-
+<i class="fa-solid fa-rotate"></i>
 
 
-<i class="fa-solid fa-arrow-left"></i>
-
-
-Dashboard
+Refresh
 
 
 </button>
 
 
-
 </div>
 
 
 
-
 </div>
-
-
-
-
 
 
 
@@ -445,196 +417,16 @@ Dashboard
 <div class="banner-image">
 
 
+<div class="hero-circle">
+
+
 <i class="fa-solid fa-bed-pulse"></i>
 
 
 </div>
 
 
-
-
-
-</section>
-<!-- ================= PATIENT STATISTICS ================= -->
-
-
-<section class="stats-container">
-
-
-
-
-
-<div class="stat-card patients">
-
-
-<div class="stat-icon">
-
-<i class="fa-solid fa-bed-pulse"></i>
-
 </div>
-
-
-
-<div class="stat-info">
-
-
-<p>Total Patients</p>
-
-
-<h2 id="patientCount">
-
-0
-
-</h2>
-
-
-<span>
-
-Registered Patients
-
-</span>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="stat-card doctors">
-
-
-<div class="stat-icon">
-
-<i class="fa-solid fa-user-doctor"></i>
-
-</div>
-
-
-
-<div class="stat-info">
-
-
-<p>Doctors Assigned</p>
-
-
-<h2 id="doctorAssigned">
-
-0
-
-</h2>
-
-
-<span>
-
-Medical Team
-
-</span>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="stat-card staff">
-
-
-<div class="stat-icon">
-
-<i class="fa-solid fa-user-nurse"></i>
-
-</div>
-
-
-
-<div class="stat-info">
-
-
-<p>Staff Assigned</p>
-
-
-<h2 id="staffAssigned">
-
-0
-
-</h2>
-
-
-<span>
-
-Care Support Team
-
-</span>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="stat-card appointments">
-
-
-<div class="stat-icon">
-
-<i class="fa-solid fa-virus"></i>
-
-</div>
-
-
-
-<div class="stat-info">
-
-
-<p>Disease Records</p>
-
-
-<h2 id="diseaseCount">
-
-0
-
-</h2>
-
-
-<span>
-
-Medical Conditions
-
-</span>
-
-
-</div>
-
-
-
-</div>
-
-
-
 
 
 
@@ -644,572 +436,1039 @@ Medical Conditions
 
 
 
+<!-- ======================================
+            STATISTICS START
+======================================= -->
 
 
+<section class="stats-grid">
+	<!-- ======================================
+	            PATIENT STATISTICS
+	======================================= -->
 
+	<div class="stat-card">
 
-<!-- ================= PATIENT LIST ================= -->
+	    <div class="stat-icon blue">
 
+	        <i class="fa-solid fa-users"></i>
 
+	    </div>
 
-<section class="dashboard-card">
+	    <div class="stat-content">
 
+	        <h2 id="patientCount">0</h2>
 
+	        <p>Total Patients</p>
 
+	        <span>Registered Patients</span>
 
+	    </div>
 
-<div class="card-header">
+	</div>
 
 
 
-<div>
+	<div class="stat-card">
 
+	    <div class="stat-icon green">
 
-<h2>
+	        <i class="fa-solid fa-user-check"></i>
 
-<i class="fa-solid fa-bed-pulse"></i>
+	    </div>
 
-Patient List
+	    <div class="stat-content">
 
-</h2>
+	        <h2 id="admittedCount">0</h2>
 
+	        <p>Admitted Patients</p>
 
-<p style="color:#64748b">
+	        <span>Currently Hospitalized</span>
 
-Manage patient details and assignments
+	    </div>
 
-</p>
+	</div>
 
 
-</div>
 
+	<div class="stat-card">
 
+	    <div class="stat-icon orange">
 
+	        <i class="fa-solid fa-person-circle-check"></i>
 
+	    </div>
 
+	    <div class="stat-content">
 
+	        <h2 id="dischargedCount">0</h2>
 
-<button onclick="openPatientModal()">
+	        <p>Discharged</p>
 
+	        <span>Recovered Patients</span>
 
+	    </div>
 
-<i class="fa-solid fa-plus"></i>
+	</div>
 
 
-Add Patient
 
+	<div class="stat-card">
 
-</button>
+	    <div class="stat-icon red">
 
+	        <i class="fa-solid fa-heart-pulse"></i>
 
+	    </div>
 
-</div>
+	    <div class="stat-content">
 
+	        <h2 id="criticalCount">0</h2>
 
+	        <p>Critical Patients</p>
 
+	        <span>Under Observation</span>
 
+	    </div>
 
+	</div>
 
 
+	</section>
 
 
-<div class="table-container">
+	<!-- ======================================
+	                FILTER SECTION
+	======================================= -->
 
 
+	<section class="dashboard-card">
 
 
+	<div class="card-header">
 
-<table>
 
+	<h2>
 
+	<i class="fa-solid fa-filter"></i>
 
-<thead>
+	Filter Patients
 
+	</h2>
 
-<tr>
 
+	</div>
 
-<th>ID</th>
 
 
-<th>Name</th>
+	<div class="filter-grid">
 
 
-<th>Age</th>
 
+	<div class="form-group">
 
-<th>Disease</th>
 
+	<label>
 
-<th>Phone</th>
+	Disease
 
+	</label>
 
-<th>Doctor</th>
 
+	<select id="diseaseFilter"
+	onchange="filterPatients()">
 
-<th>Staff</th>
 
+	<option value="">
 
-<th>Actions</th>
+	All Diseases
 
+	</option>
 
 
-</tr>
+	<option>
 
+	Fever
 
-</thead>
+	</option>
 
 
+	<option>
 
+	Diabetes
 
+	</option>
 
 
-<tbody id="patientTable">
+	<option>
 
+	Heart Disease
 
+	</option>
 
-<!-- Loaded from patients.js -->
 
+	<option>
 
+	COVID
 
-</tbody>
+	</option>
 
 
+	<option>
 
+	Fracture
 
+	</option>
 
-</table>
 
+	<option>
 
+	Other
 
+	</option>
 
 
-</div>
+	</select>
 
 
+	</div>
 
 
 
 
+	<div class="form-group">
 
-</section>
-<!-- ================= ADD / EDIT PATIENT MODAL ================= -->
 
+	<label>
 
-<div id="patientModal" class="modal">
+	Doctor
 
+	</label>
 
-<div class="modal-content">
 
+	<select id="doctorFilter"
+	onchange="filterPatients()">
 
 
-<h2 id="modalTitle">
 
+	<option value="">
 
-<i class="fa-solid fa-bed-pulse"></i>
+	All Doctors
 
+	</option>
 
-Add Patient
 
 
-</h2>
+	</select>
 
 
+	</div>
 
 
 
 
+	<div class="form-group">
 
-<input
-type="hidden"
-id="patientId">
 
+	<label>
 
+	Status
 
+	</label>
 
 
+	<select id="patientStatusFilter"
+	onchange="filterPatients()">
 
 
-<label>
 
-Patient Name
+	<option value="">
 
-</label>
+	All
 
+	</option>
 
-<input
 
-type="text"
+	<option>
 
-id="patientName"
+	Admitted
 
-placeholder="Enter patient name"
+	</option>
 
->
 
+	<option>
 
+	Discharged
 
+	</option>
 
 
+	<option>
 
+	Critical
 
-<label>
+	</option>
 
-Age
 
-</label>
+	</select>
 
 
-<input
+	</div>
 
-type="number"
 
-id="patientAge"
 
-placeholder="Enter age"
 
->
+	<div class="form-group">
 
 
+	<label>
 
+	Actions
 
+	</label>
 
 
 
-<label>
+	<div style="display:flex;gap:10px;">
 
-Disease
 
-</label>
 
+	<button
 
-<input
+	class="primary-btn"
 
-type="text"
+	onclick="loadPatients()">
 
-id="patientDisease"
 
-placeholder="Enter disease"
 
->
+	<i class="fa-solid fa-rotate"></i>
 
 
+	Refresh
 
 
+	</button>
 
 
 
-<label>
+	<button
 
-Phone Number
+	class="secondary-btn"
 
-</label>
+	onclick="exportCSV()">
 
 
-<input
 
-type="text"
+	<i class="fa-solid fa-file-csv"></i>
 
-id="patientPhone"
 
-maxlength="10"
+	Export
 
-placeholder="Enter phone number"
 
->
+	</button>
 
 
 
+	</div>
 
 
+	</div>
 
 
 
-<label>
+	</div>
 
-Assign Doctor
 
-</label>
+	</section>
 
 
-<select id="doctorSelect">
 
+	<!-- ======================================
+	                PATIENT TABLE
+	======================================= -->
 
-<option value="">
 
-Select Doctor
+	<section class="dashboard-card">
 
-</option>
 
 
-</select>
+	<div class="card-header">
 
 
+	<h2>
 
+	<i class="fa-solid fa-bed-pulse"></i>
 
 
+	Patient Records
 
 
+	</h2>
 
 
-<label>
 
-Assign Staff
+	<button
 
-</label>
+	class="primary-btn"
 
+	onclick="openPatientModal()">
 
-<select id="staffSelect">
 
 
-<option value="">
+	<i class="fa-solid fa-plus"></i>
 
-Select Staff
 
-</option>
+	Add Patient
 
 
-</select>
+	</button>
 
 
+	</div>
 
 
 
 
+	<div class="table-responsive">
 
 
 
-<div class="modal-buttons">
+	<table>
 
 
 
+	<thead>
 
 
-<button
+	<tr>
 
-class="deleteBtn"
 
-onclick="closePatientModal()"
+	<th>ID</th>
 
->
+	<th>Patient</th>
 
+	<th>Age</th>
 
-Cancel
+	<th>Disease</th>
 
+	<th>Doctor</th>
 
-</button>
+	<th>Phone</th>
 
+	<th>Status</th>
 
+	<th>Actions</th>
 
 
+	</tr>
 
 
+	</thead>
 
-<button
 
-class="btn"
 
-onclick="savePatient()"
 
->
+	<tbody id="patientTable">
 
 
-<i class="fa-solid fa-floppy-disk"></i>
+	<!-- Loaded by patients.js -->
 
 
-Save Patient
+	</tbody>
 
 
-</button>
 
+	</table>
 
 
 
+	</div>
 
-</div>
 
 
+	</section>
+	<!-- ======================================
+	            PATIENT MODAL
+	======================================= -->
 
+	<div
+	id="patientModal"
+	class="modal-overlay">
 
 
+	<div class="modal">
 
 
-</div>
+	<!-- MODAL HEADER -->
 
+	<div class="modal-header">
 
-</div>
 
+	<h2 id="modalTitle">
 
 
+	<i class="fa-solid fa-user-plus"></i>
 
 
+	Add Patient
 
 
+	</h2>
 
 
-<!-- ================= DELETE PATIENT MODAL ================= -->
 
+	<button
 
+	class="close-btn"
 
-<div id="deleteModal" class="modal">
+	onclick="closePatientModal()">
 
 
 
-<div class="modal-content">
+	<i class="fa-solid fa-xmark"></i>
 
 
+	</button>
 
-<h2>
 
 
-<i class="fa-solid fa-trash"></i>
+	</div>
 
 
-Delete Patient
 
 
-</h2>
 
+	<!-- MODAL BODY -->
 
+	<div class="modal-body">
 
 
 
+	<input
 
+	type="hidden"
 
-<p>
+	id="patientId">
 
 
-Are you sure you want to delete this patient?
 
 
-</p>
 
+	<div class="form-grid">
 
 
 
+	<div class="form-group">
 
 
+	<label>
 
+	Patient Name
 
+	</label>
 
-<div class="modal-buttons">
 
+	<input
 
+	type="text"
 
+	id="patientName"
 
+	placeholder="Enter patient name">
 
-<button
 
-class="btn"
+	</div>
 
-onclick="closeDeleteModal()"
 
->
 
 
-Cancel
 
+	<div class="form-group">
 
-</button>
 
+	<label>
 
+	Age
 
+	</label>
 
 
+	<input
 
+	type="number"
 
-<button
+	id="patientAge"
 
-class="deleteBtn"
+	placeholder="Enter age">
 
-onclick="confirmDelete()"
 
->
+	</div>
 
 
-<i class="fa-solid fa-trash"></i>
 
 
-Delete
 
+	<div class="form-group">
 
-</button>
 
+	<label>
 
+	Gender
 
+	</label>
 
 
+	<select id="patientGender">
 
 
-</div>
+	<option value="">
 
+	Select Gender
 
+	</option>
 
 
+	<option>
 
+	Male
 
-</div>
+	</option>
 
 
-</div>
+	<option>
 
+	Female
 
+	</option>
 
 
+	<option>
 
+	Other
 
+	</option>
 
 
+	</select>
 
-<!-- ================= FOOTER ================= -->
 
+	</div>
 
 
-<footer class="footer">
 
 
-<p>
 
+	<div class="form-group">
 
-© 2026 HMS PRO | Patient Management Panel
 
+	<label>
 
-</p>
+	Phone
 
+	</label>
 
-</footer>
 
+	<input
 
+	type="text"
 
+	id="patientPhone"
 
+	placeholder="Enter phone number">
 
 
+	</div>
 
 
 
-</div>
 
 
+	<div class="form-group">
 
 
+	<label>
 
+	Disease
 
+	</label>
 
 
+	<input
 
-<!-- ================= SCRIPTS ================= -->
+	type="text"
 
+	id="patientDisease"
 
-<script src="js/auth.js"></script>
+	placeholder="Disease name">
 
 
-<script src="js/patients.js"></script>
+	</div>
 
 
 
-<script src="js/theme.js"></script>
 
 
-</body>
+	<div class="form-group">
 
-</html>
+
+	<label>
+
+	Doctor
+
+	</label>
+
+
+	<select id="patientDoctor">
+
+
+	<option value="">
+
+	Select Doctor
+
+	</option>
+
+
+	</select>
+
+
+	</div>
+
+
+
+
+
+	<div class="form-group">
+
+
+	<label>
+
+	Status
+
+	</label>
+
+
+	<select id="patientStatus">
+
+
+	<option>
+
+	Admitted
+
+	</option>
+
+
+	<option>
+
+	Discharged
+
+	</option>
+
+
+	<option>
+
+	Critical
+
+	</option>
+
+
+	</select>
+
+
+	</div>
+
+
+
+
+
+	<div class="form-group">
+
+
+	<label>
+
+	Address
+
+	</label>
+
+
+	<input
+
+	type="text"
+
+	id="patientAddress"
+
+	placeholder="Enter address">
+
+
+	</div>
+
+
+
+	</div>
+
+
+
+	</div>
+
+
+
+
+
+
+	<!-- MODAL FOOTER -->
+
+
+	<div class="modal-footer">
+
+
+	<button
+
+	class="secondary-btn"
+
+	onclick="closePatientModal()">
+
+
+
+	<i class="fa-solid fa-xmark"></i>
+
+
+	Cancel
+
+
+	</button>
+
+
+
+
+	<button
+
+	class="primary-btn"
+
+	onclick="savePatient()">
+
+
+
+	<i class="fa-solid fa-floppy-disk"></i>
+
+
+	Save Patient
+
+
+	</button>
+
+
+
+	</div>
+
+
+
+
+	</div>
+
+
+	</div>
+
+
+
+
+
+
+	<!-- ======================================
+	            DELETE MODAL
+	======================================= -->
+
+
+	<div
+
+	id="deleteModal"
+
+	class="modal-overlay">
+
+
+
+	<div class="delete-modal">
+
+
+
+	<div class="modal-header">
+
+
+	<h2>
+
+
+	<i class="fa-solid fa-trash"></i>
+
+
+	Delete Patient
+
+
+	</h2>
+
+
+
+	</div>
+
+
+
+
+	<div class="modal-body">
+
+
+	<p>
+
+	Are you sure you want to delete this patient?
+
+	</p>
+
+
+	<p class="warning-text">
+
+	This action cannot be undone.
+
+	</p>
+
+
+
+	</div>
+
+
+
+
+	<div class="modal-footer">
+
+
+
+	<button
+
+	class="secondary-btn"
+
+	onclick="closeDeleteModal()">
+
+
+
+	Cancel
+
+
+	</button>
+
+
+
+
+
+	<button
+
+	class="primary-btn danger"
+
+	onclick="confirmDelete()">
+
+
+
+	Delete
+
+
+	</button>
+
+
+
+	</div>
+
+
+
+	</div>
+
+
+
+	</div>
+	<!-- ======================================
+	                FOOTER
+	======================================= -->
+
+	<footer class="footer">
+
+	    <div class="footer-left">
+
+	        © 2026 HMS PRO - Hospital Management System
+
+	    </div>
+
+
+	    <div class="footer-right">
+
+	        Patient Management Module | Version 2.0
+
+	    </div>
+
+	</footer>
+
+
+	</div>
+	<!-- END MAIN -->
+
+
+
+	<!-- ======================================
+	            LOADING OVERLAY
+	======================================= -->
+
+
+	<div
+
+	id="loadingOverlay"
+
+	class="loading-overlay">
+
+
+	<div class="loader">
+
+
+	<div class="spinner"></div>
+
+
+	<p>
+
+	Loading Patients...
+
+	</p>
+
+
+	</div>
+
+
+	</div>
+
+
+
+
+	<!-- ======================================
+	                TOAST
+	======================================= -->
+
+
+	<div
+
+	id="toastContainer">
+
+
+	</div>
+
+
+
+
+
+	<!-- ======================================
+	                JAVASCRIPT
+	======================================= -->
+
+
+	<script src="js/theme.js"></script>
+
+
+	<script src="js/common.js"></script>
+
+
+	<script src="js/patients.js"></script>
+
+
+
+	</body>
+
+
+	</html>

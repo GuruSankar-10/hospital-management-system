@@ -1,0 +1,1209 @@
+/*=========================================================
+                    HMS PRO SETTINGS
+                    PART 5A
+=========================================================*/
+
+/*=========================================================
+                    SETTINGS LAYOUT
+=========================================================*/
+
+.settings-layout{
+
+    display:grid;
+
+    grid-template-columns:1fr;
+
+    gap:30px;
+
+    margin-top:30px;
+
+}
+
+/*=========================================================
+                    SETTINGS CARD
+=========================================================*/
+
+.settings-card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:22px;
+
+    box-shadow:var(--shadow);
+
+    overflow:hidden;
+
+    transition:.35s;
+
+}
+
+.settings-card:hover{
+
+    transform:translateY(-6px);
+
+}
+
+.settings-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:22px 30px;
+
+    border-bottom:1px solid var(--border);
+
+}
+
+.settings-header h2{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    font-size:24px;
+
+    font-weight:700;
+
+}
+
+.settings-header i{
+
+    color:var(--primary);
+
+}
+
+.settings-body{
+
+    padding:30px;
+
+}
+
+/*=========================================================
+                    DASHBOARD HERO
+=========================================================*/
+
+.dashboard-banner{
+
+    margin-bottom:30px;
+
+    background:linear-gradient(
+    135deg,
+    #2563eb,
+    #4f46e5);
+
+    border-radius:24px;
+
+    padding:40px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    color:white;
+
+    overflow:hidden;
+
+    position:relative;
+
+}
+
+.dashboard-banner::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:280px;
+
+    height:280px;
+
+    background:rgba(255,255,255,.08);
+
+    border-radius:50%;
+
+    right:-80px;
+
+    top:-80px;
+
+}
+
+.banner-content{
+
+    position:relative;
+
+    z-index:2;
+
+}
+
+.banner-content h2{
+
+    font-size:34px;
+
+    margin:15px 0;
+
+}
+
+.banner-content p{
+
+    color:rgba(255,255,255,.85);
+
+    max-width:500px;
+
+}
+
+.status-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    background:rgba(255,255,255,.18);
+
+    padding:10px 18px;
+
+    border-radius:50px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+.banner-image{
+
+    position:relative;
+
+    z-index:2;
+
+}
+
+.hero-circle{
+
+    width:180px;
+
+    height:180px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.12);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    backdrop-filter:blur(10px);
+
+}
+
+.hero-circle i{
+
+    font-size:70px;
+
+    color:white;
+
+}
+
+/*=========================================================
+                    PROFILE UPLOAD
+=========================================================*/
+
+.profile-upload{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:30px;
+
+    flex-wrap:wrap;
+
+    margin-bottom:30px;
+
+}
+
+.profile-upload img{
+
+    width:140px;
+
+    height:140px;
+
+    border-radius:24px;
+
+    object-fit:cover;
+
+    border:4px solid var(--primary);
+
+    box-shadow:var(--shadow);
+
+}
+
+/*=========================================================
+                    SETTINGS GRID
+=========================================================*/
+
+.settings-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(320px,1fr));
+
+    gap:25px;
+
+}
+
+/*=========================================================
+                    FORM GRID
+=========================================================*/
+
+.form-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(260px,1fr));
+
+    gap:22px;
+
+}
+
+.form-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.form-group label{
+
+    margin-bottom:10px;
+
+    font-weight:600;
+
+    color:var(--text);
+
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+
+    width:100%;
+
+    padding:14px 16px;
+
+    border-radius:14px;
+
+    border:1px solid var(--border);
+
+    background:var(--card);
+
+    color:var(--text);
+
+    transition:.3s;
+
+}
+
+.form-group textarea{
+
+    resize:vertical;
+
+    min-height:120px;
+
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+
+    outline:none;
+
+    border-color:var(--primary);
+
+    box-shadow:
+
+    0 0 0 4px rgba(37,99,235,.15);
+
+}
+
+/*=========================================================
+                    FULL WIDTH
+=========================================================*/
+
+.full-width{
+
+    grid-column:1/-1;
+
+}
+
+/*=========================================================
+                    BUTTON AREA
+=========================================================*/
+
+.settings-actions{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:15px;
+
+    margin-top:25px;
+
+    flex-wrap:wrap;
+
+}
+/*=========================================================
+                    HMS PRO SETTINGS
+                    PART 5B
+        SWITCHES • APPEARANCE • SECURITY
+=========================================================*/
+
+/*=========================================================
+                    SETTING OPTION
+=========================================================*/
+
+.setting-option{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:25px;
+
+    padding:20px 0;
+
+    border-bottom:1px solid var(--border);
+
+}
+
+.setting-option:last-child{
+
+    border-bottom:none;
+
+}
+
+.setting-option h3{
+
+    font-size:18px;
+
+    margin-bottom:6px;
+
+}
+
+.setting-option p{
+
+    color:var(--text-light);
+
+    font-size:14px;
+
+}
+
+/*=========================================================
+                    SWITCH
+=========================================================*/
+
+.switch{
+
+    position:relative;
+
+    display:inline-block;
+
+    width:60px;
+
+    height:32px;
+
+}
+
+.switch input{
+
+    display:none;
+
+}
+
+.slider{
+
+    position:absolute;
+
+    inset:0;
+
+    cursor:pointer;
+
+    background:#cbd5e1;
+
+    border-radius:50px;
+
+    transition:.35s;
+
+}
+
+.slider::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:24px;
+
+    height:24px;
+
+    left:4px;
+
+    top:4px;
+
+    background:#fff;
+
+    border-radius:50%;
+
+    transition:.35s;
+
+}
+
+.switch input:checked + .slider{
+
+    background:var(--primary);
+
+}
+
+.switch input:checked + .slider::before{
+
+    transform:translateX(28px);
+
+}
+
+/*=========================================================
+                    COLOR PICKER
+=========================================================*/
+
+input[type="color"]{
+
+    width:80px;
+
+    height:48px;
+
+    padding:5px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    background:transparent;
+
+}
+
+input[type="color"]::-webkit-color-swatch{
+
+    border:none;
+
+    border-radius:10px;
+
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper{
+
+    padding:0;
+
+}
+
+/*=========================================================
+                    PASSWORD BOX
+=========================================================*/
+
+.password-box{
+
+    position:relative;
+
+}
+
+.password-box input{
+
+    padding-right:45px;
+
+}
+
+.password-box i{
+
+    position:absolute;
+
+    top:50%;
+
+    right:15px;
+
+    transform:translateY(-50%);
+
+    cursor:pointer;
+
+    color:var(--text-light);
+
+    transition:.3s;
+
+}
+
+.password-box i:hover{
+
+    color:var(--primary);
+
+}
+
+/*=========================================================
+                    SECURITY BOX
+=========================================================*/
+
+.security-box{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+
+    gap:25px;
+
+}
+
+/*=========================================================
+                    STATUS BOX
+=========================================================*/
+
+.status-box{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    padding:18px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:16px;
+
+    transition:.3s;
+
+}
+
+.status-box:hover{
+
+    transform:translateY(-4px);
+
+}
+
+.status-box i{
+
+    width:55px;
+
+    height:55px;
+
+    border-radius:14px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:linear-gradient(
+    135deg,
+    var(--primary),
+    var(--primary-dark));
+
+    color:#fff;
+
+    font-size:22px;
+
+}
+
+.status-box h4{
+
+    margin-bottom:5px;
+
+}
+
+.status-box small{
+
+    color:var(--text-light);
+
+}
+
+/*=========================================================
+                    SETTINGS ICON
+=========================================================*/
+
+.settings-icon{
+
+    width:60px;
+
+    height:60px;
+
+    border-radius:18px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:linear-gradient(
+    135deg,
+    #2563eb,
+    #4f46e5);
+
+    color:#fff;
+
+    font-size:26px;
+
+    box-shadow:var(--shadow);
+
+}
+
+/*=========================================================
+                    DIVIDER
+=========================================================*/
+
+.settings-divider{
+
+    height:1px;
+
+    background:var(--border);
+
+    margin:30px 0;
+
+}
+
+/*=========================================================
+                    SAVE PANEL
+=========================================================*/
+
+.save-panel{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:15px;
+
+    margin-top:30px;
+
+    flex-wrap:wrap;
+
+}
+
+/*=========================================================
+                    HOVER EFFECTS
+=========================================================*/
+
+.setting-option,
+.status-box,
+.settings-card{
+
+    transition:.35s ease;
+
+}
+
+.setting-option:hover{
+
+    padding-left:10px;
+
+}
+/*=========================================================
+                    HMS PRO SETTINGS
+                    PART 5C
+        BACKUP • STORAGE • LOGS • LOADER
+=========================================================*/
+
+/*=========================================================
+                    BACKUP GRID
+=========================================================*/
+
+.backup-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+
+    gap:25px;
+
+}
+
+.backup-card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:20px;
+
+    padding:30px;
+
+    text-align:center;
+
+    transition:.35s;
+
+    box-shadow:var(--shadow);
+
+}
+
+.backup-card:hover{
+
+    transform:translateY(-8px);
+
+}
+
+.backup-card i{
+
+    width:75px;
+
+    height:75px;
+
+    border-radius:20px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin:0 auto 20px;
+
+    font-size:30px;
+
+    background:linear-gradient(
+    135deg,
+    var(--primary),
+    var(--primary-dark));
+
+    color:#fff;
+
+}
+
+.backup-card h3{
+
+    margin-bottom:12px;
+
+}
+
+.backup-card p{
+
+    margin-bottom:25px;
+
+    color:var(--text-light);
+
+}
+
+/*=========================================================
+                    STORAGE
+=========================================================*/
+
+.storage-box{
+
+    margin-top:20px;
+
+}
+
+.storage-item{
+
+    margin-bottom:25px;
+
+}
+
+.storage-item label{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-bottom:8px;
+
+    font-weight:600;
+
+}
+
+.progress{
+
+    width:100%;
+
+    height:12px;
+
+    background:#e2e8f0;
+
+    border-radius:50px;
+
+    overflow:hidden;
+
+}
+
+.progress-bar{
+
+    height:100%;
+
+    border-radius:50px;
+
+    background:linear-gradient(
+    90deg,
+    var(--primary),
+    var(--primary-dark));
+
+}
+
+/*=========================================================
+                    ACTIVITY TABLE
+=========================================================*/
+
+.activity-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+.activity-table thead{
+
+    background:var(--primary);
+
+    color:#fff;
+
+}
+
+.activity-table th{
+
+    padding:16px;
+
+    text-align:left;
+
+}
+
+.activity-table td{
+
+    padding:16px;
+
+    border-bottom:1px solid var(--border);
+
+}
+
+.activity-table tbody tr{
+
+    transition:.3s;
+
+}
+
+.activity-table tbody tr:hover{
+
+    background:rgba(37,99,235,.06);
+
+}
+
+/*=========================================================
+                    LOADING
+=========================================================*/
+
+.loading-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:rgba(0,0,0,.45);
+
+    backdrop-filter:blur(6px);
+
+    z-index:99999;
+
+}
+
+.loader{
+
+    background:var(--card);
+
+    padding:35px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    box-shadow:var(--shadow);
+
+}
+
+.spinner{
+
+    width:55px;
+
+    height:55px;
+
+    border-radius:50%;
+
+    border:6px solid #dbeafe;
+
+    border-top:6px solid var(--primary);
+
+    animation:spin .8s linear infinite;
+
+    margin:auto;
+
+    margin-bottom:18px;
+
+}
+
+@keyframes spin{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+/*=========================================================
+                    TOAST
+=========================================================*/
+
+#toastContainer{
+
+    position:fixed;
+
+    top:25px;
+
+    right:25px;
+
+    z-index:100000;
+
+}
+
+.toast{
+
+    min-width:320px;
+
+    background:var(--card);
+
+    color:var(--text);
+
+    border-left:5px solid var(--primary);
+
+    border-radius:16px;
+
+    padding:18px;
+
+    margin-bottom:15px;
+
+    box-shadow:var(--shadow);
+
+    animation:toastSlide .35s ease;
+
+}
+
+.toast.success{
+
+    border-left-color:#10b981;
+
+}
+
+.toast.error{
+
+    border-left-color:#ef4444;
+
+}
+
+.toast.warning{
+
+    border-left-color:#f59e0b;
+
+}
+
+@keyframes toastSlide{
+
+    from{
+
+        opacity:0;
+
+        transform:translateX(100px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateX(0);
+
+    }
+
+}
+
+/*=========================================================
+                    FOOTER
+=========================================================*/
+
+.footer{
+
+    margin-top:40px;
+
+    padding:25px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    border-top:1px solid var(--border);
+
+    color:var(--text-light);
+
+    flex-wrap:wrap;
+
+    gap:15px;
+
+}
+
+/*=========================================================
+                    DARK MODE
+=========================================================*/
+
+body.dark .settings-card,
+body.dark .backup-card,
+body.dark .loader{
+
+    background:var(--card);
+
+    color:var(--text);
+
+}
+
+body.dark .progress{
+
+    background:#334155;
+
+}
+
+body.dark .activity-table tbody tr:hover{
+
+    background:rgba(255,255,255,.05);
+
+}
+
+body.dark .toast{
+
+    background:#1e293b;
+
+    color:#fff;
+
+}
+
+/*=========================================================
+                    RESPONSIVE
+=========================================================*/
+
+@media(max-width:992px){
+
+    .dashboard-banner{
+
+        flex-direction:column;
+
+        text-align:center;
+
+        gap:30px;
+
+    }
+
+    .hero-circle{
+
+        width:140px;
+
+        height:140px;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .settings-header{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:15px;
+
+    }
+
+    .profile-upload{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .footer{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .backup-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+@media(max-width:576px){
+
+    .dashboard-banner{
+
+        padding:25px;
+
+    }
+
+    .banner-content h2{
+
+        font-size:28px;
+
+    }
+
+    .settings-body{
+
+        padding:20px;
+
+    }
+
+    .toast{
+
+        min-width:260px;
+
+    }
+
+}

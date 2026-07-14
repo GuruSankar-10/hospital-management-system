@@ -3,48 +3,43 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
+    <title>HMS PRO | Admin Dashboard</title>
 
-<title>HMS PRO | Admin Dashboard</title>
+    <!-- Font Awesome -->
 
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-<!-- Google Font -->
+    <!-- Chart.js -->
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <!-- Theme -->
 
-<!-- Font Awesome -->
+	<link rel="stylesheet" href="css/theme.css">
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+	<link rel="stylesheet" href="css/common.css">
 
+	<link rel="stylesheet" href="css/animations.css">
 
-<!-- CSS -->
-
-<link rel="stylesheet" href="css/theme.css">
-
-<link rel="stylesheet" href="css/admin.css">
-
+	<link rel="stylesheet" href="css/admin.css">
 
 </head>
 
-
 <body>
 
-
-<!-- =========================
-        SIDEBAR
-========================= -->
-
+<!-- ==========================================
+                SIDEBAR
+========================================== -->
 
 <aside class="sidebar">
 
-
     <div class="logo">
-
 
         <div class="logo-icon">
 
@@ -52,34 +47,26 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
         </div>
 
-
         <div class="logo-text">
-
 
             <h2>HMS PRO</h2>
 
             <p>Hospital System</p>
 
-
         </div>
-
 
     </div>
 
-
-
     <nav class="menu">
 
-
-        <a href="admin-dashboard.html" class="active">
+        <a href="admin-dashboard.html"
+           class="active">
 
             <i class="fa-solid fa-chart-line"></i>
 
             <span>Dashboard</span>
 
         </a>
-
-
 
         <a href="admin-doctors.html">
 
@@ -89,8 +76,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
         </a>
 
-
-
         <a href="admin-staff.html">
 
             <i class="fa-solid fa-user-nurse"></i>
@@ -99,17 +84,13 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
         </a>
 
-
-
-        <a href="admin-patients.html">
+        <a href="patients.html">
 
             <i class="fa-solid fa-bed-pulse"></i>
 
             <span>Patients</span>
 
         </a>
-
-
 
         <a href="appointments.html">
 
@@ -118,8 +99,14 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
             <span>Appointments</span>
 
         </a>
+		
+		<a href="admin-medicines.html">
 
+		    <i class="fas fa-pills"></i>
 
+		    <span>Medicines</span>
+
+		</a>
 
         <a href="billing.html">
 
@@ -129,19 +116,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
         </a>
 
-
-
-        <a href="admin-medicines.html">
-
-            <i class="fa-solid fa-pills"></i>
-
-            <span>Medicines</span>
-
-        </a>
-
-
-
-        <a href="medical-records.html">
+        <a href="records.html">
 
             <i class="fa-solid fa-file-medical"></i>
 
@@ -149,1445 +124,1248 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
         </a>
 
+		<a href="inventory.html">
 
+		    <i class="fa-solid fa-boxes-stacked"></i>
 
-    </nav>
+		    <span>Inventory</span>
 
+		</a>
 
+        <a href="reports.html">
 
-    <div class="sidebar-footer">
+            <i class="fa-solid fa-chart-column"></i>
 
+            <span>Reports</span>
 
-        <button class="secondary-btn">
+        </a>
 
+        <a href="settings.html">
+
+            <i class="fa-solid fa-gear"></i>
+
+            <span>Settings</span>
+
+        </a>
+
+        <a href="login.html"
+           onclick="logout()">
 
             <i class="fa-solid fa-right-from-bracket"></i>
 
-            Logout
+            <span>Logout</span>
 
+        </a>
 
-        </button>
-
-
-    </div>
-
-
+    </nav>
 
 </aside>
 
+<!-- ==========================================
+                MAIN CONTENT
+========================================== -->
 
+<div class="main">
 
-
-<!-- =========================
-        MAIN CONTENT
-========================= -->
-
-
-<main class="main">
-
-
-
-<!-- =========================
-        TOPBAR
-========================= -->
-
+<!-- ==========================================
+                TOPBAR
+========================================== -->
 
 <header class="topbar">
 
+    <div>
 
-<div class="welcome">
+        <div class="breadcrumb">
 
+            <i class="fa-solid fa-house"></i>
 
-<h1>
+            <span>Admin</span>
 
-Welcome Back,
+            <i class="fa-solid fa-angle-right"></i>
 
-<span id="adminName">
+            <span class="active-page">
 
-Administrator
+                Dashboard
 
-</span>
+            </span>
 
-👋
+        </div>
 
-</h1>
+        <div class="welcome">
 
+            <h1>
 
+                Welcome Administrator 👋
 
-<p id="todayDate">
+            </h1>
 
-Monday, 13 July 2026
+            <p>
 
-</p>
+                Monitor hospital performance, patients,
+                doctors, appointments and revenue
+                from one premium dashboard.
 
+            </p>
 
-</div>
+        </div>
 
+    </div>
 
+    <div class="top-actions">
 
+        <!-- Search -->
 
-<div class="top-actions">
+        <div class="search-box">
 
+            <i class="fa-solid fa-search"></i>
 
+            <input
+                type="text"
+                placeholder="Search...">
 
-<div class="search-box">
+        </div>
 
+        <!-- Dark Mode -->
 
-<i class="fa-solid fa-search"></i>
+        <button
+            id="themeToggle"
+            class="icon-btn">
 
+            <i
+                id="themeIcon"
+                class="fa-solid fa-moon">
 
-<input
+            </i>
 
-type="text"
+        </button>
 
-id="dashboardSearch"
+        <!-- Notification -->
 
-placeholder="Search Dashboard...">
+        <button class="icon-btn">
 
+            <i class="fa-solid fa-bell"></i>
 
-</div>
+        </button>
 
+        <!-- Settings -->
 
+        <button class="icon-btn">
 
+            <i class="fa-solid fa-gear"></i>
 
+        </button>
 
-<button class="icon-btn">
+        <!-- Profile -->
 
+        <div class="profile-box">
 
-<i class="fa-solid fa-bell"></i>
+            <img
+                src="https://ui-avatars.com/api/?name=Administrator&background=2563eb&color=ffffff"
+                alt="Admin">
 
+            <div>
 
-</button>
+                <strong>Administrator</strong>
 
+                <small>Hospital Admin</small>
 
+            </div>
 
+        </div>
 
-
-<button class="icon-btn">
-
-
-<i class="fa-solid fa-envelope"></i>
-
-
-</button>
-
-
-
-
-
-<button class="icon-btn" id="themeToggle">
-
-
-<i class="fa-solid fa-moon" id="themeIcon"></i>
-
-
-</button>
-
-
-
-
-
-<div class="profile-box">
-
-
-<i class="fa-solid fa-circle-user"></i>
-
-
-
-<div>
-
-
-<strong>
-
-Administrator
-
-</strong>
-
-
-<small>
-
-Hospital Admin
-
-</small>
-
-
-</div>
-
-
-</div>
-
-
-
-</div>
-
-
+    </div>
 
 </header>
-<!-- =========================
-        HERO SECTION
-========================= -->
 
+<!-- ==========================================
+                HERO SECTION
+========================================== -->
 
 <section class="dashboard-banner">
 
+    <div class="banner-content">
 
-<div class="banner-content">
+        <span class="status-badge">
 
+            <i class="fa-solid fa-circle-check"></i>
 
-<span class="status-badge">
+            HMS PRO Dashboard
 
-🟢 Hospital Server Online
+        </span>
 
-</span>
+        <h2>
 
+            Hospital Overview
 
+        </h2>
 
-<h2>
+        <p>
 
-Hospital Management Dashboard
+            Track live hospital statistics,
+            appointments, doctors,
+            patients and billing performance
+            with a modern management dashboard.
 
-</h2>
+        </p>
 
+        <div class="banner-buttons">
 
+            <button
+                class="primary-btn"
+                onclick="location.href='admin-doctors.html'">
 
-<p>
+                <i class="fa-solid fa-user-plus"></i>
 
-Manage doctors, patients, appointments,
-billing, medicines and hospital operations
-from one smart platform.
+                Add Doctor
 
-</p>
+            </button>
 
+            <button
+                class="secondary-btn"
+                onclick="location.href='patients.html'">
 
+                <i class="fa-solid fa-bed-pulse"></i>
 
+                Add Patient
 
-<div class="banner-buttons">
+            </button>
 
+            <button
+                class="secondary-btn"
+                onclick="location.href='appointments.html'">
 
-<button class="primary-btn"
-onclick="location.href='admin-doctors.html'">
+                <i class="fa-solid fa-calendar-plus"></i>
 
+                Appointment
 
-<i class="fa-solid fa-user-doctor"></i>
+            </button>
 
-Add Doctor
+        </div>
 
+    </div>
 
-</button>
+    <div class="banner-image">
 
+        <div class="hero-circle">
 
+            <i class="fa-solid fa-hospital-user"></i>
 
+        </div>
 
-<button class="secondary-btn"
-onclick="location.href='appointments.html'">
-
-
-<i class="fa-solid fa-calendar-plus"></i>
-
-New Appointment
-
-
-</button>
-
-
-</div>
-
-
-</div>
-
-
-
-
-<div class="banner-image">
-
-
-<div class="hero-circle">
-
-
-<i class="fa-solid fa-hospital"></i>
-
-
-</div>
-
-
-</div>
-
+    </div>
 
 </section>
 
+<!-- ==========================================
+            DASHBOARD STATISTICS
+========================================== -->
 
+<section class="stats-grid">
+	<!-- ==========================================
+	            STATISTICS CARDS
+	========================================== -->
 
+	    <div class="stat-card doctors">
 
+	        <div class="stat-icon">
 
-<!-- =========================
-        LIVE STATUS
-========================= -->
+	            <i class="fa-solid fa-user-doctor"></i>
 
+	        </div>
 
-<section class="live-status">
+	        <div class="stat-content">
 
+	            <h2 id="doctorCount">0</h2>
 
-<div class="live-card">
+	            <p>Total Doctors</p>
 
+	            <span>
 
-<i class="fa-solid fa-server"></i>
+	                <i class="fa-solid fa-arrow-trend-up"></i>
 
+	                +12% this month
 
-<div>
+	            </span>
 
-<h4>
+	        </div>
 
-Server
+	    </div>
 
-</h4>
+	    <div class="stat-card patients">
 
+	        <div class="stat-icon">
 
-<span class="success">
+	            <i class="fa-solid fa-bed-pulse"></i>
 
-Online
+	        </div>
 
-</span>
+	        <div class="stat-content">
 
+	            <h2 id="patientCount">0</h2>
 
-</div>
+	            <p>Total Patients</p>
 
+	            <span>
 
-</div>
+	                <i class="fa-solid fa-user-plus"></i>
 
+	                25 New Today
 
+	            </span>
 
+	        </div>
 
+	    </div>
 
-<div class="live-card">
+	    <div class="stat-card appointments">
 
+	        <div class="stat-icon">
 
-<i class="fa-solid fa-database"></i>
+	            <i class="fa-solid fa-calendar-check"></i>
 
+	        </div>
 
-<div>
+	        <div class="stat-content">
 
-<h4>
+	            <h2 id="appointmentCount">0</h2>
 
-Database
+	            <p>Appointments</p>
 
-</h4>
+	            <span>
 
+	                <i class="fa-solid fa-clock"></i>
 
-<span class="success">
+	                Today's Schedule
 
-Connected
+	            </span>
 
-</span>
+	        </div>
 
+	    </div>
 
-</div>
+	    <div class="stat-card revenue">
 
+	        <div class="stat-icon">
 
-</div>
+	            <i class="fa-solid fa-indian-rupee-sign"></i>
 
+	        </div>
 
+	        <div class="stat-content">
 
+	            <h2 id="revenueCount">₹0</h2>
 
+	            <p>Today's Revenue</p>
 
-<div class="live-card">
+	            <span>
 
+	                <i class="fa-solid fa-chart-line"></i>
 
-<i class="fa-solid fa-shield-halved"></i>
+	                +18% Growth
 
+	            </span>
 
-<div>
+	        </div>
 
-<h4>
+	    </div>
 
-Security
+	</section>
 
-</h4>
+	<!-- ==========================================
+	            QUICK ACTIONS
+	========================================== -->
 
+	<section class="dashboard-card">
 
-<span class="success">
+	    <div class="card-header">
 
-Protected
+	        <h2>
 
-</span>
+	            <i class="fa-solid fa-bolt"></i>
 
+	            Quick Actions
 
-</div>
+	        </h2>
 
+	    </div>
 
-</div>
+	    <div class="quick-actions">
 
+	        <a
+	            href="admin-doctors.html"
+	            class="action-card">
 
+	            <div class="action-icon blue">
 
+	                <i class="fa-solid fa-user-plus"></i>
 
+	            </div>
 
-<div class="live-card">
+	            <h3>Add Doctor</h3>
 
+	            <p>Register a new doctor.</p>
 
-<i class="fa-solid fa-clock"></i>
+	        </a>
 
+	        <a
+	            href="patients.html"
+	            class="action-card">
 
-<div>
+	            <div class="action-icon green">
 
-<h4>
+	                <i class="fa-solid fa-bed-pulse"></i>
 
-Last Sync
+	            </div>
 
-</h4>
+	            <h3>Add Patient</h3>
 
+	            <p>Create a patient record.</p>
 
-<span id="syncTime">
+	        </a>
 
-Just Now
+	        <a
+	            href="appointments.html"
+	            class="action-card">
 
-</span>
+	            <div class="action-icon orange">
 
+	                <i class="fa-solid fa-calendar-plus"></i>
 
-</div>
+	            </div>
 
+	            <h3>Appointment</h3>
 
-</div>
+	            <p>Book an appointment.</p>
 
+	        </a>
 
+	        <a
+	            href="billing.html"
+	            class="action-card">
 
-</section>
+	            <div class="action-icon red">
 
+	                <i class="fa-solid fa-file-invoice-dollar"></i>
 
+	            </div>
 
+	            <h3>Create Bill</h3>
 
+	            <p>Generate billing invoice.</p>
 
-<!-- =========================
-        STATISTICS ROW 1
-========================= -->
+	        </a>
 
+	        <a
+	            href="records.html"
+	            class="action-card">
 
-<section class="stats-container">
+	            <div class="action-icon purple">
 
+	                <i class="fa-solid fa-file-medical"></i>
 
+	            </div>
 
-<div class="stat-card">
+	            <h3>Medical Records</h3>
 
+	            <p>View patient records.</p>
 
-<div class="stat-icon">
+	        </a>
 
-<i class="fa-solid fa-user-doctor"></i>
+	        <a
+	            href="#"
+	            class="action-card">
 
-</div>
+	            <div class="action-icon cyan">
 
+	                <i class="fa-solid fa-chart-column"></i>
 
-<div class="stat-info">
+	            </div>
 
+	            <h3>Reports</h3>
 
-<p>
+	            <p>Hospital analytics.</p>
 
-Doctors
+	        </a>
 
-</p>
+	    </div>
 
+	</section>
 
-<h2 id="doctorCount">
+	<!-- ==========================================
+	            PERFORMANCE SUMMARY
+	========================================== -->
 
-0
+	<section class="summary-grid">
 
-</h2>
+	    <div class="summary-card">
 
+	        <h3>
 
-<span>
+	            <i class="fa-solid fa-user-doctor"></i>
 
-Active Medical Team
+	            Active Doctors
 
-</span>
+	        </h3>
 
+	        <h1 id="activeDoctors">
 
-</div>
+	            0
 
+	        </h1>
 
-</div>
+	    </div>
 
+	    <div class="summary-card">
 
+	        <h3>
 
+	            <i class="fa-solid fa-bed-pulse"></i>
 
+	            Admitted Patients
 
-<div class="stat-card">
+	        </h3>
 
+	        <h1 id="admittedPatients">
 
-<div class="stat-icon">
+	            0
 
-<i class="fa-solid fa-bed-pulse"></i>
+	        </h1>
 
-</div>
+	    </div>
 
+	    <div class="summary-card">
 
-<div class="stat-info">
+	        <h3>
 
+	            <i class="fa-solid fa-calendar-day"></i>
 
-<p>
+	            Today's Visits
 
-Patients
+	        </h3>
 
-</p>
+	        <h1 id="todayVisits">
 
+	            0
 
-<h2 id="patientCount">
+	        </h1>
 
-0
+	    </div>
 
-</h2>
+	    <div class="summary-card">
 
+	        <h3>
 
-<span>
+	            <i class="fa-solid fa-money-bill-wave"></i>
 
-Registered Patients
+	            Monthly Revenue
 
-</span>
+	        </h3>
 
+	        <h1 id="monthlyRevenue">
 
-</div>
+	            ₹0
 
+	        </h1>
 
-</div>
+	    </div>
 
+	</section>
 
+	<!-- ==========================================
+	            ANALYTICS SECTION
+	========================================== -->
 
+	<section class="dashboard-grid">
+		<!-- ==========================================
+		            REVENUE CHART
+		========================================== -->
 
+		<div class="dashboard-card chart-card">
 
-<div class="stat-card">
+		    <div class="card-header">
 
+		        <div>
 
-<div class="stat-icon">
+		            <h2>
 
-<i class="fa-solid fa-user-nurse"></i>
+		                <i class="fa-solid fa-chart-line"></i>
 
-</div>
+		                Revenue Overview
 
+		            </h2>
 
-<div class="stat-info">
+		            <p>
 
+		                Monthly hospital revenue performance.
 
-<p>
+		            </p>
 
-Staff
+		        </div>
 
-</p>
+		    </div>
 
+		    <div class="chart-container">
 
-<h2 id="staffCount">
+		        <canvas id="revenueChart"></canvas>
 
-0
+		    </div>
 
-</h2>
+		</div>
 
+		<!-- ==========================================
+		            APPOINTMENT CHART
+		========================================== -->
 
-<span>
+		<div class="dashboard-card chart-card">
 
-Hospital Employees
+		    <div class="card-header">
 
-</span>
+		        <div>
 
+		            <h2>
 
-</div>
+		                <i class="fa-solid fa-calendar-check"></i>
 
+		                Appointment Statistics
 
-</div>
+		            </h2>
 
+		            <p>
 
+		                Daily appointment distribution.
 
+		            </p>
 
+		        </div>
 
-<div class="stat-card">
+		    </div>
 
+		    <div class="chart-container">
 
-<div class="stat-icon">
+		        <canvas id="appointmentChart"></canvas>
 
-<i class="fa-solid fa-calendar-check"></i>
+		    </div>
 
-</div>
+		</div>
 
+		<!-- ==========================================
+		            DEPARTMENT STATUS
+		========================================== -->
 
-<div class="stat-info">
+		<div class="dashboard-card">
 
+		    <div class="card-header">
 
-<p>
+		        <h2>
 
-Appointments
+		            <i class="fa-solid fa-building"></i>
 
-</p>
+		            Department Overview
 
+		        </h2>
 
-<h2 id="appointmentCount">
+		    </div>
 
-0
+		    <div class="department-list">
 
-</h2>
+		        <div class="department-item">
 
+		            <span>🫀 Cardiology</span>
 
-<span>
+		            <strong>18 Doctors</strong>
 
-Scheduled Visits
+		        </div>
 
-</span>
+		        <div class="progress">
 
+		            <div style="width:90%;"></div>
 
-</div>
+		        </div>
 
+		        <div class="department-item">
 
-</div>
+		            <span>🧠 Neurology</span>
 
+		            <strong>12 Doctors</strong>
 
+		        </div>
 
-</section>
+		        <div class="progress">
 
+		            <div style="width:70%;"></div>
 
+		        </div>
 
+		        <div class="department-item">
 
+		            <span>🦴 Orthopedics</span>
 
+		            <strong>15 Doctors</strong>
 
+		        </div>
 
-<!-- =========================
-        STATISTICS ROW 2
-========================= -->
+		        <div class="progress">
 
+		            <div style="width:80%;"></div>
 
-<section class="stats-container">
+		        </div>
 
+		        <div class="department-item">
 
+		            <span>👶 Pediatrics</span>
 
-<div class="stat-card">
+		            <strong>10 Doctors</strong>
 
+		        </div>
 
-<div class="stat-icon">
+		        <div class="progress">
 
-<i class="fa-solid fa-indian-rupee-sign"></i>
+		            <div style="width:60%;"></div>
 
-</div>
+		        </div>
 
+		        <div class="department-item">
 
-<div class="stat-info">
+		            <span>🩺 General Medicine</span>
 
+		            <strong>25 Doctors</strong>
 
-<p>
+		        </div>
 
-Revenue
+		        <div class="progress">
 
-</p>
+		            <div style="width:95%;"></div>
 
+		        </div>
 
-<h2 id="revenue">
+		    </div>
 
-₹0
+		</div>
 
-</h2>
+		<!-- ==========================================
+		            BED OCCUPANCY
+		========================================== -->
 
+		<div class="dashboard-card">
 
-<span>
+		    <div class="card-header">
 
-Total Collection
+		        <h2>
 
-</span>
+		            <i class="fa-solid fa-bed-pulse"></i>
 
+		            Bed Occupancy
 
-</div>
+		        </h2>
 
+		    </div>
 
-</div>
+		    <div class="occupancy-box">
 
+		        <div class="circle-progress">
 
+		            <h2>82%</h2>
 
+		            <p>Occupied</p>
 
+		        </div>
 
-<div class="stat-card">
+		        <div class="occupancy-details">
 
+		            <div>
 
-<div class="stat-icon">
+		                <span>Total Beds</span>
 
-<i class="fa-solid fa-pills"></i>
+		                <strong>250</strong>
 
-</div>
+		            </div>
 
+		            <div>
 
-<div class="stat-info">
+		                <span>Occupied</span>
 
+		                <strong>205</strong>
 
-<p>
+		            </div>
 
-Medicines
+		            <div>
 
-</p>
+		                <span>Available</span>
 
+		                <strong>45</strong>
 
-<h2 id="medicineCount">
+		            </div>
 
-0
+		        </div>
 
-</h2>
+		    </div>
 
+		</div>
 
-<span>
+		</section>
 
-Pharmacy Stock
+		<!-- ==========================================
+		            RECENT ACTIVITY
+		========================================== -->
 
-</span>
+		<section class="dashboard-card">
 
+		    <div class="card-header">
 
-</div>
+		        <h2>
 
+		            <i class="fa-solid fa-clock-rotate-left"></i>
 
-</div>
+		            Recent Activities
 
+		        </h2>
 
+		    </div>
 
+		    <div class="activity-list">
 
+		        <div class="activity-item">
 
-<div class="stat-card">
+		            <i class="fa-solid fa-user-plus"></i>
 
+		            <div>
 
-<div class="stat-icon">
+		                <strong>New Doctor Registered</strong>
 
-<i class="fa-solid fa-triangle-exclamation"></i>
+		                <p>Dr. Rajesh Kumar joined Cardiology.</p>
 
-</div>
+		            </div>
 
+		            <small>2 min ago</small>
 
-<div class="stat-info">
+		        </div>
 
+		        <div class="activity-item">
 
-<p>
+		            <i class="fa-solid fa-bed-pulse"></i>
 
-Low Stock
+		            <div>
 
-</p>
+		                <strong>Patient Admitted</strong>
 
+		                <p>Room 205 allocated successfully.</p>
 
-<h2 id="lowStock">
+		            </div>
 
-0
+		            <small>15 min ago</small>
 
-</h2>
+		        </div>
 
+		        <div class="activity-item">
 
-<span class="danger">
+		            <i class="fa-solid fa-money-bill-wave"></i>
 
-Needs Restock
+		            <div>
 
-</span>
+		                <strong>Billing Completed</strong>
 
+		                <p>Invoice #INV1024 generated.</p>
 
-</div>
+		            </div>
 
+		            <small>40 min ago</small>
 
-</div>
+		        </div>
 
+		        <div class="activity-item">
 
+		            <i class="fa-solid fa-calendar-check"></i>
 
+		            <div>
 
+		                <strong>Appointment Confirmed</strong>
 
-<div class="stat-card">
+		                <p>Dr. Priya with Patient Ravi.</p>
 
+		            </div>
 
-<div class="stat-icon">
+		            <small>1 hour ago</small>
 
-<i class="fa-solid fa-file-invoice-dollar"></i>
+		        </div>
 
-</div>
+		    </div>
 
+		</section>
 
-<div class="stat-info">
+		<!-- ==========================================
+		            TABLE SECTION START
+		========================================== -->
 
+		<section class="table-grid">
+			<!-- ==========================================
+			            RECENT DOCTORS
+			========================================== -->
 
-<p>
+			<div class="dashboard-card">
 
-Paid Bills
+			    <div class="card-header">
 
-</p>
+			        <h2>
 
+			            <i class="fa-solid fa-user-doctor"></i>
 
-<h2 id="paidBills">
+			            Recent Doctors
 
-0
+			        </h2>
 
-</h2>
+			        <a href="admin-doctors.html" class="view-all">
 
+			            View All
 
-<span>
+			        </a>
 
-Completed Payments
+			    </div>
 
-</span>
+			    <div class="table-responsive">
 
+			        <table>
 
-</div>
+			            <thead>
 
+			                <tr>
 
-</div>
+			                    <th>Doctor</th>
 
+			                    <th>Department</th>
 
+			                    <th>Status</th>
 
-</section>
-<!-- =========================
-        ANALYTICS
-========================= -->
+			                </tr>
 
+			            </thead>
 
-<section class="chart-grid">
+			            <tbody id="recentDoctorTable">
 
+			                <!-- Loaded by dashboard.js -->
 
-<div class="chart-card">
+			            </tbody>
 
+			        </table>
 
-<div class="chart-header">
+			    </div>
 
+			</div>
 
-<h2>
+			<!-- ==========================================
+			            RECENT PATIENTS
+			========================================== -->
 
-<i class="fa-solid fa-chart-line"></i>
+			<div class="dashboard-card">
 
-Monthly Revenue
+			    <div class="card-header">
 
-</h2>
+			        <h2>
 
+			            <i class="fa-solid fa-bed-pulse"></i>
 
-<span class="badge badge-success">
+			            Recent Patients
 
-Live
+			        </h2>
 
-</span>
+			        <a href="patients.html" class="view-all">
 
+			            View All
 
-</div>
+			        </a>
 
+			    </div>
 
+			    <div class="table-responsive">
 
-<canvas id="revenueChart"></canvas>
+			        <table>
 
+			            <thead>
 
-</div>
+			                <tr>
 
+			                    <th>Patient</th>
 
+			                    <th>Disease</th>
 
+			                    <th>Doctor</th>
 
+			                </tr>
 
-<div class="chart-card">
+			            </thead>
 
+			            <tbody id="recentPatientTable">
 
-<div class="chart-header">
+			                <!-- Loaded by dashboard.js -->
 
+			            </tbody>
 
-<h2>
+			        </table>
 
-<i class="fa-solid fa-chart-pie"></i>
+			    </div>
 
-Patient Distribution
+			</div>
 
-</h2>
+			<!-- ==========================================
+			            TODAY'S APPOINTMENTS
+			========================================== -->
 
+			<div class="dashboard-card">
 
-</div>
+			    <div class="card-header">
 
+			        <h2>
 
+			            <i class="fa-solid fa-calendar-check"></i>
 
-<canvas id="patientChart"></canvas>
+			            Today's Appointments
 
+			        </h2>
 
-</div>
+			        <a href="appointments.html" class="view-all">
 
+			            View All
 
+			        </a>
 
-</section>
+			    </div>
 
+			    <div class="table-responsive">
 
+			        <table>
 
+			            <thead>
 
+			                <tr>
 
+			                    <th>Patient</th>
 
-<!-- =========================
-        TABLES
-========================= -->
+			                    <th>Doctor</th>
 
+			                    <th>Time</th>
 
-<section class="chart-grid">
+			                    <th>Status</th>
 
+			                </tr>
 
+			            </thead>
 
-<div class="dashboard-card">
+			            <tbody id="appointmentTable">
 
+			                <!-- Loaded by dashboard.js -->
 
-<div class="card-header">
+			            </tbody>
 
+			        </table>
 
-<h2>
+			    </div>
 
-<i class="fa-solid fa-calendar-check"></i>
+			</div>
 
-Today's Appointments
+			<!-- ==========================================
+			            RECENT BILLING
+			========================================== -->
 
-</h2>
+			<div class="dashboard-card">
 
+			    <div class="card-header">
 
-</div>
+			        <h2>
 
+			            <i class="fa-solid fa-file-invoice-dollar"></i>
 
+			            Recent Billing
 
+			        </h2>
 
-<div class="table-container">
+			        <a href="billing.html" class="view-all">
 
+			            View All
 
-<table>
+			        </a>
 
+			    </div>
 
-<thead>
+			    <div class="table-responsive">
 
-<tr>
+			        <table>
 
-<th>ID</th>
+			            <thead>
 
-<th>Patient</th>
+			                <tr>
 
-<th>Doctor</th>
+			                    <th>Bill No</th>
 
-<th>Status</th>
+			                    <th>Patient</th>
 
-</tr>
+			                    <th>Amount</th>
 
-</thead>
+			                    <th>Status</th>
 
+			                </tr>
 
+			            </thead>
 
-<tbody id="appointmentTable">
+			            <tbody id="billingTable">
 
+			                <!-- Loaded by dashboard.js -->
 
-</tbody>
+			            </tbody>
 
+			        </table>
 
+			    </div>
 
-</table>
+			</div>
 
+			</section>
 
-</div>
+			<!-- ==========================================
+			            NOTIFICATIONS
+			========================================== -->
 
+			<section class="dashboard-card">
 
-</div>
+			    <div class="card-header">
 
+			        <h2>
 
+			            <i class="fa-solid fa-bell"></i>
 
+			            Notifications
 
+			        </h2>
 
+			    </div>
 
+			    <div class="notification-list">
 
-<div class="dashboard-card">
+			        <div class="notification success">
 
+			            <i class="fa-solid fa-circle-check"></i>
 
-<div class="card-header">
+			            <div>
 
+			                <strong>Doctor Registered</strong>
 
-<h2>
+			                <p>Dr. Sharma has been added successfully.</p>
 
-<i class="fa-solid fa-pills"></i>
+			            </div>
 
-Low Stock Medicines
+			        </div>
 
-</h2>
+			        <div class="notification info">
 
+			            <i class="fa-solid fa-calendar-check"></i>
 
-</div>
+			            <div>
 
+			                <strong>Appointment Reminder</strong>
 
+			                <p>12 appointments are scheduled today.</p>
 
-<div class="table-container">
+			            </div>
 
+			        </div>
 
-<table>
+			        <div class="notification warning">
 
+			            <i class="fa-solid fa-triangle-exclamation"></i>
 
-<thead>
+			            <div>
 
+			                <strong>Low Medicine Stock</strong>
 
-<tr>
+			                <p>Paracetamol stock is below minimum level.</p>
 
-<th>Medicine</th>
+			            </div>
 
-<th>Stock</th>
+			        </div>
 
-<th>Status</th>
+			        <div class="notification danger">
 
+			            <i class="fa-solid fa-heart-pulse"></i>
 
-</tr>
+			            <div>
 
+			                <strong>Emergency Alert</strong>
 
-</thead>
+			                <p>Emergency ward is reaching capacity.</p>
 
+			            </div>
 
+			        </div>
 
+			    </div>
 
-<tbody id="lowStockTable">
+			</section>
+			<!-- ==========================================
+			                FOOTER
+			========================================== -->
 
+			<footer class="footer">
 
-</tbody>
+			    <div class="footer-left">
 
+			        © 2026 HMS PRO - Hospital Management System
 
+			    </div>
 
-</table>
+			    <div class="footer-right">
 
+			        Version 2.0 | Spring Boot • PostgreSQL • Render
 
+			    </div>
 
-</div>
+			</footer>
 
+			</div>
+			<!-- END MAIN -->
 
+			<!-- ==========================================
+			            LOADING OVERLAY
+			========================================== -->
 
-</div>
+			<div id="loadingOverlay" class="loading-overlay">
 
+			    <div class="loader">
 
+			        <div class="spinner"></div>
 
+			        <p>Loading Dashboard...</p>
 
-</section>
+			    </div>
 
+			</div>
 
+			<!-- ==========================================
+			            LOGOUT FUNCTION
+			========================================== -->
 
+			<script>
 
+			function logout(){
 
+			    if(confirm("Are you sure you want to logout?")){
 
-<!-- =========================
-        RECENT ACTIVITY
-========================= -->
+			        localStorage.clear();
 
+			        window.location.href="login.html";
 
-<section class="dashboard-card">
+			    }
 
+			}
 
-<div class="card-header">
+			</script>
 
+			<!-- ==========================================
+			            JAVASCRIPT
+			========================================== -->
+			<!-- JS -->
+			<script src="js/config.js"></script>
+			<script src="js/auth.js"></script>
+			<script src="js/admin-dashboard.js"></script>
+			<script src="js/theme.js"></script>
 
-<h2>
+			</body>
 
-<i class="fa-solid fa-clock-rotate-left"></i>
-
-Recent Activity
-
-</h2>
-
-
-</div>
-
-
-
-
-
-<div class="activity-list">
-
-
-
-<div class="activity-item">
-
-
-<div class="activity-icon success">
-
-
-<i class="fa-solid fa-user-plus"></i>
-
-
-</div>
-
-
-
-<div>
-
-
-<strong>
-
-New Patient Registered
-
-</strong>
-
-
-<p>
-
-Patient registration completed successfully.
-
-</p>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-<div class="activity-item">
-
-
-<div class="activity-icon primary">
-
-
-<i class="fa-solid fa-file-invoice-dollar"></i>
-
-
-</div>
-
-
-
-
-<div>
-
-
-<strong>
-
-Bill Generated
-
-</strong>
-
-
-<p>
-
-Payment processed successfully.
-
-</p>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="activity-item">
-
-
-<div class="activity-icon warning">
-
-
-<i class="fa-solid fa-pills"></i>
-
-
-</div>
-
-
-
-
-<div>
-
-
-<strong>
-
-Low Stock Alert
-
-</strong>
-
-
-<p>
-
-Medicine stock requires attention.
-
-</p>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="activity-item">
-
-
-<div class="activity-icon purple">
-
-
-<i class="fa-solid fa-calendar-plus"></i>
-
-
-</div>
-
-
-
-<div>
-
-
-<strong>
-
-Appointment Booked
-
-</strong>
-
-
-<p>
-
-New patient appointment scheduled.
-
-</p>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-<!-- =========================
-        SYSTEM HEALTH
-========================= -->
-
-
-<section class="dashboard-card">
-
-
-<div class="card-header">
-
-
-<h2>
-
-<i class="fa-solid fa-server"></i>
-
-System Health
-
-</h2>
-
-
-</div>
-
-
-
-
-
-<div class="stats-container">
-
-
-
-<div class="stat-card">
-
-
-<div class="stat-icon">
-
-<i class="fa-solid fa-database"></i>
-
-</div>
-
-
-<div class="stat-info">
-
-
-<p>
-
-Database
-
-</p>
-
-
-<h2 class="success">
-
-Connected
-
-</h2>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="stat-card">
-
-
-<div class="stat-icon">
-
-<i class="fa-solid fa-cloud"></i>
-
-</div>
-
-
-<div class="stat-info">
-
-
-<p>
-
-Backend API
-
-</p>
-
-
-<h2 class="success">
-
-Running
-
-</h2>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="stat-card">
-
-
-<div class="stat-icon">
-
-<i class="fa-solid fa-shield-halved"></i>
-
-</div>
-
-
-<div class="stat-info">
-
-
-<p>
-
-Security
-
-</p>
-
-
-<h2 class="success">
-
-Protected
-
-</h2>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="stat-card">
-
-
-<div class="stat-icon">
-
-<i class="fa-solid fa-clock"></i>
-
-</div>
-
-
-<div class="stat-info">
-
-
-<p>
-
-Last Sync
-
-</p>
-
-
-<h2 id="lastSyncTime">
-
-Just Now
-
-</h2>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-<!-- =========================
-        FOOTER
-========================= -->
-
-
-<footer class="footer">
-
-
-<p>
-
-© 2026 HMS PRO |
-Hospital Management System
-
-</p>
-
-
-</footer>
-
-
-
-</main>
-
-
-
-
-
-
-
-<!-- =========================
-        JAVASCRIPT
-========================= -->
-
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-
-<script src="js/dashboard.js"></script>
-
-
-</body>
-
-</html>
+			</html>

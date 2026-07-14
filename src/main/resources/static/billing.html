@@ -8,28 +8,44 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>HMS PRO | Billing</title>
+
+<title>HMS PRO | Billing Management</title>
+
+
+<!-- Font Awesome -->
 
 <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-<link rel="stylesheet"
-href="css/theme.css">
 
-<link rel="stylesheet"
-href="css/admin.css">
+<!-- Theme -->
+
+<link rel="stylesheet" href="css/theme.css">
+
+<link rel="stylesheet" href="css/common.css">
+
+<link rel="stylesheet" href="css/animations.css">
+
+<link rel="stylesheet" href="css/admin.css">
+
 
 </head>
 
+
 <body>
 
-<!-- ======================
-SIDEBAR
-======================= -->
+
+
+<!-- ======================================
+                SIDEBAR
+======================================= -->
+
 
 <aside class="sidebar">
 
+
 <div class="logo">
+
 
 <div class="logo-icon">
 
@@ -37,7 +53,9 @@ SIDEBAR
 
 </div>
 
-<div>
+
+
+<div class="logo-text">
 
 <h2>HMS PRO</h2>
 
@@ -45,9 +63,15 @@ SIDEBAR
 
 </div>
 
+
 </div>
 
+
+
+
+
 <nav class="menu">
+
 
 <a href="admin-dashboard.html">
 
@@ -57,6 +81,9 @@ SIDEBAR
 
 </a>
 
+
+
+
 <a href="admin-doctors.html">
 
 <i class="fa-solid fa-user-doctor"></i>
@@ -64,6 +91,9 @@ SIDEBAR
 <span>Doctors</span>
 
 </a>
+
+
+
 
 <a href="admin-staff.html">
 
@@ -73,6 +103,9 @@ SIDEBAR
 
 </a>
 
+
+
+
 <a href="patients.html">
 
 <i class="fa-solid fa-bed-pulse"></i>
@@ -80,6 +113,9 @@ SIDEBAR
 <span>Patients</span>
 
 </a>
+
+
+
 
 <a href="appointments.html">
 
@@ -89,22 +125,23 @@ SIDEBAR
 
 </a>
 
+
+
+
 <a href="billing.html"
 class="active">
 
+
 <i class="fa-solid fa-file-invoice-dollar"></i>
+
 
 <span>Billing</span>
 
-</a>
-
-<a href="admin-medicines.html">
-
-<i class="fa-solid fa-pills"></i>
-
-<span>Medicines</span>
 
 </a>
+
+
+
 
 <a href="records.html">
 
@@ -114,656 +151,1665 @@ class="active">
 
 </a>
 
-<a href="javascript:void(0)"
+
+
+
+<a href="#"
 onclick="logout()">
+
 
 <i class="fa-solid fa-right-from-bracket"></i>
 
+
 <span>Logout</span>
+
 
 </a>
 
+
+
 </nav>
+
 
 </aside>
 
-<!-- ======================
-MAIN
-======================= -->
+
+
+
+
+<!-- ======================================
+                MAIN
+======================================= -->
+
 
 <div class="main">
 
+
+
+
+
+<!-- ======================================
+                TOPBAR
+======================================= -->
+
+
 <header class="topbar">
 
-<div class="welcome">
 
-<h1>
-
-Billing Management 💰
-
-</h1>
-
-<p>
-
-Generate professional hospital invoices
-
-</p>
-
-</div>
-
-</header>
-
-<!-- ======================
-BANNER
-======================= -->
-
-<section class="dashboard-banner">
-
-<div class="banner-content">
-
-<h2>
-
-Hospital Billing Center
-
-</h2>
-
-<p>
-
-Generate bills automatically using medicines.
-
-</p>
-
-<div class="banner-buttons">
-
-<button onclick="generateBill()">
-
-<i class="fa-solid fa-file-invoice"></i>
-
-Generate Bill
-
-</button>
-
-<button
-onclick="location.href='admin-dashboard.html'">
-
-<i class="fa-solid fa-arrow-left"></i>
-
-Dashboard
-
-</button>
-
-</div>
-
-</div>
-
-<div class="banner-image">
-
-<i class="fa-solid fa-file-invoice-dollar"></i>
-
-</div>
-
-</section>
-
-<!-- ======================
-SUMMARY
-======================= -->
-
-<section class="stats-container">
-
-<div class="stat-card">
-
-<div class="stat-icon">
-
-<i class="fa-solid fa-money-bill-wave"></i>
-
-</div>
-
-<div class="stat-info">
-
-<p>Total Revenue</p>
-
-<h2 id="totalRevenue">
-
-₹0
-
-</h2>
-
-</div>
-
-</div>
-
-<div class="stat-card">
-
-<div class="stat-icon">
-
-<i class="fa-solid fa-circle-check"></i>
-
-</div>
-
-<div class="stat-info">
-
-<p>Paid Bills</p>
-
-<h2 id="paidBills">
-
-0
-
-</h2>
-
-</div>
-
-</div>
-
-<div class="stat-card">
-
-<div class="stat-icon">
-
-<i class="fa-solid fa-clock"></i>
-
-</div>
-
-<div class="stat-info">
-
-<p>Pending Bills</p>
-
-<h2 id="pendingBills">
-
-0
-
-</h2>
-
-</div>
-
-</div>
-
-<div class="stat-card">
-
-<div class="stat-icon">
-
-<i class="fa-solid fa-file-lines"></i>
-
-</div>
-
-<div class="stat-info">
-
-<p>Total Bills</p>
-
-<h2 id="billCount">
-
-0
-
-</h2>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ======================
-NEW BILL
-======================= -->
-
-<section class="dashboard-card">
-
-<div class="card-header">
-
-<h2>
-
-Create New Bill
-
-</h2>
-
-</div>
-
-<div class="form-grid">
-
-<div class="form-group">
-
-<label>
-
-Patient
-
-</label>
-
-<select id="patientSelect">
-
-<option>
-
-Loading...
-
-</option>
-
-</select>
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-Doctor
-
-</label>
-
-<select id="doctorSelect">
-
-<option>
-
-Loading...
-
-</option>
-
-</select>
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-Medicine
-
-</label>
-
-<select id="medicineSelect">
-
-<option>
-
-Loading...
-
-</option>
-
-</select>
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-Quantity
-
-</label>
-
-<input
-
-type="number"
-
-id="medicineQty"
-
-value="1"
-
-min="1"
-
-oninput="calculateMedicineTotal()">
-
-</div>
-<div class="form-group">
-
-<label>
-
-Medicine Price
-
-</label>
-
-<input
-
-type="number"
-
-id="medicinePrice"
-
-readonly
-
->
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-Medicine Total
-
-</label>
-
-<input
-
-type="number"
-
-id="medicineTotal"
-
-readonly
-
->
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-Doctor Fee
-
-</label>
-
-<input
-
-type="number"
-
-id="doctorFee"
-
-value="500"
-
-oninput="calculateGrandTotal()"
-
->
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-Room Charge
-
-</label>
-
-<input
-
-type="number"
-
-id="roomCharge"
-
-value="1000"
-
-oninput="calculateGrandTotal()"
-
->
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-Lab Charge
-
-</label>
-
-<input
-
-type="number"
-
-id="labCharge"
-
-value="0"
-
-oninput="calculateGrandTotal()"
-
->
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-Grand Total
-
-</label>
-
-<input
-
-type="number"
-
-id="grandTotal"
-
-readonly
-
->
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-Payment Method
-
-</label>
-
-<select id="paymentMethod">
-
-<option value="Cash">Cash</option>
-
-<option value="UPI">UPI</option>
-
-<option value="Card">Card</option>
-
-</select>
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-Payment Status
-
-</label>
-
-<select id="paymentStatus">
-
-<option value="PAID">PAID</option>
-
-<option value="UNPAID">UNPAID</option>
-
-</select>
-
-</div>
-
-</div>
-
-<div style="margin-top:30px;">
-
-<button
-class="save-btn"
-onclick="generateBill()">
-
-<i class="fa-solid fa-file-invoice-dollar"></i>
-
-Generate Bill
-
-</button>
-
-</div>
-
-</section>
-
-<!-- ===============================
-            BILL HISTORY
-================================ -->
-
-<section class="dashboard-card">
-
-<div class="card-header">
 
 <div>
 
-<h2>
 
-<i class="fa-solid fa-clock-rotate-left"></i>
 
-Billing History
+<div class="breadcrumb">
 
-</h2>
 
-<p style="color:#64748b">
+<i class="fa-solid fa-house"></i>
 
-Generated hospital invoices
+
+<span>Admin</span>
+
+
+
+<i class="fa-solid fa-angle-right"></i>
+
+
+
+<span class="active-page">
+
+Billing
+
+</span>
+
+
+
+</div>
+
+
+
+
+
+<div class="welcome">
+
+
+<h1>
+
+Billing Management 💳
+
+</h1>
+
+
+
+
+<p>
+
+Manage invoices, payments and patient billing records.
 
 </p>
 
-</div>
+
 
 </div>
 
-<div class="table-container">
 
-<table>
-
-<thead>
-
-<tr>
-
-<th>ID</th>
-
-<th>Patient</th>
-
-<th>Amount</th>
-
-<th>Status</th>
-
-<th>Method</th>
-
-<th>Actions</th>
-
-</tr>
-
-</thead>
-
-<tbody id="billingTable">
-
-<!-- Loaded by billing.js -->
-
-</tbody>
-
-</table>
 
 </div>
+
+
+
+
+
+
+
+<div class="top-actions">
+
+
+
+<div class="search-box">
+
+
+<i class="fa-solid fa-search"></i>
+
+
+
+<input
+
+type="text"
+
+id="searchBill"
+
+placeholder="Search Invoice..."
+
+onkeyup="searchBill()">
+
+
+
+</div>
+
+
+
+
+
+<button
+
+id="themeToggle"
+
+class="icon-btn">
+
+
+
+<i
+
+id="themeIcon"
+
+class="fa-solid fa-moon">
+
+</i>
+
+
+
+</button>
+
+
+
+
+
+<button class="icon-btn">
+
+
+<i class="fa-solid fa-bell"></i>
+
+
+</button>
+
+
+
+
+
+
+<div class="profile-box">
+
+
+<img
+
+src="https://ui-avatars.com/api/?name=Administrator&background=2563eb&color=ffffff">
+
+
+
+<div>
+
+
+<strong>
+
+Administrator
+
+</strong>
+
+
+<small>
+
+Hospital Admin
+
+</small>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+</header>
+
+
+
+
+
+
+<!-- ======================================
+                HERO SECTION
+======================================= -->
+
+
+<section class="dashboard-banner">
+
+
+
+<div class="banner-content">
+
+
+
+
+<span class="status-badge">
+
+
+<i class="fa-solid fa-file-invoice-dollar"></i>
+
+
+HMS Billing System
+
+
+</span>
+
+
+
+
+
+<h2>
+
+Hospital Invoice Management
+
+</h2>
+
+
+
+
+<p>
+
+Generate bills, track payments,
+and manage financial transactions.
+
+</p>
+
+
+
+
+
+<div class="banner-buttons">
+
+
+<button
+
+class="primary-btn"
+
+onclick="openBillingModal()">
+
+
+
+<i class="fa-solid fa-plus"></i>
+
+
+Create Invoice
+
+
+</button>
+
+
+
+
+
+<button
+
+class="secondary-btn"
+
+onclick="loadBills()">
+
+
+
+<i class="fa-solid fa-rotate"></i>
+
+
+Refresh
+
+
+</button>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+<div class="banner-image">
+
+
+<div class="hero-circle">
+
+
+<i class="fa-solid fa-money-bill-wave"></i>
+
+
+</div>
+
+
+</div>
+
+
 
 </section>
-<!-- ==========================================
-        DELETE BILL MODAL
-========================================== -->
 
-<div class="modal-overlay" id="deleteModal">
 
-    <div class="modal delete-modal">
 
-        <div class="modal-header">
 
-            <h2>
 
-                <i class="fa-solid fa-trash"></i>
+<!-- ======================================
+            STATISTICS START
+======================================= -->
 
-                Delete Bill
 
-            </h2>
+<section class="stats-grid">
+	<!-- ======================================
+	            BILLING STATISTICS
+	======================================= -->
 
-        </div>
 
-        <div class="modal-body">
+	<div class="stat-card">
 
-            <p>
 
-                Are you sure you want to delete this bill?
+	<div class="stat-icon blue">
 
-            </p>
+	<i class="fa-solid fa-indian-rupee-sign"></i>
 
-            <p style="color:#64748b;">
+	</div>
 
-                This action cannot be undone.
 
-            </p>
 
-        </div>
+	<div class="stat-content">
 
-        <div class="modal-footer">
 
-            <button
-                class="cancel-btn"
-                onclick="closeDeleteModal()">
+	<h2 id="totalRevenue">
 
-                Cancel
+	₹0
 
-            </button>
+	</h2>
 
-            <button
-                class="deleteBtn"
-                onclick="confirmDelete()">
 
-                Delete
+	<p>
 
-            </button>
+	Total Revenue
 
-        </div>
+	</p>
 
-    </div>
 
-</div>
+	<span>
 
-<!-- ==========================================
-        PAGE HELPERS
-========================================== -->
+	Overall Collection
 
-<script>
+	</span>
 
-function logout(){
 
-    localStorage.removeItem("token");
-    localStorage.removeItem("email");
-    localStorage.removeItem("role");
+	</div>
 
-    window.location.href = "login.html";
 
-}
+	</div>
 
-// Close Modal Using ESC
 
-document.addEventListener("keydown", function(e){
 
-    if(e.key==="Escape"){
 
-        closeDeleteModal();
 
-    }
+	<div class="stat-card">
 
-});
 
-// Close Modal on Outside Click
+	<div class="stat-icon green">
 
-window.addEventListener("mousedown",function(e){
 
-    const modal=document.getElementById("deleteModal");
+	<i class="fa-solid fa-circle-check"></i>
 
-    if(
 
-        modal &&
+	</div>
 
-        modal.style.display==="flex" &&
 
-        e.target===modal
 
-    ){
 
-        closeDeleteModal();
+	<div class="stat-content">
 
-    }
 
-});
+	<h2 id="paidBills">
 
-</script>
+	0
 
-<!-- ==========================================
-        JAVASCRIPT
-========================================== -->
+	</h2>
 
-<script src="js/billing.js"></script>
 
-</div>
+	<p>
 
-</body>
+	Paid Bills
 
-</html>
+	</p>
+
+
+	<span>
+
+	Completed Payments
+
+	</span>
+
+
+	</div>
+
+
+	</div>
+
+
+
+
+
+	<div class="stat-card">
+
+
+	<div class="stat-icon orange">
+
+
+	<i class="fa-solid fa-clock"></i>
+
+
+	</div>
+
+
+
+
+	<div class="stat-content">
+
+
+	<h2 id="pendingBills">
+
+	0
+
+	</h2>
+
+
+	<p>
+
+	Pending
+
+	</p>
+
+
+	<span>
+
+	Waiting Payments
+
+	</span>
+
+
+	</div>
+
+
+	</div>
+
+
+
+
+
+	<div class="stat-card">
+
+
+	<div class="stat-icon red">
+
+
+	<i class="fa-solid fa-file-circle-xmark"></i>
+
+
+	</div>
+
+
+
+
+	<div class="stat-content">
+
+
+	<h2 id="cancelledBills">
+
+	0
+
+	</h2>
+
+
+	<p>
+
+	Cancelled
+
+	</p>
+
+
+	<span>
+
+	Cancelled Invoices
+
+	</span>
+
+
+	</div>
+
+
+	</div>
+
+
+	</section>
+
+
+
+
+
+
+
+	<!-- ======================================
+	                FILTER SECTION
+	======================================= -->
+
+
+	<section class="dashboard-card">
+
+
+	<div class="card-header">
+
+
+	<h2>
+
+
+	<i class="fa-solid fa-filter"></i>
+
+
+	Filter Bills
+
+
+	</h2>
+
+
+	</div>
+
+
+
+
+
+
+	<div class="filter-grid">
+
+
+
+
+
+	<div class="form-group">
+
+
+	<label>
+
+	Patient
+
+	</label>
+
+
+
+	<select
+
+	id="patientFilter"
+
+	onchange="filterBills()">
+
+
+
+	<option value="">
+
+	All Patients
+
+	</option>
+
+
+	</select>
+
+
+	</div>
+
+
+
+
+
+
+
+	<div class="form-group">
+
+
+	<label>
+
+	Payment Status
+
+	</label>
+
+
+
+	<select
+
+	id="paymentStatusFilter"
+
+	onchange="filterBills()">
+
+
+
+	<option value="">
+
+	All Status
+
+	</option>
+
+
+	<option>
+
+	Paid
+
+	</option>
+
+
+	<option>
+
+	Pending
+
+	</option>
+
+
+	<option>
+
+	Cancelled
+
+	</option>
+
+
+
+	</select>
+
+
+	</div>
+
+
+
+
+
+
+	<div class="form-group">
+
+
+	<label>
+
+	Payment Method
+
+	</label>
+
+
+
+	<select
+
+	id="paymentMethodFilter"
+
+	onchange="filterBills()">
+
+
+
+	<option value="">
+
+	All Methods
+
+	</option>
+
+
+	<option>
+
+	Cash
+
+	</option>
+
+
+	<option>
+
+	Card
+
+	</option>
+
+
+	<option>
+
+	UPI
+
+	</option>
+
+
+	<option>
+
+	Insurance
+
+	</option>
+
+
+
+	</select>
+
+
+	</div>
+
+
+
+
+
+
+	<div class="form-group">
+
+
+	<label>
+
+	Actions
+
+	</label>
+
+
+
+	<div style="display:flex;gap:10px;">
+
+
+
+	<button
+
+	class="primary-btn"
+
+	onclick="loadBills()">
+
+
+
+	<i class="fa-solid fa-rotate"></i>
+
+
+	Refresh
+
+
+	</button>
+
+
+
+
+
+	<button
+
+	class="secondary-btn"
+
+	onclick="exportCSV()">
+
+
+
+	<i class="fa-solid fa-file-csv"></i>
+
+
+	Export
+
+
+	</button>
+
+
+
+	</div>
+
+
+	</div>
+
+
+
+	</div>
+
+
+	</section>
+
+
+
+
+
+
+
+	<!-- ======================================
+	                BILL TABLE
+	======================================= -->
+
+
+	<section class="dashboard-card">
+
+
+
+	<div class="card-header">
+
+
+
+	<h2>
+
+
+	<i class="fa-solid fa-file-invoice"></i>
+
+
+	Invoice Records
+
+
+	</h2>
+
+
+
+
+
+	<button
+
+	class="primary-btn"
+
+	onclick="openBillingModal()">
+
+
+
+	<i class="fa-solid fa-plus"></i>
+
+
+	Create Bill
+
+
+	</button>
+
+
+
+	</div>
+
+
+
+
+
+
+
+	<div class="table-responsive">
+
+
+
+	<table>
+
+
+
+	<thead>
+
+
+	<tr>
+
+
+	<th>ID</th>
+
+
+	<th>Patient</th>
+
+
+	<th>Invoice</th>
+
+
+	<th>Amount</th>
+
+
+	<th>Date</th>
+
+
+	<th>Payment</th>
+
+
+	<th>Status</th>
+
+
+	<th>Actions</th>
+
+
+	</tr>
+
+
+	</thead>
+
+
+
+
+
+
+	<tbody id="billingTable">
+
+
+	<!-- Loaded by billing.js -->
+
+
+	</tbody>
+
+
+
+
+	</table>
+
+
+
+	</div>
+
+
+
+
+	</section>
+	<!-- ======================================
+	            BILLING MODAL
+	======================================= -->
+
+
+	<div
+
+	id="billingModal"
+
+	class="modal-overlay">
+
+
+
+	<div class="modal">
+
+
+
+
+
+	<!-- MODAL HEADER -->
+
+
+	<div class="modal-header">
+
+
+	<h2 id="modalTitle">
+
+
+	<i class="fa-solid fa-file-invoice-dollar"></i>
+
+
+	Create Invoice
+
+
+	</h2>
+
+
+
+
+	<button
+
+	class="close-btn"
+
+	onclick="closeBillingModal()">
+
+
+
+	<i class="fa-solid fa-xmark"></i>
+
+
+	</button>
+
+
+
+	</div>
+
+
+
+
+
+
+	<!-- MODAL BODY -->
+
+
+	<div class="modal-body">
+
+
+
+	<input
+
+	type="hidden"
+
+	id="billId">
+
+
+
+
+
+	<div class="form-grid">
+
+
+
+
+
+	<div class="form-group">
+
+
+	<label>
+
+	Patient
+
+	</label>
+
+
+
+	<select
+
+	id="billPatient">
+
+
+
+	<option value="">
+
+	Select Patient
+
+	</option>
+
+
+	</select>
+
+
+
+	</div>
+
+
+
+
+
+
+
+	<div class="form-group">
+
+
+	<label>
+
+	Bill Date
+
+	</label>
+
+
+
+	<input
+
+	type="date"
+
+	id="billDate">
+
+
+
+	</div>
+
+
+
+
+
+
+
+	<div class="form-group">
+
+
+	<label>
+
+	Consultation Fee
+
+	</label>
+
+
+
+	<input
+
+	type="number"
+
+	id="consultationFee"
+
+	placeholder="0"
+
+	oninput="calculateTotal()">
+
+
+
+	</div>
+
+
+
+
+
+
+
+
+	<div class="form-group">
+
+
+	<label>
+
+	Medicine Charges
+
+	</label>
+
+
+
+	<input
+
+	type="number"
+
+	id="medicineCharges"
+
+	placeholder="0"
+
+	oninput="calculateTotal()">
+
+
+
+	</div>
+
+
+
+
+
+
+
+
+	<div class="form-group">
+
+
+	<label>
+
+	Lab Charges
+
+	</label>
+
+
+
+	<input
+
+	type="number"
+
+	id="labCharges"
+
+	placeholder="0"
+
+	oninput="calculateTotal()">
+
+
+
+	</div>
+
+
+
+
+
+
+
+	<div class="form-group">
+
+
+	<label>
+
+	Room Charges
+
+	</label>
+
+
+
+	<input
+
+	type="number"
+
+	id="roomCharges"
+
+	placeholder="0"
+
+	oninput="calculateTotal()">
+
+
+
+	</div>
+
+
+
+
+
+
+
+
+	<div class="form-group">
+
+
+	<label>
+
+	Total Amount
+
+	</label>
+
+
+
+	<input
+
+	type="number"
+
+	id="totalAmount"
+
+	readonly>
+
+
+
+	</div>
+
+
+
+
+
+
+
+
+	<div class="form-group">
+
+
+	<label>
+
+	Payment Method
+
+	</label>
+
+
+
+	<select
+
+	id="paymentMethod">
+
+
+
+	<option>
+
+	Cash
+
+	</option>
+
+
+	<option>
+
+	Card
+
+	</option>
+
+
+	<option>
+
+	UPI
+
+	</option>
+
+
+	<option>
+
+	Insurance
+
+	</option>
+
+
+
+	</select>
+
+
+
+	</div>
+
+
+
+
+
+
+
+
+	<div class="form-group">
+
+
+	<label>
+
+	Payment Status
+
+	</label>
+
+
+
+	<select
+
+	id="paymentStatus">
+
+
+
+	<option>
+
+	Paid
+
+	</option>
+
+
+	<option>
+
+	Pending
+
+	</option>
+
+
+	<option>
+
+	Cancelled
+
+	</option>
+
+
+
+	</select>
+
+
+
+	</div>
+
+
+
+
+
+	</div>
+
+
+
+	</div>
+
+
+
+
+
+
+
+	<!-- MODAL FOOTER -->
+
+
+	<div class="modal-footer">
+
+
+
+	<button
+
+	class="secondary-btn"
+
+	onclick="closeBillingModal()">
+
+
+
+	<i class="fa-solid fa-xmark"></i>
+
+
+	Cancel
+
+
+	</button>
+
+
+
+
+
+
+	<button
+
+	class="primary-btn"
+
+	onclick="saveBill()">
+
+
+
+	<i class="fa-solid fa-floppy-disk"></i>
+
+
+	Save Bill
+
+
+	</button>
+
+
+
+
+	</div>
+
+
+
+
+
+	</div>
+
+
+
+	</div>
+
+
+
+
+
+
+
+	<!-- ======================================
+	            DELETE BILL MODAL
+	======================================= -->
+
+
+	<div
+
+	id="deleteModal"
+
+	class="modal-overlay">
+
+
+
+	<div class="delete-modal">
+
+
+
+
+
+	<div class="modal-header">
+
+
+	<h2>
+
+
+	<i class="fa-solid fa-trash"></i>
+
+
+	Delete Invoice
+
+
+	</h2>
+
+
+
+	</div>
+
+
+
+
+
+
+
+	<div class="modal-body">
+
+
+	<p>
+
+	Are you sure you want to delete this invoice?
+
+	</p>
+
+
+
+	<p class="warning-text">
+
+	This action cannot be undone.
+
+	</p>
+
+
+
+	</div>
+
+
+
+
+
+
+
+	<div class="modal-footer">
+
+
+
+	<button
+
+	class="secondary-btn"
+
+	onclick="closeDeleteModal()">
+
+
+
+	Cancel
+
+
+	</button>
+
+
+
+
+
+
+
+	<button
+
+	class="primary-btn danger"
+
+	onclick="confirmDelete()">
+
+
+
+	Delete
+
+
+	</button>
+
+
+
+
+	</div>
+
+
+
+
+	</div>
+
+
+
+
+	</div>
+	<!-- ======================================
+	                FOOTER
+	======================================= -->
+
+
+	<footer class="footer">
+
+
+	<div class="footer-left">
+
+	© 2026 HMS PRO - Hospital Management System
+
+	</div>
+
+
+
+
+	<div class="footer-right">
+
+	Billing Management Module | Version 2.0
+
+	</div>
+
+
+
+	</footer>
+
+
+
+
+	</div>
+	<!-- END MAIN -->
+
+
+
+
+
+
+	<!-- ======================================
+	            LOADING OVERLAY
+	======================================= -->
+
+
+	<div
+
+	id="loadingOverlay"
+
+	class="loading-overlay">
+
+
+
+	<div class="loader">
+
+
+
+	<div class="spinner"></div>
+
+
+
+	<p>
+
+	Loading Bills...
+
+	</p>
+
+
+
+	</div>
+
+
+
+	</div>
+
+
+
+
+
+
+
+	<!-- ======================================
+	                TOAST
+	======================================= -->
+
+
+	<div
+
+	id="toastContainer">
+
+
+	</div>
+
+
+
+
+
+
+
+	<!-- ======================================
+	                JAVASCRIPT
+	======================================= -->
+
+
+	<script src="js/theme.js"></script>
+
+
+	<script src="js/common.js"></script>
+
+
+	<script src="js/billing.js"></script>
+
+
+
+
+
+	</body>
+
+
+	</html>

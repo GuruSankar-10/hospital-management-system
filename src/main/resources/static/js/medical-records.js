@@ -1,117 +1,160 @@
-// ==========================================
-// Medical Records
-// ==========================================
+/*=========================================================
+            HMS PRO DOCTOR MEDICAL RECORDS
+=========================================================*/
 
-// API URL
-const isLocal =
-    window.location.hostname === "localhost" ||
-    window.location.hostname === "127.0.0.1";
+const RECORD_API = `${API_URL}/records`;
 
-const API_URL = isLocal
-    ? "http://localhost:8080"
-    : "https://hospital-management-system-6pok.onrender.com";
-
-// Doctor Session
 const doctorId = localStorage.getItem("doctorId");
+const token = localStorage.getItem("token");
+const role = localStorage.getItem("role");
 
-if (!doctorId) {
+/*=========================================================
+                SECURITY
+=========================================================*/
 
-    alert("Session expired. Please login again.");
+if (!token || role !== "DOCTOR") {
+
+    alert("Please login as Doctor.");
 
     window.location.href = "login.html";
 
 }
 
-// ==========================================
-// Load Medical Records
-// ==========================================
+/*=========================================================
+                PAGE LOAD
+=========================================================*/
 
-function loadMedicalRecords() {
+document.addEventListener("DOMContentLoaded", () => {
 
-    fetch(API_URL + "/medical-records", {
+    loadMedicalRecords();
 
-        headers: {
+});
 
-            "Authorization": "Bearer " + localStorage.getItem("token")
+/*=========================================================
+                LOAD RECORDS
+=========================================================*/
 
-        }
+async function loadMedicalRecords() {
 
-    })
+    try {
 
-    .then(response => {
+        const response = await fetch(RECORD_API, {
 
-        if (!response.ok) {
-
-            throw new Error("Unable to load medical records.");
-
-        }
-
-        return response.json();
-
-    })
-
-    .then(records => {
-
-        const table = document.getElementById("recordsTable");
-
-        table.innerHTML = "";
-
-        records.forEach(record => {
-
-            table.innerHTML += `
-
-            <tr>
-
-                <td>${record.id}</td>
-
-                <td>${record.patient ? record.patient.name : "-"}</td>
-
-                <td>${record.diagnosis}</td>
-
-                <td>${record.symptoms}</td>
-
-                <td>${record.treatment}</td>
-
-                <td>${record.visitDate}</td>
-
-                <td>
-
-                    <button
-                        class="delete-btn"
-                        onclick="deleteMedicalRecord(${record.id})">
-
-                        Delete
-
-                    </button>
-
-                </td>
-
-            </tr>
-
-            `;
+            headers: {
+                Authorization: "Bearer " + token
+            }
 
         });
 
-    })
+        if (!response.ok) {
 
-    .catch(error => {
+            throw new Error("Unable to load medical records");
+
+        }
+
+        const records = await response.json();
+
+        renderTable(records);
+
+    }
+
+    catch (error) {
 
         console.error(error);
 
         alert(error.message);
 
+    }
+
+}
+
+/*=========================================================
+                TABLE
+=========================================================*/
+
+function renderTable(records) {
+
+    const tbody =
+        document.getElementById("recordsTable");
+
+    if (!tbody) return;
+
+    tbody.innerHTML = "";
+
+    if (records.length === 0) {
+
+        tbody.innerHTML = `
+
+<tr>
+
+<td colspan="7" style="text-align:center">
+
+No Medical Records Found
+
+</td>
+
+</tr>
+
+`;
+
+        return;
+
+    }
+
+    records.forEach(record => {
+
+        tbody.innerHTML += `
+
+<tr>
+
+<td>${record.id}</td>
+
+<td>${record.patient?.name ?? "-"}</td>
+
+<td>${record.diagnosis ?? "-"}</td>
+
+<td>${record.symptoms ?? "-"}</td>
+
+<td>${record.treatment ?? "-"}</td>
+
+<td>${record.visitDate ?? "-"}</td>
+
+<td>
+
+<button
+class="editBtn"
+onclick="editMedicalRecord(${record.id})">
+
+<i class="fa-solid fa-pen"></i>
+
+</button>
+
+<button
+class="deleteBtn"
+onclick="deleteMedicalRecord(${record.id})">
+
+<i class="fa-solid fa-trash"></i>
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
     });
 
 }
 
-// ==========================================
-// Save Medical Record
-// ==========================================
+/*=========================================================
+                SAVE RECORD
+=========================================================*/
 
-function saveMedicalRecord() {
+async function saveMedicalRecord() {
 
     const patientId =
-        document.getElementById("patientId").value.trim();
+        document.getElementById("patientId").value;
 
     const diagnosis =
         document.getElementById("diagnosis").value.trim();
@@ -125,7 +168,7 @@ function saveMedicalRecord() {
     const notes =
         document.getElementById("notes").value.trim();
 
-    if (!patientId || diagnosis === "") {
+    if (patientId === "" || diagnosis === "") {
 
         alert("Patient ID and Diagnosis are required.");
 
@@ -133,158 +176,288 @@ function saveMedicalRecord() {
 
     }
 
-    const medicalRecord = {
+    const body = {
 
         patient: {
 
-            id: patientId
+            id: Number(patientId)
 
         },
 
         doctor: {
 
-            id: doctorId
+            id: Number(doctorId)
 
         },
 
-        diagnosis: diagnosis,
+        diagnosis,
 
-        symptoms: symptoms,
+        symptoms,
 
-        treatment: treatment,
+        treatment,
 
-        notes: notes,
+        notes,
 
-        visitDate: new Date().toISOString().split("T")[0]
+        visitDate:
+            new Date().toISOString().split("T")[0]
 
     };
 
-    fetch(API_URL + "/medical-records", {
+    try {
 
-        method: "POST",
+        const response = await fetch(RECORD_API, {
 
-        headers: {
+            method: "POST",
 
-            "Content-Type": "application/json",
+            headers: {
 
-            "Authorization": "Bearer " + localStorage.getItem("token")
+                "Content-Type": "application/json",
 
-        },
+                Authorization: "Bearer " + token
 
-        body: JSON.stringify(medicalRecord)
+            },
 
-    })
+            body: JSON.stringify(body)
 
-    .then(response => {
+        });
 
         if (!response.ok) {
 
-            throw new Error("Unable to save medical record.");
+            throw new Error("Unable to save medical record");
 
         }
 
-        return response.json();
-
-    })
-
-    .then(() => {
-
-        alert("✅ Medical Record Saved Successfully");
+        alert("Medical Record Saved Successfully");
 
         clearForm();
 
         loadMedicalRecords();
 
-    })
+    }
 
-    .catch(error => {
+    catch (error) {
 
         console.error(error);
 
         alert(error.message);
 
-    });
+    }
+
+}
+/*=========================================================
+                EDIT RECORD
+=========================================================*/
+
+let editingId = null;
+
+function editMedicalRecord(id) {
+
+    const row = [...document.querySelectorAll("#recordsTable tr")]
+        .find(r => Number(r.cells[0]?.textContent) === id);
+
+    if (!row) return;
+
+    editingId = id;
+
+    document.getElementById("patientId").value =
+        row.cells[1].textContent;
+
+    document.getElementById("diagnosis").value =
+        row.cells[2].textContent;
+
+    document.getElementById("symptoms").value =
+        row.cells[3].textContent;
+
+    document.getElementById("treatment").value =
+        row.cells[4].textContent;
 
 }
 
-// ==========================================
-// Delete Medical Record
-// ==========================================
+/*=========================================================
+                UPDATE RECORD
+=========================================================*/
 
-function deleteMedicalRecord(id) {
+async function updateMedicalRecord() {
 
-    if (!confirm("Delete this medical record?")) {
+    if (editingId == null) {
+
+        alert("No record selected.");
 
         return;
 
     }
 
-    fetch(API_URL + "/medical-records/" + id, {
+    const body = {
 
-        method: "DELETE",
+        patient: {
 
-        headers: {
+            id: Number(
+                document.getElementById("patientId").value
+            )
 
-            "Authorization": "Bearer " + localStorage.getItem("token")
+        },
+
+        doctor: {
+
+            id: Number(doctorId)
+
+        },
+
+        diagnosis:
+            document.getElementById("diagnosis").value.trim(),
+
+        symptoms:
+            document.getElementById("symptoms").value.trim(),
+
+        treatment:
+            document.getElementById("treatment").value.trim(),
+
+        notes:
+            document.getElementById("notes").value.trim(),
+
+        visitDate:
+            new Date().toISOString().split("T")[0]
+
+    };
+
+    try {
+
+        const response = await fetch(
+
+            RECORD_API + "/" + editingId,
+
+            {
+
+                method: "PUT",
+
+                headers: {
+
+                    "Content-Type":"application/json",
+
+                    Authorization:"Bearer " + token
+
+                },
+
+                body:JSON.stringify(body)
+
+            }
+
+        );
+
+        if(!response.ok){
+
+            throw new Error("Unable to update record");
 
         }
 
-    })
+        alert("Medical Record Updated");
 
-    .then(response => {
+        editingId = null;
 
-        if (!response.ok) {
-
-            throw new Error("Unable to delete medical record.");
-
-        }
-
-        return response.text();
-
-    })
-
-    .then(message => {
-
-        alert(message);
+        clearForm();
 
         loadMedicalRecords();
 
-    })
+    }
 
-    .catch(error => {
+    catch(error){
 
         console.error(error);
 
         alert(error.message);
 
-    });
+    }
 
 }
 
-// ==========================================
-// Clear Form
-// ==========================================
+/*=========================================================
+                DELETE
+=========================================================*/
 
-function clearForm() {
+async function deleteMedicalRecord(id){
 
-    document.getElementById("patientId").value = "";
+    if(!confirm("Delete this medical record?")){
 
-    document.getElementById("diagnosis").value = "";
+        return;
 
-    document.getElementById("symptoms").value = "";
+    }
 
-    document.getElementById("treatment").value = "";
+    try{
 
-    document.getElementById("notes").value = "";
+        const response=await fetch(
+
+            RECORD_API+"/"+id,
+
+            {
+
+                method:"DELETE",
+
+                headers:{
+
+                    Authorization:"Bearer "+token
+
+                }
+
+            }
+
+        );
+
+        if(!response.ok){
+
+            throw new Error("Unable to delete record");
+
+        }
+
+        alert("Medical Record Deleted");
+
+        loadMedicalRecords();
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        alert(error.message);
+
+    }
 
 }
 
-// ==========================================
-// Load Records Automatically
-// ==========================================
+/*=========================================================
+                CLEAR FORM
+=========================================================*/
 
-window.onload = function () {
+function clearForm(){
+
+    editingId=null;
+
+    document.getElementById("patientId").value="";
+
+    document.getElementById("diagnosis").value="";
+
+    document.getElementById("symptoms").value="";
+
+    document.getElementById("treatment").value="";
+
+    document.getElementById("notes").value="";
+
+}
+
+/*=========================================================
+                REFRESH
+=========================================================*/
+
+setInterval(()=>{
 
     loadMedicalRecords();
 
-};
+},300000);
+
+window.addEventListener("focus",()=>{
+
+    loadMedicalRecords();
+
+});
+
+console.log("✅ Doctor Medical Records Ready");

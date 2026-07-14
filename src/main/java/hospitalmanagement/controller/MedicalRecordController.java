@@ -4,22 +4,17 @@ package hospitalmanagement.controller;
 import hospitalmanagement.entity.MedicalRecord;
 import hospitalmanagement.service.MedicalRecordService;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.util.List;
 
 
-
 @RestController
-@RequestMapping("/medical-records")
+@RequestMapping("/records")
 @CrossOrigin(origins = "*")
 public class MedicalRecordController {
-
-
 
 
     @Autowired
@@ -27,45 +22,31 @@ public class MedicalRecordController {
 
 
 
-
-
     // =====================================
     // CREATE MEDICAL RECORD
     // =====================================
-
 
     @PostMapping
     public ResponseEntity<?> addMedicalRecord(
             @RequestBody MedicalRecord medicalRecord) {
 
-
         try {
-
 
             return ResponseEntity.ok(
                     medicalRecordService.saveMedicalRecord(medicalRecord)
             );
 
-
         }
-        catch(Exception e){
 
+        catch(Exception e) {
 
             return ResponseEntity
                     .badRequest()
                     .body(e.getMessage());
 
-
         }
 
-
     }
-
-
-
-
-
-
 
 
 
@@ -73,48 +54,30 @@ public class MedicalRecordController {
     // GET ALL RECORDS
     // =====================================
 
-
     @GetMapping
-    public ResponseEntity<List<MedicalRecord>> getAllMedicalRecords(){
-
+    public ResponseEntity<List<MedicalRecord>> getAllMedicalRecords() {
 
         return ResponseEntity.ok(
                 medicalRecordService.getAllMedicalRecords()
         );
 
-
     }
 
 
 
-
-
-
-
-
-
     // =====================================
-    // GET BY ID
+    // GET RECORD BY ID
     // =====================================
-
 
     @GetMapping("/{id}")
     public ResponseEntity<MedicalRecord> getMedicalRecord(
-            @PathVariable Long id){
-
+            @PathVariable Long id) {
 
         return ResponseEntity.ok(
                 medicalRecordService.getMedicalRecordById(id)
         );
 
-
     }
-
-
-
-
-
-
 
 
 
@@ -122,24 +85,15 @@ public class MedicalRecordController {
     // PATIENT HISTORY
     // =====================================
 
-
     @GetMapping("/patient/{patientId}")
     public ResponseEntity<List<MedicalRecord>> getPatientRecords(
-            @PathVariable Long patientId){
-
+            @PathVariable Long patientId) {
 
         return ResponseEntity.ok(
                 medicalRecordService.getPatientRecords(patientId)
         );
 
-
     }
-
-
-
-
-
-
 
 
 
@@ -147,24 +101,15 @@ public class MedicalRecordController {
     // DOCTOR RECORDS
     // =====================================
 
-
     @GetMapping("/doctor/{doctorId}")
     public ResponseEntity<List<MedicalRecord>> getDoctorRecords(
-            @PathVariable Long doctorId){
-
+            @PathVariable Long doctorId) {
 
         return ResponseEntity.ok(
                 medicalRecordService.getDoctorRecords(doctorId)
         );
 
-
     }
-
-
-
-
-
-
 
 
 
@@ -172,12 +117,10 @@ public class MedicalRecordController {
     // UPDATE
     // =====================================
 
-
     @PutMapping("/{id}")
     public ResponseEntity<MedicalRecord> updateMedicalRecord(
             @PathVariable Long id,
-            @RequestBody MedicalRecord medicalRecord){
-
+            @RequestBody MedicalRecord medicalRecord) {
 
 
         return ResponseEntity.ok(
@@ -187,14 +130,7 @@ public class MedicalRecordController {
                 )
         );
 
-
     }
-
-
-
-
-
-
 
 
 
@@ -202,24 +138,18 @@ public class MedicalRecordController {
     // DELETE
     // =====================================
 
-
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteMedicalRecord(
-            @PathVariable Long id){
-
+            @PathVariable Long id) {
 
 
         medicalRecordService.deleteMedicalRecord(id);
-
 
 
         return ResponseEntity.ok(
                 "Medical Record Deleted Successfully"
         );
 
-
     }
-
-
 
 }

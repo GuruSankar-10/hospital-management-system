@@ -119,7 +119,7 @@ h1{
 
     font-size:34px;
     font-weight:700;
-    color:var(--black);
+    color:var(--text);
 
 }
 
@@ -158,7 +158,7 @@ small{
 
 strong{
 
-    color:var(--black);
+    color:var(--text);
 
 }
 

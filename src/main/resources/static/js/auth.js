@@ -1,149 +1,284 @@
-// ==========================================
-// Hospital Management System
-// Authentication
-// ==========================================
+/*=========================================================
+                HMS PRO AUTHENTICATION
+=========================================================*/
 
-// ==========================================
-// API URL
-// ==========================================
+const AUTH_API = window.AUTH_API;
 
-const isLocal =
-    window.location.hostname === "localhost" ||
-    window.location.hostname === "127.0.0.1";
+if (!AUTH_API) {
 
-const API_URL = isLocal
-    ? "http://localhost:8080/auth"
-    : "https://hospital-management-system-6pok.onrender.com/auth";
+    console.error("AUTH_API is not defined.");
 
-// ==========================================
-// Login
-// ==========================================
+    alert("Configuration Error. Please load config.js first.");
 
-function login() {
+    throw new Error("AUTH_API Undefined");
 
-    const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
+}
 
-    if (!emailInput || !passwordInput) return;
 
-    const email = emailInput.value.trim();
-    const password = passwordInput.value.trim();
+/*=========================================================
+                LOGIN
+=========================================================*/
 
-    const loginButton = document.querySelector("button");
+async function login() {
+
+    const emailInput =
+        document.getElementById("email");
+
+    const passwordInput =
+        document.getElementById("password");
+
+    const loginButton =
+        document.getElementById("loginBtn");
+
+
+    if (!emailInput || !passwordInput) {
+
+        alert("Login form not found.");
+
+        return;
+
+    }
+
+
+    const email =
+        emailInput.value.trim();
+
+    const password =
+        passwordInput.value.trim();
+
 
     if (email === "" || password === "") {
-        alert("Please enter email and password.");
+
+        alert("Please enter Email and Password.");
+
         return;
+
     }
+
 
     showLoading(loginButton);
 
-    fetch(API_URL + "/login", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            email,
-            password
-        })
-    })
 
-    .then(async response => {
+    try {
+
+        const response = await fetch(
+
+            AUTH_API + "/login",
+
+            {
+
+                method: "POST",
+
+                headers: {
+
+                    "Content-Type": "application/json"
+
+                },
+
+                body: JSON.stringify({
+
+                    email: email,
+
+                    password: password
+
+                })
+
+            }
+
+        );
+
 
         if (!response.ok) {
 
             hideLoading(loginButton);
 
-            let message = "Invalid email or password.";
+            let message = "Invalid Email or Password";
 
             try {
-                const error = await response.json();
+
+                const error =
+                    await response.json();
+
                 if (error.message) {
+
                     message = error.message;
+
                 }
-            } catch (e) {}
+
+            }
+
+            catch (e) {
+
+                console.error(e);
+
+            }
 
             throw new Error(message);
+
         }
 
-        return response.json();
 
-    })
+        const data =
+            await response.json();
 
-    .then(data => {
 
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("role", data.role);
-        localStorage.setItem("name", data.fullName);
-        localStorage.setItem("email", data.email);
+        /*=====================================
+                STORE USER
+        =====================================*/
+
+        localStorage.setItem(
+            "token",
+            data.token
+        );
+
+        localStorage.setItem(
+            "role",
+            data.role
+        );
+
+        localStorage.setItem(
+            "name",
+            data.fullName
+        );
+
+        localStorage.setItem(
+            "email",
+            data.email
+        );
+
 
         if (data.doctorId != null) {
-            localStorage.setItem("doctorId", data.doctorId);
+
+            localStorage.setItem(
+                "doctorId",
+                data.doctorId
+            );
+
         }
+
 
         rememberUser();
 
+        hideLoading(loginButton);
+
         alert("Welcome " + data.fullName);
 
-        if (data.role === "ADMIN") {
 
-            window.location.href = "admin-dashboard.html";
+        /*=====================================
+                REDIRECT
+        =====================================*/
 
-        } else if (data.role === "DOCTOR") {
+        switch (data.role) {
 
-            window.location.href = "doctor-dashboard.html";
+            case "ADMIN":
 
-        } else if (data.role === "STAFF") {
+                window.location.href =
+                    "admin-dashboard.html";
 
-            window.location.href = "staff-dashboard.html";
+                break;
 
-        } else {
+            case "DOCTOR":
 
-            alert("Unknown Role");
+                window.location.href =
+                    "doctor-dashboard.html";
+
+                break;
+
+            case "STAFF":
+
+                window.location.href =
+                    "staff-dashboard.html";
+
+                break;
+
+            default:
+
+                alert("Unknown User Role");
 
         }
 
-    })
+    }
 
-    .catch(error => {
+    catch (error) {
 
         hideLoading(loginButton);
+
+        console.error(error);
+
         alert(error.message);
 
-    });
+    }
+
+}
+/*=========================================================
+                REMEMBER USER
+=========================================================*/
+
+function rememberUser() {
+
+    const emailInput = document.getElementById("email");
+
+    if (!emailInput) return;
+
+    const email = emailInput.value.trim();
+
+    if (email !== "") {
+
+        localStorage.setItem("rememberEmail", email);
+
+    }
 
 }
 
-// ==========================================
-// Forgot Password
-// ==========================================
 
-function openForgotPassword() {
+/*=========================================================
+                BUTTON LOADING
+=========================================================*/
 
-    document.getElementById("forgotModal").style.display = "block";
+function showLoading(button) {
 
-}
+    if (!button) return;
 
-function closeForgotPassword() {
+    button.disabled = true;
 
-    document.getElementById("forgotModal").style.display = "none";
+    button.dataset.originalText = button.innerHTML;
 
-    document.getElementById("resetEmail").value = "";
-    document.getElementById("newPassword").value = "";
-    document.getElementById("confirmPassword").value = "";
+    button.innerHTML =
+        '<i class="fas fa-spinner fa-spin"></i> Signing In...';
 
 }
 
-function resetPassword() {
+function hideLoading(button) {
 
-    const email = document.getElementById("resetEmail").value.trim();
-    const newPassword = document.getElementById("newPassword").value.trim();
-    const confirmPassword = document.getElementById("confirmPassword").value.trim();
+    if (!button) return;
 
-    if (email === "" || newPassword === "" || confirmPassword === "") {
+    button.disabled = false;
+
+    button.innerHTML =
+        button.dataset.originalText || "Login Securely";
+
+}
+
+
+/*=========================================================
+                FORGOT PASSWORD
+=========================================================*/
+
+async function resetPassword() {
+
+    const email =
+        document.getElementById("resetEmail").value.trim();
+
+    const newPassword =
+        document.getElementById("newPassword").value.trim();
+
+    const confirmPassword =
+        document.getElementById("confirmPassword").value.trim();
+
+    if (!email || !newPassword || !confirmPassword) {
 
         alert("Please fill all fields.");
+
         return;
 
     }
@@ -151,159 +286,255 @@ function resetPassword() {
     if (newPassword !== confirmPassword) {
 
         alert("Passwords do not match.");
+
         return;
 
     }
 
-    fetch(API_URL + "/forgot-password", {
+    try {
 
-        method: "POST",
+        const response = await fetch(
 
-        headers: {
-            "Content-Type": "application/json"
-        },
+            AUTH_API + "/forgot-password",
 
-        body: JSON.stringify({
-            email,
-            newPassword
-        })
+            {
 
-    })
+                method: "POST",
 
-    .then(async response => {
+                headers: {
+
+                    "Content-Type": "application/json"
+
+                },
+
+                body: JSON.stringify({
+
+                    email,
+
+                    newPassword
+
+                })
+
+            }
+
+        );
 
         if (!response.ok) {
 
-            let message = "Unable to reset password.";
-
-            try {
-
-                const error = await response.json();
-
-                if (error.message) {
-                    message = error.message;
-                }
-
-            } catch (e) {}
-
-            throw new Error(message);
+            throw new Error("Unable to reset password.");
 
         }
 
-        return response.text();
+        alert("✅ Password Updated Successfully");
 
-    })
-
-    .then(message => {
-
-        alert(message);
         closeForgotPassword();
 
-    })
+    }
 
-    .catch(error => {
+    catch (error) {
+
+        console.error(error);
 
         alert(error.message);
+
+    }
+
+}
+
+
+/*=========================================================
+                FORGOT PASSWORD MODAL
+=========================================================*/
+
+function openForgotPassword() {
+
+    const modal =
+        document.getElementById("forgotModal");
+
+    if (modal) {
+
+        modal.style.display = "flex";
+
+    }
+
+}
+
+function closeForgotPassword() {
+
+    const modal =
+        document.getElementById("forgotModal");
+
+    if (modal) {
+
+        modal.style.display = "none";
+
+    }
+
+    const fields = [
+
+        "resetEmail",
+
+        "newPassword",
+
+        "confirmPassword"
+
+    ];
+
+    fields.forEach(id => {
+
+        const input = document.getElementById(id);
+
+        if (input) {
+
+            input.value = "";
+
+        }
 
     });
 
 }
 
-// ==========================================
-// Toggle Password
-// ==========================================
+
+/*=========================================================
+                TOGGLE PASSWORD
+=========================================================*/
 
 function togglePassword(inputId, iconId) {
 
-    const input = document.getElementById(inputId);
-    const icon = document.getElementById(iconId);
+    const input =
+        document.getElementById(inputId);
+
+    const icon =
+        document.getElementById(iconId);
 
     if (!input || !icon) return;
 
     if (input.type === "password") {
 
         input.type = "text";
+
         icon.className = "fas fa-eye-slash";
 
-    } else {
+    }
+
+    else {
 
         input.type = "password";
+
         icon.className = "fas fa-eye";
 
     }
 
 }
-
-// ==========================================
-// Logout
-// ==========================================
+/*=========================================================
+                LOGOUT
+=========================================================*/
 
 function logout() {
 
-    localStorage.clear();
+    if (!confirm("Are you sure you want to logout?")) {
+
+        return;
+
+    }
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    localStorage.removeItem("doctorId");
+    localStorage.removeItem("name");
+    localStorage.removeItem("email");
+
     window.location.href = "login.html";
 
 }
 
-// ==========================================
-// Remember Email
-// ==========================================
 
-function rememberUser() {
+/*=========================================================
+                CHECK LOGIN
+=========================================================*/
 
-    const email = document.getElementById("email");
+function checkLogin() {
 
-    if (email && email.value.trim() !== "") {
+    const token = localStorage.getItem("token");
 
-        localStorage.setItem("rememberEmail", email.value.trim());
-
-    }
+    return token !== null && token !== "";
 
 }
 
-// ==========================================
-// DOM Ready
-// ==========================================
 
-document.addEventListener("DOMContentLoaded", function () {
+/*=========================================================
+                CURRENT USER
+=========================================================*/
+
+function getCurrentUser() {
+
+    return {
+
+        token: localStorage.getItem("token"),
+
+        role: localStorage.getItem("role"),
+
+        name: localStorage.getItem("name"),
+
+        email: localStorage.getItem("email"),
+
+        doctorId: localStorage.getItem("doctorId")
+
+    };
+
+}
+
+
+/*=========================================================
+                DOM READY
+=========================================================*/
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const emailInput = document.getElementById("email");
 
     const savedEmail = localStorage.getItem("rememberEmail");
 
-    const email = document.getElementById("email");
+    if (emailInput && savedEmail) {
 
-    if (savedEmail && email) {
-
-        email.value = savedEmail;
-        email.focus();
+        emailInput.value = savedEmail;
 
     }
 
 });
 
-// ==========================================
-// Enter Key Login (Only Login Page)
-// ==========================================
 
-document.addEventListener("keydown", function (event) {
+/*=========================================================
+                ENTER KEY LOGIN
+=========================================================*/
+
+document.addEventListener("keydown", (event) => {
 
     if (event.key !== "Enter") return;
 
-    if (
-        document.getElementById("email") &&
-        document.getElementById("password")
-    ) {
+    const email =
+        document.getElementById("email");
+
+    const password =
+        document.getElementById("password");
+
+    if (email && password) {
+
         login();
+
     }
 
 });
 
-// ==========================================
-// Close Forgot Password Modal
-// ==========================================
 
-window.addEventListener("click", function (event) {
+/*=========================================================
+                CLOSE MODAL
+=========================================================*/
 
-    const modal = document.getElementById("forgotModal");
+window.addEventListener("click", (event) => {
+
+    const modal =
+        document.getElementById("forgotModal");
 
     if (modal && event.target === modal) {
 
@@ -313,24 +544,32 @@ window.addEventListener("click", function (event) {
 
 });
 
-// ==========================================
-// Button Loading
-// ==========================================
 
-function showLoading(button) {
+/*=========================================================
+                ESC KEY
+=========================================================*/
 
-    if (!button) return;
+document.addEventListener("keydown", (event) => {
 
-    button.disabled = true;
-    button.innerHTML = "Signing In...";
+    if (event.key === "Escape") {
 
-}
+        closeForgotPassword();
 
-function hideLoading(button) {
+    }
 
-    if (!button) return;
+});
 
-    button.disabled = false;
-    button.innerHTML = "Login Securely";
 
-}
+/*=========================================================
+                DEBUG
+=========================================================*/
+
+console.log("====================================");
+
+console.log("🏥 HMS PRO Authentication Loaded");
+
+console.log("AUTH API :", AUTH_API);
+
+console.log("Logged In :", checkLogin());
+
+console.log("====================================");

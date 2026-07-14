@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>HMS PRO | Settings</title>
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="css/theme.css">
+
+    <link rel="stylesheet" href="css/common.css">
+
+    <link rel="stylesheet" href="css/animations.css">
+
+    <link rel="stylesheet" href="css/admin.css">
+
+    <link rel="stylesheet" href="css/settings.css">
+
+</head>
+
+<body>
+
+<!-- =====================================================
+                        SIDEBAR
+====================================================== -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <i class="fa-solid fa-hospital"></i>
+
+        <div>
+
+            <h2>HMS PRO</h2>
+
+            <small>Hospital Management</small>
+
+        </div>
+
+    </div>
+
+    <nav>
+
+        <a href="admin-dashboard.html">
+
+            <i class="fa-solid fa-chart-line"></i>
+
+            Dashboard
+
+        </a>
+
+        <a href="admin-doctors.html">
+
+            <i class="fa-solid fa-user-doctor"></i>
+
+            Doctors
+
+        </a>
+
+        <a href="admin-staff.html">
+
+            <i class="fa-solid fa-user-nurse"></i>
+
+            Staff
+
+        </a>
+
+        <a href="patients.html">
+
+            <i class="fa-solid fa-bed-pulse"></i>
+
+            Patients
+
+        </a>
+
+        <a href="appointments.html">
+
+            <i class="fa-solid fa-calendar-check"></i>
+
+            Appointments
+
+        </a>
+
+        <a href="billing.html">
+
+            <i class="fa-solid fa-file-invoice-dollar"></i>
+
+            Billing
+
+        </a>
+
+        <a href="inventory.html">
+
+            <i class="fa-solid fa-pills"></i>
+
+            Inventory
+
+        </a>
+
+        <a href="reports.html">
+
+            <i class="fa-solid fa-chart-column"></i>
+
+            Reports
+
+        </a>
+
+        <a href="settings.html" class="active">
+
+            <i class="fa-solid fa-gear"></i>
+
+            Settings
+
+        </a>
+
+        <a href="#" onclick="logout()">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            Logout
+
+        </a>
+
+    </nav>
+
+</aside>
+
+<!-- =====================================================
+                        MAIN
+====================================================== -->
+
+<div class="main">
+
+<!-- =====================================================
+                        TOPBAR
+====================================================== -->
+
+<header class="topbar">
+
+    <div>
+
+        <h1>
+
+            <i class="fa-solid fa-gear"></i>
+
+            System Settings
+
+        </h1>
+
+        <p>
+
+            Configure hospital information, security and appearance.
+
+        </p>
+
+    </div>
+
+    <div class="top-actions">
+
+        <!-- Search -->
+
+        <div class="search-box">
+
+            <i class="fa-solid fa-search"></i>
+
+            <input
+                type="text"
+                placeholder="Search settings...">
+
+        </div>
+
+        <!-- Theme -->
+
+        <button
+            id="themeToggle"
+            class="icon-btn"
+            title="Toggle Theme">
+
+            <i
+                id="themeIcon"
+                class="fa-solid fa-moon">
+
+            </i>
+
+        </button>
+
+        <!-- Notifications -->
+
+        <button class="icon-btn">
+
+            <i class="fa-solid fa-bell"></i>
+
+        </button>
+
+        <!-- Profile -->
+
+        <div class="profile-box">
+
+            <i class="fa-solid fa-circle-user"></i>
+
+            <div>
+
+                <strong>
+
+                    Administrator
+
+                </strong>
+
+                <small>
+
+                    Hospital Admin
+
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+<!-- =====================================================
+                    SETTINGS DASHBOARD
+====================================================== -->
+
+<section class="stats-grid">
+
+    <div class="stat-card">
+
+        <i class="fa-solid fa-hospital"></i>
+
+        <div>
+
+            <h2>1</h2>
+
+            <p>Hospital Profile</p>
+
+        </div>
+
+    </div>
+
+    <div class="stat-card">
+
+        <i class="fa-solid fa-users"></i>
+
+        <div>
+
+            <h2 id="userCount">0</h2>
+
+            <p>Total Users</p>
+
+        </div>
+
+    </div>
+
+    <div class="stat-card">
+
+        <i class="fa-solid fa-shield-halved"></i>
+
+        <div>
+
+            <h2>Secure</h2>
+
+            <p>Security Status</p>
+
+        </div>
+
+    </div>
+
+    <div class="stat-card">
+
+        <i class="fa-solid fa-circle-check"></i>
+
+        <div>
+
+            <h2>Online</h2>
+
+            <p>System Status</p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+                PART 2 STARTS HERE
+====================================================== -->
+<!-- =====================================================
+                HOSPITAL PROFILE
+====================================================== -->
+
+<section class="card fade-up">
+
+    <div class="card-header">
+
+        <h2>
+
+            <i class="fa-solid fa-hospital"></i>
+
+            Hospital Profile
+
+        </h2>
+
+    </div>
+
+    <div class="form-grid">
+
+        <div class="form-group">
+
+            <label>Hospital Name</label>
+
+            <input
+                type="text"
+                id="hospitalName"
+                placeholder="ABC Multi Speciality Hospital">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Hospital Email</label>
+
+            <input
+                type="email"
+                id="hospitalEmail"
+                placeholder="hospital@email.com">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Phone Number</label>
+
+            <input
+                type="text"
+                id="hospitalPhone"
+                placeholder="+91 9876543210">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Website</label>
+
+            <input
+                type="text"
+                id="hospitalWebsite"
+                placeholder="www.hospital.com">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Emergency Number</label>
+
+            <input
+                type="text"
+                id="emergencyNumber"
+                placeholder="+91 9999999999">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>GST Number</label>
+
+            <input
+                type="text"
+                id="hospitalGST"
+                placeholder="GST Number">
+
+        </div>
+
+        <div class="form-group" style="grid-column:1/-1;">
+
+            <label>Hospital Address</label>
+
+            <textarea
+                id="hospitalAddress"
+                rows="4"
+                placeholder="Complete Hospital Address"></textarea>
+
+        </div>
+
+    </div>
+
+    <div class="mt-20">
+
+        <button
+            class="primary-btn"
+            onclick="saveHospitalProfile()">
+
+            <i class="fa-solid fa-floppy-disk"></i>
+
+            Save Hospital Profile
+
+        </button>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+                ADMIN PROFILE
+====================================================== -->
+
+<section class="card fade-up">
+
+    <div class="card-header">
+
+        <h2>
+
+            <i class="fa-solid fa-user-shield"></i>
+
+            Administrator Profile
+
+        </h2>
+
+    </div>
+
+    <div class="form-grid">
+
+        <div class="form-group">
+
+            <label>Full Name</label>
+
+            <input
+                type="text"
+                id="adminName"
+                placeholder="Administrator">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Email</label>
+
+            <input
+                type="email"
+                id="adminEmail"
+                placeholder="admin@email.com">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Phone Number</label>
+
+            <input
+                type="text"
+                id="adminPhone"
+                placeholder="+91 9876543210">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Role</label>
+
+            <input
+                type="text"
+                value="ADMIN"
+                readonly>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>New Password</label>
+
+            <input
+                type="password"
+                id="newPassword"
+                placeholder="Enter New Password">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Confirm Password</label>
+
+            <input
+                type="password"
+                id="confirmPassword"
+                placeholder="Confirm Password">
+
+        </div>
+
+    </div>
+
+    <div class="mt-20">
+
+        <button
+            class="primary-btn"
+            onclick="saveAdminProfile()">
+
+            <i class="fa-solid fa-user-pen"></i>
+
+            Update Administrator
+
+        </button>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+                HOSPITAL LOGO
+====================================================== -->
+
+<section class="card fade-up">
+
+    <div class="card-header">
+
+        <h2>
+
+            <i class="fa-solid fa-image"></i>
+
+            Hospital Logo
+
+        </h2>
+
+    </div>
+
+    <div style="display:flex;
+                align-items:center;
+                gap:30px;
+                flex-wrap:wrap;">
+
+        <img
+
+            id="hospitalLogo"
+
+            src="https://ui-avatars.com/api/?name=HMS+PRO&background=2563eb&color=ffffff"
+
+            style="width:140px;
+                   height:140px;
+                   border-radius:20px;
+                   object-fit:cover;">
+
+        <div>
+
+            <input
+                type="file"
+                id="logoUpload"
+                accept="image/*">
+
+            <br><br>
+
+            <button
+                class="secondary-btn">
+
+                <i class="fa-solid fa-upload"></i>
+
+                Upload Logo
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+                PART 3 STARTS HERE
+====================================================== -->
+<!-- =====================================================
+                USER MANAGEMENT
+====================================================== -->
+
+<section class="card fade-up">
+
+    <div class="card-header">
+
+        <h2>
+
+            <i class="fa-solid fa-users-gear"></i>
+
+            User Management
+
+        </h2>
+
+        <button
+            class="primary-btn"
+            onclick="addNewUser()">
+
+            <i class="fa-solid fa-user-plus"></i>
+
+            Add User
+
+        </button>
+
+    </div>
+
+    <div class="table-responsive">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Name</th>
+
+                    <th>Email</th>
+
+                    <th>Role</th>
+
+                    <th>Status</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="usersTable">
+
+                <!-- Loaded using settings.js -->
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+                APPEARANCE SETTINGS
+====================================================== -->
+
+<section class="card fade-up">
+
+    <div class="card-header">
+
+        <h2>
+
+            <i class="fa-solid fa-palette"></i>
+
+            Appearance Settings
+
+        </h2>
+
+    </div>
+
+    <div class="form-grid">
+
+        <div class="form-group">
+
+            <label>Theme</label>
+
+            <select id="themeSelect">
+
+                <option value="light">Light</option>
+
+                <option value="dark">Dark</option>
+
+                <option value="system">System Default</option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Primary Color</label>
+
+            <input
+                type="color"
+                id="themeColor"
+                value="#2563eb">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Sidebar Style</label>
+
+            <select id="sidebarStyle">
+
+                <option>Default</option>
+
+                <option>Compact</option>
+
+                <option>Modern</option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Language</label>
+
+            <select id="language">
+
+                <option>English</option>
+
+                <option>తెలుగు</option>
+
+                <option>Hindi</option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+    <div class="mt-20">
+
+        <button
+            class="primary-btn"
+            onclick="saveAppearance()">
+
+            <i class="fa-solid fa-floppy-disk"></i>
+
+            Save Appearance
+
+        </button>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+                NOTIFICATION SETTINGS
+====================================================== -->
+
+<section class="card fade-up">
+
+    <div class="card-header">
+
+        <h2>
+
+            <i class="fa-solid fa-bell"></i>
+
+            Notification Settings
+
+        </h2>
+
+    </div>
+
+    <div class="form-grid">
+
+        <div class="form-group">
+
+            <label>
+
+                <input
+                    type="checkbox"
+                    id="emailNotification"
+                    checked>
+
+                Email Notifications
+
+            </label>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>
+
+                <input
+                    type="checkbox"
+                    id="smsNotification"
+                    checked>
+
+                SMS Notifications
+
+            </label>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>
+
+                <input
+                    type="checkbox"
+                    id="appointmentAlert"
+                    checked>
+
+                Appointment Alerts
+
+            </label>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>
+
+                <input
+                    type="checkbox"
+                    id="inventoryAlert"
+                    checked>
+
+                Low Stock Alerts
+
+            </label>
+
+        </div>
+
+    </div>
+
+    <div class="mt-20">
+
+        <button
+            class="primary-btn"
+            onclick="saveNotifications()">
+
+            <i class="fa-solid fa-bell"></i>
+
+            Save Notifications
+
+        </button>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+                SYSTEM SETTINGS
+====================================================== -->
+
+<section class="card fade-up">
+
+    <div class="card-header">
+
+        <h2>
+
+            <i class="fa-solid fa-server"></i>
+
+            System Settings
+
+        </h2>
+
+    </div>
+
+    <div class="form-grid">
+
+        <div class="form-group">
+
+            <label>Time Zone</label>
+
+            <select id="timezone">
+
+                <option>Asia/Kolkata</option>
+
+                <option>UTC</option>
+
+                <option>America/New_York</option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Date Format</label>
+
+            <select id="dateFormat">
+
+                <option>DD/MM/YYYY</option>
+
+                <option>MM/DD/YYYY</option>
+
+                <option>YYYY-MM-DD</option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Currency</label>
+
+            <select id="currency">
+
+                <option>INR (₹)</option>
+
+                <option>USD ($)</option>
+
+                <option>EUR (€)</option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Auto Logout (Minutes)</label>
+
+            <input
+                type="number"
+                id="autoLogout"
+                value="30">
+
+        </div>
+
+    </div>
+
+    <div class="mt-20">
+
+        <button
+            class="primary-btn"
+            onclick="saveSystemSettings()">
+
+            <i class="fa-solid fa-save"></i>
+
+            Save System Settings
+
+        </button>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+                PART 4 STARTS HERE
+====================================================== -->
+```html
+<!-- =====================================================
+                BACKUP & RESTORE
+====================================================== -->
+
+<section class="card fade-up">
+
+    <div class="card-header">
+
+        <h2>
+
+            <i class="fa-solid fa-database"></i>
+
+            Backup & Restore
+
+        </h2>
+
+    </div>
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+
+            <i class="fa-solid fa-download"></i>
+
+            <div>
+
+                <h3>Create Backup</h3>
+
+                <p>Download complete database backup.</p>
+
+                <br>
+
+                <button
+                    class="primary-btn"
+                    onclick="createBackup()">
+
+                    <i class="fa-solid fa-download"></i>
+
+                    Backup
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="stat-card">
+
+            <i class="fa-solid fa-upload"></i>
+
+            <div>
+
+                <h3>Restore Backup</h3>
+
+                <p>Restore hospital data from backup.</p>
+
+                <br>
+
+                <button
+                    class="secondary-btn"
+                    onclick="restoreBackup()">
+
+                    <i class="fa-solid fa-upload"></i>
+
+                    Restore
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+                SYSTEM INFORMATION
+====================================================== -->
+
+<section class="card fade-up">
+
+    <div class="card-header">
+
+        <h2>
+
+            <i class="fa-solid fa-circle-info"></i>
+
+            System Information
+
+        </h2>
+
+    </div>
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+
+            <i class="fa-solid fa-server"></i>
+
+            <div>
+
+                <h2>ONLINE</h2>
+
+                <p>Server Status</p>
+
+            </div>
+
+        </div>
+
+        <div class="stat-card">
+
+            <i class="fa-solid fa-database"></i>
+
+            <div>
+
+                <h2>PostgreSQL</h2>
+
+                <p>Database</p>
+
+            </div>
+
+        </div>
+
+        <div class="stat-card">
+
+            <i class="fa-brands fa-java"></i>
+
+            <div>
+
+                <h2>Spring Boot</h2>
+
+                <p>Backend</p>
+
+            </div>
+
+        </div>
+
+        <div class="stat-card">
+
+            <i class="fa-solid fa-code"></i>
+
+            <div>
+
+                <h2>Version 2.0</h2>
+
+                <p>Application</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+                STORAGE
+====================================================== -->
+
+<section class="card fade-up">
+
+    <div class="card-header">
+
+        <h2>
+
+            <i class="fa-solid fa-hard-drive"></i>
+
+            Storage Usage
+
+        </h2>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Database Storage</label>
+
+        <progress
+            value="45"
+            max="100"
+            style="width:100%;height:20px;"></progress>
+
+        <small>
+
+            45% Used
+
+        </small>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>File Storage</label>
+
+        <progress
+            value="30"
+            max="100"
+            style="width:100%;height:20px;"></progress>
+
+        <small>
+
+            30% Used
+
+        </small>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+                ACTIVITY LOGS
+====================================================== -->
+
+<section class="card fade-up">
+
+    <div class="card-header">
+
+        <h2>
+
+            <i class="fa-solid fa-clock-rotate-left"></i>
+
+            Recent Activity
+
+        </h2>
+
+    </div>
+
+    <div class="table-responsive">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Time</th>
+
+                    <th>User</th>
+
+                    <th>Activity</th>
+
+                    <th>Status</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr>
+
+                    <td>10:30 AM</td>
+
+                    <td>Administrator</td>
+
+                    <td>Updated Hospital Profile</td>
+
+                    <td>
+
+                        <span class="badge badge-success">
+
+                            Success
+
+                        </span>
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>09:50 AM</td>
+
+                    <td>Administrator</td>
+
+                    <td>Created Database Backup</td>
+
+                    <td>
+
+                        <span class="badge badge-info">
+
+                            Completed
+
+                        </span>
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Yesterday</td>
+
+                    <td>Administrator</td>
+
+                    <td>Updated Theme Settings</td>
+
+                    <td>
+
+                        <span class="badge badge-warning">
+
+                            Saved
+
+                        </span>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+                FOOTER
+====================================================== -->
+
+<footer
+    style="margin-top:40px;
+           text-align:center;
+           color:var(--muted);
+           padding:30px;">
+
+    © 2026 HMS PRO |
+    Hospital Management System |
+    Version 2.0
+
+</footer>
+
+</div>
+
+<!-- =====================================================
+                LOADING
+====================================================== -->
+
+<div
+    id="loadingOverlay"
+    class="loading-overlay"
+    style="display:none;">
+
+    <div class="spinner"></div>
+
+</div>
+
+<!-- =====================================================
+                TOAST
+====================================================== -->
+
+<div id="toastContainer"></div>
+
+<!-- =====================================================
+                JAVASCRIPT
+====================================================== -->
+
+<script src="js/theme.js"></script>
+
+<script src="js/common.js"></script>
+
+<script src="js/settings.js"></script>
+
+</body>
+
+</html>
+```

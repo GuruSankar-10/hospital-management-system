@@ -1,15 +1,17 @@
 package hospitalmanagement.repository;
 
-import java.util.List;
-
+import hospitalmanagement.entity.Medicine;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import hospitalmanagement.entity.Medicine;
+import java.util.List;
 
-public interface MedicineRepository extends JpaRepository<Medicine, Long>{
+public interface MedicineRepository
+        extends JpaRepository<Medicine, Long> {
 
+    // Search Medicine
     List<Medicine> findByNameContainingIgnoreCase(String keyword);
 
+    // Dashboard Low Stock
     long countByStockLessThanEqual(Integer stock);
 
 }

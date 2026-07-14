@@ -6,15 +6,8 @@ console.log("Admin Dashboard JS Loaded");
 // ======================================
 
 
-const BASE_URL =
-window.location.hostname === "localhost"
-? "http://localhost:8080"
-: "https://hospital-management-system-6pok.onrender.com";
-
-
-
 const DASHBOARD_API =
-BASE_URL + "/dashboard/stats";
+API_URL + "/dashboard/stats";
 
 
 

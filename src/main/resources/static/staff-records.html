@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HMS PRO | Staff Medical Records</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/staff.css">
+
+</head>
+
+<body>
+
+<!-- =========================================
+                LOGIN CHECK
+========================================= -->
+
+<script>
+
+const role = localStorage.getItem("role");
+
+if (!role || role !== "STAFF") {
+
+    window.location.href = "login.html";
+
+}
+
+</script>
+
+<!-- =========================================
+                SIDEBAR
+========================================= -->
+
+<aside class="sidebar">
+
+<div class="logo">
+
+<div class="logo-icon">
+
+<i class="fa-solid fa-hospital"></i>
+
+</div>
+
+<div class="logo-text">
+
+<h2>HMS PRO</h2>
+
+<p>Staff Panel</p>
+
+</div>
+
+</div>
+
+<nav class="menu">
+
+<a href="staff-dashboard.html">
+
+<i class="fa-solid fa-chart-line"></i>
+
+<span>Dashboard</span>
+
+</a>
+
+<a href="staff-patients.html">
+
+<i class="fa-solid fa-bed-pulse"></i>
+
+<span>Patients</span>
+
+</a>
+
+<a href="staff-appointments.html">
+
+<i class="fa-solid fa-calendar-check"></i>
+
+<span>Appointments</span>
+
+</a>
+
+<a href="staff-records.html" class="active">
+
+<i class="fa-solid fa-file-medical"></i>
+
+<span>Medical Records</span>
+
+</a>
+
+<a href="staff-profile.html">
+
+<i class="fa-solid fa-user"></i>
+
+<span>Profile</span>
+
+</a>
+
+<a href="#" onclick="logout()">
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+<span>Logout</span>
+
+</a>
+
+</nav>
+
+</aside>
+
+<!-- =========================================
+                MAIN
+========================================= -->
+
+<div class="main">
+
+<!-- =========================================
+                TOPBAR
+========================================= -->
+
+<header class="topbar">
+
+<div>
+
+<div class="breadcrumb">
+
+<i class="fa-solid fa-house"></i>
+
+<span>Staff</span>
+
+<i class="fa-solid fa-angle-right"></i>
+
+<span class="active-page">
+
+Medical Records
+
+</span>
+
+</div>
+
+<div class="welcome">
+
+<h1>
+
+Medical Records 📄
+
+</h1>
+
+<p>
+
+View and update patient medical records.
+
+</p>
+
+</div>
+
+</div>
+
+<div class="top-actions">
+
+<div class="search-box">
+
+<i class="fa-solid fa-search"></i>
+
+<input
+type="text"
+id="searchRecord"
+placeholder="Search Patient, Doctor or Diagnosis..."
+onkeyup="searchRecord()">
+
+</div>
+
+<button
+id="themeToggle"
+class="icon-btn">
+
+<i
+id="themeIcon"
+class="fa-solid fa-moon">
+
+</i>
+
+</button>
+
+<button class="icon-btn">
+
+<i class="fa-solid fa-bell"></i>
+
+</button>
+
+<div class="profile-box">
+
+<img
+
+id="profileImage"
+
+src="https://ui-avatars.com/api/?name=Staff&background=0ea5e9&color=ffffff">
+
+<div>
+
+<strong id="staffName">
+
+Staff
+
+</strong>
+
+<small>
+
+Hospital Staff
+
+</small>
+
+</div>
+
+</div>
+
+</div>
+
+</header>
+
+<!-- =========================================
+                HERO
+========================================= -->
+
+<section class="dashboard-banner">
+
+<div class="banner-content">
+
+<span class="status-badge">
+
+<i class="fa-solid fa-notes-medical"></i>
+
+Staff Medical Records
+
+</span>
+
+<h2>
+
+Patient Treatment History
+
+</h2>
+
+<p>
+
+Access patient diagnosis, symptoms, treatment plans and update medical notes.
+
+</p>
+
+<div class="banner-buttons">
+
+<button
+class="primary-btn"
+onclick="loadRecords()">
+
+<i class="fa-solid fa-rotate"></i>
+
+Refresh
+
+</button>
+
+</div>
+
+</div>
+
+<div class="banner-image">
+
+<div class="hero-circle">
+
+<i class="fa-solid fa-file-medical"></i>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =========================================
+            STATISTICS
+========================================= -->
+
+<section class="stats-grid">
+
+<div class="stat-card">
+
+<div class="stat-icon blue">
+
+<i class="fa-solid fa-folder-open"></i>
+
+</div>
+
+<div class="stat-content">
+
+<h2 id="totalRecords">
+
+0
+
+</h2>
+
+<p>
+
+Medical Records
+
+</p>
+
+<span>
+
+Available Records
+
+</span>
+
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-icon green">
+
+<i class="fa-solid fa-user-injured"></i>
+
+</div>
+
+<div class="stat-content">
+
+<h2 id="todayPatients">
+
+0
+
+</h2>
+
+<p>
+
+Patients
+
+</p>
+
+<span>
+
+Registered Patients
+
+</span>
+
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-icon orange">
+
+<i class="fa-solid fa-notes-medical"></i>
+
+</div>
+
+<div class="stat-content">
+
+<h2 id="updatedRecords">
+
+0
+
+</h2>
+
+<p>
+
+Updated Records
+
+</p>
+
+<span>
+
+Latest Updates
+
+</span>
+
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-icon red">
+
+<i class="fa-solid fa-calendar-day"></i>
+
+</div>
+
+<div class="stat-content">
+
+<h2 id="pendingRecords">
+
+0
+
+</h2>
+
+<p>
+
+Today's Visits
+
+</p>
+
+<span>
+
+Visit Count
+
+</span>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =========================================
+        FILTER SECTION STARTS HERE
+========================================= -->
+<!-- =========================================
+                FILTER SECTION
+========================================= -->
+
+<section class="dashboard-card">
+
+    <div class="card-header">
+
+        <h2>
+
+            <i class="fa-solid fa-filter"></i>
+
+            Filter Medical Records
+
+        </h2>
+
+    </div>
+
+    <div class="filter-grid">
+
+        <div class="form-group">
+
+            <label>Patient</label>
+
+            <select
+                id="patientFilter"
+                onchange="filterRecords()">
+
+                <option value="">All Patients</option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Visit Date</label>
+
+            <input
+                type="date"
+                id="recordDateFilter"
+                onchange="filterRecords()">
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================================
+            MEDICAL RECORDS TABLE
+========================================= -->
+
+<section class="dashboard-card">
+
+    <div class="card-header">
+
+        <h2>
+
+            <i class="fa-solid fa-file-medical"></i>
+
+            Patient Medical Records
+
+        </h2>
+
+        <button
+            class="primary-btn"
+            onclick="loadRecords()">
+
+            <i class="fa-solid fa-rotate"></i>
+
+            Refresh
+
+        </button>
+
+    </div>
+
+    <div class="table-responsive">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Patient</th>
+
+                    <th>Doctor</th>
+
+                    <th>Diagnosis</th>
+
+                    <th>Symptoms</th>
+
+                    <th>Visit Date</th>
+
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="recordsTable">
+
+                <!-- Loaded by staff-records.js -->
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+<!-- =========================================
+            EMPTY STATE
+========================================= -->
+
+<div
+    id="emptyState"
+    class="dashboard-card"
+    style="display:none; text-align:center; padding:60px;">
+
+    <i
+        class="fa-solid fa-file-medical"
+        style="font-size:70px;color:#cbd5e1;margin-bottom:20px;">
+    </i>
+
+    <h2>No Medical Records Found</h2>
+
+    <p>
+
+        There are no medical records available.
+
+    </p>
+
+</div>
+
+<!-- =========================================
+            RECORD MODAL
+========================================= -->
+
+<div
+    id="recordModal"
+    class="modal-overlay">
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h2>
+
+                <i class="fa-solid fa-file-medical"></i>
+
+                Update Medical Record
+
+            </h2>
+
+            <button
+                class="close-btn"
+                onclick="closeRecordModal()">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+        <div class="modal-body">
+
+            <input
+                type="hidden"
+                id="recordId">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label>Patient</label>
+
+                    <select id="recordPatient"></select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Visit Date</label>
+
+                    <input
+                        type="date"
+                        id="recordDate">
+
+                </div>
+
+                <div class="form-group full-width">
+
+                    <label>Diagnosis</label>
+
+                    <textarea
+                        id="recordDiagnosis"
+                        rows="3"
+                        placeholder="Diagnosis"></textarea>
+
+                </div>
+
+                <div class="form-group full-width">
+
+                    <label>Symptoms</label>
+
+                    <textarea
+                        id="recordSymptoms"
+                        rows="3"
+                        placeholder="Symptoms"></textarea>
+
+                </div>
+
+                <div class="form-group full-width">
+
+                    <label>Treatment</label>
+
+                    <textarea
+                        id="recordTreatment"
+                        rows="3"
+                        placeholder="Treatment"></textarea>
+
+                </div>
+
+                <div class="form-group full-width">
+
+                    <label>Notes</label>
+
+                    <textarea
+                        id="recordNotes"
+                        rows="4"
+                        placeholder="Additional Notes"></textarea>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button
+                class="secondary-btn"
+                onclick="closeRecordModal()">
+
+                <i class="fa-solid fa-xmark"></i>
+
+                Cancel
+
+            </button>
+
+            <button
+                class="primary-btn"
+                onclick="saveRecord()">
+
+                <i class="fa-solid fa-floppy-disk"></i>
+
+                Save Changes
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================================
+        VIEW RECORD MODAL STARTS HERE
+========================================= -->
+<!-- =========================================
+            VIEW RECORD MODAL
+========================================= -->
+
+<div id="viewModal" class="modal-overlay">
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h2>
+
+                <i class="fa-solid fa-eye"></i>
+
+                Medical Record Details
+
+            </h2>
+
+            <button
+                class="close-btn"
+                onclick="closeViewModal()">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+        <div class="modal-body">
+
+            <div id="recordDetails">
+
+                <!-- Loaded by staff-records.js -->
+
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button
+                class="secondary-btn"
+                onclick="closeViewModal()">
+
+                Close
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================================
+                FOOTER
+========================================= -->
+
+<footer class="footer">
+
+    <div class="footer-left">
+
+        © 2026 HMS PRO | Staff Panel
+
+    </div>
+
+    <div class="footer-right">
+
+        Medical Records Management
+
+    </div>
+
+</footer>
+
+</div>
+
+<!-- =========================================
+            LOADING OVERLAY
+========================================= -->
+
+<div
+    id="loadingOverlay"
+    class="loading-overlay"
+    style="display:none;">
+
+    <div class="loader">
+
+        <div class="spinner"></div>
+
+        <p>
+
+            Loading Medical Records...
+
+        </p>
+
+    </div>
+
+</div>
+
+<!-- =========================================
+            TOAST CONTAINER
+========================================= -->
+
+<div id="toastContainer"></div>
+
+<!-- =========================================
+        STAFF PROFILE SCRIPT
+========================================= -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const staffName =
+        localStorage.getItem("name") || "Staff";
+
+    document.getElementById("staffName").textContent =
+        staffName;
+
+    document.getElementById("profileImage").src =
+        "https://ui-avatars.com/api/?name=" +
+        encodeURIComponent(staffName) +
+        "&background=0ea5e9&color=ffffff";
+
+});
+
+</script>
+
+<!-- =========================================
+            JAVASCRIPT FILES
+========================================= -->
+
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/common.js"></script>
+<script src="js/staff-records.js"></script>
+
+</body>
+</html>

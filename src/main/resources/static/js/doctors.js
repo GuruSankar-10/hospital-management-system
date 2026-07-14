@@ -12,85 +12,29 @@ console.log("Doctor Dashboard JS Loaded");
 // ==========================================
 
 
-const BASE_URL =
+const doctorId = localStorage.getItem("doctorId");
 
-window.location.hostname === "localhost"
+if (!doctorId) {
 
-?
+    alert("Session expired. Please login again.");
 
-"http://localhost:8080"
-
-:
-
-"https://hospital-management-system-6pok.onrender.com";
-
-
-
-
-
-const doctorId =
-localStorage.getItem("doctorId");
-
-
-
-
-
-if(!doctorId){
-
-
-alert(
-"Session expired. Please login again."
-);
-
-
-window.location.href =
-"login.html";
-
+    window.location.href = "login.html";
 
 }
 
-
-
-
-
-
-
-
 // APIs
 
-
 const PATIENT_API =
-
-BASE_URL +
-"/patients/doctor/" +
-doctorId;
-
-
-
+    API_URL + "/patients/doctor/" + doctorId;
 
 const APPOINTMENT_API =
-
-BASE_URL +
-"/appointments/doctor/" +
-doctorId;
-
-
-
+    API_URL + "/appointments/doctor/" + doctorId;
 
 const RECORD_API =
-
-BASE_URL +
-"/medical-records/doctor/" +
-doctorId;
-
-
-
+    API_URL + "/medical-records/doctor/" + doctorId;
 
 const PRESCRIPTION_API =
-
-BASE_URL +
-"/prescriptions/doctor/" +
-doctorId;
+    API_URL + "/prescriptions/doctor/" + doctorId;
 
 
 
